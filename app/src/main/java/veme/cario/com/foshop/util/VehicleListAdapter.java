@@ -18,6 +18,18 @@ import com.parse.ParseImageView;
 /**
  * Created by bski on 11/5/14.
  */
+
+/*
+    Design issues:
+        why do we want to have explicit favorite class?
+        - implment listeners, so that we can tell users more on favs
+
+    To-do:
+        1. incorporate dialog box
+        2. incorporate instagram/facebook/wechat shares
+        3. wire up the dialog box
+ */
+
 public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
 
     private static int GREEN_BACKGROUND = 0x008000;
@@ -33,6 +45,7 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
         ParseImageView photo;
         ImageButton favoriteButton;
         ImageButton deleteButton;
+        ImageButton shareButton;
     }
 
 
@@ -67,19 +80,29 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
                     .findViewById(R.id.favorite_button);
             holder.deleteButton = (ImageButton) view
                     .findViewById(R.id.delete_button);
+            holder.shareButton = (ImageButton) view
+                    .findViewById(R.id.share_button);
             // Tag for lookup later
             view.setTag(holder);
+
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
         /* vehicle: object for the entire getView function */
         final Vehicle vehicle = getItem(position);
-
+        LinearLayout vehicleLayout = holder.vehicleItemLayout;
         if (isFavoritesView) {
-            LinearLayout vehicleLayout = holder.vehicleItemLayout;
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
+        vehicleLayout.setClickable(true);
+        vehicleLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* create a new dialog */
+            }
+        });
+
 
         TextView timeView = holder.timeView;
         timeView.setText(vehicle.getTagTimestamp());
@@ -98,6 +121,7 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
         photo.loadInBackground();
 
 
+        /* Favorite Button: Visible no matter in normal, or favorites view */
         final ImageButton favoriteButton = holder.favoriteButton;
         if (Favorites.get().contains(vehicle)) {
             if (isFavoritesView) {
@@ -111,7 +135,6 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
                     .setImageResource(R.drawable.light_rating_not_important);
         }
 
-        /* Favorite Button: Visible no matter in normal, or favorites view */
         favoriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Favorites favorites = Favorites.get();
@@ -134,6 +157,7 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
         });
         favoriteButton.setFocusable(false);
 
+
         /* Delete Button: Visible no matter in normal, or favorites view */
         final ImageButton delete_button = holder.deleteButton;
         delete_button.setOnClickListener(new OnClickListener() {
@@ -150,6 +174,16 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
 
             }
         });
+
+        /* Share Button - to implement once have social authentication implemented*/
+        final ImageButton share_button = holder.shareButton;
+        share_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return view;
     }
 
