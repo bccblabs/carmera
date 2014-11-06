@@ -1,15 +1,16 @@
 package veme.cario.com.foshop.model;
 
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 /**
  * Created by bski on 11/5/14.
  */
-public class Vehicle extends ParseObject {
+public class TaggedVehicle extends ParseObject {
 
     // Requires empty constructor
-    public Vehicle() {}
+    public TaggedVehicle() {}
 
     public String getYear() {
         return getString("year");
@@ -57,5 +58,13 @@ public class Vehicle extends ParseObject {
 
     public void setFavorite(boolean fav) {
         put ("favorite", fav);
+    }
+
+    public void setLocation (ParseGeoPoint location) {
+        put ("location", location);
+    }
+
+    public ParseGeoPoint getLocation () {
+       return getParseGeoPoint("location");
     }
 }

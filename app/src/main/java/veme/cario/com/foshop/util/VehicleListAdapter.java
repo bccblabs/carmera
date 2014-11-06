@@ -2,7 +2,7 @@ package veme.cario.com.foshop.util;
 
 import android.widget.ArrayAdapter;
 
-import veme.cario.com.foshop.model.Vehicle;
+import veme.cario.com.foshop.model.TaggedVehicle;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,7 +30,7 @@ import com.parse.ParseImageView;
         3. wire up the dialog box
  */
 
-public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
+public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
     private static int GREEN_BACKGROUND = 0x008000;
     private boolean isFavoritesView = false;
@@ -90,7 +90,7 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
         }
 
         /* vehicle: object for the entire getView function */
-        final Vehicle vehicle = getItem(position);
+        final TaggedVehicle taggedVehicle = getItem(position);
         LinearLayout vehicleLayout = holder.vehicleItemLayout;
         if (isFavoritesView) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
@@ -105,16 +105,16 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
 
 
         TextView timeView = holder.timeView;
-        timeView.setText(vehicle.getTagTimestamp());
+        timeView.setText(taggedVehicle.getTagTimestamp());
 
         TextView yearView = holder.yearView;
-        yearView.setText(vehicle.getYear());
+        yearView.setText(taggedVehicle.getYear());
 
         TextView makeView = holder.makeView;
-        makeView.setText(vehicle.getMake());
+        makeView.setText(taggedVehicle.getMake());
 
         TextView modelView = holder.modelView;
-        modelView.setText(vehicle.getModel());
+        modelView.setText(taggedVehicle.getModel());
 
         final ParseImageView photo = holder.photo;
 
@@ -123,7 +123,7 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
 
         /* Favorite Button: Visible no matter in normal, or favorites view */
         final ImageButton favoriteButton = holder.favoriteButton;
-        if (Favorites.get().contains(vehicle)) {
+        if (Favorites.get().contains(taggedVehicle)) {
             if (isFavoritesView) {
                 favoriteButton.setImageResource(R.drawable.x);
             } else {
@@ -138,13 +138,13 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
         favoriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Favorites favorites = Favorites.get();
-                if (favorites.contains(vehicle)) {
-                    favorites.remove(vehicle);
+                if (favorites.contains(taggedVehicle)) {
+                    favorites.remove(taggedVehicle);
 
                     favoriteButton
                             .setImageResource(R.drawable.light_rating_not_important);
                 } else {
-                    favorites.add(vehicle);
+                    favorites.add(taggedVehicle);
                     if (isFavoritesView) {
                         favoriteButton.setImageResource(R.drawable.x);
                     } else {
@@ -164,10 +164,10 @@ public class VehicleListAdapter extends ArrayAdapter<Vehicle> {
             @Override
             public void onClick(View v) {
                 Favorites favorites = Favorites.get();
-                if (favorites.contain(vehicle)) {
-                    favorites.remove(vehicle);
+                if (favorites.contain(taggedVehicle)) {
+                    favorites.remove(taggedVehicle);
                 }
-                vehicle.deleteInBackground();
+                taggedVehicle.deleteInBackground();
                 favorites.save(getContext());
                 /* do we really need this? */
                 notifyDataSetChanged();
