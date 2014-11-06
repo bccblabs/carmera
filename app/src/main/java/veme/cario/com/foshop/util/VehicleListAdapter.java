@@ -2,6 +2,7 @@ package veme.cario.com.foshop.util;
 
 import android.widget.ArrayAdapter;
 
+import veme.cario.com.foshop.model.Favorites;
 import veme.cario.com.foshop.model.TaggedVehicle;
 
 import android.content.Context;
@@ -15,14 +16,10 @@ import android.widget.TextView;
 
 import com.parse.ParseImageView;
 
-/**
- * Created by bski on 11/5/14.
- */
-
 /*
     Design issues:
         why do we want to have explicit favorite class?
-        - implment listeners, so that we can tell users more on favs
+        - implement listeners, so that we can tell users more on favorites
 
     To-do:
         1. incorporate dialog box
@@ -48,16 +45,12 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         ImageButton shareButton;
     }
 
-
-
-
     public VehicleListAdapter (Context context, boolean isFavorites) {
         super(context, 0);
         isFavoritesView = isFavorites;
         inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
     }
-
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -99,7 +92,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         vehicleLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* create a new dialog */
+                /* TODO: create a new dialog */
             }
         });
 
@@ -164,7 +157,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             @Override
             public void onClick(View v) {
                 Favorites favorites = Favorites.get();
-                if (favorites.contain(taggedVehicle)) {
+                if (favorites.contains(taggedVehicle)) {
                     favorites.remove(taggedVehicle);
                 }
                 taggedVehicle.deleteInBackground();
@@ -180,7 +173,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         share_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /* TODO: create share button actions*/
             }
         });
 
