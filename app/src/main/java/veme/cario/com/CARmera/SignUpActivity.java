@@ -30,7 +30,7 @@ public class SignUpActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_sign_up);
 
         // Set up the sign up form.
         usernameEditText = (EditText) findViewById(R.id.username_edit_text);
@@ -40,7 +40,7 @@ public class SignUpActivity extends Activity {
         passwordAgainEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == R.id.editText_action_signup ||
+                if (actionId == R.id.editText_action_sign_up ||
                         actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                     sign_up();
                     return true;
@@ -95,7 +95,7 @@ public class SignUpActivity extends Activity {
 
         // Set up a progress dialog
         final ProgressDialog dialog = new ProgressDialog(SignUpActivity.this);
-        dialog.setMessage(getString(R.string.progress_signup));
+        dialog.setMessage(getString(R.string.progress_sign_up));
         dialog.show();
 
         // Set up a new Parse user

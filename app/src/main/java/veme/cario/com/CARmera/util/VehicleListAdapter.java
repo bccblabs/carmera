@@ -2,6 +2,7 @@ package veme.cario.com.CARmera.util;
 
 import android.widget.ArrayAdapter;
 
+import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.Favorites;
 import veme.cario.com.CARmera.model.TaggedVehicle;
 
@@ -12,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.parse.ParseImageView;
@@ -23,7 +25,7 @@ import com.parse.ParseImageView;
 
     To-do:
         1. incorporate dialog box
-        2. incorporate instagram/facebook/wechat shares
+        2. incorporate Ins/facebook/WeChat shares
         3. wire up the dialog box
  */
 
@@ -34,7 +36,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
     private LayoutInflater inflater;
 
     private static class ViewHolder {
-        LinearLayout vehicleItemLayout;
+        RelativeLayout vehicleItemLayout;
         TextView timeView;
         TextView yearView;
         TextView makeView;
@@ -61,7 +63,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             view = inflater.inflate(R.layout.list_item_vehicle, parent, false);
             // Cache view components into the view holder
             holder = new ViewHolder();
-            holder.vehicleItemLayout = (LinearLayout) view
+            holder.vehicleItemLayout = (RelativeLayout) view
                     .findViewById(R.id.vehicle_item);
             holder.timeView = (TextView) view.findViewById(R.id.time_view);
             holder.yearView = (TextView) view.findViewById(R.id.year_view);
@@ -84,7 +86,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
         /* vehicle: object for the entire getView function */
         final TaggedVehicle taggedVehicle = getItem(position);
-        LinearLayout vehicleLayout = holder.vehicleItemLayout;
+        RelativeLayout vehicleLayout = holder.vehicleItemLayout;
         if (isFavoritesView) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
@@ -118,7 +120,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         final ImageButton favoriteButton = holder.favoriteButton;
         if (Favorites.get().contains(taggedVehicle)) {
             if (isFavoritesView) {
-                favoriteButton.setImageResource(R.drawable.x);
+//                favoriteButton.setImageResource(R.drawable.x);
             } else {
                 favoriteButton
                         .setImageResource(R.drawable.light_rating_important);
@@ -139,7 +141,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                 } else {
                     favorites.add(taggedVehicle);
                     if (isFavoritesView) {
-                        favoriteButton.setImageResource(R.drawable.x);
+//                        favoriteButton.setImageResource(R.drawable.x);
                     } else {
                         favoriteButton
                                 .setImageResource(R.drawable.light_rating_important);

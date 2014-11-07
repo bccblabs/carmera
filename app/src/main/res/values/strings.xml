@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FoShop</string>
+    <string name="app_name">CARmera</string>
     <string name="title_activity_base">Base</string>
     <string name="title_activity_capture">Capture</string>
     <string name="title_activity_favorites">Favorites</string>

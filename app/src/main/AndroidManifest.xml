@@ -45,14 +45,6 @@
 
 
         <activity
-            android:name="veme.cario.com.CARmera.BaseActivity"
-            android:label="@string/title_activity_base"
-            android:uiOptions="splitActionBarWhenNarrow"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-
-        <activity
             android:name="veme.cario.com.CARmera.CaptureActivity"
             android:label="@string/title_activity_capture"
             android:screenOrientation="portrait"
