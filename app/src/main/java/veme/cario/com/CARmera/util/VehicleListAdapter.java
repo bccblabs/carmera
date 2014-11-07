@@ -1,9 +1,9 @@
-package veme.cario.com.foshop.util;
+package veme.cario.com.CARmera.util;
 
 import android.widget.ArrayAdapter;
 
-import veme.cario.com.foshop.model.Favorites;
-import veme.cario.com.foshop.model.TaggedVehicle;
+import veme.cario.com.CARmera.model.Favorites;
+import veme.cario.com.CARmera.model.TaggedVehicle;
 
 import android.content.Context;
 import android.view.LayoutInflater;

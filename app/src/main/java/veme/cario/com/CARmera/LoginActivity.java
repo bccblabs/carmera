@@ -1,4 +1,4 @@
-package veme.cario.com.foshop;
+package veme.cario.com.CARmera;
 
 import android.app.Activity;
 
@@ -6,7 +6,6 @@ import android.app.Activity;
  * Created by bski on 11/5/14.
  */
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;

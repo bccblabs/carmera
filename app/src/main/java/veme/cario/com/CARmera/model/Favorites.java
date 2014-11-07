@@ -1,4 +1,4 @@
-package veme.cario.com.foshop.model;
+package veme.cario.com.CARmera.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;

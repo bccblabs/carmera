@@ -1,8 +1,6 @@
-package veme.cario.com.foshop;
+package veme.cario.com.CARmera;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -21,8 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import veme.cario.com.foshop.model.TaggedVehicle;
-import veme.cario.com.foshop.view.CameraPreview;
+import veme.cario.com.CARmera.model.TaggedVehicle;
+import veme.cario.com.CARmera.view.CameraPreview;
 
 /**
  * Created by bski on 11/5/14.
@@ -87,7 +85,7 @@ public class CaptureActivity extends Activity {
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate (savedBundleInstance);
         camera = getCameraInstance();
-        cameraPreview = new CameraPreview(this, camera);
+        cameraPreview = new CameraPreview(this, savedBundleInstance);
 
         /* Set up location client */
         LocationClient locationCLient = new LocationClient(this, null, null);

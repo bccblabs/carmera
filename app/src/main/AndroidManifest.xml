@@ -1,32 +1,25 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="veme.cario.com.foshop">
+    package="veme.cario.com.CARmera">
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_GSERVICES" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -38,7 +31,6 @@
     <uses-feature android:name="android.hardware.microphone" />
     <uses-feature android:name="android.hardware.location" />
     <uses-feature android:name="android.hardware.sensor.accelerometer" />
-    <uses-feature android:name="android.hardware.sensor.barometer" />
     <uses-feature android:name="android.hardware.sensor.gyroscope" />
     <uses-feature android:name="android.hardware.telephony" />
 
@@ -49,23 +41,19 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:persistent="true"
-        android:theme="@style/AppTheme"
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-    >
+        android:theme="@style/AppTheme">
+
 
         <activity
-            android:name=".BaseActivity"
+            android:name="veme.cario.com.CARmera.BaseActivity"
             android:label="@string/title_activity_base"
             android:uiOptions="splitActionBarWhenNarrow"
             android:screenOrientation="portrait"
             >
-            <meta-data android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
         </activity>
 
         <activity
-            android:name=".CaptureActivity"
+            android:name="veme.cario.com.CARmera.CaptureActivity"
             android:label="@string/title_activity_capture"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
@@ -86,10 +74,10 @@
         </activity>
 
         <activity
-            android:name=".DispatchActivity"
+            android:name="veme.cario.com.CARmera.DispatchActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
 
             <meta-data android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />
@@ -101,51 +89,29 @@
         </activity>
 
         <activity
-            android:name=".FavoritesActivity"
-            android:label="@string/title_activity_favorites"
-            android:uiOptions="splitActionBarWhenNarrow"
-            android:screenOrientation="portrait"
-            >
-            <meta-data android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
-            >
-        </activity>
-
-        <activity
-            android:name=".LoginActivity"
+            android:name="veme.cario.com.CARmera.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:parentActivityName=".WelcomeActivity"
+            android:parentActivityName="veme.cario.com.CARmera.WelcomeActivity"
             >
         </activity>
 
         <activity
-            android:name=".SignUpActivity"
+            android:name="veme.cario.com.CARmera.SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:screenOrientation="portrait"
-            android:parentActivityName=".WelcomeActivity"
+            android:parentActivityName="veme.cario.com.CARmera.WelcomeActivity"
             >
         </activity>
 
         <activity
-            android:name=".TaggedPhotoActivity"
-            android:label="@string/title_activity_tagged"
-            android:uiOptions="splitActionBarWhenNarrow"
-            android:screenOrientation="portrait"
-            >
-            <meta-data android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
-        </activity>
-
-        <activity
-            android:name=".WelcomeActivity"
+            android:name="veme.cario.com.CARmera.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             >
         </activity>
 
-
-
     </application>
+
 
 </manifest>
