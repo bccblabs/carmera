@@ -123,11 +123,11 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 //                favoriteButton.setImageResource(R.drawable.x);
             } else {
                 favoriteButton
-                        .setImageResource(R.drawable.light_rating_important);
+                        .setImageResource(R.drawable.tagged_favorite);
             }
         } else {
             favoriteButton
-                    .setImageResource(R.drawable.light_rating_not_important);
+                    .setImageResource(R.drawable.tagged_favorite);
         }
 
         favoriteButton.setOnClickListener(new OnClickListener() {
@@ -137,14 +137,14 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                     favorites.remove(taggedVehicle);
 
                     favoriteButton
-                            .setImageResource(R.drawable.light_rating_not_important);
+                            .setImageResource(R.drawable.tagged_not_favorite);
                 } else {
                     favorites.add(taggedVehicle);
                     if (isFavoritesView) {
 //                        favoriteButton.setImageResource(R.drawable.x);
                     } else {
                         favoriteButton
-                                .setImageResource(R.drawable.light_rating_important);
+                                .setImageResource(R.drawable.tagged_favorite);
                     }
                 }
                 favorites.save(getContext());
