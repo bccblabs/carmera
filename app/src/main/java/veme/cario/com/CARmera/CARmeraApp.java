@@ -7,7 +7,7 @@ import com.parse.Parse;
 /**
  * Created by bski on 11/5/14.
  */
-public class FoShopApp extends Application {
+public class CARmeraApp extends Application {
 
     @Override
     public void onCreate() {
