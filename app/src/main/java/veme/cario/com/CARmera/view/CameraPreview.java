@@ -82,22 +82,22 @@ public class CameraPreview extends SurfaceView
             Update the imagery in the surface
         */
         Log.d (TAG, "surfaceChanged called.");    
-        if (surfaceHolder.getSurface() == null) {
-            return;
-        }
-
-        try {
-            camera.stopPreview();
-        } catch (Exception e) {
-            Log.d(TAG, "surfaceChanged: Error stopping camera preview - " + e.getMessage());
-        }
-        try {
-            camera.setPreviewDisplay(s_holder);
-            camera.startPreview();
-
-        } catch (Exception e) {
-            Log.d(TAG, "surfaceChanged: Error starting camera preview - " + e.getMessage());
-        }
+//        if (surfaceHolder.getSurface() == null) {
+//            return;
+//        }
+//
+//        try {
+//            camera.stopPreview();
+//        } catch (Exception e) {
+//            Log.d(TAG, "surfaceChanged: Error stopping camera preview - " + e.getMessage());
+//        }
+//        try {
+//            camera.setPreviewDisplay(s_holder);
+//            camera.startPreview();
+//
+//        } catch (Exception e) {
+//            Log.d(TAG, "surfaceChanged: Error starting camera preview - " + e.getMessage());
+//        }
     }
 
 }

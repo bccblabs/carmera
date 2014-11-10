@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.OrientationEventListener;
+import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -90,22 +92,23 @@ public class CaptureActivity extends Activity
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate (savedBundleInstance);
         setContentView(R.layout.activity_capture);
-
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
         camera = getCameraInstance();
 
         /* Set up location, orientation listeners, gesture detector */
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
-        locationRequest.setFastestInterval(LOCATION_UPDATE_CEILING);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationClient = new LocationClient(this, null, null); // cxt, gs cnx cb, gs bad cnx cb
-
-        orientationEventListener = new OrientationEventListener(this) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                CaptureActivity.this.onOrientationChanged(orientation);
-            }
-        };
+//        locationRequest = LocationRequest.create();
+//        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
+//        locationRequest.setFastestInterval(LOCATION_UPDATE_CEILING);
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationClient = new LocationClient(this, null, null); // cxt, gs cnx cb, gs bad cnx cb
+//
+//        orientationEventListener = new OrientationEventListener(this) {
+//            @Override
+//            public void onOrientationChanged(int orientation) {
+//                CaptureActivity.this.onOrientationChanged(orientation);
+//            }
+//        };
 
 //       gestureDetector = new GestureDetector(this, new );
 
@@ -113,7 +116,7 @@ public class CaptureActivity extends Activity
         cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(cameraPreview);
-
+        Log.v(TAG, " - cameraPreview attached.");
         /* Camera initialization */
         Camera.Parameters parameters = camera.getParameters();
         List<String> focusModes = parameters.getSupportedFocusModes();
@@ -121,6 +124,7 @@ public class CaptureActivity extends Activity
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         }
         camera.setParameters(parameters);
+        setCameraDisplayOrientation(camera);
         /* initialize camera listeners */
         shutterCallback = new Camera.ShutterCallback() {
             @Override
@@ -168,7 +172,7 @@ public class CaptureActivity extends Activity
             }
         };
 
-        camera.autoFocus(AFCallback);
+//        camera.autoFocus(AFCallback);
 
         /* Listeners for buttons */
         ImageButton fav_btn = (ImageButton) findViewById(R.id.favorite_button);
@@ -177,57 +181,57 @@ public class CaptureActivity extends Activity
         ImageButton album_upl_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
 
         /* Camera UI initializer */
-        fav_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        tagged_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        settings_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        album_upl_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        fav_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        tagged_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        settings_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        album_upl_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
      }
 
     @Override
     public void onPause () {
-        if (locationClient.isConnected()) {
-        }
-        locationClient.disconnect();
-        orientationEventListener.disable();
-        camera.release();
+//        if (locationClient.isConnected()) {
+//        }
+//        locationClient.disconnect();
+//        orientationEventListener.disable();
+//        camera.release();
         super.onPause();
     }
 
     @Override
     public void onStart () {
         super.onStart();
-        locationClient.connect();
+//        locationClient.connect();
     }
 
     @Override
     public void onStop () {
-        if (locationClient.isConnected()) {
-            stopLocationUpdates();
-        }
-        locationClient.disconnect();
-        orientationEventListener.disable();
-        camera.release();
+//        if (locationClient.isConnected()) {
+//            stopLocationUpdates();
+//        }
+//        locationClient.disconnect();
+//        orientationEventListener.disable();
+//        camera.release();
         super.onStop();
     }
 
@@ -261,6 +265,30 @@ public class CaptureActivity extends Activity
         return bos.toByteArray();
     }
 
+    public void setCameraDisplayOrientation(android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(0, info);
+        int rotation = CaptureActivity.this.getWindowManager().getDefaultDisplay()
+                .getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        camera.setDisplayOrientation(result);
+    }
+
     /* UI helper functions */
     public void onOrientationChanged (int orientation) {
     }
@@ -284,8 +312,8 @@ public class CaptureActivity extends Activity
 
     @Override
     public void onConnected (Bundle savedBundleInst) {
-        curr_location = getLocation();
-        startLocationUpdates();
+//        curr_location = getLocation();
+//        startLocationUpdates();
     }
 
     @Override
@@ -295,24 +323,24 @@ public class CaptureActivity extends Activity
 
     @Override
     public void onConnectionFailed (ConnectionResult con_res) {
-        if (con_res.hasResolution()) {
-            try {
-                con_res.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-            } catch (IntentSender.SendIntentException e) {
-                Log.d (TAG, " - error connecting location services.");
-            }
-        } else {
-            Log.d (TAG, " - resolution not available.");
-        }
+//        if (con_res.hasResolution()) {
+//            try {
+//                con_res.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+//            } catch (IntentSender.SendIntentException e) {
+//                Log.d (TAG, " - error connecting location services.");
+//            }
+//        } else {
+//            Log.d (TAG, " - resolution not available.");
+//        }
     }
 
     private boolean servicesConnected() {
-        int res = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (res == ConnectionResult.SUCCESS) {
-            return true;
-        } else {
+//        int res = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+//        if (res == ConnectionResult.SUCCESS) {
+//            return true;
+//        } else {
             return false;
-        }
+//        }
     }
 
     @Override
