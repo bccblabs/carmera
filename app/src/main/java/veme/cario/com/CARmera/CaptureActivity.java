@@ -41,6 +41,7 @@ import java.util.List;
 
 import veme.cario.com.CARmera.model.TaggedVehicle;
 import veme.cario.com.CARmera.view.CameraPreview;
+import veme.cario.com.CARmera.view.TouchFocusView;
 
 /**
  * Created by bski on 11/5/14.
@@ -52,14 +53,15 @@ public class CaptureActivity extends Activity
 
     /* TODO: background overlay when picture is taken */
     /* TODO: upload->render fragment overlay */
+    /* TODO: implement touch view for auto-focus gesture */
     /* onDestroy will not need override */
     /* onPause, remove orientation listener, close all open frags, tell preview to onPause() */
 
     private final static String TAG = "CAPTURE_ACTIVITY";
-    /* Camera Object */
+    /* Dependent objects */
     private Camera camera;
     private CameraPreview cameraPreview = null;
-
+    private TouchFocusView touchFocusView;
     /* Access user location object */
     private LocationClient locationClient;
     private LocationRequest locationRequest;
@@ -78,6 +80,7 @@ public class CaptureActivity extends Activity
 
     private boolean lockedScreen = false;
 
+    /* Camera callbacks */
     private Camera.ShutterCallback shutterCallback = null ;
     private Camera.PictureCallback pictureCallback = null;
     private Camera.AutoFocusCallback AFCallback = null;
@@ -214,7 +217,7 @@ public class CaptureActivity extends Activity
 //        }
 //        locationClient.disconnect();
 //        orientationEventListener.disable();
-//        camera.release();
+        camera.release();
         super.onPause();
     }
 
@@ -231,7 +234,7 @@ public class CaptureActivity extends Activity
 //        }
 //        locationClient.disconnect();
 //        orientationEventListener.disable();
-//        camera.release();
+        camera.release();
         super.onStop();
     }
 
