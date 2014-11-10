@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.io.IOException;
-
 /**
  * Created by bski on 11/6/14.
  */
@@ -23,7 +21,6 @@ public class CameraPreview extends SurfaceView
             - Ensure that the drawing thread oly touches the underlying Surface while it's 
                 valid. (surfaceCreated -> surfaceDestroyed)
     */
-
     private Context cxt;
     private SurfaceHolder surfaceHolder;
     private Camera camera;

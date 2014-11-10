@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CARmera.iml" filepath="$PROJECT_DIR$/CARmera.iml" />
       <module fileurl="file://$PROJECT_DIR$/FoShop.iml" filepath="$PROJECT_DIR$/FoShop.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" filepath="$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" />
     </modules>
   </component>
 </project>
