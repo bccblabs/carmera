@@ -55,12 +55,12 @@ public class FragmentDialog extends DialogFragment {
                     return specsFragment;
                 }
                 case 1: {
-                    OwnershipCostFragment ownershipCostFragment = new OwnershipCostFragment();
-                    return ownershipCostFragment;
-                }
-                case 2: {
                     DealershipFragment dealershipFragment = new DealershipFragment();
                     return dealershipFragment;
+                }
+                case 2: {
+                    OwnershipCostFragment ownershipCostFragment = new OwnershipCostFragment();
+                    return ownershipCostFragment;
                 }
                 case 3: {
                     RentalFragment rentalFragment = new RentalFragment();
@@ -87,17 +87,17 @@ public class FragmentDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SPECS";
+                    return "SPECS & REVIEWS";
                 case 1:
-                    return "COST TO OWN";
-                case 2:
                     return "NEARBY LISTINGS";
+                case 2:
+                    return "COST TO OWN";
                 case 3:
                     return "RENTALS";
                 case 4:
                     return "NEWS";
                 case 5:
-                    return "RECOMMENDED";
+                    return "SIMILAR VEHICLES";
             }
             return null;
         }

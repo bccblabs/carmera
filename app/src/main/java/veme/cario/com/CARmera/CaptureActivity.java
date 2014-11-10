@@ -2,17 +2,23 @@ package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Application;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.IntentSender;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+
 import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +36,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
+
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
@@ -39,14 +46,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import veme.cario.com.CARmera.fragment.FragmentDialog;
 import veme.cario.com.CARmera.model.TaggedVehicle;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.TouchFocusView;
 
+
+
 /**
  * Created by bski on 11/5/14.
  */
-public class CaptureActivity extends Activity
+public class CaptureActivity extends FragmentActivity
                              implements LocationListener,
                                         GooglePlayServicesClient.ConnectionCallbacks,
                                         GooglePlayServicesClient.OnConnectionFailedListener {
@@ -97,8 +107,12 @@ public class CaptureActivity extends Activity
         setContentView(R.layout.activity_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
-        camera = getCameraInstance();
 
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentDialog dialogOverlay = new FragmentDialog();
+//        dialogOverlay.show(fm, "dialogOverlay");
+
+        camera = getCameraInstance();
         /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();
 //        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
