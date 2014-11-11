@@ -2,6 +2,7 @@ package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
 
+import android.graphics.Paint;
 import android.support.v4.app.FragmentActivity;
 
 
@@ -14,6 +15,7 @@ import android.location.Location;
 import android.location.LocationListener;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
@@ -26,6 +28,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -41,10 +48,15 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
+import veme.cario.com.CARmera.fragment.ImagePreviewDialog;
+import veme.cario.com.CARmera.fragment.VehicleInfoDialog;
+import veme.cario.com.CARmera.model.TaggedVehicle;
 import veme.cario.com.CARmera.view.CVPortraitView;
 
 
@@ -75,7 +87,7 @@ public class CaptureActivity extends FragmentActivity
     private Location curr_location;
     private Location last_location;
     private final static int LOCATION_UPDATE_INTERVAL = 5000;
-    private final static int LOCATION_UPDATE_CEILING = 60*1000;
+    private final static int LOCATION_UPDATE_CEILING = 60 * 1000;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
 
@@ -85,54 +97,50 @@ public class CaptureActivity extends FragmentActivity
     private boolean lockedScreen = false;
 
     /* Camera callbacks */
-    private Camera.ShutterCallback shutterCallback = null ;
+    private Camera.ShutterCallback shutterCallback = null;
     private Camera.PictureCallback pictureCallback = null;
     private Camera.AutoFocusCallback AFCallback = null;
+    private boolean inPreview = false;
 
     /* OpenCV objects */
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
+                case LoaderCallbackInterface.SUCCESS: {
                     Log.i(TAG, "OpenCV loaded successfully");
                     cvPreview.enableView();
                     cvPreview.setOnTouchListener(CaptureActivity.this);
-                } break;
-                default:
-                {
+                }
+                break;
+                default: {
                     super.onManagerConnected(status);
-                } break;
+                }
+                break;
             }
         }
     };
-    private boolean              mIsColorSelected = false;
-    private Mat                  mRgba;
-    private Scalar               mBlobColorRgba;
-    private Scalar               mBlobColorHsv;
-    private ColorBlobDetector    mDetector;
-    private Mat                  mSpectrum;
-    private Size                 SPECTRUM_SIZE;
-    private Scalar               CONTOUR_COLOR;
-
-
+    private boolean mIsColorSelected = false;
+    private Mat mRgba;
+    private Scalar mBlobColorRgba;
+    private Scalar mBlobColorHsv;
+    private ColorBlobDetector mDetector;
+    private Mat mSpectrum;
+    private Size SPECTRUM_SIZE;
+    private Scalar CONTOUR_COLOR;
 
 
     /* Activity lifecycle */
     @Override
-    public void onCreate (Bundle savedBundleInstance) {
-        super.onCreate (savedBundleInstance);
+    public void onCreate(Bundle savedBundleInstance) {
+        super.onCreate(savedBundleInstance);
 
         setContentView(R.layout.activity_cv_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentDialog dialogOverlay = new FragmentDialog();
-//        dialogOverlay.show(fm, "dialogOverlay");
-
-        /* Set up location, orientation listeners, gesture detector */
+//
+//        /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();
 //        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
 //        locationRequest.setFastestInterval(LOCATION_UPDATE_CEILING);
@@ -145,55 +153,13 @@ public class CaptureActivity extends FragmentActivity
 //                CaptureActivity.this.onOrientationChanged(orientation);
 //            }
 //        };
-
+//
 
         /* Draw CV layout */
         cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
         cvPreview.setVisibility(SurfaceView.VISIBLE);
         cvPreview.setCvCameraViewListener(this);
 
-
-//        pictureCallback = new Camera.PictureCallback() {
-//
-//            @Override
-//            public void onPictureTaken(byte[] data, Camera camera) {
-//
-//            /* send data to parse, camFind, and drawing stuff */
-//            /*  TODO: progress update while uploading
-//                TODO: marsh up recognition request
-//                TODO: marsh up Edmund's request
-//                TODO: put all in an overlay
-//                TODO: put all in asyncTasks
-//             */
-//                TaggedVehicle taggedVehicle = new TaggedVehicle();
-//                ParseUser curr_user = ParseUser.getCurrentUser();
-//
-//                Location location = (curr_location == null) ? last_location : curr_location;
-//                ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-//                SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
-//                String timestamp = s.format(new Date());
-//
-//            /* wire up the new taggedVehicle */
-//                taggedVehicle.setFavorite(false);
-//                taggedVehicle.setLocation(geo_point);
-//                ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(data));
-//                taggedVehicle.setTagPhoto(photo_file);
-//
-//            /* save them all to Parse! */
-//                photo_file.saveInBackground();
-//                curr_user.getRelation("taggedVehicles").add(taggedVehicle);
-//                curr_user.saveInBackground();
-//            }
-//        };
-//
-//        AFCallback = new Camera.AutoFocusCallback() {
-//            @Override
-//            public void onAutoFocus(boolean success, Camera camera) {
-//                camera.takePicture(shutterCallback, null, pictureCallback);
-//            }
-//        };
-
-//        camera.autoFocus(AFCallback);
 
         /* Listeners for buttons */
         ImageButton fav_btn = (ImageButton) findViewById(R.id.favorite_button);
@@ -227,10 +193,10 @@ public class CaptureActivity extends FragmentActivity
 //            }
 //        });
 
-     }
+    }
 
     @Override
-    public void onDestroy () {
+    public void onDestroy() {
         if (cvPreview != null)
             cvPreview.disableView();
         super.onPause();
@@ -238,7 +204,7 @@ public class CaptureActivity extends FragmentActivity
     }
 
     @Override
-    public void onPause () {
+    public void onPause() {
 //        if (locationClient.isConnected()) {
 //        }
 //        locationClient.disconnect();
@@ -250,19 +216,19 @@ public class CaptureActivity extends FragmentActivity
     }
 
     @Override
-    public void onResume () {
+    public void onResume() {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, loaderCallback);
     }
 
     @Override
-    public void onStart () {
+    public void onStart() {
         super.onStart();
 //        locationClient.connect();
     }
 
     @Override
-    public void onStop () {
+    public void onStop() {
 //        if (locationClient.isConnected()) {
 //            stopLocationUpdates();
 //        }
@@ -292,9 +258,8 @@ public class CaptureActivity extends FragmentActivity
         return bos.toByteArray();
     }
 
-
     /* UI helper functions */
-    public void onOrientationChanged (int orientation) {
+    public void onOrientationChanged(int orientation) {
     }
 
     /* Google location services functions */
@@ -310,23 +275,23 @@ public class CaptureActivity extends FragmentActivity
 //       locationClient.requestLocationUpdates(locationRequest, this);
     }
 
-    public void stopLocationUpdates () {
+    public void stopLocationUpdates() {
 //       locationClient.removeLocationUpdates(this);
     }
 
     @Override
-    public void onConnected (Bundle savedBundleInst) {
+    public void onConnected(Bundle savedBundleInst) {
 //        curr_location = getLocation();
 //        startLocationUpdates();
     }
 
     @Override
-    public void onDisconnected () {
-        Log.d (TAG, " - service disconnected.");
+    public void onDisconnected() {
+        Log.d(TAG, " - service disconnected.");
     }
 
     @Override
-    public void onConnectionFailed (ConnectionResult con_res) {
+    public void onConnectionFailed(ConnectionResult con_res) {
 //        if (con_res.hasResolution()) {
 //            try {
 //                con_res.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
@@ -343,31 +308,29 @@ public class CaptureActivity extends FragmentActivity
 //        if (res == ConnectionResult.SUCCESS) {
 //            return true;
 //        } else {
-            return false;
+        return false;
 //        }
     }
 
     @Override
-    public void onProviderEnabled (String provider) {
+    public void onProviderEnabled(String provider) {
 
     }
 
     @Override
-    public void onLocationChanged (Location location) {
+    public void onLocationChanged(Location location) {
 
     }
 
     @Override
-    public void onStatusChanged (String provider, int status, Bundle extras) {
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
     @Override
-    public void onProviderDisabled (String provider) {
+    public void onProviderDisabled(String provider) {
 
     }
-
-
 
     /* OpenCV functions */
     public void onCameraViewStarted(int width, int height) {
@@ -377,7 +340,7 @@ public class CaptureActivity extends FragmentActivity
         mBlobColorRgba = new Scalar(255);
         mBlobColorHsv = new Scalar(255);
         SPECTRUM_SIZE = new Size(200, 64);
-        CONTOUR_COLOR = new Scalar(255,255,0,255);
+        CONTOUR_COLOR = new Scalar(255, 255, 0, 255);
     }
 
     public void onCameraViewStopped() {
@@ -390,76 +353,155 @@ public class CaptureActivity extends FragmentActivity
         if (mIsColorSelected) {
             mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
-            Log.e(TAG, "Contours count: " + contours.size());
-//            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
 
             // fill a polygon instead of drawing contours
             for (MatOfPoint contour : contours) {
                 Rect boundingRect = Imgproc.boundingRect(contour);
-                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(),CONTOUR_COLOR, 5);
+                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(), CONTOUR_COLOR, 5);
             }
         }
 
         return mRgba;
     }
 
+    private void saveToParse(byte[] raw_data) {
+        TaggedVehicle taggedVehicle = new TaggedVehicle();
+        final ParseUser curr_user = ParseUser.getCurrentUser();
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String timestamp = s.format(new Date());
+        Location location = (curr_location == null) ? last_location : curr_location;
+        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+        taggedVehicle.setLocation(geo_point);
+        taggedVehicle.setFavorite(false);
+        ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
+        taggedVehicle.setTagPhoto(photo_file);
+        photo_file.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Image saved...",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                } else {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Parse save image error",
+                            Toast.LENGTH_SHORT);
+                    curr_user.saveEventually();
+                    toast.show();
+                }
+            }
+        });
+        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
+        curr_user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "TaggedV saved, waiting image rec...",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                } else {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Parse save taggedV error",
+                            Toast.LENGTH_SHORT);
+                    curr_user.saveEventually();
+                    toast.show();
+                }
+            }
+        });
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.i(TAG,"onTouch event");
-//        cvPreview.takePicture();
+        if (mIsColorSelected == false) {
 
-        int cols = mRgba.cols();
-        int rows = mRgba.rows();
+            if (inPreview == false) {
+                Log.i(TAG, "starting preview");
+                Camera mCamera = cvPreview.getCVCamera();
+                mCamera.startPreview();
+                inPreview = true;
+            }
 
-        int xOffset = (cvPreview.getWidth() - cols) / 2;
-        int yOffset = (cvPreview.getHeight() - rows) / 2;
+            Log.i(TAG, "ON_TOUCH COLOR SELECT EVENT");
 
-        int x = (int)event.getX() - xOffset;
-        int y = (int)event.getY() - yOffset;
+            int cols = mRgba.cols();
+            int rows = mRgba.rows();
 
-        Log.i(TAG, "Touch image coordinates: (" + x + ", " + y + ")");
+            int xOffset = (cvPreview.getWidth() - cols) / 2;
+            int yOffset = (cvPreview.getHeight() - rows) / 2;
 
-        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
+            int x = (int) event.getX() - xOffset;
+            int y = (int) event.getY() - yOffset;
 
-        Rect touchedRect = new Rect();
+            Log.i(TAG, "Touch image coordinates: (" + x + ", " + y + ")");
 
-        touchedRect.x = (x>4) ? x-4 : 0;
-        touchedRect.y = (y>4) ? y-4 : 0;
+            if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
 
-        touchedRect.width = (x+4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
-        touchedRect.height = (y+4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
+            Rect touchedRect = new Rect();
 
-        Mat touchedRegionRgba = mRgba.submat(touchedRect);
+            touchedRect.x = (x > 4) ? x - 4 : 0;
+            touchedRect.y = (y > 4) ? y - 4 : 0;
 
-        Mat touchedRegionHsv = new Mat();
+            touchedRect.width = (x + 4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
+            touchedRect.height = (y + 4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
 
-        // CONVERT THE COLOR OF TOUCH REGION FROM RGBA TO HSV
-        Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
+            Mat touchedRegionRgba = mRgba.submat(touchedRect);
 
-        // Calculate average color of touched region
-        mBlobColorHsv = Core.sumElems(touchedRegionHsv);
+            Mat touchedRegionHsv = new Mat();
 
-        // mBlobColorHsv/Rgba: Scalar of colors
-        int pointCount = touchedRect.width*touchedRect.height;
-        for (int i = 0; i < mBlobColorHsv.val.length; i++)
-            mBlobColorHsv.val[i] /= pointCount;
+            // CONVERT THE COLOR OF TOUCH REGION FROM RGBA TO HSV
+            Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
 
-        mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
+            // Calculate average color of touched region
+            mBlobColorHsv = Core.sumElems(touchedRegionHsv);
 
-        Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
-                ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
+            // mBlobColorHsv/Rgba: Scalar of colors
+            int pointCount = touchedRect.width * touchedRect.height;
+            for (int i = 0; i < mBlobColorHsv.val.length; i++)
+                mBlobColorHsv.val[i] /= pointCount;
 
-        // mDetector: Color Detector
-        mDetector.setHsvColor(mBlobColorHsv);
+            mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
 
-        // Resize the Detector's spectrum to mSpectrum as a 200x64
-        Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE);
+            Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
+                    ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
 
-        mIsColorSelected = true;
+            // mDetector: Color Detector
+            mDetector.setHsvColor(mBlobColorHsv);
 
-        touchedRegionRgba.release();
-        touchedRegionHsv.release();
+            // Resize the Detector's spectrum to mSpectrum as a 200x64
+            Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE);
 
+            mIsColorSelected = true;
+            touchedRegionRgba.release();
+            touchedRegionHsv.release();
+
+        } else {
+            Log.i(TAG, "Taking picture");
+
+            final Camera mCamera = cvPreview.getCVCamera();
+            mIsColorSelected = inPreview = false;
+            mCamera.stopPreview();
+            FragmentManager fm = getSupportFragmentManager();
+            ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
+            previewOverlay.show(fm, "previewOverlay");
+
+            /* should have listeners for dismiss, etc. */
+
+//            mCamera.stopPreview();
+//            mCamera.takePicture(null, null, new Camera.PictureCallback() {
+//                @Override
+//                public void onPictureTaken(byte[] data, Camera camera) {
+//                    FragmentManager fm = getSupportFragmentManager();
+//                    ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
+//                    previewOverlay.show(fm, "previewOverlay");
+//                    mCamera.startPreview();
+//                }
+//            });
+
+        }
         return false;
     }
 
@@ -470,5 +512,6 @@ public class CaptureActivity extends FragmentActivity
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
+
 
 }

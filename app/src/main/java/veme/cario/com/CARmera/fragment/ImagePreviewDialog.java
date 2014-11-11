@@ -13,18 +13,18 @@ import android.view.Window;
 
 import veme.cario.com.CARmera.R;
 
-public class FragmentDialog extends DialogFragment {
+public class ImagePreviewDialog extends DialogFragment {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
-    private final static int NUM_FRAG = 6;
+    private final static int NUM_FRAG = 2;
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT);
         return dialog;
     }
 
@@ -51,28 +51,12 @@ public class FragmentDialog extends DialogFragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: {
-                    SpecsFragment specsFragment = new SpecsFragment();
-                    return specsFragment;
+                    ImagePreviewFragment previewFragment = new ImagePreviewFragment();
+                    return previewFragment;
                 }
                 case 1: {
-                    DealershipFragment dealershipFragment = new DealershipFragment();
-                    return dealershipFragment;
-                }
-                case 2: {
-                    OwnershipCostFragment ownershipCostFragment = new OwnershipCostFragment();
-                    return ownershipCostFragment;
-                }
-                case 3: {
-                    RentalFragment rentalFragment = new RentalFragment();
-                    return rentalFragment;
-                }
-                case 4: {
-                    NewsFragment newsFragment = new NewsFragment();
-                    return newsFragment;
-                }
-                case 5: {
-                    RecommendedFragment recommendedFragment = new RecommendedFragment();
-                    return recommendedFragment;
+                    ProgressFragment progressFragment = new ProgressFragment();
+                    return progressFragment;
                 }
             }
             return null;
@@ -87,17 +71,9 @@ public class FragmentDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SPECS & REVIEWS";
+                    return "IMAGE PREVIEW";
                 case 1:
-                    return "NEARBY LISTINGS";
-                case 2:
-                    return "COST TO OWN";
-                case 3:
-                    return "RENTALS";
-                case 4:
-                    return "NEWS";
-                case 5:
-                    return "SIMILAR VEHICLES";
+                    return "PROGRESS";
             }
             return null;
         }

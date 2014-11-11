@@ -18,7 +18,9 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
 
-public class CVPortraitView extends CameraBridgeViewBase implements Camera.PreviewCallback {
+
+public class CVPortraitView extends CameraBridgeViewBase
+                            implements Camera.PreviewCallback {
 
     private static final int MAGIC_TEXTURE_ID = 10;
     private static final String TAG = "CVPortraitView";
@@ -30,9 +32,10 @@ public class CVPortraitView extends CameraBridgeViewBase implements Camera.Previ
     private boolean mStopThread;
 
     protected Camera mCamera;
+    protected int mCameraId;
     protected JavaCameraFrame[] mCameraFrame;
     private SurfaceTexture mSurfaceTexture;
-    private int mCameraId;
+
 
     public static class JavaCameraSizeAccessor implements ListItemAccessor {
 
@@ -233,6 +236,21 @@ public class CVPortraitView extends CameraBridgeViewBase implements Camera.Previ
             mCamera.addCallbackBuffer(mBuffer);
     }
 
+    @Override
+    protected Size calculateCameraFrameSize(List<?> supportedSizes, ListItemAccessor accessor, int surfaceWidth, int surfaceHeight) {
+        int calcWidth = 0;
+        int calcHeight = 0;
+        for (Object size : supportedSizes) {
+            int width = accessor.getWidth(size);
+            int height = accessor.getHeight(size);
+            if (width >= calcWidth && height >= calcHeight) {
+                calcWidth = (int) width;
+                calcHeight = (int) height;
+            }
+        }
+        return new Size(calcWidth, calcHeight);
+    }
+
     private class JavaCameraFrame implements CvCameraViewFrame {
         private Mat mYuvFrameData;
         private Mat mRgba;
@@ -294,18 +312,8 @@ public class CVPortraitView extends CameraBridgeViewBase implements Camera.Previ
         }
     }
 
-    @Override
-    protected Size calculateCameraFrameSize(List<?> supportedSizes, ListItemAccessor accessor, int surfaceWidth, int surfaceHeight) {
-        int calcWidth = 0;
-        int calcHeight = 0;
-        for (Object size : supportedSizes) {
-            int width = accessor.getWidth(size);
-            int height = accessor.getHeight(size);
-                if (width >= calcWidth && height >= calcHeight) {
-                    calcWidth = (int) width;
-                    calcHeight = (int) height;
-                }
-        }
-        return new Size(calcWidth, calcHeight);
+    public Camera getCVCamera() {
+        return mCamera;
     }
+
 }
