@@ -41,6 +41,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
@@ -376,7 +377,7 @@ public class CaptureActivity extends FragmentActivity
         mBlobColorRgba = new Scalar(255);
         mBlobColorHsv = new Scalar(255);
         SPECTRUM_SIZE = new Size(200, 64);
-        CONTOUR_COLOR = new Scalar(255,0,0,255);
+        CONTOUR_COLOR = new Scalar(255,255,0,255);
     }
 
     public void onCameraViewStopped() {
@@ -390,13 +391,13 @@ public class CaptureActivity extends FragmentActivity
             mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
             Log.e(TAG, "Contours count: " + contours.size());
-            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
+//            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
 
-            Mat colorLabel = mRgba.submat(4, 68, 4, 68);
-            colorLabel.setTo(mBlobColorRgba);
-
-            Mat spectrumLabel = mRgba.submat(4, 4 + mSpectrum.rows(), 70, 70 + mSpectrum.cols());
-            mSpectrum.copyTo(spectrumLabel);
+            // fill a polygon instead of drawing contours
+            for (MatOfPoint contour : contours) {
+                Rect boundingRect = Imgproc.boundingRect(contour);
+                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(),CONTOUR_COLOR, 5);
+            }
         }
 
         return mRgba;
@@ -431,10 +432,14 @@ public class CaptureActivity extends FragmentActivity
         Mat touchedRegionRgba = mRgba.submat(touchedRect);
 
         Mat touchedRegionHsv = new Mat();
+
+        // CONVERT THE COLOR OF TOUCH REGION FROM RGBA TO HSV
         Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
 
         // Calculate average color of touched region
         mBlobColorHsv = Core.sumElems(touchedRegionHsv);
+
+        // mBlobColorHsv/Rgba: Scalar of colors
         int pointCount = touchedRect.width*touchedRect.height;
         for (int i = 0; i < mBlobColorHsv.val.length; i++)
             mBlobColorHsv.val[i] /= pointCount;
@@ -444,8 +449,10 @@ public class CaptureActivity extends FragmentActivity
         Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
                 ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
 
+        // mDetector: Color Detector
         mDetector.setHsvColor(mBlobColorHsv);
 
+        // Resize the Detector's spectrum to mSpectrum as a 200x64
         Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE);
 
         mIsColorSelected = true;
