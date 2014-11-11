@@ -1,13 +1,8 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
-import android.app.Activity;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 
 
 import android.graphics.Bitmap;
@@ -17,40 +12,31 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.OrientationEventListener;
-import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 
-import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
-import veme.cario.com.CARmera.fragment.FragmentDialog;
-import veme.cario.com.CARmera.model.TaggedVehicle;
-import veme.cario.com.CARmera.view.CameraPreview;
-import veme.cario.com.CARmera.view.TouchFocusView;
-
+import veme.cario.com.CARmera.view.CVPortraitView;
+import veme.cario.com.CARmera.view.CVPreview;
 
 
 /**
@@ -59,7 +45,9 @@ import veme.cario.com.CARmera.view.TouchFocusView;
 public class CaptureActivity extends FragmentActivity
                              implements LocationListener,
                                         GooglePlayServicesClient.ConnectionCallbacks,
-                                        GooglePlayServicesClient.OnConnectionFailedListener {
+                                        GooglePlayServicesClient.OnConnectionFailedListener,
+                                        CameraBridgeViewBase.CvCameraViewListener2,
+                                        View.OnTouchListener {
 
     /* TODO: background overlay when picture is taken */
     /* TODO: upload->render fragment overlay */
@@ -68,10 +56,10 @@ public class CaptureActivity extends FragmentActivity
     /* onPause, remove orientation listener, close all open frags, tell preview to onPause() */
 
     private final static String TAG = "CAPTURE_ACTIVITY";
+
     /* Dependent objects */
-    private Camera camera;
-    private CameraPreview cameraPreview = null;
-    private TouchFocusView touchFocusView;
+    private CVPortraitView cvPreview;
+
     /* Access user location object */
     private LocationClient locationClient;
     private LocationRequest locationRequest;
@@ -85,9 +73,6 @@ public class CaptureActivity extends FragmentActivity
     /* On orientation change, pause->redraw */
     private OrientationEventListener orientationEventListener;
 
-    /* Gesture manager, not sure if we really need it */
-    private GestureDetector gestureDetector;
-
     private boolean lockedScreen = false;
 
     /* Camera callbacks */
@@ -95,16 +80,35 @@ public class CaptureActivity extends FragmentActivity
     private Camera.PictureCallback pictureCallback = null;
     private Camera.AutoFocusCallback AFCallback = null;
 
+    /* OpenCV functions */
 
-    /* not sure if we really need it, seem like used for lock screen */
-    private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
-    }
+    private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.i(TAG, "OpenCV loaded successfully");
+                    cvPreview.enableView();
+                    cvPreview.setOnTouchListener(CaptureActivity.this);
+                } break;
+                default:
+                {
+                    super.onManagerConnected(status);
+                } break;
+            }
+        }
+    };
+
+
+
 
     /* Activity lifecycle */
     @Override
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate (savedBundleInstance);
-        setContentView(R.layout.activity_capture);
+
+        setContentView(R.layout.activity_cv_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
@@ -112,7 +116,6 @@ public class CaptureActivity extends FragmentActivity
 //        FragmentDialog dialogOverlay = new FragmentDialog();
 //        dialogOverlay.show(fm, "dialogOverlay");
 
-        camera = getCameraInstance();
         /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();
 //        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
@@ -127,67 +130,52 @@ public class CaptureActivity extends FragmentActivity
 //            }
 //        };
 
-//       gestureDetector = new GestureDetector(this, new );
 
-        /* Draw layout */
-        cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-        preview.addView(cameraPreview);
-        Log.v(TAG, " - cameraPreview attached.");
-        /* Camera initialization */
-        Camera.Parameters parameters = camera.getParameters();
-        List<String> focusModes = parameters.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        }
-        camera.setParameters(parameters);
-        setCameraDisplayOrientation(camera);
-        /* initialize camera listeners */
-        shutterCallback = new Camera.ShutterCallback() {
-            @Override
-            public void onShutter() {
-            /* play a sound, draw animation, etc */
-            }
-        };
-        pictureCallback = new Camera.PictureCallback() {
+        /* Draw CV layout */
+        cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
+        cvPreview.setVisibility(SurfaceView.VISIBLE);
+        cvPreview.setCvCameraViewListener(this);
 
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
 
-            /* send data to parse, camFind, and drawing stuff */
-            /*  TODO: progress update while uploading
-                TODO: marsh up recognition request
-                TODO: marsh up Edmund's request
-                TODO: put all in an overlay
-                TODO: put all in asyncTasks
-             */
-                TaggedVehicle taggedVehicle = new TaggedVehicle();
-                ParseUser curr_user = ParseUser.getCurrentUser();
-
-                Location location = (curr_location == null) ? last_location : curr_location;
-                ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-                SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
-                String timestamp = s.format(new Date());
-
-            /* wire up the new taggedVehicle */
-                taggedVehicle.setFavorite(false);
-                taggedVehicle.setLocation(geo_point);
-                ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(data));
-                taggedVehicle.setTagPhoto(photo_file);
-
-            /* save them all to Parse! */
-                photo_file.saveInBackground();
-                curr_user.getRelation("taggedVehicles").add(taggedVehicle);
-                curr_user.saveInBackground();
-            }
-        };
-
-        AFCallback = new Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-                camera.takePicture(shutterCallback, null, pictureCallback);
-            }
-        };
+//        pictureCallback = new Camera.PictureCallback() {
+//
+//            @Override
+//            public void onPictureTaken(byte[] data, Camera camera) {
+//
+//            /* send data to parse, camFind, and drawing stuff */
+//            /*  TODO: progress update while uploading
+//                TODO: marsh up recognition request
+//                TODO: marsh up Edmund's request
+//                TODO: put all in an overlay
+//                TODO: put all in asyncTasks
+//             */
+//                TaggedVehicle taggedVehicle = new TaggedVehicle();
+//                ParseUser curr_user = ParseUser.getCurrentUser();
+//
+//                Location location = (curr_location == null) ? last_location : curr_location;
+//                ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+//                SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+//                String timestamp = s.format(new Date());
+//
+//            /* wire up the new taggedVehicle */
+//                taggedVehicle.setFavorite(false);
+//                taggedVehicle.setLocation(geo_point);
+//                ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(data));
+//                taggedVehicle.setTagPhoto(photo_file);
+//
+//            /* save them all to Parse! */
+//                photo_file.saveInBackground();
+//                curr_user.getRelation("taggedVehicles").add(taggedVehicle);
+//                curr_user.saveInBackground();
+//            }
+//        };
+//
+//        AFCallback = new Camera.AutoFocusCallback() {
+//            @Override
+//            public void onAutoFocus(boolean success, Camera camera) {
+//                camera.takePicture(shutterCallback, null, pictureCallback);
+//            }
+//        };
 
 //        camera.autoFocus(AFCallback);
 
@@ -226,13 +214,29 @@ public class CaptureActivity extends FragmentActivity
      }
 
     @Override
+    public void onDestroy () {
+        if (cvPreview != null)
+            cvPreview.disableView();
+        super.onPause();
+
+    }
+
+    @Override
     public void onPause () {
 //        if (locationClient.isConnected()) {
 //        }
 //        locationClient.disconnect();
 //        orientationEventListener.disable();
-        camera.release();
+//        camera.release();
+        if (cvPreview != null)
+            cvPreview.disableView();
         super.onPause();
+    }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, loaderCallback);
     }
 
     @Override
@@ -248,20 +252,10 @@ public class CaptureActivity extends FragmentActivity
 //        }
 //        locationClient.disconnect();
 //        orientationEventListener.disable();
-        camera.release();
+//        camera.release();
+        if (cvPreview != null)
+            cvPreview.disableView();
         super.onStop();
-    }
-
-
-    /* Camera helper functions */
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        } catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
     }
 
     private byte[] getScaledPhoto(byte[] raw_data) {
@@ -282,29 +276,6 @@ public class CaptureActivity extends FragmentActivity
         return bos.toByteArray();
     }
 
-    public void setCameraDisplayOrientation(android.hardware.Camera camera) {
-        android.hardware.Camera.CameraInfo info =
-                new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(0, info);
-        int rotation = CaptureActivity.this.getWindowManager().getDefaultDisplay()
-                .getRotation();
-        int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0: degrees = 0; break;
-            case Surface.ROTATION_90: degrees = 90; break;
-            case Surface.ROTATION_180: degrees = 180; break;
-            case Surface.ROTATION_270: degrees = 270; break;
-        }
-
-        int result;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            result = (info.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
-        } else {  // back-facing
-            result = (info.orientation - degrees + 360) % 360;
-        }
-        camera.setDisplayOrientation(result);
-    }
 
     /* UI helper functions */
     public void onOrientationChanged (int orientation) {
@@ -378,6 +349,27 @@ public class CaptureActivity extends FragmentActivity
     @Override
     public void onProviderDisabled (String provider) {
 
+    }
+
+
+
+    /* OpenCV functions */
+    public void onCameraViewStarted(int width, int height) {
+    }
+
+    public void onCameraViewStopped() {
+    }
+
+    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        return inputFrame.rgba();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.i(TAG,"onTouch event");
+//        cvPreview.takePicture();
+        Toast.makeText(this, "take pic!", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
 }

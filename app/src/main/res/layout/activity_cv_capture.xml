@@ -6,16 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".CaptureActivity">
 
-    <FrameLayout
-        android:id="@+id/camera_preview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-    />
-
-    <!--<veme.cario.com.CARmera.view.TouchFocusView-->
-        <!--android:id="@+id/touch_focus_view"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent" />-->
+    <veme.cario.com.CARmera.view.CVPortraitView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/activity_capture_cv_preview" />
 
     <ImageButton
         android:id="@+id/favorites_btn"
@@ -23,10 +18,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/green_circle"
         android:src="@drawable/ic_action_star"
-        android:layout_alignRight="@id/camera_preview"
+        android:layout_alignRight="@id/activity_capture_cv_preview"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="20dp"
-    />
+        />
 
     <ImageButton
         android:id="@+id/tagged_photo_btn"
@@ -35,10 +30,10 @@
         android:background="@drawable/green_circle"
         android:src="@drawable/ic_action_storage"
         android:layout_alignParentBottom="@id/favorites_btn"
-        android:layout_alignRight="@id/camera_preview"
+        android:layout_alignRight="@id/activity_capture_cv_preview"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="90dp"
-    />
+        />
 
     <ImageButton
         android:id="@+id/settings_btn"
@@ -47,10 +42,10 @@
         android:background="@drawable/green_circle"
         android:src="@drawable/ic_settings"
         android:layout_alignParentBottom="@id/favorites_btn"
-        android:layout_alignRight="@id/camera_preview"
+        android:layout_alignRight="@id/activity_capture_cv_preview"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="160dp"
-    />
+        />
 
     <ImageButton
         android:id="@+id/upload_from_album_btn"
@@ -59,9 +54,9 @@
         android:background="@drawable/green_circle"
         android:src="@drawable/ic_action_upload"
         android:layout_alignParentBottom="@id/favorites_btn"
-        android:layout_alignRight="@id/camera_preview"
+        android:layout_alignRight="@id/activity_capture_cv_preview"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="230dp"
-    />
+        />
 
 </RelativeLayout>
