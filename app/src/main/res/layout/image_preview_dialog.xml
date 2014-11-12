@@ -5,4 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <ImageView
+        android:id="@+id/animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription=""
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/discard_photo_btn"
+            android:text="Discard Photo"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+        />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload_btn"
+            android:text="Upload Image"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -2,7 +2,6 @@ package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
 
-import android.graphics.Paint;
 import android.support.v4.app.FragmentActivity;
 
 
@@ -49,13 +48,10 @@ import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
-import veme.cario.com.CARmera.fragment.ImagePreviewDialog;
-import veme.cario.com.CARmera.fragment.VehicleInfoDialog;
 import veme.cario.com.CARmera.model.TaggedVehicle;
 import veme.cario.com.CARmera.view.CVPortraitView;
 
@@ -484,22 +480,15 @@ public class CaptureActivity extends FragmentActivity
             final Camera mCamera = cvPreview.getCVCamera();
             mIsColorSelected = inPreview = false;
             mCamera.stopPreview();
-            FragmentManager fm = getSupportFragmentManager();
-            ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
-            previewOverlay.show(fm, "previewOverlay");
-
-            /* should have listeners for dismiss, etc. */
-
-//            mCamera.stopPreview();
-//            mCamera.takePicture(null, null, new Camera.PictureCallback() {
-//                @Override
-//                public void onPictureTaken(byte[] data, Camera camera) {
-//                    FragmentManager fm = getSupportFragmentManager();
-//                    ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
-//                    previewOverlay.show(fm, "previewOverlay");
-//                    mCamera.startPreview();
-//                }
-//            });
+            mCamera.takePicture(null, null, new Camera.PictureCallback() {
+                @Override
+                public void onPictureTaken(byte[] data, Camera camera) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
+                    previewOverlay.show(fm, "previewOverlay");
+                    mCamera.startPreview();
+                }
+            });
 
         }
         return false;
