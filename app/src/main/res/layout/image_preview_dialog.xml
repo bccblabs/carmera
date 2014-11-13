@@ -7,14 +7,19 @@
 
 
     <ImageView
-        android:id="@+id/animation"
+        android:id="@+id/preview_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        />
+    />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/status_view"
+    />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -34,6 +39,6 @@
             android:id="@+id/upload_btn"
             android:text="Upload Image"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            />
+        />
     </LinearLayout>
 </LinearLayout>

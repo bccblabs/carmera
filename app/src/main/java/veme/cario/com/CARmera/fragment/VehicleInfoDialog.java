@@ -67,8 +67,8 @@ public class VehicleInfoDialog extends DialogFragment {
                     return rentalFragment;
                 }
                 case 4: {
-                    NewsFragment newsFragment = new NewsFragment();
-                    return newsFragment;
+                    ReviewFragment reviewFragment = new ReviewFragment();
+                    return reviewFragment;
                 }
                 case 5: {
                     RecommendedFragment recommendedFragment = new RecommendedFragment();
