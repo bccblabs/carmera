@@ -27,6 +27,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
+import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
+import com.octo.android.robospice.SpiceManager;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -53,7 +55,9 @@ import java.util.List;
 
 import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
 import veme.cario.com.CARmera.model.TaggedVehicle;
+import veme.cario.com.CARmera.model.VehicleBaseInfo;
 import veme.cario.com.CARmera.view.CVPortraitView;
+import veme.cario.com.CARmera.view.ImagePreviewDialog;
 
 
 /**
@@ -125,12 +129,16 @@ public class CaptureActivity extends FragmentActivity
     private Size SPECTRUM_SIZE;
     private Scalar CONTOUR_COLOR;
 
-
+    /* SpiceManager Class */
+    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+    private SpiceManager spiceManager = new SpiceManager(Jackson)
+    private String last_request;
+    private VehicleBaseInfo vehicleBaseInfo;
     /* Activity lifecycle */
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-
+        vehicleBaseInfo.
         setContentView(R.layout.activity_cv_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
@@ -489,7 +497,6 @@ public class CaptureActivity extends FragmentActivity
                     mCamera.startPreview();
                 }
             });
-
         }
         return false;
     }
