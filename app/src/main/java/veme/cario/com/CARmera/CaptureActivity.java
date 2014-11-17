@@ -43,6 +43,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -100,7 +101,7 @@ public class CaptureActivity extends FragmentActivity
     private Camera.ShutterCallback shutterCallback = null;
     private Camera.PictureCallback pictureCallback = null;
     private Camera.AutoFocusCallback AFCallback = null;
-    private boolean inPreview = false;
+    private boolean mTouchInBound = false;
 
     /* OpenCV objects */
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
@@ -120,6 +121,7 @@ public class CaptureActivity extends FragmentActivity
             }
         }
     };
+    private Camera mCamera = null;
     private boolean mIsColorSelected = false;
     private Mat mRgba;
     private Scalar mBlobColorRgba;
@@ -135,10 +137,10 @@ public class CaptureActivity extends FragmentActivity
     private String last_request;
     private VehicleBaseInfo vehicleBaseInfo;
     /* Activity lifecycle */
+
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-        vehicleBaseInfo.
         setContentView(R.layout.activity_cv_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
@@ -160,6 +162,7 @@ public class CaptureActivity extends FragmentActivity
 //
 
         /* Draw CV layout */
+        mCamera = cvPreview.getCVCamera();
         cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
         cvPreview.setVisibility(SurfaceView.VISIBLE);
         cvPreview.setCvCameraViewListener(this);
@@ -420,14 +423,9 @@ public class CaptureActivity extends FragmentActivity
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (mIsColorSelected == false) {
 
-            if (inPreview == false) {
-                Log.i(TAG, "starting preview");
-                Camera mCamera = cvPreview.getCVCamera();
-                mCamera.startPreview();
-                inPreview = true;
-            }
+        /* If touched, a region might be selected, stop preview */
+        if (mIsColorSelected == false) {
 
             Log.i(TAG, "ON_TOUCH COLOR SELECT EVENT");
 
@@ -482,23 +480,44 @@ public class CaptureActivity extends FragmentActivity
             touchedRegionRgba.release();
             touchedRegionHsv.release();
 
-        } else {
-            Log.i(TAG, "Taking picture");
-
-            final Camera mCamera = cvPreview.getCVCamera();
-            mIsColorSelected = inPreview = false;
             mCamera.stopPreview();
-            mCamera.takePicture(null, null, new Camera.PictureCallback() {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera) {
-                    FragmentManager fm = getSupportFragmentManager();
-                    ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
-                    previewOverlay.show(fm, "previewOverlay");
-                    mCamera.startPreview();
+
+        } else {
+
+            float raw_touch_x = event.getRawX();
+            float raw_touch_y = event.getRawY();
+            mDetector.process(mRgba);
+            List<MatOfPoint> contours = mDetector.getContours();
+
+            for (MatOfPoint contour : contours) {
+                Rect boundingRect = Imgproc.boundingRect(contour);
+                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(), CONTOUR_COLOR, 5);
+                if (boundingRect.contains(new Point(raw_touch_x, raw_touch_y))) {
+                    Log.i(TAG, "Taking picture");
+
+                } else {
                 }
-            });
+            }
+
+
+            /* Region is selected, take picture of the rectangular region */
+            if (mTouchInBound == true) {
+                mCamera.takePicture(null, null, new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+                        FragmentManager fm = getSupportFragmentManager();
+                        ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
+                        previewOverlay.show(fm, "previewOverlay");
+                        saveToParse(data);
+                    }
+                });
+            }
+
+            /* None of the regions found are interested, turn camera back on */
+            /* On picture taken, restart the preview */
         }
-        return false;
+
+            return false;
     }
 
     private Scalar converScalarHsv2Rgba(Scalar hsvColor) {
