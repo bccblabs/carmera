@@ -42,6 +42,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
@@ -51,6 +52,7 @@ import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -484,37 +486,30 @@ public class CaptureActivity extends FragmentActivity
 
         } else {
 
-            float raw_touch_x = event.getRawX();
-            float raw_touch_y = event.getRawY();
-            mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
+            List<Rect> boundingRects = new ArrayList<Rect>();
+            Point touch_point = new Point (event.getRawX(), event.getRawY());
+            mDetector.process(mRgba);
 
-            for (MatOfPoint contour : contours) {
-                Rect boundingRect = Imgproc.boundingRect(contour);
-                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(), CONTOUR_COLOR, 5);
-                if (boundingRect.contains(new Point(raw_touch_x, raw_touch_y))) {
-                    Log.i(TAG, "Taking picture");
-
-                } else {
-                }
+            for (int i = 0; i < contours.size(); i++) {
+                Rect rect = Imgproc.boundingRect(contours.get(i));
+                Core.rectangle(mRgba, rect.tl(), rect.br(), CONTOUR_COLOR, 5);
+                boundingRects.add(rect);
             }
 
-
-            /* Region is selected, take picture of the rectangular region */
-            if (mTouchInBound == true) {
-                mCamera.takePicture(null, null, new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera) {
-                        FragmentManager fm = getSupportFragmentManager();
-                        ImagePreviewDialog previewOverlay = new ImagePreviewDialog();
-                        previewOverlay.show(fm, "previewOverlay");
-                        saveToParse(data);
-                    }
-                });
+            for (Rect rect : boundingRects) {
+                if (touch_point.inside(rect)) {
+                    Log.i(TAG, "Taking picture");
+                    MatOfByte byteMat = new MatOfByte(new Mat(mRgba,rect));
+                    saveToParse(byteMat.toArray());
+                }
             }
 
             /* None of the regions found are interested, turn camera back on */
             /* On picture taken, restart the preview */
+            mIsColorSelected = false;
+            mCamera.startPreview();
+
         }
 
             return false;
