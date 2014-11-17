@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.model;
+package veme.cario.com.CARmera.model.APIModels;
 
 import java.util.ArrayList;
 

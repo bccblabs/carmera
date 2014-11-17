@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.model;
+package veme.cario.com.CARmera.model.UserModels;
 
 import com.parse.ParseObject;
 
@@ -11,7 +11,7 @@ public class BusinessRequest extends ParseObject {
     public enum BusRequestType {
         Dealership,
         Service,
-        Upgrade;
+        Upgrade
     }
 
     /* Default empty constructor */

@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.model;
+package veme.cario.com.CARmera.model.UserModels;
 
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;

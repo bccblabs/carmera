@@ -3,8 +3,8 @@ package veme.cario.com.CARmera.util;
 import android.widget.ArrayAdapter;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.Favorites;
-import veme.cario.com.CARmera.model.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.Favorites;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 

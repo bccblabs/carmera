@@ -54,8 +54,8 @@ import java.util.Date;
 import java.util.List;
 
 import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
-import veme.cario.com.CARmera.model.TaggedVehicle;
-import veme.cario.com.CARmera.model.VehicleBaseInfo;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.view.CVPortraitView;
 import veme.cario.com.CARmera.view.ImagePreviewDialog;
 
@@ -131,7 +131,7 @@ public class CaptureActivity extends FragmentActivity
 
     /* SpiceManager Class */
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
-    private SpiceManager spiceManager = new SpiceManager(Jackson)
+    private SpiceManager spiceManager = new SpiceManager(Jackson);
     private String last_request;
     private VehicleBaseInfo vehicleBaseInfo;
     /* Activity lifecycle */

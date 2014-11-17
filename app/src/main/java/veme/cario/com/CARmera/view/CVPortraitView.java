@@ -244,8 +244,8 @@ public class CVPortraitView extends CameraBridgeViewBase
             int width = accessor.getWidth(size);
             int height = accessor.getHeight(size);
             if (width >= calcWidth && height >= calcHeight) {
-                calcWidth = (int) width;
-                calcHeight = (int) height;
+                calcWidth = width;
+                calcHeight = height;
             }
         }
         return new Size(calcWidth, calcHeight);
@@ -288,7 +288,7 @@ public class CVPortraitView extends CameraBridgeViewBase
         }
 
 
-    };
+    }
 
     private class CameraWorker implements Runnable {
 
