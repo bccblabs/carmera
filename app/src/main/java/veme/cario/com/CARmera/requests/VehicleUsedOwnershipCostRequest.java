@@ -20,7 +20,7 @@ public class VehicleUsedOwnershipCostRequest extends SpringAndroidSpiceRequest<V
 
     @Override
     public VehicleOwnershipCost loadDataFromNetwork () throws Exception {
-        String url = String.format ("https://api.edmunds.com/api/tco/v1/details/allusedtcobystyleidzipandstate/%s/%s/%s?fmt=json&api_key=%s\n",
+        String url = String.format ("https://api.edmunds.com/api/tco/v1/details/allusedtcobystyleidzipandstate/%s/%s/%s?fmt=json&api_key=%s",
                 this.vehicle_id, Utility.get_zip(), Utility.get_state(), CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, VehicleOwnershipCost.class);
     }

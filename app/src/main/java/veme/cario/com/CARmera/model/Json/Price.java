@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.model.VehicleStyleJson;
+package veme.cario.com.CARmera.model.Json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.model.VehicleStyleJson;
+package veme.cario.com.CARmera.model.Json;
 
 /**
  * Created by bski on 11/15/14.

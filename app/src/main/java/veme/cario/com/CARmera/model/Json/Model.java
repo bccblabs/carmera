@@ -1,9 +1,12 @@
-package veme.cario.com.CARmera.model.VehicleStyleJson;
+package veme.cario.com.CARmera.model.Json;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by bski on 11/15/14.
  */
-public class Make {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Model {
     public String getId() {
         return id;
     }

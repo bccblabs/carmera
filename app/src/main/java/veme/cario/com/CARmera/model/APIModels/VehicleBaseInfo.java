@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.model.VehicleStyleJson.Engine;
-import veme.cario.com.CARmera.model.VehicleStyleJson.MPG;
-import veme.cario.com.CARmera.model.VehicleStyleJson.Make;
-import veme.cario.com.CARmera.model.VehicleStyleJson.Model;
-import veme.cario.com.CARmera.model.VehicleStyleJson.Price;
-import veme.cario.com.CARmera.model.VehicleStyleJson.Transmission;
+import veme.cario.com.CARmera.model.Json.Engine;
+import veme.cario.com.CARmera.model.Json.MPG;
+import veme.cario.com.CARmera.model.Json.Make;
+import veme.cario.com.CARmera.model.Json.Model;
+import veme.cario.com.CARmera.model.Json.Price;
+import veme.cario.com.CARmera.model.Json.Transmission;
 
 /**
  * Created by bski on 11/14/14.
@@ -115,12 +115,12 @@ public class VehicleBaseInfo {
         this.transmission = transmission;
     }
 
-    public DrivenWheels getDw() {
-        return dw;
+    public String getDrivenWheels() {
+        return drivenWheels;
     }
 
-    public void setDw(DrivenWheels dw) {
-        this.dw = dw;
+    public void setDrivenWheels(String dw) {
+        this.drivenWheels = dw;
     }
 
     public Price getPrice() {

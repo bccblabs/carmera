@@ -2,11 +2,11 @@ package veme.cario.com.CARmera.model.APIModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import veme.cario.com.CARmera.model.OwnershipCostJson.DeprCost;
-import veme.cario.com.CARmera.model.OwnershipCostJson.FuelCost;
-import veme.cario.com.CARmera.model.OwnershipCostJson.InsuranceCost;
-import veme.cario.com.CARmera.model.OwnershipCostJson.MaintenanceCost;
-import veme.cario.com.CARmera.model.OwnershipCostJson.RepairCost;
+import veme.cario.com.CARmera.model.Json.DeprCost;
+import veme.cario.com.CARmera.model.Json.FuelCost;
+import veme.cario.com.CARmera.model.Json.InsuranceCost;
+import veme.cario.com.CARmera.model.Json.MaintenanceCost;
+import veme.cario.com.CARmera.model.Json.RepairCost;
 
 /**
  * Created by bski on 11/14/14.

@@ -1,8 +1,11 @@
-package veme.cario.com.CARmera.model.VehicleStyleJson;
+package veme.cario.com.CARmera.model.Json;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by bski on 11/15/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MPG {
     public String getHighway() {
         return highway;
