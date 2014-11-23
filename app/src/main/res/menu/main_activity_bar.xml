@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/title_activity_user_profile"
+        android:icon="@drawable/ic_profile"
+        android:layout_width="20dp"
+        />
+
+    <item
+        android:id="@+id/action_nearby"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/title_activity_nearby"
+        android:icon="@drawable/ic_home"
+        />
+    <item
+        android:id="@+id/action_capture"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/title_activity_capture"
+        android:icon="@drawable/ic_home"
+        />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/title_activity_settings"
+        />
+
+    <item
+        android:id="@+id/action_notifications"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_following"
+        android:title="@string/title_activity_following"
+        />
+
+</menu>

@@ -9,7 +9,10 @@
     <string name="title_activity_tagged">Tagged</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_welcome">FoSho</string>
+    <string name="title_activity_welcome">Carmera</string>
+    <string name="title_activity_nearby">NearBy</string>
+    <string name="title_activity_following">Following</string>
+    <string name="title_activity_notifications">Notifications</string>
 
     <!-- Strings related to login/sign up -->
     <string name="powered_by">Powered by</string>

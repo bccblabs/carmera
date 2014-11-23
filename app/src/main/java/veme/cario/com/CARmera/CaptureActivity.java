@@ -67,10 +67,7 @@ import veme.cario.com.CARmera.view.ImagePreviewDialog;
  * Created by bski on 11/5/14.
  */
 public class CaptureActivity extends FragmentActivity
-                             implements LocationListener,
-                                        GooglePlayServicesClient.ConnectionCallbacks,
-                                        GooglePlayServicesClient.OnConnectionFailedListener,
-                                        CameraBridgeViewBase.CvCameraViewListener2,
+                             implements CameraBridgeViewBase.CvCameraViewListener2,
                                         View.OnTouchListener {
 
     /* TODO: background overlay when picture is taken */
@@ -83,16 +80,6 @@ public class CaptureActivity extends FragmentActivity
 
     /* Dependent objects */
     private CVPortraitView cvPreview;
-
-    /* Access user location object */
-    private LocationClient locationClient;
-    private LocationRequest locationRequest;
-    private Location curr_location;
-    private Location last_location;
-    private final static int LOCATION_UPDATE_INTERVAL = 5000;
-    private final static int LOCATION_UPDATE_CEILING = 60 * 1000;
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-
 
     /* On orientation change, pause->redraw */
     private OrientationEventListener orientationEventListener;
@@ -147,22 +134,6 @@ public class CaptureActivity extends FragmentActivity
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
-//
-//        /* Set up location, orientation listeners, gesture detector */
-//        locationRequest = LocationRequest.create();
-//        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
-//        locationRequest.setFastestInterval(LOCATION_UPDATE_CEILING);
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationClient = new LocationClient(this, null, null); // cxt, gs cnx cb, gs bad cnx cb
-//
-//        orientationEventListener = new OrientationEventListener(this) {
-//            @Override
-//            public void onOrientationChanged(int orientation) {
-//                CaptureActivity.this.onOrientationChanged(orientation);
-//            }
-//        };
-//
-
         /* Draw CV layout */
         mCamera = cvPreview.getCVCamera();
         cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
@@ -173,7 +144,6 @@ public class CaptureActivity extends FragmentActivity
         /* Listeners for buttons */
         ImageButton fav_btn = (ImageButton) findViewById(R.id.favorite_button);
         ImageButton tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
-        ImageButton settings_btn = (ImageButton) findViewById(R.id.settings_btn);
         ImageButton album_upl_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
 
         /* Camera UI initializer */
@@ -214,9 +184,6 @@ public class CaptureActivity extends FragmentActivity
 
     @Override
     public void onPause() {
-//        if (locationClient.isConnected()) {
-//        }
-//        locationClient.disconnect();
 //        orientationEventListener.disable();
 //        camera.release();
         if (cvPreview != null)
@@ -230,18 +197,9 @@ public class CaptureActivity extends FragmentActivity
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, loaderCallback);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-//        locationClient.connect();
-    }
 
     @Override
     public void onStop() {
-//        if (locationClient.isConnected()) {
-//            stopLocationUpdates();
-//        }
-//        locationClient.disconnect();
 //        orientationEventListener.disable();
 //        camera.release();
         if (cvPreview != null)
@@ -269,76 +227,6 @@ public class CaptureActivity extends FragmentActivity
 
     /* UI helper functions */
     public void onOrientationChanged(int orientation) {
-    }
-
-    /* Google location services functions */
-    private Location getLocation() {
-        if (servicesConnected()) {
-            return locationClient.getLastLocation();
-        } else {
-            return null;
-        }
-    }
-
-    private void startLocationUpdates() {
-//       locationClient.requestLocationUpdates(locationRequest, this);
-    }
-
-    public void stopLocationUpdates() {
-//       locationClient.removeLocationUpdates(this);
-    }
-
-    @Override
-    public void onConnected(Bundle savedBundleInst) {
-//        curr_location = getLocation();
-//        startLocationUpdates();
-    }
-
-    @Override
-    public void onDisconnected() {
-        Log.d(TAG, " - service disconnected.");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult con_res) {
-//        if (con_res.hasResolution()) {
-//            try {
-//                con_res.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-//            } catch (IntentSender.SendIntentException e) {
-//                Log.d (TAG, " - error connecting location services.");
-//            }
-//        } else {
-//            Log.d (TAG, " - resolution not available.");
-//        }
-    }
-
-    private boolean servicesConnected() {
-//        int res = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-//        if (res == ConnectionResult.SUCCESS) {
-//            return true;
-//        } else {
-        return false;
-//        }
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 
     /* OpenCV functions */
