@@ -14,7 +14,7 @@ import veme.cario.com.CARmera.model.Json.Transmission;
 /**
  * Created by bski on 11/14/14.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+// @JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleBaseInfo {
 
     private String id;
@@ -34,8 +34,6 @@ public class VehicleBaseInfo {
     private String drivenWheels;
 
     private Price price;
-
-    private String name;
 
     private MPG mpg;
 
@@ -130,9 +128,5 @@ public class VehicleBaseInfo {
     public void setPrice(Price price) {
         this.price = price;
     }
-
-    public void setDrivenWheels (String dw) { this.drivenWheels = dw; }
-
-    public String getDrivenWheels () { return drivenWheels; }
 
 }

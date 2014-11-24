@@ -31,13 +31,13 @@ public class CVPortraitView extends CameraBridgeViewBase
     private Thread mThread;
     private boolean mStopThread;
 
-    protected Camera mCamera;
-    protected int mCameraId;
-    protected JavaCameraFrame[] mCameraFrame;
+    private Camera mCamera;
+    private int mCameraId;
+    private JavaCameraFrame[] mCameraFrame;
     private SurfaceTexture mSurfaceTexture;
 
 
-    public static class JavaCameraSizeAccessor implements ListItemAccessor {
+    private static class JavaCameraSizeAccessor implements ListItemAccessor {
 
         public int getWidth(Object obj) {
             Camera.Size size = (Camera.Size) obj;
@@ -50,15 +50,11 @@ public class CVPortraitView extends CameraBridgeViewBase
         }
     }
 
-    public CVPortraitView(Context context, int cameraId) {
-        super(context, cameraId);
-    }
-
     public CVPortraitView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    protected boolean initializeCamera(int width, int height) {
+    boolean initializeCamera(int width, int height) {
         Log.d(TAG, "Initialize java camera");
         boolean result = true;
         synchronized (this) {
@@ -162,7 +158,7 @@ public class CVPortraitView extends CameraBridgeViewBase
         return result;
     }
 
-    protected void releaseCamera() {
+    void releaseCamera() {
         synchronized (this) {
             if (mCamera != null) {
                 mCamera.stopPreview();
@@ -252,9 +248,9 @@ public class CVPortraitView extends CameraBridgeViewBase
     }
 
     private class JavaCameraFrame implements CvCameraViewFrame {
-        private Mat mYuvFrameData;
-        private Mat mRgba;
-        private int mWidth;
+        private final Mat mYuvFrameData;
+        private final Mat mRgba;
+        private final int mWidth;
         private int mHeight;
         private Mat mRotated;
 

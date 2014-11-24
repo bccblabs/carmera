@@ -14,6 +14,7 @@ public class VehicleBaseInfoRequest extends SpringAndroidSpiceRequest<VehicleBas
     private String make;
     private String model;
 
+
     public VehicleBaseInfoRequest(String yr, String mk, String ml) {
         super(VehicleBaseInfoList.class);
         this.year = yr;

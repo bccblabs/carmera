@@ -11,11 +11,13 @@ import android.graphics.Matrix;
 
 import android.hardware.Camera;
 import android.location.Location;
-import android.location.LocationListener;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.SurfaceView;
@@ -23,10 +25,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationRequest;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.parse.ParseException;
@@ -60,7 +58,7 @@ import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.view.CVPortraitView;
-import veme.cario.com.CARmera.view.ImagePreviewDialog;
+//import veme.cario.com.CARmera.view.ImagePreviewDialog;
 
 
 /**
@@ -110,7 +108,6 @@ public class CaptureActivity extends FragmentActivity
             }
         }
     };
-    private Camera mCamera = null;
     private boolean mIsColorSelected = false;
     private Mat mRgba;
     private Scalar mBlobColorRgba;
@@ -122,20 +119,20 @@ public class CaptureActivity extends FragmentActivity
 
     /* SpiceManager Class */
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
-    private SpiceManager spiceManager = new SpiceManager(Jackson);
     private String last_request;
     private VehicleBaseInfo vehicleBaseInfo;
+
     /* Activity lifecycle */
+
+    private Location curr_location;
+    private Location last_location;
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
         setContentView(R.layout.activity_cv_capture);
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
 
         /* Draw CV layout */
-        mCamera = cvPreview.getCVCamera();
         cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
         cvPreview.setVisibility(SurfaceView.VISIBLE);
         cvPreview.setCvCameraViewListener(this);
@@ -145,6 +142,10 @@ public class CaptureActivity extends FragmentActivity
         ImageButton fav_btn = (ImageButton) findViewById(R.id.favorite_button);
         ImageButton tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
         ImageButton album_upl_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 
         /* Camera UI initializer */
 //        fav_btn.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +176,25 @@ public class CaptureActivity extends FragmentActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.capture_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cancel:
+                if (cvPreview != null)
+                    cvPreview.disableView();
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onDestroy() {
         if (cvPreview != null)
             cvPreview.disableView();
@@ -185,7 +205,6 @@ public class CaptureActivity extends FragmentActivity
     @Override
     public void onPause() {
 //        orientationEventListener.disable();
-//        camera.release();
         if (cvPreview != null)
             cvPreview.disableView();
         super.onPause();
@@ -200,8 +219,6 @@ public class CaptureActivity extends FragmentActivity
 
     @Override
     public void onStop() {
-//        orientationEventListener.disable();
-//        camera.release();
         if (cvPreview != null)
             cvPreview.disableView();
         super.onStop();
@@ -262,53 +279,54 @@ public class CaptureActivity extends FragmentActivity
     }
 
     private void saveToParse(byte[] raw_data) {
-        TaggedVehicle taggedVehicle = new TaggedVehicle();
-        final ParseUser curr_user = ParseUser.getCurrentUser();
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
-        String timestamp = s.format(new Date());
-        Location location = (curr_location == null) ? last_location : curr_location;
-        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-        taggedVehicle.setLocation(geo_point);
-        taggedVehicle.setFavorite(false);
-        ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
-        taggedVehicle.setTagPhoto(photo_file);
-        photo_file.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast toast = Toast.makeText(CaptureActivity.this,
-                            "Image saved...",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-
-                } else {
-                    Toast toast = Toast.makeText(CaptureActivity.this,
-                            "Parse save image error",
-                            Toast.LENGTH_SHORT);
-                    curr_user.saveEventually();
-                    toast.show();
-                }
-            }
-        });
-        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
-        curr_user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast toast = Toast.makeText(CaptureActivity.this,
-                            "TaggedV saved, waiting image rec...",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-
-                } else {
-                    Toast toast = Toast.makeText(CaptureActivity.this,
-                            "Parse save taggedV error",
-                            Toast.LENGTH_SHORT);
-                    curr_user.saveEventually();
-                    toast.show();
-                }
-            }
-        });
+//        TaggedVehicle taggedVehicle = new TaggedVehicle();
+//        final ParseUser curr_user = ParseUser.getCurrentUser();
+//        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+//        String timestamp = s.format(new Date());
+//        Location location = (curr_location == null) ? last_location : curr_location;
+//        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+//        taggedVehicle.setLocation(geo_point);
+//        taggedVehicle.setFavorite(false);
+//        ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
+//        taggedVehicle.setTagPhoto(photo_file);
+//        photo_file.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    Toast toast = Toast.makeText(CaptureActivity.this,
+//                            "Image saved...",
+//                            Toast.LENGTH_SHORT);
+//                    toast.show();
+//
+//                } else {
+//                    Toast toast = Toast.makeText(CaptureActivity.this,
+//                            "Parse save image error",
+//                            Toast.LENGTH_SHORT);
+//                    curr_user.saveEventually();
+//                    toast.show();
+//                }
+//            }
+//        });
+//        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
+//        curr_user.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    Toast toast = Toast.makeText(CaptureActivity.this,
+//                            "TaggedV saved, waiting image rec...",
+//                            Toast.LENGTH_SHORT);
+//                    toast.show();
+//
+//                } else {
+//                    Toast toast = Toast.makeText(CaptureActivity.this,
+//                            "Parse save taggedV error",
+//                            Toast.LENGTH_SHORT);
+//                    curr_user.saveEventually();
+//                    toast.show();
+//                }
+//            }
+//        });
+        Log.d(TAG, " parse object saved!");
     }
 
     @Override
@@ -369,10 +387,10 @@ public class CaptureActivity extends FragmentActivity
             mIsColorSelected = true;
             touchedRegionRgba.release();
             touchedRegionHsv.release();
-
-            mCamera.stopPreview();
+            cvPreview.disableView();
 
         } else {
+            cvPreview.enableView();
 
             List<MatOfPoint> contours = mDetector.getContours();
             List<Rect> boundingRects = new ArrayList<Rect>();
@@ -388,16 +406,14 @@ public class CaptureActivity extends FragmentActivity
             for (Rect rect : boundingRects) {
                 if (touch_point.inside(rect)) {
                     Log.i(TAG, "Taking picture");
-                    MatOfByte byteMat = new MatOfByte(new Mat(mRgba,rect));
-                    saveToParse(byteMat.toArray());
+//                    MatOfByte byteMat = new MatOfByte(new Mat(mRgba,rect));
+//                    saveToParse(byteMat.toArray());
                 }
             }
 
             /* None of the regions found are interested, turn camera back on */
             /* On picture taken, restart the preview */
             mIsColorSelected = false;
-            mCamera.startPreview();
-
         }
 
             return false;

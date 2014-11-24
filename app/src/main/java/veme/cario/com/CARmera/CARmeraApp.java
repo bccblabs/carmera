@@ -18,6 +18,5 @@ public class CARmeraApp extends Application {
         Parse.initialize(this,
                 getString(R.string.parse_app_id),
                 getString(R.string.parse_app_key));
-
     }
 }

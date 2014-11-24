@@ -1,6 +1,6 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import veme.cario.com.CARmera.model.Json.Review;
 /**
  * Created by bski on 11/16/14.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+// // @JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleCustomerReview {
     public String getAverageRating() {
         return averageRating;

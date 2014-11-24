@@ -13,6 +13,7 @@
     <string name="title_activity_nearby">NearBy</string>
     <string name="title_activity_following">Following</string>
     <string name="title_activity_notifications">Notifications</string>
+    <string name="action_back">Back</string>
 
     <!-- Strings related to login/sign up -->
     <string name="powered_by">Powered by</string>
