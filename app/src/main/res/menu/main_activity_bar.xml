@@ -6,23 +6,23 @@
     <item
         android:id="@+id/action_profile"
         android:orderInCategory="100"
-        compat:showAsAction="ifRoom"
+        compat:showAsAction="always"
         android:title="@string/title_activity_user_profile"
         android:icon="@drawable/ic_profile"
         android:layout_width="20dp"
-        />`
+        />
 
     <item
         android:id="@+id/action_nearby"
         android:orderInCategory="100"
-        compat:showAsAction="ifRoom"
+        compat:showAsAction="always"
         android:title="@string/title_activity_nearby"
         android:icon="@drawable/ic_home"
         />
     <item
         android:id="@+id/action_capture"
         android:orderInCategory="100"
-        compat:showAsAction="ifRoom"
+        compat:showAsAction="always"
         android:title="@string/title_activity_capture"
         android:icon="@drawable/ic_home"
         />
@@ -30,7 +30,7 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        compat:showAsAction="ifRoom"
+        compat:showAsAction="always"
         android:icon="@drawable/ic_settings"
         android:title="@string/title_activity_settings"
         />
@@ -38,9 +38,9 @@
     <item
         android:id="@+id/action_notifications"
         android:orderInCategory="100"
-        compat:showAsAction="ifRoom"
+        compat:showAsAction="always"
         android:icon="@drawable/ic_following"
-        android:title="@string/title_activity_following"
+        android:title="@string/title_activity_notifications"
         />
 
 </menu>

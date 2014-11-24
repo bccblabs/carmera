@@ -14,7 +14,7 @@
     <string name="title_activity_following">Following</string>
     <string name="title_activity_notifications">Notifications</string>
     <string name="action_back">Back</string>
-
+    <string name="empty_string"></string>
     <!-- Strings related to login/sign up -->
     <string name="powered_by">Powered by</string>
     <string name="cario">Car.I.O.</string>
@@ -34,6 +34,15 @@
 
     <!-- Application credentials -->
     <string name="parse_app_id">4C3g4JMvuWMEuTVeTtjoQdvxCOv80XHRtIYnM3Kg</string>
-    <string name="parse_app_key">nne5AzTfwxpHhNrKuVArS8ip8yZoS5oopd7ohSJz</string>
+    <string name="parse_app_key">OTwE5Qi7WuZ4gs8q66T2nKrDArWPbph3u1CmPjP1</string>
 
+    <!-- Settings -->
+
+    <string name="pref_user_privacy">Privacy</string>
+    <string name="pref_title_user_name">Your Name</string>
+    <string name="pref_title_user_phone">Contact Phone</string>
+    <string name="pref_title_user_email">Email</string>
+    <string name="pref_title_allow_contact">Allow Dealership Contact</string>
+    <string name="pref_title_search_radius">Default Search Radius</string>
+    <string name="pref_default_search_radius">100</string>
 </resources>

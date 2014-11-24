@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,13 +26,14 @@ public class SignUpActivity extends Activity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText passwordAgainEditText;
-
+    private static String TAG = "SignUp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_sign_up);
 
+        Log.d(TAG, " - onCreate()");
         // Set up the sign up form.
         usernameEditText = (EditText) findViewById(R.id.username_edit_text);
 

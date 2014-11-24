@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 /**

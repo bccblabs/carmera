@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:title="@string/pref_user_privacy"
+        android:key="pref_key_user_info">
+        <EditTextPreference
+            android:key="pref_key_user_name"
+            android:title="@string/pref_title_user_name"
+            android:defaultValue="@string/empty_string">
+        </EditTextPreference>
+
+        <EditTextPreference
+            android:key="pref_key_user_phone"
+            android:title="@string/pref_title_user_phone"
+            android:defaultValue="@string/empty_string">
+        </EditTextPreference>
+
+        <EditTextPreference
+            android:key="pref_key_user_email"
+            android:title="@string/pref_title_user_email"
+            android:defaultValue="@string/empty_string">
+        </EditTextPreference>
+
+        <CheckBoxPreference
+            android:key="pref_key_user_allow_contact"
+            android:title="@string/pref_title_allow_contact"
+            android:defaultValue="true">
+        </CheckBoxPreference>
+
+        <ListPreference
+            android:key="pref_key_search_radius"
+            android:title="@string/pref_title_search_radius"
+            android:entries="@array/pref_search_radius"
+            android:entryValues="@array/pref_search_radius"
+            android:defaultValue="@string/pref_default_search_radius">
+        </ListPreference>
+
+    </PreferenceCategory>
 </PreferenceScreen>

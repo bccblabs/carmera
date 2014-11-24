@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -38,6 +39,8 @@ public class BaseActivity extends Activity {
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
 
         /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();

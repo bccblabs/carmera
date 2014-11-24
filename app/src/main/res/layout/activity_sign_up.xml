@@ -11,7 +11,7 @@
 
         <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:orientation="vertical" >
 
             <EditText
@@ -46,12 +46,9 @@
 
             <Button
                 android:id="@+id/action_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:layout_marginTop="16dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
                 android:text="@string/sign_up" />
         </LinearLayout>
     </ScrollView>
