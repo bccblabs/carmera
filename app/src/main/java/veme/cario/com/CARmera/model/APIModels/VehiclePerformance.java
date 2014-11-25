@@ -18,27 +18,27 @@ public class VehiclePerformance {
     @JsonProperty
     private String quarter_mile;
 
-    public String getZero_to_sixty() {
+    public String getZeroToSixty() {
         return zero_to_sixty;
     }
 
-    public void setZero_to_sixty(String zero_to_sixty) {
+    public void setZeroToSixty(String zero_to_sixty) {
         this.zero_to_sixty = zero_to_sixty;
     }
 
-    public String getZero_to_hundred() {
+    public String getZeroToHundred() {
         return zero_to_hundred;
     }
 
-    public void setZero_to_hundred(String zero_to_hundred) {
+    public void setZeroToHundred(String zero_to_hundred) {
         this.zero_to_hundred = zero_to_hundred;
     }
 
-    public String getQuarter_mile() {
+    public String getQuarterMile() {
         return quarter_mile;
     }
 
-    public void setQuarter_mile(String quarter_mile) {
+    public void setQuarterMile(String quarter_mile) {
         this.quarter_mile = quarter_mile;
     }
 

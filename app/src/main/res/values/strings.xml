@@ -9,7 +9,7 @@
     <string name="title_activity_tagged">Tagged</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_welcome">Carmera</string>
+    <string name="title_activity_welcome">CARmera</string>
     <string name="title_activity_nearby">NearBy</string>
     <string name="title_activity_following">Following</string>
     <string name="title_activity_notifications">Notifications</string>
@@ -116,4 +116,13 @@
     <string name="str_depr_cost3">Fourth Year Depreciation Cost</string>
     <string name="str_depr_cost4">Fifth Year Depreciation Cost</string>
 
+    <string name="str_total_cost_ownership">Total 5 Years Cost to Own</string>
+    <string name="str_total_fuel_cost">Total 5 Years Fuel Cost</string>
+    <string name="str_total_repair_cost">Total 5 Years Repair Cost</string>
+    <string name="str_total_maintenance_cost">Total 5 Years Maintenance Cost</string>
+    <string name="str_total_insurance_cost">Total 5 Years Insurance Cost</string>
+    <string name="str_total_depr_cost">Total 5 Years Depreciation Cost</string>
+
+    <string name="str_average_customer_rating">Average Customer Rating</string>
+    <string name="str_customer_review_count">Customer Rating Count</string>
 </resources>

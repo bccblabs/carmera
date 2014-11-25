@@ -13,9 +13,10 @@ public class VehicleNewOwnershipCostRequest extends SpringAndroidSpiceRequest<Ve
     private String vehicle_id;
 
 
-    public VehicleNewOwnershipCostRequest(String yr, String mk, String ml) {
+    public VehicleNewOwnershipCostRequest(String vehicle_id) {
         super(VehicleOwnershipCost.class);
-        this.vehicle_id = Utility.mmy_to_id(yr, mk, ml);
+        // TODO: use a guard to handle the receiving of vehicle_id
+        this.vehicle_id = vehicle_id;
     }
 
     @Override

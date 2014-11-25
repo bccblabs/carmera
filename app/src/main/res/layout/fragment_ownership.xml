@@ -5,11 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <TableRow>
+            <TextView android:text="@string/str_total_cost_ownership"/>
+            <TextView android:id="@+id/total_cost_ownership"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_total_fuel_cost"/>
+            <TextView android:id="@+id/total_fuel_cost"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_total_insurance_cost"/>
+            <TextView android:id="@+id/total_insurance_cost"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_total_repair_cost"/>
+            <TextView android:id="@+id/total_repair_cost"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_total_maintenance_cost"/>
+            <TextView android:id="@+id/total_maintenance_cost"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_total_depr_cost"/>
+            <TextView android:id="@+id/total_depreciation_cost"/>
+        </TableRow>
         <TableRow>
             <TextView android:text="@string/str_fuel_cost0"/>
             <TextView android:id="@+id/fuel_cost0_textview"/>

@@ -5,7 +5,6 @@ import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceReques
 
 import veme.cario.com.CARmera.CARmeraApp;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
-import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfoList;
 
 /**
  * Created by bski on 11/13/14.

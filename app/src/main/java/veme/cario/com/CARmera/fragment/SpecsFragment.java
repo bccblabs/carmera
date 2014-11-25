@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -18,7 +18,6 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.requests.VehicleBaseInfoRequest;
-import veme.cario.com.CARmera.services.InMemorySpiceService;
 
 /**
  * Created by bski on 11/10/14.
@@ -64,7 +63,8 @@ public class SpecsFragment extends Fragment {
     private TextView drive_train;
 
 
-    private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
+//    private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
+    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     private final class VehicleBaseInfoRequestListener implements RequestListener<VehicleBaseInfo> {
         @Override
@@ -75,32 +75,36 @@ public class SpecsFragment extends Fragment {
 
         @Override
         public void onRequestSuccess (VehicleBaseInfo vehicleBaseInfo) {
-            vehicle_name.setText(vehicleBaseInfo.getName());
-            drive_train.setText(vehicleBaseInfo.getDrivenWheels());
-            transmission_type.setText(vehicleBaseInfo.getTransmission().getTransmissionType());
-            transmission_speed.setText(vehicleBaseInfo.getTransmission().getNumberofSpeeds());
+            getArguments().putString("vehicle_id", vehicleBaseInfo.getId());
 
-            base_msrp.setText(vehicleBaseInfo.getPrice().getBaseMSRP());
-            used_tmv_retail.setText(vehicleBaseInfo.getPrice().getUsedTmvRetail());
-            used_private_party.setText(vehicleBaseInfo.getPrice().getUsedPrivateParty());
-            base_invoice.setText(vehicleBaseInfo.getPrice().getBaseInvoice());
+            if (SpecsFragment.this.isAdded()) {
+                vehicle_name.setText(vehicleBaseInfo.getName());
+                drive_train.setText(vehicleBaseInfo.getDrivenWheels());
+                transmission_type.setText(vehicleBaseInfo.getTransmission().getTransmissionType());
+                transmission_speed.setText(vehicleBaseInfo.getTransmission().getNumberofSpeeds());
 
-            engine_hp.setText(vehicleBaseInfo.getEngine().getHorsepower());
-            engine_torque.setText(vehicleBaseInfo.getEngine().getTorque());
-            engine_fuelType.setText(vehicleBaseInfo.getEngine().getFuelType());
-            engine_displacement.setText(vehicleBaseInfo.getEngine().getDisplacement());
-            engine_cyl.setText(vehicleBaseInfo.getEngine().getCylinder());
-            engine_config.setText(vehicleBaseInfo.getEngine().getConfiguration());
-            engine_name.setText(vehicleBaseInfo.getEngine().getName());
-            engine_compressor.setText(vehicleBaseInfo.getEngine().getCompressorType());
-            engine_compression.setText(vehicleBaseInfo.getEngine().getCompressionRatio());
-            engine_valves.setText(vehicleBaseInfo.getEngine().getTotalValves());
-            engine_code.setText(vehicleBaseInfo.getEngine().getManufacturerEngineCode());
+                base_msrp.setText(vehicleBaseInfo.getPrice().getBaseMSRP());
+                used_tmv_retail.setText(vehicleBaseInfo.getPrice().getUsedTmvRetail());
+                used_private_party.setText(vehicleBaseInfo.getPrice().getUsedPrivateParty());
+                base_invoice.setText(vehicleBaseInfo.getPrice().getBaseInvoice());
 
-            city_mpg.setText(vehicleBaseInfo.getMpg().getCity());
-            hw_mpg.setText(vehicleBaseInfo.getMpg().getHighway());
+                engine_hp.setText(vehicleBaseInfo.getEngine().getHorsepower());
+                engine_torque.setText(vehicleBaseInfo.getEngine().getTorque());
+                engine_fuelType.setText(vehicleBaseInfo.getEngine().getFuelType());
+                engine_displacement.setText(vehicleBaseInfo.getEngine().getDisplacement());
+                engine_cyl.setText(vehicleBaseInfo.getEngine().getCylinder());
+                engine_config.setText(vehicleBaseInfo.getEngine().getConfiguration());
+                engine_name.setText(vehicleBaseInfo.getEngine().getName());
+                engine_compressor.setText(vehicleBaseInfo.getEngine().getCompressorType());
+                engine_compression.setText(vehicleBaseInfo.getEngine().getCompressionRatio());
+                engine_valves.setText(vehicleBaseInfo.getEngine().getTotalValves());
+                engine_code.setText(vehicleBaseInfo.getEngine().getManufacturerEngineCode());
 
-            SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+                city_mpg.setText(vehicleBaseInfo.getMpg().getCity());
+                hw_mpg.setText(vehicleBaseInfo.getMpg().getHighway());
+
+                SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+            }
         }
     }
 
@@ -167,8 +171,6 @@ public class SpecsFragment extends Fragment {
 
         city_mpg = (TextView) getView().findViewById(R.id.city_mpg);
         hw_mpg = (TextView) getView().findViewById(R.id.highway_mpg);
-
-
 
 
         performRequest(getArguments().getString("vehicle_yr"),
