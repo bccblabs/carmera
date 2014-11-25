@@ -1,12 +1,15 @@
 package veme.cario.com.CARmera.model.UserModels;
 
+import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * Created by bski on 11/5/14.
  */
+@ParseClassName("TaggedVehicle")
 public class TaggedVehicle extends ParseObject {
 
     // Requires empty constructor
@@ -48,6 +51,15 @@ public class TaggedVehicle extends ParseObject {
         return getParseFile("photo");
     }
 
+    public void setUser (UserInfo user_info) {
+        put("user_info", user_info);
+    }
+
+    public ParseFile getUserPhoto() {
+        UserInfo userinfo = (UserInfo) getParseObject("user_info");
+        return userinfo.getThumbnail();
+    }
+
     public void setTagPhoto (ParseFile photo) {
         put ("photo", photo);
     }
@@ -67,4 +79,22 @@ public class TaggedVehicle extends ParseObject {
     public ParseGeoPoint getLocation () {
        return getParseGeoPoint("location");
     }
+
+    public String getUserName() {
+        return ParseUser.getCurrentUser().getUsername();
+    }
+
+    @Override
+    public String toString () {
+        return getYear() + " " + getMake() + " " + getModel();
+    }
+
+    public int getLikesCnt() {
+        return getInt("likes");
+    }
+
+    public int getCommentsCnt() {
+        return getInt("comments");
+    }
+
 }

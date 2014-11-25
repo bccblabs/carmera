@@ -5,4 +5,5 @@ package veme.cario.com.CARmera;
  */
 public class NearbyActivity extends BaseActivity {
 
+
 }

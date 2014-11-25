@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera.model.APIModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -14,29 +15,40 @@ import veme.cario.com.CARmera.model.Json.Transmission;
 /**
  * Created by bski on 11/14/14.
  */
-// @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleBaseInfo {
 
+    @JsonProperty
     private String id;
 
+    @JsonProperty
     private String name;
 
+    @JsonProperty
     private String niceName;
 
+    @JsonProperty
     private Make make;
 
+    @JsonProperty
     private Model model;
 
+    @JsonProperty
     private Engine engine;
 
+    @JsonProperty
     private Transmission transmission;
 
+    @JsonProperty
     private String drivenWheels;
 
+    @JsonProperty
     private Price price;
 
+    @JsonProperty
     private MPG mpg;
 
+    @JsonProperty
     private List<String> states;
 
 

@@ -15,6 +15,7 @@
     <string name="title_activity_notifications">Notifications</string>
     <string name="action_back">Back</string>
     <string name="empty_string"></string>
+
     <!-- Strings related to login/sign up -->
     <string name="powered_by">Powered by</string>
     <string name="cario">Car.I.O.</string>
@@ -47,4 +48,36 @@
     <string name="pref_title_allow_contact">Allow Dealership Contact</string>
     <string name="pref_title_search_radius">Default Search Radius</string>
     <string name="pref_default_search_radius">100</string>
+
+
+    <!-- Strings -->
+    <string name="str_mpg_info">Gas Mileage</string>
+    <string name="str_city_mpg">City MPG</string>
+    <string name="str_highway_mpg">Highway MPG</string>
+
+    <string name="str_price_info">Price Info</string>
+    <string name="str_used_private">Used Private Party</string>
+    <string name="str_used_tmv">Used TMV Retail Price</string>
+    <string name="str_invoice">Invoice</string>
+    <string name="str_msrp">MSRP</string>
+
+    <string name="str_engine_info">Engine Details</string>
+    <string name="str_hp">Horsepower</string>
+    <string name="str_torque">Horsepower</string>
+    <string name="str_fueltype">Fuel Type</string>
+    <string name="str_displacement">Engine Displacement</string>
+    <string name="str_cylinder">Cylinder Count</string>
+    <string name="str_configuration">Engine Configuration</string>
+    <string name="str_engine_name">Engine Name</string>
+    <string name="str_engine_code">Manufacturer Engine Code</string>
+    <string name="str_compressor">Compressor Type</string>
+    <string name="str_compression_ratio">Compression Ratio</string>
+    <string name="str_valve">Valve Count</string>
+
+    <string name="str_drivetrain">Drivetrain</string>
+    <string name="str_transmission">Transmission</string>
+
+    <string name="str_poster_image">Poster Image</string>
+    <string name="str_vehicle_image">Vehicle Image</string>
+
 </resources>

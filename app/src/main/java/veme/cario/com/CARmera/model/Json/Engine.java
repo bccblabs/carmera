@@ -1,37 +1,69 @@
 package veme.cario.com.CARmera.model.Json;
 
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by bski on 11/15/14.
  */
-// // @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Engine {
 
-    private String id;
+    // @JsonProperty
+    // private String id;
+
+    @JsonProperty
     private String name;
-    private String equipmentType;
+
+    // @JsonProperty
+    // private String equipmentType;
+
+    @JsonProperty
     private String compressionRatio;
+
+    @JsonProperty
     private String cylinder;
-    private String size;
+
+    // @JsonProperty
+    // private String size;
+
+    @JsonProperty
     private String displacement;
+
+    @JsonProperty
     private String configuration;
+
+    @JsonProperty
     private String fuelType;
+
+    @JsonProperty
     private String horsepower;
+
+    @JsonProperty
     private String torque;
+
+    @JsonProperty
     private String totalValves;
+
+    @JsonProperty
     private String manufacturerEngineCode;
-    private String type;
-    private String code;
+
+    // @JsonProperty
+    // private String type;
+
+    // @JsonProperty
+    // private String code;
+
+    @JsonProperty
     private String compressorType;
 
-    public String getId() {
-        return id;
-    }
+    // public String getId() {
+    //     return id;
+    // }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    // public void setId(String id) {
+    //     this.id = id;
+    // }
 
     public String getName() {
         return name;
@@ -41,13 +73,13 @@ public class Engine {
         this.name = name;
     }
 
-    public String getEquipmentType() {
-        return equipmentType;
-    }
+    // public String getEquipmentType() {
+    //     return equipmentType;
+    // }
 
-    public void setEquipmentType(String equipmentType) {
-        this.equipmentType = equipmentType;
-    }
+    // public void setEquipmentType(String equipmentType) {
+    //     this.equipmentType = equipmentType;
+    // }
 
     public String getCompressionRatio() {
         return compressionRatio;
@@ -65,13 +97,13 @@ public class Engine {
         this.cylinder = cylinder;
     }
 
-    public String getSize() {
-        return size;
-    }
+    // public String getSize() {
+    //     return size;
+    // }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+    // public void setSize(String size) {
+    //     this.size = size;
+    // }
 
     public String getDisplacement() {
         return displacement;
@@ -129,21 +161,21 @@ public class Engine {
         this.manufacturerEngineCode = manufacturerEngineCode;
     }
 
-    public String getType() {
-        return type;
-    }
+    // public String getType() {
+    //     return type;
+    // }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    // public void setType(String type) {
+    //     this.type = type;
+    // }
 
-    public String getCode() {
-        return code;
-    }
+    // public String getCode() {
+    //     return code;
+    // }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    // public void setCode(String code) {
+    //     this.code = code;
+    // }
 
     public String getCompressorType() {
         return compressorType;

@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -22,6 +23,7 @@ import com.parse.ParseUser;
 /**
  * The set of tagged_vehicles that have been starred in the app.
  */
+
 public class Favorites {
     /**
      * A listener to notify other parts of the app when tagged_vehicles have been starred

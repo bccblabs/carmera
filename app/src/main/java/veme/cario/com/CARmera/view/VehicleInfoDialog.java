@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.view;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,12 +12,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.fragment.DealershipFragment;
+import veme.cario.com.CARmera.fragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.OwnershipCostFragment;
+import veme.cario.com.CARmera.fragment.RecommendedFragment;
+import veme.cario.com.CARmera.fragment.RentalFragment;
+import veme.cario.com.CARmera.fragment.ReviewFragment;
+import veme.cario.com.CARmera.fragment.SpecsFragment;
 
 public class VehicleInfoDialog extends DialogFragment {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
-    private final static int NUM_FRAG = 6;
+    private final static int NUM_FRAG = 7;
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -51,26 +58,30 @@ public class VehicleInfoDialog extends DialogFragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: {
+                    ImageFragment imageFragment = new ImageFragment();
+                    return imageFragment;
+                }
+                case 1: {
                     SpecsFragment specsFragment = new SpecsFragment();
                     return specsFragment;
                 }
-                case 1: {
+                case 2: {
                     DealershipFragment dealershipFragment = new DealershipFragment();
                     return dealershipFragment;
                 }
-                case 2: {
+                case 3: {
                     OwnershipCostFragment ownershipCostFragment = new OwnershipCostFragment();
                     return ownershipCostFragment;
                 }
-                case 3: {
+                case 4: {
                     RentalFragment rentalFragment = new RentalFragment();
                     return rentalFragment;
                 }
-                case 4: {
+                case 5: {
                     ReviewFragment reviewFragment = new ReviewFragment();
                     return reviewFragment;
                 }
-                case 5: {
+                case 6: {
                     RecommendedFragment recommendedFragment = new RecommendedFragment();
                     return recommendedFragment;
                 }

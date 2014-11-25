@@ -1,6 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/base_info_view">
+                <TextView
+                    android:id="@+id/year_view"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <TextView
+                    android:id="@+id/make_view"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <TextView
+                    android:id="@+id/model_view"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+            </LinearLayout>
+            <TableRow
+                android:id="@+id/transmission_row">
+                <TextView android:text="@string/str_transmission"/>
+                <TextView android:id="@+id/transmission"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/drivetrain_row">
+                <TextView android:text="@string/str_drivetrain"/>
+                <TextView android:id="@+id/drivetrain"/>
+            </TableRow>
+
+
+
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TextView
+                android:id="@+id/price_info_view"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/str_price_info"/>
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TableRow
+                android:id="@+id/used_private_row">
+                <TextView android:text="@string/str_used_private"/>
+                <TextView android:id="@+id/used_private"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/used_tmv_row">
+                <TextView android:text="@string/str_used_tmv"/>
+                <TextView android:id="@+id/used_tmv"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/invoice_row">
+                <TextView android:text="@string/str_invoice"/>
+                <TextView android:id="@+id/invoice"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/msrp_row">
+                <TextView android:text="@string/str_msrp"/>
+                <TextView android:id="@+id/msrp"/>
+            </TableRow>
+
+
+
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TextView
+                android:id="@+id/engine_info_view"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/str_engine_info"/>
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TableRow
+                android:id="@+id/hp_row">
+                <TextView android:text="@string/str_hp"/>
+                <TextView android:id="@+id/hp"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/torque_row">
+                <TextView android:text="@string/str_torque"/>
+                <TextView android:id="@+id/torque"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/fueltype_row">
+                <TextView android:text="@string/str_fueltype"/>
+                <TextView android:id="@+id/fueltype"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/displacement_row">
+                <TextView android:text="@string/str_displacement"/>
+                <TextView android:id="@+id/displacement"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/cylinder_cnt_row">
+                <TextView android:text="@string/str_cylinder"/>
+                <TextView android:id="@+id/cylinder_cnt"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/configuration_row">
+                <TextView android:text="@string/str_configuration"/>
+                <TextView android:id="@+id/configuration"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/engine_name_row">
+                <TextView android:text="@string/str_engine_name"/>
+                <TextView android:id="@+id/engine_name"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/engine_code_row">
+                <TextView android:text="@string/str_engine_code"/>
+                <TextView android:id="@+id/engine_code"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/compressor_row">
+                <TextView android:text="@string/str_compressor"/>
+                <TextView android:id="@+id/compressor"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/compression_ratio_row">
+                <TextView android:text="@string/str_compression_ratio"/>
+                <TextView android:id="@+id/compression_ratio"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/valve_row">
+                <TextView android:text="@string/str_valve"/>
+                <TextView android:id="@+id/valve"/>
+            </TableRow>
+
+
+
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TextView
+                android:id="@+id/mpg_info_view"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/str_mpg_info"/>
+            <View
+                android:layout_height="1dip"
+                android:background="#000000" />
+            <TableRow
+                android:id="@+id/city_mpg_row">
+                <TextView android:text="@string/str_city_mpg"/>
+                <TextView android:id="@+id/city_mpg"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/highway_mpg_row">
+                <TextView android:text="@string/str_highway_mpg"/>
+                <TextView android:id="@+id/highway_mpg"/>
+            </TableRow>
+
+
+
+
+
+        </TableLayout>
+
+    </ScrollView>
+</RelativeLayout>
