@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"/>
             </LinearLayout>
             <TableRow
-                android:id="@+id/transmission_type_row">
+                android:id="@+id/vehicle_name_row">
                 <TextView android:text="@string/str_vehicle_name"/>
                 <TextView android:id="@+id/name_view"/>
             </TableRow>

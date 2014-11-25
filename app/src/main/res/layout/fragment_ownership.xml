@@ -1,6 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView android:text="@string/str_fuel_cost0"/>
+            <TextView android:id="@+id/fuel_cost0_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_insurance_cost0"/>
+            <TextView android:id="@+id/insurance_cost0_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_maintenance_cost0"/>
+            <TextView android:id="@+id/maintenance_cost0_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_repair_cost0"/>
+            <TextView android:id="@+id/repair_cost0_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_depr_cost0"/>
+            <TextView android:id="@+id/depr_cost0_textview"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:text="@string/str_fuel_cost1"/>
+            <TextView android:id="@+id/fuel_cost1_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_insurance_cost1"/>
+            <TextView android:id="@+id/insurance_cost1_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_maintenance_cost1"/>
+            <TextView android:id="@+id/maintenance_cost1_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_repair_cost1"/>
+            <TextView android:id="@+id/repair_cost1_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_depr_cost1"/>
+            <TextView android:id="@+id/depr_cost1_textview"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:text="@string/str_fuel_cost2"/>
+            <TextView android:id="@+id/fuel_cost2_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_insurance_cost2"/>
+            <TextView android:id="@+id/insurance_cost2_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_maintenance_cost2"/>
+            <TextView android:id="@+id/maintenance_cost2_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_repair_cost2"/>
+            <TextView android:id="@+id/repair_cost2_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_depr_cost2"/>
+            <TextView android:id="@+id/depr_cost2_textview"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:text="@string/str_fuel_cost3"/>
+            <TextView android:id="@+id/fuel_cost3_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_insurance_cost3"/>
+            <TextView android:id="@+id/insurance_cost3_textview"/>
+        </TableRow>
+        <TableRow>
+        <TextView android:text="@string/str_maintenance_cost3"/>
+            <TextView android:id="@+id/maintenance_cost3_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_repair_cost3"/>
+            <TextView android:id="@+id/repair_cost3_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_depr_cost3"/>
+            <TextView android:id="@+id/depr_cost3_textview"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:text="@string/str_fuel_cost4"/>
+            <TextView android:id="@+id/fuel_cost4_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_insurance_cost4"/>
+            <TextView android:id="@+id/insurance_cost4_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_maintenance_cost4"/>
+            <TextView android:id="@+id/maintenance_cost4_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_repair_cost4"/>
+            <TextView android:id="@+id/repair_cost4_textview"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="@string/str_depr_cost4"/>
+            <TextView android:id="@+id/depr_cost4_textview"/>
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

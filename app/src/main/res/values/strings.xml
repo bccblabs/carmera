@@ -85,4 +85,35 @@
 
     <string name="str_vehicle_name">Vehicle Name</string>
 
+
+    <string name="str_fuel_cost0">First Year Fuel Cost</string>
+    <string name="str_fuel_cost1">Second Year Fuel Cost</string>
+    <string name="str_fuel_cost2">Third Year Fuel Cost</string>
+    <string name="str_fuel_cost3">Fourth Year Fuel Cost</string>
+    <string name="str_fuel_cost4">Fifth Year Fuel Cost</string>
+
+    <string name="str_insurance_cost0">First Year Insurance Cost</string>
+    <string name="str_insurance_cost1">Second Year Insurance Cost</string>
+    <string name="str_insurance_cost2">Third Year Insurance Cost</string>
+    <string name="str_insurance_cost3">Fourth Year Insurance Cost</string>
+    <string name="str_insurance_cost4">Fifth Year Insurance Cost</string>
+
+    <string name="str_repair_cost0">First Year Repair Cost</string>
+    <string name="str_repair_cost1">Second Year Repair Cost</string>
+    <string name="str_repair_cost2">Third Year Repair Cost</string>
+    <string name="str_repair_cost3">Fourth Year Repair Cost</string>
+    <string name="str_repair_cost4">Fifth Year Repair Cost</string>
+
+    <string name="str_maintenance_cost0">First Year Maintenance Cost</string>
+    <string name="str_maintenance_cost1">Second Year Maintenance Cost</string>
+    <string name="str_maintenance_cost2">Third Year Maintenance Cost</string>
+    <string name="str_maintenance_cost3">Fourth Year Maintenance Cost</string>
+    <string name="str_maintenance_cost4">Fifth Year Maintenance Cost</string>
+
+    <string name="str_depr_cost0">First Year Depreciation Cost</string>
+    <string name="str_depr_cost1">Second Year Depreciation Cost</string>
+    <string name="str_depr_cost2">Third Year Depreciation Cost</string>
+    <string name="str_depr_cost3">Fourth Year Depreciation Cost</string>
+    <string name="str_depr_cost4">Fifth Year Depreciation Cost</string>
+
 </resources>

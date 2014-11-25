@@ -17,14 +17,35 @@ public class OwnershipCostFragment extends Fragment {
     private LinearLayout price_overlay; // new, used
     private LinearLayout running_overlay; // fuel, insurance, maintenance, repair, insurance
 
-    private TextView avg_new_price;
-    private TextView avg_used_price;
+    private TextView fuel_cost0_textview;
+    private TextView insurance_cost0_textview;
+    private TextView repair_cost0_textview;
+    private TextView maintenance_cost0_textview;
+    private TextView depr_cost0_textview;
 
-    private TextView fuel_sum;
-    private TextView insurance_sum;
-    private TextView maintenance_sum;
-    private TextView repair_sum;
-    private TextView dep_sum;
+    private TextView fuel_cost1_textview;
+    private TextView insurance_cost1_textview;
+    private TextView repair_cost1_textview;
+    private TextView maintenance_cost1_textview;
+    private TextView depr_cost1_textview;
+
+    private TextView fuel_cost2_textview;
+    private TextView insurance_cost2_textview;
+    private TextView repair_cost2_textview;
+    private TextView maintenance_cost2_textview;
+    private TextView depr_cost2_textview;
+
+    private TextView fuel_cost3_textview;
+    private TextView insurance_cost3_textview;
+    private TextView repair_cost3_textview;
+    private TextView maintenance_cost3_textview;
+    private TextView depr_cost3_textview;
+
+    private TextView fuel_cost4_textview;
+    private TextView insurance_cost4_textview;
+    private TextView repair_cost4_textview;
+    private TextView maintenance_cost4_textview;
+    private TextView depr_cost4_textview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
