@@ -27,8 +27,8 @@ public class ImagePreviewDialog extends ProgressDialog {
         super (cxt);
     }
     @Override
-    public void onCreate (Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.image_preview_dialog);
         preview_view = (ImageView) findViewById (R.id.preview_view);
         status_view = (TextView) findViewById(R.id.status_view);

@@ -8,8 +8,8 @@ import android.os.Bundle;
  */
 public class SettingsActivity extends BaseActivity {
     @Override
-    public void onCreate (Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, new SettingsFragment())
                             .commit();

@@ -26,8 +26,8 @@ public class SettingsFragment extends PreferenceFragment
     ListPreference dist_pref;
 
     @Override
-    public void onCreate (Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         name_pref = (EditTextPreference) findPreference(KEY_PREF_USER_NAME);
         phone_pref = (EditTextPreference) findPreference(KEY_PREF_USER_PHONE);

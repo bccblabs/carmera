@@ -128,8 +128,8 @@ public class CaptureActivity extends FragmentActivity
     private Location last_location;
 
     @Override
-    public void onCreate(Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cv_capture);
 
         /* Draw CV layout */

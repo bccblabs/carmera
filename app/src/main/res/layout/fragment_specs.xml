@@ -35,9 +35,19 @@
                     android:layout_width="match_parent"/>
             </LinearLayout>
             <TableRow
-                android:id="@+id/transmission_row">
-                <TextView android:text="@string/str_transmission"/>
-                <TextView android:id="@+id/transmission"/>
+                android:id="@+id/transmission_type_row">
+                <TextView android:text="@string/str_vehicle_name"/>
+                <TextView android:id="@+id/name_view"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/transmission_type_row">
+                <TextView android:text="@string/str_transmission_type"/>
+                <TextView android:id="@+id/transmission_type"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/transmission_speed_row">
+                <TextView android:text="@string/str_transmission_speed"/>
+                <TextView android:id="@+id/transmission_speed"/>
             </TableRow>
             <TableRow
                 android:id="@+id/drivetrain_row">

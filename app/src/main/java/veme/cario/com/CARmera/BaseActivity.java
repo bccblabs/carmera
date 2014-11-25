@@ -37,8 +37,8 @@ public class BaseActivity extends Activity {
     static final private String TAG = "BASEACTIVITY";
 
     @Override
-    public void onCreate(Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
 
