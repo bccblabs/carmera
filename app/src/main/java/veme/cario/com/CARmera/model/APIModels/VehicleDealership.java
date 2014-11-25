@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import veme.cario.com.CARmera.model.Json.ContactInfo;
 import veme.cario.com.CARmera.model.Json.DealershipAddress;
@@ -8,8 +9,10 @@ import veme.cario.com.CARmera.model.Json.DealershipAddress;
 /**
  * Created by bski on 11/16/14.
  */
-// // @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class VehicleDealership {
+
     public String getDealershipId() {
         return dealershipId;
     }
@@ -50,10 +53,19 @@ public class VehicleDealership {
         this.contactInfo = contactInfo;
     }
 
+    @JsonProperty
     private String dealershipId;
+
+    @JsonProperty
     private String name;
+
+    @JsonProperty
     private int distance;
+
+    @JsonProperty
     private DealershipAddress address;
+
+    @JsonProperty
     private ContactInfo contactInfo;
 
 

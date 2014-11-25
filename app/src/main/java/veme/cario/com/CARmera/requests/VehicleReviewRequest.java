@@ -3,8 +3,7 @@ package veme.cario.com.CARmera.requests;
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import veme.cario.com.CARmera.CARmeraApp;
-import veme.cario.com.CARmera.Utility.Utility;
-import veme.cario.com.CARmera.model.APIModels.VehicleOwnershipCost;
+import veme.cario.com.CARmera.util.Utility;
 import veme.cario.com.CARmera.model.APIModels.VehicleReview;
 
 /**

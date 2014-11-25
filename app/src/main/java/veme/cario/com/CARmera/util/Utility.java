@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.Utility;
+package veme.cario.com.CARmera.util;
 
 /**
  * Created by bski on 11/16/14.
