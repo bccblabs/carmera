@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import veme.cario.com.CARmera.model.Json.ContactInfo;
 import veme.cario.com.CARmera.model.Json.DealershipAddress;
+import veme.cario.com.CARmera.model.Json.Operations;
 
 /**
  * Created by bski on 11/16/14.
@@ -13,7 +14,7 @@ import veme.cario.com.CARmera.model.Json.DealershipAddress;
 
 public class VehicleDealership {
 
-    public String getDealershipId() {
+    public String getDealershipIdgetDealershipId() {
         return dealershipId;
     }
 
@@ -53,8 +54,24 @@ public class VehicleDealership {
         this.contactInfo = contactInfo;
     }
 
+    public String getDealerId() {
+        return dealerId;
+    }
+
+    public void setDealerId(String dealerId) {
+        this.dealerId = dealerId;
+    }
+
+    public Operations getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Operations operations) {
+        this.operations = operations;
+    }
+
     @JsonProperty
-    private String dealershipId;
+    private String dealerId;
 
     @JsonProperty
     private String name;
@@ -64,6 +81,9 @@ public class VehicleDealership {
 
     @JsonProperty
     private DealershipAddress address;
+
+    @JsonProperty
+    private Operations operations;
 
     @JsonProperty
     private ContactInfo contactInfo;

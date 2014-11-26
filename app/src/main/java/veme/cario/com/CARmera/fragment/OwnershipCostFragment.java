@@ -23,12 +23,7 @@ import veme.cario.com.CARmera.model.APIModels.VehicleOwnershipCost;
 import veme.cario.com.CARmera.requests.VehicleBaseInfoRequest;
 import veme.cario.com.CARmera.requests.VehicleNewOwnershipCostRequest;
 
-/**
- * Created by bski on 11/10/14.
- */
 public class OwnershipCostFragment extends Fragment {
-    private LinearLayout price_overlay; // new, used
-    private LinearLayout running_overlay; // fuel, insurance, maintenance, repair, insurance
 
     private TextView total_cost;
     private TextView total_fuel_cost;

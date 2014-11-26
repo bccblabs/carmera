@@ -56,7 +56,7 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
         review_title_tv.setText(review.getTitle());
         review_text_tv.setText(review.getText());
 
-        customerRatingListAdapter = new CustomerRatingListAdapter();
+        customerRatingListAdapter = new CustomerRatingListAdapter(getContext());
         customerRatingListAdapter.clear();
         for (CustomerRating rating : review.getRatings()) {
             customerRatingListAdapter.add(rating);

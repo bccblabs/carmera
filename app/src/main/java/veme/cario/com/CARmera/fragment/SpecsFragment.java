@@ -19,15 +19,9 @@ import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.requests.VehicleBaseInfoRequest;
 
-/**
- * Created by bski on 11/10/14.
- */
 public class SpecsFragment extends Fragment {
 
     private static final String JSON_HASH_KEY = "base_info_json";
-    private LinearLayout mpg_overlay;
-    private LinearLayout price_overlay;
-    private LinearLayout performance_overlay;
 
     /* "name" */
     private TextView vehicle_name;
@@ -174,7 +168,8 @@ public class SpecsFragment extends Fragment {
 
 
         performRequest(getArguments().getString("vehicle_yr"),
-                getArguments().getString("vehicle_mk"), getArguments().getString("vehicle_model"));
+                        getArguments().getString("vehicle_mk"),
+                        getArguments().getString("vehicle_model"));
     }
 
     private void performRequest(String year, String make, String model) {

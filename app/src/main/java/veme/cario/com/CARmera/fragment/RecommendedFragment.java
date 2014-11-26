@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import veme.cario.com.CARmera.R;
 
-/**
- * Created by bski on 11/10/14.
- */
 public class RecommendedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
