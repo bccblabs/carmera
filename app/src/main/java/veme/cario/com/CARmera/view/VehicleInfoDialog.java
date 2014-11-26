@@ -15,8 +15,6 @@ import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.DealershipFragment;
 import veme.cario.com.CARmera.fragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.OwnershipCostFragment;
-import veme.cario.com.CARmera.fragment.RecommendedFragment;
-import veme.cario.com.CARmera.fragment.RentalFragment;
 import veme.cario.com.CARmera.fragment.ReviewFragment;
 import veme.cario.com.CARmera.fragment.SpecsFragment;
 
@@ -41,7 +39,6 @@ public class VehicleInfoDialog extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_dialog, container);
         sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-        // Set up the ViewPager with the sections adapter.
         viewPager = (ViewPager)view.findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         return view;
@@ -62,28 +59,20 @@ public class VehicleInfoDialog extends DialogFragment {
                     return imageFragment;
                 }
                 case 1: {
-                    SpecsFragment specsFragment = new SpecsFragment();
-                    return specsFragment;
+                    ReviewFragment reviewFragment = new ReviewFragment();
+                    return reviewFragment;
                 }
                 case 2: {
-                    DealershipFragment dealershipFragment = new DealershipFragment();
-                    return dealershipFragment;
+                    SpecsFragment specsFragment = new SpecsFragment();
+                    return specsFragment;
                 }
                 case 3: {
                     OwnershipCostFragment ownershipCostFragment = new OwnershipCostFragment();
                     return ownershipCostFragment;
                 }
                 case 4: {
-                    RentalFragment rentalFragment = new RentalFragment();
-                    return rentalFragment;
-                }
-                case 5: {
-                    ReviewFragment reviewFragment = new ReviewFragment();
-                    return reviewFragment;
-                }
-                case 6: {
-                    RecommendedFragment recommendedFragment = new RecommendedFragment();
-                    return recommendedFragment;
+                    DealershipFragment dealershipFragment = new DealershipFragment();
+                    return dealershipFragment;
                 }
             }
             return null;
@@ -98,17 +87,15 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SPECS & REVIEWS";
+                    return "";
                 case 1:
-                    return "NEARBY LISTINGS";
+                    return "Customer Reviews";
                 case 2:
-                    return "COST TO OWN";
+                    return "Detailed Specifications";
                 case 3:
-                    return "RENTALS";
+                    return "Cost-To-Own";
                 case 4:
-                    return "NEWS";
-                case 5:
-                    return "SIMILAR VEHICLES";
+                    return "Nearby Dealerships";
             }
             return null;
         }

@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.Json.CustomerRating;
-import veme.cario.com.CARmera.model.Json.Review;
+import veme.cario.com.CARmera.model.Json.CustomerReview;
 
 /**
  * Created by bski on 11/25/14.
  */
-public class ReviewListAdapter extends ArrayAdapter<Review> {
+public class ReviewListAdapter extends ArrayAdapter<CustomerReview> {
     private LayoutInflater inflater;
     private CustomerRatingListAdapter customerRatingListAdapter = null;
 
@@ -46,7 +46,7 @@ public class ReviewListAdapter extends ArrayAdapter<Review> {
             holder = (ViewHolder) view.getTag();
         }
 
-        final Review review = getItem(position);
+        final CustomerReview review = getItem(position);
         TextView reviewer_name_tv = holder.reviewer_name_textview;
         TextView review_title_tv = holder.review_title_textview;
         TextView review_text_tv = holder.review_text_textview;

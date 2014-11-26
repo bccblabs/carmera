@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.model.Json.Review;
+import veme.cario.com.CARmera.model.Json.CustomerReview;
 
 /**
  * Created by bski on 11/16/14.
@@ -29,11 +29,11 @@ public class VehicleCustomerReview {
         this.reviewCount = reviewCount;
     }
 
-    public List<Review> getReviews() {
+    public List<CustomerReview> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<CustomerReview> reviews) {
         this.reviews = reviews;
     }
 
@@ -44,5 +44,5 @@ public class VehicleCustomerReview {
     private String reviewCount;
 
     @JsonProperty
-    private List<Review> reviews;
+    private List<CustomerReview> reviews;
 }

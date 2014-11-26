@@ -14,12 +14,13 @@ import veme.cario.com.CARmera.model.Json.Operations;
 
 public class VehicleDealership {
 
-    public String getDealershipIdgetDealershipId() {
-        return dealershipId;
+
+    public String getDealerId() {
+        return dealerId;
     }
 
-    public void setDealershipId(String dealershipId) {
-        this.dealershipId = dealershipId;
+    public void setDealerId(String dealerId) {
+        this.dealerId = dealerId;
     }
 
     public String getName() {
@@ -52,14 +53,6 @@ public class VehicleDealership {
 
     public void setContactInfo(ContactInfo contactInfo) {
         this.contactInfo = contactInfo;
-    }
-
-    public String getDealerId() {
-        return dealerId;
-    }
-
-    public void setDealerId(String dealerId) {
-        this.dealerId = dealerId;
     }
 
     public Operations getOperations() {

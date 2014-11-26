@@ -17,7 +17,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleCustomerReview;
-import veme.cario.com.CARmera.model.Json.Review;
+import veme.cario.com.CARmera.model.Json.CustomerReview;
 import veme.cario.com.CARmera.requests.VehicleCustomerReviewRequest;
 import veme.cario.com.CARmera.util.ReviewListAdapter;
 
@@ -50,7 +50,7 @@ public class ReviewFragment extends Fragment {
                     return;
                 }
                 customer_reviews_adapter.clear();
-                for (Review review : vehicleCustomerReview.getReviews()) {
+                for (CustomerReview review : vehicleCustomerReview.getReviews()) {
                     customer_reviews_adapter.add(review);
                 }
                 customer_reviews_adapter.notifyDataSetChanged();

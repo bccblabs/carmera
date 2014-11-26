@@ -9,7 +9,9 @@ import java.util.List;
  * Created by bski on 11/16/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Review {
+
+public class CustomerReview {
+
     public String getTitle() {
         return title;
     }
