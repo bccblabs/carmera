@@ -82,8 +82,6 @@ public class CaptureActivity extends FragmentActivity
     /* On orientation change, pause->redraw */
     private OrientationEventListener orientationEventListener;
 
-    private boolean lockedScreen = false;
-
     /* Camera callbacks */
     private Camera.ShutterCallback shutterCallback = null;
     private Camera.PictureCallback pictureCallback = null;
@@ -108,6 +106,7 @@ public class CaptureActivity extends FragmentActivity
             }
         }
     };
+
     private boolean mIsColorSelected = false;
     private Mat mRgba;
     private Scalar mBlobColorRgba;
@@ -151,25 +150,25 @@ public class CaptureActivity extends FragmentActivity
 //        fav_btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                if (cvPreview != null) {
+//                    cvPreview.disableView();
+//                }
 //            }
 //        });
 //        tagged_btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
-//            }
-//        });
-//        settings_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
+//                if (cvPreview != null) {
+//                    cvPreview.disableView();
+//                }
 //            }
 //        });
 //        album_upl_btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                if (cvPreview != null) {
+//                    cvPreview.disableView();
+//                }
 //            }
 //        });
 
@@ -204,7 +203,6 @@ public class CaptureActivity extends FragmentActivity
 
     @Override
     public void onPause() {
-//        orientationEventListener.disable();
         if (cvPreview != null)
             cvPreview.disableView();
         super.onPause();
@@ -279,53 +277,53 @@ public class CaptureActivity extends FragmentActivity
     }
 
     private void saveToParse(byte[] raw_data) {
-//        TaggedVehicle taggedVehicle = new TaggedVehicle();
-//        final ParseUser curr_user = ParseUser.getCurrentUser();
-//        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
-//        String timestamp = s.format(new Date());
-//        Location location = (curr_location == null) ? last_location : curr_location;
-//        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-//        taggedVehicle.setLocation(geo_point);
-//        taggedVehicle.setFavorite(false);
-//        ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
-//        taggedVehicle.setTagPhoto(photo_file);
-//        photo_file.saveInBackground(new SaveCallback() {
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    Toast toast = Toast.makeText(CaptureActivity.this,
-//                            "Image saved...",
-//                            Toast.LENGTH_SHORT);
-//                    toast.show();
-//
-//                } else {
-//                    Toast toast = Toast.makeText(CaptureActivity.this,
-//                            "Parse save image error",
-//                            Toast.LENGTH_SHORT);
-//                    curr_user.saveEventually();
-//                    toast.show();
-//                }
-//            }
-//        });
-//        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
-//        curr_user.saveInBackground(new SaveCallback() {
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    Toast toast = Toast.makeText(CaptureActivity.this,
-//                            "TaggedV saved, waiting image rec...",
-//                            Toast.LENGTH_SHORT);
-//                    toast.show();
-//
-//                } else {
-//                    Toast toast = Toast.makeText(CaptureActivity.this,
-//                            "Parse save taggedV error",
-//                            Toast.LENGTH_SHORT);
-//                    curr_user.saveEventually();
-//                    toast.show();
-//                }
-//            }
-//        });
+        TaggedVehicle taggedVehicle = new TaggedVehicle();
+        final ParseUser curr_user = ParseUser.getCurrentUser();
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String timestamp = s.format(new Date());
+        Location location = (curr_location == null) ? last_location : curr_location;
+        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+        taggedVehicle.setLocation(geo_point);
+        taggedVehicle.setFavorite(false);
+        ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
+        taggedVehicle.setTagPhoto(photo_file);
+        photo_file.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Image saved...",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                } else {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Parse save image error",
+                            Toast.LENGTH_SHORT);
+                    curr_user.saveEventually();
+                    toast.show();
+                }
+            }
+        });
+        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
+        curr_user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "TaggedV saved, waiting image rec...",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                } else {
+                    Toast toast = Toast.makeText(CaptureActivity.this,
+                            "Parse save taggedV error",
+                            Toast.LENGTH_SHORT);
+                    curr_user.saveEventually();
+                    toast.show();
+                }
+            }
+        });
         Log.d(TAG, " parse object saved!");
     }
 

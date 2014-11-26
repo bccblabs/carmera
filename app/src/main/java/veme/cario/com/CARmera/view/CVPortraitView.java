@@ -87,7 +87,7 @@ public class CVPortraitView extends CameraBridgeViewBase
 
                 if (sizes != null) {
                 /* Select the size that fits surface considering maximum size allowed */
-                    Size frameSize = calculateCameraFrameSize(sizes, new JavaCameraSizeAccessor(), height, width); //use turn around values here to get the correct prev size for portrait mode
+                    Size frameSize = calculateCameraFrameSize(sizes, new JavaCameraSizeAccessor(), width, height); //use turn around values here to get the correct prev size for portrait mode
 
                     params.setPreviewFormat(ImageFormat.NV21);
                     Log.d(TAG, "Set preview size to " + Integer.valueOf((int)frameSize.width) + "x" + Integer.valueOf((int)frameSize.height));
@@ -105,11 +105,11 @@ public class CVPortraitView extends CameraBridgeViewBase
                     mCamera.setParameters(params);
                     params = mCamera.getParameters();
 
-                    mFrameWidth = params.getPreviewSize().height; //the frame width and height of the super class are used to generate the cached bitmap and they need to be the size of the resulting frame
-                    mFrameHeight = params.getPreviewSize().width;
+                    mFrameWidth = params.getPreviewSize().width; //the frame width and height of the super class are used to generate the cached bitmap and they need to be the size of the resulting frame
+                    mFrameHeight = params.getPreviewSize().height;
 
-                    int realWidth = mFrameHeight; //the real width and height are the width and height of the frame received in onPreviewFrame
-                    int realHeight = mFrameWidth;
+                    int realWidth = mFrameWidth; //the real width and height are the width and height of the frame received in onPreviewFrame
+                    int realHeight = mFrameHeight;
 
                     if ((getLayoutParams().width == LayoutParams.MATCH_PARENT) && (getLayoutParams().height == LayoutParams.MATCH_PARENT))
                         mScale = Math.min(((float)height)/mFrameHeight, ((float)width)/mFrameWidth);
@@ -180,28 +180,17 @@ public class CVPortraitView extends CameraBridgeViewBase
 
     @Override
     protected boolean connectCamera(int width, int height) {
-
-    /* 1. We need to instantiate camera
-     * 2. We need to start thread which will be getting frames
-     */
-    /* First step - initialize camera connection */
         Log.d(TAG, "Connecting to camera");
         if (!initializeCamera(width, height))
             return false;
-
-    /* now we can start update thread */
         Log.d(TAG, "Starting processing thread");
         mStopThread = false;
         mThread = new Thread(new CameraWorker());
         mThread.start();
-
         return true;
     }
 
     protected void disconnectCamera() {
-    /* 1. We need to stop thread which updating the frames
-     * 2. Stop camera and release it
-     */
         Log.d(TAG, "Disconnecting from camera");
         try {
             mStopThread = true;
@@ -217,8 +206,6 @@ public class CVPortraitView extends CameraBridgeViewBase
         } finally {
             mThread =  null;
         }
-
-    /* Now release camera */
         releaseCamera();
     }
 
@@ -232,19 +219,21 @@ public class CVPortraitView extends CameraBridgeViewBase
             mCamera.addCallbackBuffer(mBuffer);
     }
 
+    // setting the preview size to 1920x1080, this is right
     @Override
-    protected Size calculateCameraFrameSize(List<?> supportedSizes, ListItemAccessor accessor, int surfaceWidth, int surfaceHeight) {
-        int calcWidth = 0;
-        int calcHeight = 0;
-        for (Object size : supportedSizes) {
-            int width = accessor.getWidth(size);
-            int height = accessor.getHeight(size);
-            if (width >= calcWidth && height >= calcHeight) {
-                calcWidth = width;
-                calcHeight = height;
-            }
-        }
-        return new Size(calcWidth, calcHeight);
+    protected Size calculateCameraFrameSize(List<?> supportedSizes, ListItemAccessor accessor,
+                                                             int surfaceWidth, int surfaceHeight) {
+         int calcWidth = 0;
+         int calcHeight = 0;
+         for (Object size : supportedSizes) {
+             int width = accessor.getWidth(size);
+             int height = accessor.getHeight(size);
+             if (width >= calcWidth && height >= calcHeight) {
+                 calcWidth = width;
+                 calcHeight = height;
+             }
+         }
+         return new Size(calcWidth, calcHeight);
     }
 
     private class JavaCameraFrame implements CvCameraViewFrame {
@@ -255,19 +244,22 @@ public class CVPortraitView extends CameraBridgeViewBase
         private Mat mRotated;
 
         public Mat gray() {
-            if (mRotated != null) mRotated.release();
-            mRotated = mYuvFrameData.submat(0, mWidth, 0, mHeight); //submat with reversed width and height because its done on the landscape frame
-            mRotated = mRotated.t();
-            Core.flip(mRotated, mRotated, 1);
-            return mRotated;
+            // if (mRotated != null) mRotated.release();
+            // mRotated = mYuvFrameData.submat(0, mWidth, 0, mHeight); //submat with reversed width and height because its done on the landscape frame
+            // mRotated = mRotated.t();
+            // Core.flip(mRotated, mRotated, 1);
+            // return mRotated;
+            return mYuvFrameData.submat(0, mHeight, 0, mWidth);
+
         }
 
         public Mat rgba() {
             Imgproc.cvtColor(mYuvFrameData, mRgba, Imgproc.COLOR_YUV2BGR_NV12, 4);
-            if (mRotated != null) mRotated.release();
-            mRotated = mRgba.t();
-            Core.flip(mRotated, mRotated, 1);
-            return mRotated;
+            // if (mRotated != null) mRotated.release();
+            // mRotated = mRgba.t();
+            // Core.flip(mRotated, mRotated, 1);
+            // return mRotated;
+            return mRgba;
         }
 
         public JavaCameraFrame(Mat Yuv420sp, int width, int height) {
@@ -306,10 +298,6 @@ public class CVPortraitView extends CameraBridgeViewBase
             } while (!mStopThread);
             Log.d(TAG, "Finish processing thread");
         }
-    }
-
-    public Camera getCVCamera() {
-        return mCamera;
     }
 
 }

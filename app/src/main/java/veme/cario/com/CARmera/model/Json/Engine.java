@@ -7,25 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by bski on 11/15/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Engine {
 
-    // @JsonProperty
-    // private String id;
+public class Engine {
 
     @JsonProperty
     private String name;
-
-    // @JsonProperty
-    // private String equipmentType;
 
     @JsonProperty
     private String compressionRatio;
 
     @JsonProperty
     private String cylinder;
-
-    // @JsonProperty
-    // private String size;
 
     @JsonProperty
     private String displacement;
@@ -48,22 +40,8 @@ public class Engine {
     @JsonProperty
     private String manufacturerEngineCode;
 
-    // @JsonProperty
-    // private String type;
-
-    // @JsonProperty
-    // private String code;
-
     @JsonProperty
     private String compressorType;
-
-    // public String getId() {
-    //     return id;
-    // }
-
-    // public void setId(String id) {
-    //     this.id = id;
-    // }
 
     public String getName() {
         return name;
@@ -72,14 +50,6 @@ public class Engine {
     public void setName(String name) {
         this.name = name;
     }
-
-    // public String getEquipmentType() {
-    //     return equipmentType;
-    // }
-
-    // public void setEquipmentType(String equipmentType) {
-    //     this.equipmentType = equipmentType;
-    // }
 
     public String getCompressionRatio() {
         return compressionRatio;
@@ -96,14 +66,6 @@ public class Engine {
     public void setCylinder(String cylinder) {
         this.cylinder = cylinder;
     }
-
-    // public String getSize() {
-    //     return size;
-    // }
-
-    // public void setSize(String size) {
-    //     this.size = size;
-    // }
 
     public String getDisplacement() {
         return displacement;
@@ -160,22 +122,6 @@ public class Engine {
     public void setManufacturerEngineCode(String manufacturerEngineCode) {
         this.manufacturerEngineCode = manufacturerEngineCode;
     }
-
-    // public String getType() {
-    //     return type;
-    // }
-
-    // public void setType(String type) {
-    //     this.type = type;
-    // }
-
-    // public String getCode() {
-    //     return code;
-    // }
-
-    // public void setCode(String code) {
-    //     this.code = code;
-    // }
 
     public String getCompressorType() {
         return compressorType;

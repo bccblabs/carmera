@@ -16,7 +16,6 @@ public class VehicleCustomerReviewRequest extends SpringAndroidSpiceRequest<Vehi
 
     public VehicleCustomerReviewRequest(String vehicle_id_) {
         super(VehicleCustomerReview.class);
-//        this.vehicle_id = Utility.mmy_to_id(yr, mk, ml);
         this.vehicle_id = vehicle_id_;
     }
 
