@@ -55,6 +55,12 @@ public class DealershipAddress {
         this.zipcode = zipcode;
     }
 
+    @Override
+    public String toString() {
+        return getStreet() + "\n "
+                + getCity() + " " + getCity() +" " +getZipcode();
+    }
+
     private String street;
     private String city;
     private String stateCode;
