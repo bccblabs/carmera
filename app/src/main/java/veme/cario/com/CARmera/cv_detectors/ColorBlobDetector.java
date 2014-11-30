@@ -112,4 +112,5 @@ public class ColorBlobDetector {
     public List<MatOfPoint> getContours() {
         return mContours;
     }
+    public void clearContours() {mContours.clear();}
 }

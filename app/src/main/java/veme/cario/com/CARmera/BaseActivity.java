@@ -157,6 +157,7 @@ public class BaseActivity extends Activity {
 
         switch (item.getItemId()) {
 
+
             case R.id.action_nearby: {
                 if (!(this instanceof NearbyActivity)) {
                     Intent i = new Intent(this, NearbyActivity.class);
@@ -198,6 +199,9 @@ public class BaseActivity extends Activity {
                     finish();
                 }
                 break;
+            }
+            default: {
+                finish();
             }
 
         }

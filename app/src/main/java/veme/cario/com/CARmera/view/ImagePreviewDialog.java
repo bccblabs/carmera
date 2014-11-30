@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -38,6 +39,13 @@ public class ImagePreviewDialog extends ProgressDialog {
         status_view.setText("Let's upload!");
         discard_photo_btn.setText("Retake Photo");
         upload_btn.setText("Upload this!");
+
+        discard_photo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePreviewDialog.this.dismiss();
+            }
+        });
     }
 
     public void setImageView (Bitmap bitmap) {

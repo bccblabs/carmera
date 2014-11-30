@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -32,9 +31,7 @@ public class CVPortraitView extends CameraBridgeViewBase
     private boolean mStopThread;
 
     private Camera mCamera;
-    private int mCameraId;
     private JavaCameraFrame[] mCameraFrame;
-    private SurfaceTexture mSurfaceTexture;
 
 
     private static class JavaCameraSizeAccessor implements ListItemAccessor {
@@ -57,6 +54,7 @@ public class CVPortraitView extends CameraBridgeViewBase
     boolean initializeCamera(int width, int height) {
         Log.d(TAG, "Initialize java camera");
         boolean result = true;
+        SurfaceTexture mSurfaceTexture;
         synchronized (this) {
             mCamera = null;
 
@@ -68,7 +66,6 @@ public class CVPortraitView extends CameraBridgeViewBase
                 if (cameraInfo.facing == android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK) {
                     try {
                         mCamera = Camera.open(i);
-                        mCameraId = i;
                         connected = true;
                     } catch (RuntimeException e) {
                         Log.e(TAG, "Camera #" + i + "failed to open: " + e.getMessage());
@@ -128,13 +125,13 @@ public class CVPortraitView extends CameraBridgeViewBase
                     mCamera.setPreviewCallbackWithBuffer(this);
 
                     mFrameChain = new Mat[2];
-                    mFrameChain[0] = new Mat(realHeight + (realHeight/2), realWidth, CvType.CV_8UC1); //the frame chane is still in landscape
+                    mFrameChain[0] = new Mat(realHeight + (realHeight/2), realWidth, CvType.CV_8UC1);
                     mFrameChain[1] = new Mat(realHeight + (realHeight/2), realWidth, CvType.CV_8UC1);
 
                     AllocateCache();
 
                     mCameraFrame = new JavaCameraFrame[2];
-                    mCameraFrame[0] = new JavaCameraFrame(mFrameChain[0], mFrameWidth, mFrameHeight); //the camera frame is in portrait
+                    mCameraFrame[0] = new JavaCameraFrame(mFrameChain[0], mFrameWidth, mFrameHeight);
                     mCameraFrame[1] = new JavaCameraFrame(mFrameChain[1], mFrameWidth, mFrameHeight);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -241,24 +238,14 @@ public class CVPortraitView extends CameraBridgeViewBase
         private final Mat mRgba;
         private final int mWidth;
         private int mHeight;
-        private Mat mRotated;
 
         public Mat gray() {
-            // if (mRotated != null) mRotated.release();
-            // mRotated = mYuvFrameData.submat(0, mWidth, 0, mHeight); //submat with reversed width and height because its done on the landscape frame
-            // mRotated = mRotated.t();
-            // Core.flip(mRotated, mRotated, 1);
-            // return mRotated;
             return mYuvFrameData.submat(0, mHeight, 0, mWidth);
 
         }
 
         public Mat rgba() {
             Imgproc.cvtColor(mYuvFrameData, mRgba, Imgproc.COLOR_YUV2BGR_NV12, 4);
-            // if (mRotated != null) mRotated.release();
-            // mRotated = mRgba.t();
-            // Core.flip(mRotated, mRotated, 1);
-            // return mRotated;
             return mRgba;
         }
 
@@ -272,7 +259,6 @@ public class CVPortraitView extends CameraBridgeViewBase
 
         public void release() {
             mRgba.release();
-            if (mRotated != null) mRotated.release();
         }
 
 

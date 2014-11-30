@@ -58,6 +58,7 @@ import veme.cario.com.CARmera.cv_detectors.ColorBlobDetector;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.view.CVPortraitView;
+import veme.cario.com.CARmera.view.ImagePreviewDialog;
 //import veme.cario.com.CARmera.view.ImagePreviewDialog;
 
 
@@ -121,10 +122,17 @@ public class CaptureActivity extends FragmentActivity
     private String last_request;
     private VehicleBaseInfo vehicleBaseInfo;
 
-    /* Activity lifecycle */
 
-    private Location curr_location;
-    private Location last_location;
+    /* Camera dialog */
+    ImagePreviewDialog imagePreviewDialog = null;
+
+    private Scalar converScalarHsv2Rgba(Scalar hsvColor) {
+        Mat pointMatRgba = new Mat();
+        Mat pointMatHsv = new Mat(1, 1, CvType.CV_8UC3, hsvColor);
+        Imgproc.cvtColor(pointMatHsv, pointMatRgba, Imgproc.COLOR_HSV2RGB_FULL, 4);
+
+        return new Scalar(pointMatRgba.get(0, 0));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,42 +144,10 @@ public class CaptureActivity extends FragmentActivity
         cvPreview.setVisibility(SurfaceView.VISIBLE);
         cvPreview.setCvCameraViewListener(this);
 
-
-        /* Listeners for buttons */
-        ImageButton fav_btn = (ImageButton) findViewById(R.id.favorite_button);
-        ImageButton tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
-        ImageButton album_upl_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
-
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
-
-        /* Camera UI initializer */
-//        fav_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cvPreview != null) {
-//                    cvPreview.disableView();
-//                }
-//            }
-//        });
-//        tagged_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cvPreview != null) {
-//                    cvPreview.disableView();
-//                }
-//            }
-//        });
-//        album_upl_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cvPreview != null) {
-//                    cvPreview.disableView();
-//                }
-//            }
-//        });
-
+        imagePreviewDialog = new ImagePreviewDialog(CaptureActivity.this);
     }
 
     @Override
@@ -225,55 +201,24 @@ public class CaptureActivity extends FragmentActivity
     private byte[] getScaledPhoto(byte[] raw_data) {
         // Resize photo from camera byte array
         Bitmap vehicleImage = BitmapFactory.decodeByteArray(raw_data, 0, raw_data.length);
-        Bitmap vehicleImageScaled = Bitmap.createScaledBitmap(vehicleImage, 200, 200
-                * vehicleImage.getHeight() / vehicleImage.getWidth(), false);
+        int scaleFactor = vehicleImage.getHeight() / vehicleImage.getWidth();
+        Bitmap vehicleImageScaled = Bitmap.createScaledBitmap(vehicleImage,
+                                                            640 * scaleFactor,
+                                                            480 * scaleFactor,
+                                                            false);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        vehicleImageScaled.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
         // Override Android default landscape orientation and save portrait
-        Matrix matrix = new Matrix();
-        Bitmap rotatedScaledMealImage = Bitmap.createBitmap(vehicleImageScaled, 0,
-                0, vehicleImageScaled.getWidth(), vehicleImageScaled.getHeight(),
-                matrix, true);
+//        Matrix matrix = new Matrix();
+//        Bitmap rotatedScaledMealImage = Bitmap.createBitmap(vehicleImageScaled, 0,
+//                0, vehicleImageScaled.getWidth(), vehicleImageScaled.getHeight(),
+//                matrix, true);
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        rotatedScaledMealImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        rotatedScaledMealImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
         return bos.toByteArray();
-    }
-
-    /* UI helper functions */
-    public void onOrientationChanged(int orientation) {
-    }
-
-    /* OpenCV functions */
-    public void onCameraViewStarted(int width, int height) {
-        mRgba = new Mat(height, width, CvType.CV_8UC4);
-        mDetector = new ColorBlobDetector();
-        mSpectrum = new Mat();
-        mBlobColorRgba = new Scalar(255);
-        mBlobColorHsv = new Scalar(255);
-        SPECTRUM_SIZE = new Size(200, 64);
-        CONTOUR_COLOR = new Scalar(255, 255, 0, 255);
-    }
-
-    public void onCameraViewStopped() {
-        mRgba.release();
-    }
-
-    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        mRgba = inputFrame.rgba();
-
-        if (mIsColorSelected) {
-            mDetector.process(mRgba);
-            List<MatOfPoint> contours = mDetector.getContours();
-
-            // fill a polygon instead of drawing contours
-            for (MatOfPoint contour : contours) {
-                Rect boundingRect = Imgproc.boundingRect(contour);
-                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(), CONTOUR_COLOR, 5);
-            }
-        }
-
-        return mRgba;
     }
 
     private void saveToParse(byte[] raw_data) {
@@ -281,9 +226,9 @@ public class CaptureActivity extends FragmentActivity
         final ParseUser curr_user = ParseUser.getCurrentUser();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String timestamp = s.format(new Date());
-        Location location = (curr_location == null) ? last_location : curr_location;
-        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-        taggedVehicle.setLocation(geo_point);
+//        Location location = (curr_location == null) ? last_location : curr_location;
+//        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+//        taggedVehicle.setLocation(geo_point);
         taggedVehicle.setFavorite(false);
         ParseFile photo_file = new ParseFile(timestamp + ".jpg", getScaledPhoto(raw_data));
         taggedVehicle.setTagPhoto(photo_file);
@@ -327,103 +272,116 @@ public class CaptureActivity extends FragmentActivity
         Log.d(TAG, " parse object saved!");
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
 
-        /* If touched, a region might be selected, stop preview */
-        if (mIsColorSelected == false) {
+    /* OpenCV functions */
+    public void onCameraViewStarted(int width, int height) {
+        mRgba = new Mat(height, width, CvType.CV_8UC4);
+        mDetector = new ColorBlobDetector();
+        mSpectrum = new Mat();
+        mBlobColorRgba = new Scalar(255);
+        mBlobColorHsv = new Scalar(255);
+        SPECTRUM_SIZE = new Size(200, 64);
+        CONTOUR_COLOR = new Scalar(255, 255, 0, 255);
+    }
 
-            Log.i(TAG, "ON_TOUCH COLOR SELECT EVENT");
+    public void onCameraViewStopped() {
+        mRgba.release();
+    }
 
-            int cols = mRgba.cols();
-            int rows = mRgba.rows();
+    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        mRgba = inputFrame.rgba();
 
-            int xOffset = (cvPreview.getWidth() - cols) / 2;
-            int yOffset = (cvPreview.getHeight() - rows) / 2;
-
-            int x = (int) event.getX() - xOffset;
-            int y = (int) event.getY() - yOffset;
-
-            Log.i(TAG, "Touch image coordinates: (" + x + ", " + y + ")");
-
-            if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
-
-            Rect touchedRect = new Rect();
-
-            touchedRect.x = (x > 4) ? x - 4 : 0;
-            touchedRect.y = (y > 4) ? y - 4 : 0;
-
-            touchedRect.width = (x + 4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
-            touchedRect.height = (y + 4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
-
-            Mat touchedRegionRgba = mRgba.submat(touchedRect);
-
-            Mat touchedRegionHsv = new Mat();
-
-            // CONVERT THE COLOR OF TOUCH REGION FROM RGBA TO HSV
-            Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
-
-            // Calculate average color of touched region
-            mBlobColorHsv = Core.sumElems(touchedRegionHsv);
-
-            // mBlobColorHsv/Rgba: Scalar of colors
-            int pointCount = touchedRect.width * touchedRect.height;
-            for (int i = 0; i < mBlobColorHsv.val.length; i++)
-                mBlobColorHsv.val[i] /= pointCount;
-
-            mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
-
-            Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
-                    ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
-
-            // mDetector: Color Detector
-            mDetector.setHsvColor(mBlobColorHsv);
-
-            // Resize the Detector's spectrum to mSpectrum as a 200x64
-            Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE);
-
-            mIsColorSelected = true;
-            touchedRegionRgba.release();
-            touchedRegionHsv.release();
-            cvPreview.disableView();
-
-        } else {
-            cvPreview.enableView();
-
-            List<MatOfPoint> contours = mDetector.getContours();
-            List<Rect> boundingRects = new ArrayList<Rect>();
-            Point touch_point = new Point (event.getRawX(), event.getRawY());
+        if (mIsColorSelected) {
             mDetector.process(mRgba);
-
-            for (int i = 0; i < contours.size(); i++) {
-                Rect rect = Imgproc.boundingRect(contours.get(i));
-                Core.rectangle(mRgba, rect.tl(), rect.br(), CONTOUR_COLOR, 5);
-                boundingRects.add(rect);
+            List<MatOfPoint> contours = mDetector.getContours();
+            // fill a polygon instead of drawing contours
+            for (MatOfPoint contour : contours) {
+                Rect boundingRect = Imgproc.boundingRect(contour);
+                Core.rectangle(mRgba, boundingRect.tl(), boundingRect.br(), CONTOUR_COLOR, 5);
             }
-
-            for (Rect rect : boundingRects) {
-                if (touch_point.inside(rect)) {
-                    Log.i(TAG, "Taking picture");
-//                    MatOfByte byteMat = new MatOfByte(new Mat(mRgba,rect));
-//                    saveToParse(byteMat.toArray());
-                }
-            }
-
-            /* None of the regions found are interested, turn camera back on */
-            /* On picture taken, restart the preview */
-            mIsColorSelected = false;
         }
 
-            return false;
-    }
-
-    private Scalar converScalarHsv2Rgba(Scalar hsvColor) {
-        Mat pointMatRgba = new Mat();
-        Mat pointMatHsv = new Mat(1, 1, CvType.CV_8UC3, hsvColor);
-        Imgproc.cvtColor(pointMatHsv, pointMatRgba, Imgproc.COLOR_HSV2RGB_FULL, 4);
-
-        return new Scalar(pointMatRgba.get(0, 0));
+        return mRgba;
     }
 
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        List<Rect> boundingRects = new ArrayList<Rect>();
+        Point touch_point = new Point(event.getRawX(), event.getRawY());
+        Log.i(TAG, "ON_TOUCH COLOR SELECT EVENT");
+
+        int cols = mRgba.cols();
+        int rows = mRgba.rows();
+
+        int xOffset = (cvPreview.getWidth() - cols) / 2;
+        int yOffset = (cvPreview.getHeight() - rows) / 2;
+
+        int x = (int) event.getX() - xOffset;
+        int y = (int) event.getY() - yOffset;
+
+        Log.i(TAG, "Touch image coordinates: (" + x + ", " + y + ")");
+
+        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) {
+            Log.i(TAG, " - touched point not in region.");
+            return true;
+        }
+
+        updateDetector(x, y, cols, rows);
+        mDetector.process(mRgba);
+        mIsColorSelected = true;
+        List<MatOfPoint> contours = mDetector.getContours();
+        for (int i = 0; i < contours.size(); i++) {
+            Rect rect = Imgproc.boundingRect(contours.get(i));
+            if (rect.contains(touch_point)) {
+                mDetector.clearContours();
+                Core.rectangle(mRgba, rect.tl(), rect.br(), CONTOUR_COLOR, 7);
+                mIsColorSelected = false;
+                imagePreviewDialog.show();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void updateDetector (int x, int y, int cols, int rows) {
+
+        Rect touchedRect = new Rect();
+
+        touchedRect.x = (x > 4) ? x - 4 : 0;
+        touchedRect.y = (y > 4) ? y - 4 : 0;
+
+        touchedRect.width = (x + 4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
+        touchedRect.height = (y + 4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
+
+        Mat touchedRegionRgba = mRgba.submat(touchedRect);
+
+        Mat touchedRegionHsv = new Mat();
+
+        // CONVERT THE COLOR OF TOUCH REGION FROM RGBA TO HSV
+        Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
+
+        // Calculate average color of touched region
+        mBlobColorHsv = Core.sumElems(touchedRegionHsv);
+
+        // mBlobColorHsv/Rgba: Scalar of colors
+        int pointCount = touchedRect.width * touchedRect.height;
+        for (int i = 0; i < mBlobColorHsv.val.length; i++)
+            mBlobColorHsv.val[i] /= pointCount;
+
+        mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
+
+        Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
+                ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
+
+        // mDetector: Color Detector
+        mDetector.setHsvColor(mBlobColorHsv);
+
+        // Resize the Detector's spectrum to mSpectrum as a 200x64
+        Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE);
+
+        touchedRegionRgba.release();
+        touchedRegionHsv.release();
+
+    }
 }

@@ -60,7 +60,8 @@
             android:name="veme.cario.com.CARmera.CaptureActivity"
             android:label="@string/title_activity_capture"
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName="veme.cario.com.CARmera.ProfileActivity">
 
             <intent-filter>
                 <action android:name="android.media.action.IMAGE_CAPTURE" />

@@ -125,4 +125,9 @@
 
     <string name="str_average_customer_rating">Average Customer Rating</string>
     <string name="str_customer_review_count">Customer Rating Count</string>
+
+    <string name="str_favorites">Favorites</string>
+    <string name="str_album_upload">Upload From Album</string>
+    <string name="str_tagged">Tagged Vehicles</string>
+
 </resources>
