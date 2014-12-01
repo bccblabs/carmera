@@ -63,8 +63,6 @@ public class ReviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* set fragment to be retained across Activity recreation */
-        setRetainInstance(true);
     }
 
     @Override
@@ -110,6 +108,6 @@ public class ReviewFragment extends Fragment {
         customer_reviews_adapter = new ReviewListAdapter(getActivity());
         customer_review_listview.setAdapter(customer_reviews_adapter);
 
-        performRequest();
+//        performRequest();
     }
 }

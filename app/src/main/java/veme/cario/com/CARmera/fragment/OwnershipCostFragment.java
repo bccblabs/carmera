@@ -132,7 +132,6 @@ public class OwnershipCostFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /* set fragment to be retained across Activity recreation */
-        setRetainInstance(true);
     }
 
     @Override
@@ -208,6 +207,6 @@ public class OwnershipCostFragment extends Fragment {
         maintenance_cost4_textview = (TextView) getView().findViewById(R.id.maintenance_cost4_textview);
         depr_cost4_textview = (TextView) getView().findViewById(R.id.depr_cost4_textview);
 
-        performRequest();
+//        performRequest();
     }
 }

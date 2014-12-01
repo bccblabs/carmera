@@ -2,14 +2,15 @@ package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
 
-import android.support.v4.app.FragmentActivity;
 
 import org.opencv.android.Utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +33,6 @@ import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.view.CVPortraitView;
-import veme.cario.com.CARmera.view.ImagePreviewDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 
@@ -83,8 +83,8 @@ public class CaptureActivity extends FragmentActivity
 
 
     /* Camera dialog */
-    ImagePreviewDialog imagePreviewDialog = null;
-    VehicleInfoDialog vehicleInfoDialog = null;
+    private VehicleInfoDialog vehicleInfoDialog = null;
+    private FragmentManager fm;
     boolean imageSet = false;
 
     @Override
@@ -100,7 +100,8 @@ public class CaptureActivity extends FragmentActivity
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
-        imagePreviewDialog = new ImagePreviewDialog(CaptureActivity.this);
+        fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
     }
 
     @Override
@@ -179,8 +180,12 @@ public class CaptureActivity extends FragmentActivity
 
         mRgba = inputFrame.rgba();
         /* set image frame here */
-        if (imagePreviewDialog.isShowing() && !imageSet) {
+
+        if (vehicleInfoDialog.isVisible() && !imageSet) {
             Log.i (TAG, " - Setting Image!");
+            Bitmap bitmap = Bitmap.createBitmap(640, 480, Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(mRgba, bitmap);
+            vehicleInfoDialog.setVehicleBitmap(bitmap);
             imageSet = true;
         }
         return mRgba;
@@ -189,10 +194,10 @@ public class CaptureActivity extends FragmentActivity
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (!imagePreviewDialog.isShowing()) {
-            imagePreviewDialog.show();
+        if (!vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
         } else {
-            imagePreviewDialog.dismiss();
+            vehicleInfoDialog.dismiss();
         }
         imageSet = false;
         return false;

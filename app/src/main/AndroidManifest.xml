@@ -43,6 +43,9 @@
         android:persistent="true"
         android:theme="@style/AppTheme">
 
+        <service
+            android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
+            android:exported="false" />
 
         <activity
             android:name=".BaseActivity"

@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.view;
 import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.DealershipFragment;
@@ -22,7 +25,9 @@ public class VehicleInfoDialog extends DialogFragment {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
-    private final static int NUM_FRAG = 7;
+    private final static int NUM_FRAG = 5;
+
+    private Bitmap capturedBitmap = null;
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -42,6 +47,14 @@ public class VehicleInfoDialog extends DialogFragment {
         viewPager = (ViewPager)view.findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         return view;
+    }
+
+    public void setVehicleBitmap (Bitmap bitmap) {
+        this.capturedBitmap = bitmap;
+        Bundle args = new Bundle();
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
+        args.putByteArray("previewImage", bs.toByteArray());
     }
 
     /* Tab paging */
@@ -87,7 +100,7 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "";
+                    return "Figure this out";
                 case 1:
                     return "Customer Reviews";
                 case 2:

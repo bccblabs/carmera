@@ -55,7 +55,6 @@ public class DealershipFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -99,7 +98,7 @@ public class DealershipFragment extends Fragment {
         dealerships_list_view = (ListView) getView().findViewById(R.id.dealerships_listview);
         dealership_list_adapter = new DealershipListAdapter(getActivity());
         dealerships_list_view.setAdapter(dealership_list_adapter);
-        performRequest();
+//        performRequest();
     }
 
 }

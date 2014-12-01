@@ -105,8 +105,6 @@ public class SpecsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* set fragment to be retained across Activity recreation */
-        setRetainInstance(true);
     }
 
     @Override
@@ -167,9 +165,9 @@ public class SpecsFragment extends Fragment {
         hw_mpg = (TextView) getView().findViewById(R.id.highway_mpg);
 
 
-        performRequest(getArguments().getString("vehicle_yr"),
-                        getArguments().getString("vehicle_mk"),
-                        getArguments().getString("vehicle_model"));
+//        performRequest(getArguments().getString("vehicle_yr"),
+//                        getArguments().getString("vehicle_mk"),
+//                        getArguments().getString("vehicle_model"));
     }
 
     private void performRequest(String year, String make, String model) {
