@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -11,8 +12,18 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
 /**
  * Created by bski on 11/11/14.
@@ -23,6 +34,7 @@ public class ImagePreviewDialog extends ProgressDialog {
     private TextView status_view;
     private Button discard_photo_btn;
     private Button upload_btn;
+
 
     public ImagePreviewDialog (Context cxt) {
         super (cxt);
@@ -51,7 +63,6 @@ public class ImagePreviewDialog extends ProgressDialog {
     public void setImageView (Bitmap bitmap) {
         preview_view.setImageBitmap(bitmap);
         preview_view.setVisibility(ImageView.VISIBLE);
-
     }
 
     public void drawAnimation() {
@@ -71,4 +82,56 @@ public class ImagePreviewDialog extends ProgressDialog {
         preview_view.setAnimation(anim);
         preview_view.startAnimation(anim);
     }
+//
+//    private void saveToParse(byte[] raw_data) {
+//        TaggedVehicle taggedVehicle = new TaggedVehicle();
+//        final ParseUser curr_user = ParseUser.getCurrentUser();
+//        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+//        String timestamp = s.format(new Date());
+////        Location location = (curr_location == null) ? last_location : curr_location;
+////        ParseGeoPoint geo_point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+////        taggedVehicle.setLocation(geo_point);
+//        taggedVehicle.setFavorite(false);
+//        ParseFile photo_file = new ParseFile(timestamp + ".jpg", this.photo);
+//        taggedVehicle.setTagPhoto(photo_file);
+//        photo_file.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    Toast toast = Toast.makeText(getContext(),
+//                            "Image saved...",
+//                            Toast.LENGTH_SHORT);
+//                    toast.show();
+//
+//                } else {
+//                    Toast toast = Toast.makeText(getContext(),
+//                            "Parse save image error",
+//                            Toast.LENGTH_SHORT);
+//                    curr_user.saveEventually();
+//                    toast.show();
+//                }
+//            }
+//        });
+//        curr_user.getRelation("taggedVehicles").add(taggedVehicle);
+//        curr_user.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    Toast toast = Toast.makeText(getContext(),
+//                            "TaggedV saved, waiting image rec...",
+//                            Toast.LENGTH_SHORT);
+//                    toast.show();
+//
+//                } else {
+//                    Toast toast = Toast.makeText(getContext(),
+//                            "Parse save taggedV error",
+//                            Toast.LENGTH_SHORT);
+//                    curr_user.saveEventually();
+//                    toast.show();
+//                }
+//            }
+//        });
+//        Log.d(TAG, " parse object saved!");
+//    }
+
 }
