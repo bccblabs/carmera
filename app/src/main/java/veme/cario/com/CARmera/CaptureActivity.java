@@ -1,206 +1,155 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
-
-
-import org.opencv.android.Utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.graphics.Matrix;
+import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
+import android.view.Surface;
 import android.view.View;
-
-import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
-import com.octo.android.robospice.SpiceManager;
-
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+import android.widget.FrameLayout;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
-import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
-import veme.cario.com.CARmera.view.CVPortraitView;
+import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
-
 
 /**
  * Created by bski on 11/5/14.
  */
-public class CaptureActivity extends FragmentActivity
-                             implements CameraBridgeViewBase.CvCameraViewListener2,
-                                        View.OnTouchListener {
-
-    /* TODO: background overlay when picture is taken */
-    /* TODO: upload->render fragment overlay */
-    /* TODO: implement touch view for auto-focus gesture */
-    /* onDestroy will not need override */
-    /* onPause, remove orientation listener, close all open frags, tell preview to onPause() */
+public class CaptureActivity extends FragmentActivity {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
+    /* Camera Object */
+    private Camera camera;
+    private CameraPreview cameraPreview = null;
 
-    /* Dependent objects */
-    private CVPortraitView cvPreview;
-
-
-    /* OpenCV objects */
-    private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS: {
-                    Log.i(TAG, "OpenCV loaded successfully");
-                    cvPreview.enableView();
-                    cvPreview.setOnTouchListener(CaptureActivity.this);
-                }
-                break;
-                default: {
-                    super.onManagerConnected(status);
-                }
-                break;
-            }
-        }
-    };
-
-    private Mat mRgba;
-
-    /* SpiceManager Class */
-    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
-    private String last_request;
-    private VehicleBaseInfo vehicleBaseInfo;
-
-
-    /* Camera dialog */
     private VehicleInfoDialog vehicleInfoDialog = null;
-    private FragmentManager fm;
-    boolean imageSet = false;
 
+    /* Activity lifecycle */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cv_capture);
-
-        /* Draw CV layout */
-        cvPreview = (CVPortraitView) findViewById(R.id.activity_capture_cv_preview);
-        cvPreview.setVisibility(SurfaceView.VISIBLE);
-        cvPreview.setCvCameraViewListener(this);
-
+    public void onCreate(Bundle savedBundleInstance) {
+        super.onCreate(savedBundleInstance);
+        setContentView(R.layout.activity_capture);
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowHomeEnabled(false);
-        fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-    }
+        actionBar.hide();
+        camera = getCameraInstance();
 
-    @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.capture_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_cancel:
-                if (cvPreview != null)
-                    cvPreview.disableView();
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+        /* Draw layout */
+        cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (vehicleInfoDialog == null) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    vehicleInfoDialog = new VehicleInfoDialog();
+                    vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+                    camera.stopPreview();
+                } else {
+                    vehicleInfoDialog.dismiss();
+                    vehicleInfoDialog = null;
+                    camera.startPreview();
+                }
+                return false;
+            }
+        });
+        preview.addView(cameraPreview);
+        Log.v(TAG, " - cameraPreview attached.");
+        /* Camera initialization */
+        Camera.Parameters parameters = camera.getParameters();
+        List<String> focusModes = parameters.getSupportedFocusModes();
+        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public void onDestroy() {
-        if (cvPreview != null)
-            cvPreview.disableView();
-        super.onPause();
+        camera.setParameters(parameters);
+        setCameraDisplayOrientation(camera);
 
     }
 
     @Override
     public void onPause() {
-        if (cvPreview != null)
-            cvPreview.disableView();
+        camera.release();
         super.onPause();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, loaderCallback);
+    public void onStart() {
+        super.onStart();
     }
-
 
     @Override
     public void onStop() {
-        if (cvPreview != null)
-            cvPreview.disableView();
+        camera.release();
         super.onStop();
     }
 
-    private byte[] getScaledPhoto(byte[] raw_data) {
 
+    /* Camera helper functions */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
+
+    private byte[] getScaledPhoto(byte[] raw_data) {
+        // Resize photo from camera byte array
         Bitmap vehicleImage = BitmapFactory.decodeByteArray(raw_data, 0, raw_data.length);
-        int scaleFactor = vehicleImage.getHeight() / vehicleImage.getWidth();
-        Bitmap vehicleImageScaled = Bitmap.createScaledBitmap(vehicleImage,
-                                                            640 * scaleFactor,
-                                                            480 * scaleFactor,
-                                                            false);
+        Bitmap vehicleImageScaled = Bitmap.createScaledBitmap(vehicleImage, 200, 200
+                * vehicleImage.getHeight() / vehicleImage.getWidth(), false);
+
+        // Override Android default landscape orientation and save portrait
+        Matrix matrix = new Matrix();
+        Bitmap rotatedScaledMealImage = Bitmap.createBitmap(vehicleImageScaled, 0,
+                0, vehicleImageScaled.getWidth(), vehicleImageScaled.getHeight(),
+                matrix, true);
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        vehicleImageScaled.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        rotatedScaledMealImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
         return bos.toByteArray();
     }
 
-
-
-    /* OpenCV functions */
-    public void onCameraViewStarted(int width, int height) {
-        mRgba = new Mat(height, width, CvType.CV_8UC4);
-    }
-
-    public void onCameraViewStopped() {
-        mRgba.release();
-    }
-
-    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-
-        mRgba = inputFrame.rgba();
-        /* set image frame here */
-
-        if (vehicleInfoDialog.isVisible() && !imageSet) {
-            Log.i (TAG, " - Setting Image!");
-            Bitmap bitmap = Bitmap.createBitmap(640, 480, Bitmap.Config.ARGB_8888);
-            Utils.matToBitmap(mRgba, bitmap);
-            vehicleInfoDialog.setVehicleBitmap(bitmap);
-            imageSet = true;
+    public void setCameraDisplayOrientation(android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(0, info);
+        int rotation = CaptureActivity.this.getWindowManager().getDefaultDisplay()
+                .getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;
         }
-        return mRgba;
-    }
 
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (!vehicleInfoDialog.isVisible()) {
-            vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
-        } else {
-            vehicleInfoDialog.dismiss();
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
         }
-        imageSet = false;
-        return false;
+        camera.setDisplayOrientation(result);
     }
-
 }
