@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,11 @@ public class ImageFragment extends Fragment {
 
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
-    private Button discard_photo_btn;
     private Button upload_btn;
     private LinearLayout preview_container;
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+    private static final String TAG = "IMAGE_FRAGMENT";
 
     private final class VehicleRequestListener implements RequestListener<Vehicle> {
         @Override
@@ -47,9 +48,13 @@ public class ImageFragment extends Fragment {
 
         @Override
         public void onRequestSuccess(Vehicle vehicle) {
-            getArguments().putString("year", vehicle.getYear());
-            getArguments().putString("make", vehicle.getMake());
-            getArguments().putString("model", vehicle.getModel());
+            Log.i(TAG, " - " + vehicle.getResult().getYear() + " "
+                    + vehicle.getResult().getMake() + " "
+                    + vehicle.getResult().getModel());
+
+            getArguments().putString("year", vehicle.getResult().getYear());
+            getArguments().putString("make", vehicle.getResult().getMake());
+            getArguments().putString("model", vehicle.getResult().getModel());
             preview_container.setHorizontalScrollBarEnabled(true);
         }
     }
@@ -90,42 +95,19 @@ public class ImageFragment extends Fragment {
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.preview_view);
 
-        discard_photo_btn = (Button) getView().findViewById(R.id.discard_photo_btn);
         upload_btn = (Button) getView().findViewById(R.id.upload_btn);
 
         preview_container = (LinearLayout) getView().findViewById(R.id.image_preview_container);
         preview_container.setHorizontalScrollBarEnabled(false);
 
-        discard_photo_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* dismiss the dialog fragment */
-            }
-        });
-
-
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 performRequest();
-                /* override the imageview with animation */
             }
         });
 
-//        new BitmapLoaderTask().execute();
-        byte[] newImageBytes;
-        byte[] imageData = getArguments().getByteArray("imageData");
-            /* first, make a bitmap out of original */
-        Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-            /* second, compress it using a byte array */
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            /* third, create a new image out of byte array */
-        newImageBytes = bos.toByteArray();
-        bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
-        Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 160, 120, false);
-        preview_view.setImageBitmap(scaled_bitmap);
-
+        new BitmapLoaderTask().execute();
 
     }
 
@@ -136,11 +118,6 @@ public class ImageFragment extends Fragment {
         spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new VehicleRequestListener());
     }
-
-    /*  Params sent to task upon exec
-        Progress units published during background
-        Result of the computation
-     */
 
     public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {
 
@@ -156,7 +133,7 @@ public class ImageFragment extends Fragment {
             /* third, create a new image out of byte array */
             newImageBytes = bos.toByteArray();
             bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
-            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 160, 120, false);
+            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
             return scaled_bitmap;
         }
 

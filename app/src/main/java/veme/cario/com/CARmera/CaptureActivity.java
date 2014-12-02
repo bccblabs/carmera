@@ -3,6 +3,7 @@ package veme.cario.com.CARmera;
 import android.app.ActionBar;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +11,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+
 import java.util.List;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;

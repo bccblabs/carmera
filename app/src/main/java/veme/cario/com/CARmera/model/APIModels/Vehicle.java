@@ -8,37 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vehicle {
-    public String getYear() {
-        return year;
+
+    public PredictionResult getResult() {
+        return result;
     }
 
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
+    public void setResult(PredictionResult result) {
+        this.result = result;
     }
 
     @JsonProperty
-    private String year;
-
-    @JsonProperty
-    private String make;
-
-    @JsonProperty
-    private String model;
-
+    private PredictionResult result;
 }

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.ByteArrayOutputStream;
 
@@ -26,8 +28,6 @@ public class VehicleInfoDialog extends DialogFragment {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
     private final static int NUM_FRAG = 5;
-
-    private Bitmap capturedBitmap = null;
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
