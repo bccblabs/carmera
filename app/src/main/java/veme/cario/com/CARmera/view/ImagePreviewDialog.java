@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -12,18 +11,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
 /**
  * Created by bski on 11/11/14.
@@ -42,7 +31,7 @@ public class ImagePreviewDialog extends ProgressDialog {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.image_preview_dialog);
+        setContentView(R.layout.fragment_image_preview);
         preview_view = (ImageView) findViewById (R.id.preview_view);
         status_view = (TextView) findViewById(R.id.status_view);
         discard_photo_btn = (Button) findViewById(R.id.discard_photo_btn);

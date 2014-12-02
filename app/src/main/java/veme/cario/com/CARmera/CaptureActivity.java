@@ -1,9 +1,7 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,10 +11,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import java.io.ByteArrayOutputStream;
 import java.util.List;
-
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
@@ -29,8 +24,13 @@ public class CaptureActivity extends FragmentActivity {
     /* Camera Object */
     private Camera camera;
     private CameraPreview cameraPreview = null;
-
     private VehicleInfoDialog vehicleInfoDialog = null;
+    private Camera.PictureCallback pictureCallback  = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Log.d(TAG, " - picture length: " + data.length);
+        }
+    };
 
     /* Activity lifecycle */
     @Override
@@ -43,15 +43,30 @@ public class CaptureActivity extends FragmentActivity {
 
         /* Draw layout */
         cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
+
+
+        Log.v(TAG, " - cameraPreview attached.");
+        /* Camera initialization */
+        Camera.Parameters parameters = camera.getParameters();
+        List<String> focusModes = parameters.getSupportedFocusModes();
+        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        }
+        parameters.setPictureFormat(ImageFormat.JPEG);
+        parameters.setPictureSize(640, 480);
+        camera.setParameters(parameters);
+        setCameraDisplayOrientation(camera);
+
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+
         preview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (vehicleInfoDialog == null) {
+                    camera.takePicture(null, null, pictureCallback);
                     FragmentManager fm = getSupportFragmentManager();
                     vehicleInfoDialog = new VehicleInfoDialog();
                     vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
-                    camera.stopPreview();
                 } else {
                     vehicleInfoDialog.dismiss();
                     vehicleInfoDialog = null;
@@ -61,16 +76,6 @@ public class CaptureActivity extends FragmentActivity {
             }
         });
         preview.addView(cameraPreview);
-        Log.v(TAG, " - cameraPreview attached.");
-        /* Camera initialization */
-        Camera.Parameters parameters = camera.getParameters();
-        List<String> focusModes = parameters.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        }
-
-        camera.setParameters(parameters);
-        setCameraDisplayOrientation(camera);
 
     }
 
@@ -101,24 +106,6 @@ public class CaptureActivity extends FragmentActivity {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
-    }
-
-    private byte[] getScaledPhoto(byte[] raw_data) {
-        // Resize photo from camera byte array
-        Bitmap vehicleImage = BitmapFactory.decodeByteArray(raw_data, 0, raw_data.length);
-        Bitmap vehicleImageScaled = Bitmap.createScaledBitmap(vehicleImage, 200, 200
-                * vehicleImage.getHeight() / vehicleImage.getWidth(), false);
-
-        // Override Android default landscape orientation and save portrait
-        Matrix matrix = new Matrix();
-        Bitmap rotatedScaledMealImage = Bitmap.createBitmap(vehicleImageScaled, 0,
-                0, vehicleImageScaled.getWidth(), vehicleImageScaled.getHeight(),
-                matrix, true);
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        rotatedScaledMealImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-
-        return bos.toByteArray();
     }
 
     public void setCameraDisplayOrientation(android.hardware.Camera camera) {

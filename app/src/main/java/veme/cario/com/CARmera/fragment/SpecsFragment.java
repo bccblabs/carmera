@@ -56,8 +56,6 @@ public class SpecsFragment extends Fragment {
     /* drivenWheels */
     private TextView drive_train;
 
-
-//    private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     private final class VehicleBaseInfoRequestListener implements RequestListener<VehicleBaseInfo> {
