@@ -29,6 +29,12 @@ public class CaptureActivity extends FragmentActivity {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Log.d(TAG, " - picture length: " + data.length);
+            Bundle args = new Bundle();
+            args.putByteArray("imageData", data);
+            FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = new VehicleInfoDialog();
+            vehicleInfoDialog.setArguments(args);
+            vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
         }
     };
 
@@ -36,6 +42,8 @@ public class CaptureActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+
+        /* Initialize camera layout */
         setContentView(R.layout.activity_capture);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
@@ -43,10 +51,9 @@ public class CaptureActivity extends FragmentActivity {
 
         /* Draw layout */
         cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
-
-
         Log.v(TAG, " - cameraPreview attached.");
-        /* Camera initialization */
+
+        /* Settings camera parameters */
         Camera.Parameters parameters = camera.getParameters();
         List<String> focusModes = parameters.getSupportedFocusModes();
         if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
@@ -57,16 +64,13 @@ public class CaptureActivity extends FragmentActivity {
         camera.setParameters(parameters);
         setCameraDisplayOrientation(camera);
 
+        /* Wire up camera views */
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-
         preview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (vehicleInfoDialog == null) {
                     camera.takePicture(null, null, pictureCallback);
-                    FragmentManager fm = getSupportFragmentManager();
-                    vehicleInfoDialog = new VehicleInfoDialog();
-                    vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
                 } else {
                     vehicleInfoDialog.dismiss();
                     vehicleInfoDialog = null;
@@ -81,21 +85,22 @@ public class CaptureActivity extends FragmentActivity {
 
     @Override
     public void onPause() {
-        camera.release();
         super.onPause();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
+        releaseCamera();
     }
 
     @Override
     public void onStop() {
-        camera.release();
+        releaseCamera();
         super.onStop();
     }
 
+    private void releaseCamera() {
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
+    }
 
     /* Camera helper functions */
     public static Camera getCameraInstance() {

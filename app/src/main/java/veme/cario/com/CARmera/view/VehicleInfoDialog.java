@@ -49,14 +49,6 @@ public class VehicleInfoDialog extends DialogFragment {
         return view;
     }
 
-    public void setVehicleBitmap (Bitmap bitmap) {
-        this.capturedBitmap = bitmap;
-        Bundle args = new Bundle();
-        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
-        args.putByteArray("previewImage", bs.toByteArray());
-    }
-
     /* Tab paging */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -69,6 +61,8 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0: {
                     ImageFragment imageFragment = new ImageFragment();
+                    Bundle args = getArguments();
+                    imageFragment.setArguments(args);
                     return imageFragment;
                 }
                 case 1: {

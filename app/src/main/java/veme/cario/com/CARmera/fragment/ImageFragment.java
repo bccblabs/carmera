@@ -1,8 +1,8 @@
 package veme.cario.com.CARmera.fragment;
 
-import android.app.DialogFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
@@ -21,14 +20,12 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.ref.WeakReference;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
 import veme.cario.com.CARmera.requests.VehicleRequest;
 
-/**
- * Created by bski on 11/24/14.
- */
 public class ImageFragment extends Fragment {
 
     /* TODO: disable the scroll on vehicle request not complete*/
@@ -38,7 +35,7 @@ public class ImageFragment extends Fragment {
     private Button discard_photo_btn;
     private Button upload_btn;
     private LinearLayout preview_container;
-
+    private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     private final class VehicleRequestListener implements RequestListener<Vehicle> {
@@ -92,9 +89,10 @@ public class ImageFragment extends Fragment {
 
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.preview_view);
-//        status_view = (TextView) getView().findViewById(R.id.status_view);
+
         discard_photo_btn = (Button) getView().findViewById(R.id.discard_photo_btn);
         upload_btn = (Button) getView().findViewById(R.id.upload_btn);
+
         preview_container = (LinearLayout) getView().findViewById(R.id.image_preview_container);
         preview_container.setHorizontalScrollBarEnabled(false);
 
@@ -114,18 +112,60 @@ public class ImageFragment extends Fragment {
             }
         });
 
+//        new BitmapLoaderTask().execute();
+        byte[] newImageBytes;
+        byte[] imageData = getArguments().getByteArray("imageData");
+            /* first, make a bitmap out of original */
+        Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            /* second, compress it using a byte array */
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            /* third, create a new image out of byte array */
+        newImageBytes = bos.toByteArray();
+        bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
+        Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 160, 120, false);
+        preview_view.setImageBitmap(scaled_bitmap);
+
 
     }
 
     private void performRequest() {
         ImageFragment.this.getActivity().setProgressBarIndeterminate(true);
         /* image file */
-        byte[] imageData  = getArguments().getByteArray("imageData");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
         VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
         spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new VehicleRequestListener());
     }
+
+    /*  Params sent to task upon exec
+        Progress units published during background
+        Result of the computation
+     */
+
+    public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground (Void... params) {
+            byte[] newImageBytes;
+            byte[] imageData = getArguments().getByteArray("imageData");
+            /* first, make a bitmap out of original */
+            Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            /* second, compress it using a byte array */
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            /* third, create a new image out of byte array */
+            newImageBytes = bos.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
+            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 160, 120, false);
+            return scaled_bitmap;
+        }
+
+        @Override
+        protected void onPostExecute (Bitmap res) {
+            preview_view.setImageBitmap(res);
+        }
+    }
+
 
 
 }
