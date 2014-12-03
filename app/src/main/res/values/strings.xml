@@ -129,5 +129,8 @@
     <string name="str_favorites">Favorites</string>
     <string name="str_album_upload">Upload From Album</string>
     <string name="str_tagged">Tagged Vehicles</string>
+    <string name="str_create_new_contact">Create New Contact</string>
+    <string name="str_close_dialog">Close</string>
+    <string name="str_seller_info">Seller Info</string>
 
 </resources>

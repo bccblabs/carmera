@@ -48,9 +48,9 @@ public class ListingsFragment extends ListFragment {
         /* year, make, model, listing_id */
         Bundle args = getArguments();
         vehicleInfoDialog.setArguments(args);
-        FragmentManager fm = getChildFragmentManager();
+        FragmentManager fm = getFragmentManager();
         vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
     }
 
-    /* need to have a specilized adapter
+    /* need to have a specilized adapter */
 }

@@ -1,6 +1,9 @@
 package veme.cario.com.CARmera.util;
 
-import android.media.Image;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import veme.cario.com.CARmera.R;
@@ -16,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.parse.ParseImageView;
 
 /*
@@ -36,6 +38,8 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
     private boolean isFavorites = false;
     private boolean isListing = false;
     private LayoutInflater inflater;
+
+    private static String TAG = "SELLER_INFO_DIALOG";
 
     private static class ViewHolder {
         RelativeLayout vehicleItemLayout;
@@ -153,9 +157,34 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                 public void onClick(View v) {
                     SellerInfoDialog sellerInfoDialog = new SellerInfoDialog();
                     /* pass info to the dialog */
-                    sellerInfoDialog.show();
+                    Bundle args = new Bundle();
+                    String sellerEmail = taggedVehicle.getSellerEmail();
+                    String sellerPhone = taggedVehicle.getSellerPhone();
+                    try {
+                        byte[] seller_thumbnail = taggedVehicle.getSellerThumbnail().getData();
+                        if (seller_thumbnail != null) {
+                            args.putByteArray("seller_thumbnail", seller_thumbnail);
+                        }
+                    } catch (com.parse.ParseException e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+
+                    if (sellerEmail != null) {
+                        args.putString("seller_email", taggedVehicle.getSellerEmail());
+                    }
+                    if (sellerPhone != null) {
+                        args.putString("seller_phone", taggedVehicle.getSellerPhone());
+                    }
+                    args.putString("seller_info", taggedVehicle.getSellerInfo());
+
+
+                    /* starts the dialog */
+                    FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
+                    sellerInfoDialog.setArguments(args);
+                    sellerInfoDialog.show(fm, "sellerInfoDialog");
                 }
             });
+
         } else {
             price_info_tv.setVisibility(View.GONE);
             seller_info_tv.setVisibility(View.GONE);

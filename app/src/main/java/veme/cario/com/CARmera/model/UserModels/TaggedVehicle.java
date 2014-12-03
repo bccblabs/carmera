@@ -104,4 +104,15 @@ public class TaggedVehicle extends ParseObject {
     public String getSellerInfo () {
         return getString ("seller_info");
     }
+
+    public String getSellerPhone() {
+        return getString ("seller_phone");
+    }
+
+    public String getSellerEmail() {
+        return getString ("seller_email");
+    }
+
+    public ParseFile getSellerThumbnail() { return getParseFile("seller_thumbnail"); }
+
 }
