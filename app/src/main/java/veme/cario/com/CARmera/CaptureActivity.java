@@ -16,25 +16,27 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import java.util.List;
+
+import veme.cario.com.CARmera.fragment.ImageFragment;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-/**
- * Created by bski on 11/5/14.
- */
-public class CaptureActivity extends FragmentActivity {
+public class CaptureActivity extends FragmentActivity
+                                    implements ImageFragment.ImageResultListener{
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
     private Camera camera;
+    private byte[] imageData;
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
     private Camera.PictureCallback pictureCallback  = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Log.d(TAG, " - picture length: " + data.length);
+            imageData = data;
             Bundle args = new Bundle();
-            args.putByteArray("imageData", data);
+            args.putByteArray("imageData", imageData);
             FragmentManager fm = getSupportFragmentManager();
             vehicleInfoDialog = new VehicleInfoDialog();
             vehicleInfoDialog.setArguments(args);
@@ -148,4 +150,21 @@ public class CaptureActivity extends FragmentActivity {
         }
         camera.setDisplayOrientation(result);
     }
+
+
+    @Override
+    public void onRecognitionResult (String year, String make, String model) {
+        /* once the image is recognized, adding the new fragments to the dialog */
+        Bundle args = new Bundle();
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+        vehicleInfoDialog.dismiss();
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+    }
+
 }

@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.fragment;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -31,10 +32,16 @@ public class ImageFragment extends Fragment {
 
     /* TODO: disable the scroll on vehicle request not complete*/
 
+
+    ImageResultListener imageResultCallback = null;
+
+    public interface ImageResultListener {
+        public abstract void onRecognitionResult (String year, String make, String model);
+    }
+
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
     private Button upload_btn;
-    private LinearLayout preview_container;
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "IMAGE_FRAGMENT";
@@ -52,10 +59,10 @@ public class ImageFragment extends Fragment {
                     + vehicle.getResult().getMake() + " "
                     + vehicle.getResult().getModel());
 
-            getArguments().putString("year", vehicle.getResult().getYear());
-            getArguments().putString("make", vehicle.getResult().getMake());
-            getArguments().putString("model", vehicle.getResult().getModel());
-            preview_container.setHorizontalScrollBarEnabled(true);
+            imageResultCallback.onRecognitionResult(vehicle.getResult().getYear(),
+                                                    vehicle.getResult().getMake(),
+                                                    vehicle.getResult().getModel());
+
         }
     }
 
@@ -75,6 +82,16 @@ public class ImageFragment extends Fragment {
         initUIComponents();
     }
 
+    @Override
+    public void onAttach (Activity activity) {
+        super.onAttach(activity);
+        try {
+            imageResultCallback = (ImageResultListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + ": "
+                    + " needs to implement the ImageResultListener!");
+        }
+    }
 
     @Override
     public void onStart() {
@@ -97,9 +114,6 @@ public class ImageFragment extends Fragment {
 
         upload_btn = (Button) getView().findViewById(R.id.upload_btn);
 
-        preview_container = (LinearLayout) getView().findViewById(R.id.image_preview_container);
-        preview_container.setHorizontalScrollBarEnabled(false);
-
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,11 +126,12 @@ public class ImageFragment extends Fragment {
     }
 
     private void performRequest() {
-        ImageFragment.this.getActivity().setProgressBarIndeterminate(true);
-        /* image file */
-        VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
-        spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
-                new VehicleRequestListener());
+//        ImageFragment.this.getActivity().setProgressBarIndeterminate(true);
+//        /* image file */
+//        VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
+//        spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
+//                new VehicleRequestListener());
+        imageResultCallback.onRecognitionResult("2014", "bmw", "x3");
     }
 
     public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {
