@@ -7,6 +7,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +22,7 @@ import android.view.MenuItem;
 /**
  * Created by bski on 11/22/14.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends FragmentActivity {
 //                                implements LocationListener,
 //                                           GooglePlayServicesClient.ConnectionCallbacks,
 //                                           GooglePlayServicesClient.OnConnectionFailedListener {

@@ -97,4 +97,11 @@ public class TaggedVehicle extends ParseObject {
         return getInt("comments");
     }
 
+    public String getPrice () {
+        return getString("price");
+    }
+
+    public String getSellerInfo () {
+        return getString ("seller_info");
+    }
 }

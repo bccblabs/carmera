@@ -1,10 +1,12 @@
 package veme.cario.com.CARmera.util;
 
+import android.media.Image;
 import android.widget.ArrayAdapter;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.Favorites;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.view.SellerInfoDialog;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -31,24 +33,25 @@ import com.parse.ParseImageView;
 public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
     private static int GREEN_BACKGROUND = 0x008000;
-    private boolean isFavoritesView = false;
+    private boolean isFavorites = false;
+    private boolean isListing = false;
     private LayoutInflater inflater;
 
     private static class ViewHolder {
         RelativeLayout vehicleItemLayout;
-        TextView timeView;
-        TextView yearView;
-        TextView makeView;
-        TextView modelView;
+        TextView vehicleInfoView;
+        TextView sellerInfoView;
+        TextView priceInfoView;
         ParseImageView photo;
         ImageButton favoriteButton;
-        ImageButton deleteButton;
-        ImageButton shareButton;
+        ImageButton seeListingsBtn;
+        ImageButton contactSellerBtn;
     }
 
-    public VehicleListAdapter (Context context, boolean isFavorites) {
+    public VehicleListAdapter (Context context, boolean isFavorites_, boolean isListing_) {
         super(context, 0);
-        isFavoritesView = isFavorites;
+        isFavorites = isFavorites_;
+        isListing = isListing_;
         inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -64,18 +67,20 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             holder = new ViewHolder();
             holder.vehicleItemLayout = (RelativeLayout) view
                     .findViewById(R.id.vehicle_item);
-            holder.timeView = (TextView) view.findViewById(R.id.time_view);
-            holder.yearView = (TextView) view.findViewById(R.id.year_view);
-            holder.makeView = (TextView) view.findViewById(R.id.make_view);
-            holder.modelView = (TextView) view.findViewById(R.id.model_view);
+            holder.vehicleInfoView = (TextView) view.findViewById(R.id.vehicle_info_view);
+            holder.sellerInfoView = (TextView) view.findViewById(R.id.seller_info_view);
+            holder.priceInfoView = (TextView) view.findViewById(R.id.price_info_view);
+
             holder.photo = (ParseImageView) view
                     .findViewById(R.id.tagged_photo);
+
             holder.favoriteButton = (ImageButton) view
                     .findViewById(R.id.favorite_button);
-            holder.deleteButton = (ImageButton) view
-                    .findViewById(R.id.delete_button);
-            holder.shareButton = (ImageButton) view
-                    .findViewById(R.id.share_button);
+            holder.contactSellerBtn = (ImageButton) view
+                    .findViewById(R.id.contact_seller_btn);
+            holder.seeListingsBtn = (ImageButton) view
+                    .findViewById(R.id.see_listings_btn);
+
             // Tag for lookup later
             view.setTag(holder);
 
@@ -86,39 +91,23 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         /* vehicle: object for the entire getView function */
         final TaggedVehicle taggedVehicle = getItem(position);
         RelativeLayout vehicleLayout = holder.vehicleItemLayout;
-        if (isFavoritesView) {
+
+        if (isFavorites) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
-        vehicleLayout.setClickable(true);
-        vehicleLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* TODO: create a new dialog */
-            }
-        });
 
 
-        TextView timeView = holder.timeView;
-        timeView.setText(taggedVehicle.getTagTimestamp());
-
-        TextView yearView = holder.yearView;
-        yearView.setText(taggedVehicle.getYear());
-
-        TextView makeView = holder.makeView;
-        makeView.setText(taggedVehicle.getMake());
-
-        TextView modelView = holder.modelView;
-        modelView.setText(taggedVehicle.getModel());
+        TextView vehicle_info_tv = holder.vehicleInfoView;
+        vehicle_info_tv.setText(taggedVehicle.getMake() + " "
+                + taggedVehicle.getMake() + " "
+                + taggedVehicle.getModel());
 
         final ParseImageView photo = holder.photo;
-
         photo.loadInBackground();
 
-
-        /* Favorite Button: Visible no matter in normal, or favorites view */
         final ImageButton favoriteButton = holder.favoriteButton;
         if (Favorites.get().contains(taggedVehicle)) {
-            if (isFavoritesView) {
+            if (isFavorites) {
 //                favoriteButton.setImageResource(R.drawable.x);
             } else {
                 favoriteButton
@@ -128,6 +117,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             favoriteButton
                     .setImageResource(R.drawable.tagged_favorite);
         }
+        /* Favorite Button: Visible no matter in normal, or favorites view */
 
         favoriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -139,7 +129,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                             .setImageResource(R.drawable.tagged_not_favorite);
                 } else {
                     favorites.add(taggedVehicle);
-                    if (isFavoritesView) {
+                    if (isFavorites) {
 //                        favoriteButton.setImageResource(R.drawable.x);
                     } else {
                         favoriteButton
@@ -152,32 +142,25 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         favoriteButton.setFocusable(false);
 
 
-        /* Delete Button: Visible no matter in normal, or favorites view */
-        final ImageButton delete_button = holder.deleteButton;
-        delete_button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Favorites favorites = Favorites.get();
-                if (favorites.contains(taggedVehicle)) {
-                    favorites.remove(taggedVehicle);
+        TextView price_info_tv = holder.priceInfoView;
+        final TextView seller_info_tv = holder.sellerInfoView;
+        final ImageButton contact_seller_btn = holder.contactSellerBtn;
+        if (isListing) {
+            price_info_tv.setText(taggedVehicle.getPrice());
+            seller_info_tv.setText(taggedVehicle.getSellerInfo());
+            contact_seller_btn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SellerInfoDialog sellerInfoDialog = new SellerInfoDialog();
+                    /* pass info to the dialog */
+                    sellerInfoDialog.show();
                 }
-                taggedVehicle.deleteInBackground();
-                favorites.save(getContext());
-                /* do we really need this? */
-                notifyDataSetChanged();
-
-            }
-        });
-
-        /* Share Button - to implement once have social authentication implemented*/
-        final ImageButton share_button = holder.shareButton;
-        share_button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* TODO: create share button actions*/
-            }
-        });
-
+            });
+        } else {
+            price_info_tv.setVisibility(View.GONE);
+            seller_info_tv.setVisibility(View.GONE);
+            contact_seller_btn.setVisibility(View.GONE);
+        }
         return view;
     }
 
