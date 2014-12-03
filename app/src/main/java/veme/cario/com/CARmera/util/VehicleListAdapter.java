@@ -17,9 +17,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.parse.ParseImageView;
+import com.parse.ParseUser;
 
 /*
     Design issues:
@@ -46,10 +48,13 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         TextView vehicleInfoView;
         TextView sellerInfoView;
         TextView priceInfoView;
+        TextView likesCountView;
+        TextView refererInfo;
         ParseImageView photo;
         ImageButton favoriteButton;
         ImageButton seeListingsBtn;
         ImageButton contactSellerBtn;
+
     }
 
     public VehicleListAdapter (Context context, boolean isFavorites_, boolean isListing_) {
@@ -75,6 +80,9 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             holder.sellerInfoView = (TextView) view.findViewById(R.id.seller_info_view);
             holder.priceInfoView = (TextView) view.findViewById(R.id.price_info_view);
 
+            holder.refererInfo = (TextView) view.findViewById(R.id.referer_view);
+            holder.likesCountView = (TextView) view.findViewById(R.id.likes_view);
+
             holder.photo = (ParseImageView) view
                     .findViewById(R.id.tagged_photo);
 
@@ -94,21 +102,53 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
         /* vehicle: object for the entire getView function */
         final TaggedVehicle taggedVehicle = getItem(position);
-        RelativeLayout vehicleLayout = holder.vehicleItemLayout;
 
+        /* View item: Different relative layout button for favorite cars */
+        RelativeLayout vehicleLayout = holder.vehicleItemLayout;
         if (isFavorites) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
 
 
+        /* View item: Vehicle Year, Make, Model Information */
         TextView vehicle_info_tv = holder.vehicleInfoView;
         vehicle_info_tv.setText(taggedVehicle.getMake() + " "
                 + taggedVehicle.getMake() + " "
                 + taggedVehicle.getModel());
 
+        /* View item: Referer */
+        ParseUser referer = taggedVehicle.getReferer();
+        TextView referer_info_tv = holder.refererInfo;
+        if ( referer != null ) {
+            referer_info_tv.setText(referer.getUsername());
+        } else {
+            referer_info_tv.setVisibility(View.GONE);
+        }
+
+        /* View item: likes count */
+        TextView likes_cnt_tv = holder.likesCountView;
+        final LinearLayout likes_overlay = holder.likesOverlay;
+        likes_cnt_tv.setText(taggedVehicle.getLikesCnt());
+        likes_cnt_tv.setClickable(true);
+        likes_cnt_tv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (taggedVehicle.isLikedByMe()) {
+                    taggedVehicle.decrLike();
+                    likes_overlay.setBackgroundColor(GREEN_BACKGROUND);
+                } else {
+                    taggedVehicle.increLike();
+                    likes_overlay.setBackgroundColor(0xFFFFFF);
+                }
+            }
+        });
+
+        /* View item: Vehicle Image */
         final ParseImageView photo = holder.photo;
+        photo.setParseFile(taggedVehicle.getTagPhoto());
         photo.loadInBackground();
 
+        /* View item: Vehicle Favorite Button */
         final ImageButton favoriteButton = holder.favoriteButton;
         if (Favorites.get().contains(taggedVehicle)) {
             if (isFavorites) {
@@ -121,14 +161,12 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             favoriteButton
                     .setImageResource(R.drawable.tagged_favorite);
         }
-        /* Favorite Button: Visible no matter in normal, or favorites view */
 
         favoriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Favorites favorites = Favorites.get();
                 if (favorites.contains(taggedVehicle)) {
                     favorites.remove(taggedVehicle);
-
                     favoriteButton
                             .setImageResource(R.drawable.tagged_not_favorite);
                 } else {
@@ -145,7 +183,12 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         });
         favoriteButton.setFocusable(false);
 
-
+        /*
+            View item:
+                Vehicle price information
+                Vehicle seller information (Show Email and Phone in the dialog)
+                Vehicle contact seller button
+        */
         TextView price_info_tv = holder.priceInfoView;
         final TextView seller_info_tv = holder.sellerInfoView;
         final ImageButton contact_seller_btn = holder.contactSellerBtn;

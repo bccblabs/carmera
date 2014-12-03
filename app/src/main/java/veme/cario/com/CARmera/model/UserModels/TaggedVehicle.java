@@ -6,6 +6,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 /**
  * Created by bski on 11/5/14.
  */
@@ -39,13 +41,6 @@ public class TaggedVehicle extends ParseObject {
         put ("model", model);
     }
 
-    public String getTagTimestamp () {
-        return getString ("ts");
-    }
-
-    public void setTagTimestamp(String timestamp) {
-        put ("ts", timestamp);
-    }
 
     public ParseFile getTagPhoto() {
         return getParseFile("photo");
@@ -89,14 +84,6 @@ public class TaggedVehicle extends ParseObject {
         return getYear() + " " + getMake() + " " + getModel();
     }
 
-    public int getLikesCnt() {
-        return getInt("likes");
-    }
-
-    public int getCommentsCnt() {
-        return getInt("comments");
-    }
-
     public String getPrice () {
         return getString("price");
     }
@@ -115,4 +102,16 @@ public class TaggedVehicle extends ParseObject {
 
     public ParseFile getSellerThumbnail() { return getParseFile("seller_thumbnail"); }
 
+    public void increLike() { increment("likes");}
+
+    public void decrLike () { add("likes", -1);}
+
+    public String getLikesCnt() { return Integer.toString(getInt("likes")); }
+
+    public ParseUser getReferer() { return getParseUser("referer");}
+
+    public boolean isLikedByMe() {
+        List<String> likers_id = getList("likes");
+        return likers_id.contains(ParseUser.getCurrentUser().getObjectId());
+    }
 }

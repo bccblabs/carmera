@@ -21,12 +21,19 @@
             android:id="@+id/seller_info_textview"
             />
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/seller_email_textview"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/seller_phone_textview"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seller_email_textview"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seller_phone_textview"/>
+    </LinearLayout>
+
 </LinearLayout>
