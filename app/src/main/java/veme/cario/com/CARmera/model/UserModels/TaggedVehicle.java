@@ -93,7 +93,7 @@ public class TaggedVehicle extends ParseObject {
     }
 
     public String getSellerPhone() {
-        return getString ("seller_phone");
+        return getString("seller_phone");
     }
 
     public String getSellerEmail() {
@@ -102,16 +102,24 @@ public class TaggedVehicle extends ParseObject {
 
     public ParseFile getSellerThumbnail() { return getParseFile("seller_thumbnail"); }
 
-    public void increLike() { increment("likes");}
-
-    public void decrLike () { add("likes", -1);}
-
-    public String getLikesCnt() { return Integer.toString(getInt("likes")); }
-
-    public ParseUser getReferer() { return getParseUser("referer");}
+    public String getLikesCnt() { return Integer.toString(getList("likes").size()); }
 
     public boolean isLikedByMe() {
         List<String> likers_id = getList("likes");
         return likers_id.contains(ParseUser.getCurrentUser().getObjectId());
     }
+
+    public void addLiker(String id) {
+        addUnique("likers", id);
+    }
+
+    public void removeLiker (String id) {
+        List<String> likers_id = getList("likers");
+        likers_id.remove(likers_id);
+        remove("likers");
+        addAllUnique("likers", likers_id);
+    }
+
+    public ParseUser getReferer() { return getParseUser("referer");}
+
 }
