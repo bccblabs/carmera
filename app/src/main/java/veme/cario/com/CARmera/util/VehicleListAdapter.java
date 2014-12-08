@@ -39,8 +39,6 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
     private static int GREEN_BACKGROUND = 0x008000;
     private static int WHITE_BACKGROUND = 0xFFFFFF;
-    private boolean isFavorites = false;
-    private boolean isListing = false;
     private LayoutInflater inflater;
 
     private static String TAG = "Tagged Vehicle Adapter";
@@ -65,10 +63,8 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         ImageButton shareBtn;
     }
 
-    public VehicleListAdapter (Context context, boolean isFavorites_, boolean isListing_) {
+    public VehicleListAdapter (Context context) {
         super(context, 0);
-        isFavorites = isFavorites_;
-        isListing = isListing_;
         inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -126,7 +122,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
         /* View item: Different relative layout button for favorite cars */
         RelativeLayout vehicleLayout = holder.vehicleItemLayout;
-        if (isFavorites) {
+        if (taggedVehicle.isFavorites()) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
         /* View item: Vehicle Year, Make, Model Information */
@@ -170,7 +166,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         /* View item: Vehicle Favorite Button */
         final ImageButton favoriteButton = holder.favoriteButton;
         if (Favorites.get().contains(taggedVehicle)) {
-            if (isFavorites) {
+            if (taggedVehicle.isFavorites()) {
                 favoriteButton.setImageResource(R.drawable.x);
             } else {
                 favoriteButton
@@ -190,7 +186,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                             .setImageResource(R.drawable.tagged_not_favorite);
                 } else {
                     favorites.add(taggedVehicle);
-                    if (isFavorites) {
+                    if (taggedVehicle.isFavorites()) {
                         favoriteButton.setImageResource(R.drawable.x);
                     } else {
                         favoriteButton
@@ -245,7 +241,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             2. Vehicle Seller Information Button
             3. Contact Vehicle Seller Button
          */
-        if (isListing) {
+        if (taggedVehicle.isListing()) {
             price_info_tv.setText(taggedVehicle.getPrice());
             seller_info_tv.setText(taggedVehicle.getSellerInfo());
             contact_seller_btn.setOnClickListener(new OnClickListener() {

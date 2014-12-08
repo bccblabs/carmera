@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -46,8 +47,16 @@ public class TaggedVehicle extends ParseObject {
         return getParseFile("photo");
     }
 
-    public void setUser (UserInfo user_info) {
-        put("user_info", user_info);
+//    public void setUser (UserInfo user_info) {
+//        put("user_info", user_info);
+//    }
+
+    /* set a pointer to parse user */
+
+    public void setUser (ParseUser parseUser) {
+        ParseRelation<ParseUser> parentUser = getRelation("user");
+        parentUser.add(parseUser);
+        this.saveInBackground();
     }
 
     public ParseFile getUserPhoto() {
@@ -57,10 +66,6 @@ public class TaggedVehicle extends ParseObject {
 
     public void setTagPhoto (ParseFile photo) {
         put ("photo", photo);
-    }
-
-    public boolean isFavorite() {
-        return getBoolean("favorite");
     }
 
     public void setFavorite(boolean fav) {
@@ -122,4 +127,7 @@ public class TaggedVehicle extends ParseObject {
 
     public ParseUser getReferer() { return getParseUser("referer");}
 
+    public boolean isListing() { return getBoolean("listing");}
+
+    public boolean isFavorites() { return getBoolean("favorites");}
 }

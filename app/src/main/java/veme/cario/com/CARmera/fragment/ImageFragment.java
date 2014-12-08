@@ -20,12 +20,16 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
+import veme.cario.com.CARmera.model.UserModels.Favorites;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.requests.VehicleRequest;
 
 public class ImageFragment extends Fragment {
@@ -42,6 +46,7 @@ public class ImageFragment extends Fragment {
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
     private Button upload_btn;
+
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "IMAGE_FRAGMENT";
@@ -55,14 +60,22 @@ public class ImageFragment extends Fragment {
 
         @Override
         public void onRequestSuccess(Vehicle vehicle) {
-            Log.i(TAG, " - " + vehicle.getResult().getYear() + " "
-                    + vehicle.getResult().getMake() + " "
-                    + vehicle.getResult().getModel());
+            String year = vehicle.getResult().getYear();
+            String make = vehicle.getResult().getMake();
+            String model = vehicle.getResult().getModel();
+            Log.i(TAG, " - " + year + " " + make + " " + model);
 
-            imageResultCallback.onRecognitionResult(vehicle.getResult().getYear(),
-                                                    vehicle.getResult().getMake(),
-                                                    vehicle.getResult().getModel());
+            imageResultCallback.onRecognitionResult(year, make, model);
 
+            TaggedVehicle taggedVehicle = new TaggedVehicle();
+            taggedVehicle.setTagPhoto(new ParseFile(getArguments().getByteArray("imageData")));
+            taggedVehicle.setUser(ParseUser.getCurrentUser());
+            taggedVehicle.setYear(year);
+            taggedVehicle.setMake(make);
+            taggedVehicle.setModel(model);
+            taggedVehicle.saveInBackground();
+
+            Favorites.get().add(taggedVehicle);
         }
     }
 
@@ -113,7 +126,6 @@ public class ImageFragment extends Fragment {
         preview_view = (ImageView) getView().findViewById(R.id.preview_view);
 
         upload_btn = (Button) getView().findViewById(R.id.upload_btn);
-
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

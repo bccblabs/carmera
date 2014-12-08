@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.fragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.DealershipFragment;
 import veme.cario.com.CARmera.fragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.OwnershipCostFragment;
@@ -36,7 +37,7 @@ public class VehicleInfoDialog extends DialogFragment {
     private SpecsFragment specsFragment = null;
     private OwnershipCostFragment ownershipCostFragment = null;
     private DealershipFragment dealershipFragment = null;
-
+    private CarInfoFragment carInfoFragment = null;
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -82,21 +83,26 @@ public class VehicleInfoDialog extends DialogFragment {
                     return imageFragment;
                 }
                 case 1: {
+                    carInfoFragment = new CarInfoFragment();
+                    carInfoFragment.setArguments(args);
+                    return carInfoFragment;
+                }
+                case 2: {
                     reviewFragment = new ReviewFragment();
                     reviewFragment.setArguments(args);
                     return reviewFragment;
                 }
-                case 2: {
+                case 3: {
                     specsFragment = new SpecsFragment();
                     specsFragment.setArguments(args);
                     return specsFragment;
                 }
-                case 3: {
+                case 4: {
                     ownershipCostFragment = new OwnershipCostFragment();
                     ownershipCostFragment.setArguments(args);
                     return ownershipCostFragment;
                 }
-                case 4: {
+                case 5: {
                     dealershipFragment = new DealershipFragment();
                     dealershipFragment.setArguments(args);
                     return dealershipFragment;
@@ -116,12 +122,14 @@ public class VehicleInfoDialog extends DialogFragment {
                 case 0:
                     return "Figure this out";
                 case 1:
-                    return "Customer Reviews";
+                    return "Car Info";
                 case 2:
-                    return "Detailed Specifications";
+                    return "Customer Reviews";
                 case 3:
-                    return "Cost-To-Own";
+                    return "Detailed Specifications";
                 case 4:
+                    return "Cost-To-Own";
+                case 5:
                     return "Nearby Dealerships";
             }
             return null;

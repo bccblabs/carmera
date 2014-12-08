@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import veme.cario.com.CARmera.fragment.NearbyListingFragment;
 import veme.cario.com.CARmera.fragment.NearbyTaggedFragment;
 
@@ -39,7 +40,7 @@ public class NearbyActivity extends BaseActivity {
         });
         /* 1. nearby tags */
         actionBar.addTab(actionBar.newTab()
-                                  .setText("Listings")
+                                  .setText("")
                                   .setTabListener(new ActionBar.TabListener() {
                                       @Override
                                       public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

@@ -32,7 +32,7 @@ public class VehicleListFragment extends ListFragment {
     @Override
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-        vehicleListAdapter = new VehicleListAdapter(getActivity(), false, false);
+        vehicleListAdapter = new VehicleListAdapter(getActivity());
         this.setListAdapter(vehicleListAdapter);
         this.setListShown(false);
         List<TaggedVehicle> taggedVehicles = Favorites.get().getFavorites();
