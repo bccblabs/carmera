@@ -20,12 +20,12 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
  */
 public class TaggedVehicleFragment extends ListFragment {
 
-    OnListingSelectedListener listingCallback;
 
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
     private VehicleListAdapter vehicleListAdapter;
 
+    private OnListingSelectedListener listingCallback;
     public interface OnListingSelectedListener {
         public abstract void onListingSelected (int pos);
     }
@@ -35,7 +35,6 @@ public class TaggedVehicleFragment extends ListFragment {
         super.onCreate(savedBundleInstance);
         vehicleListAdapter = new VehicleListAdapter(getActivity());
         this.setListAdapter(vehicleListAdapter);
-        this.setListShown(false);
         List<TaggedVehicle> taggedVehicles = TaggedVehicleList.get().getTaggedVehicleList();
         for (TaggedVehicle vehicle : taggedVehicles) {
             vehicleListAdapter.add (vehicle);

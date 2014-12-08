@@ -15,10 +15,19 @@ import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
 /**
  * Created by bski on 11/23/14.
  */
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity
+                             implements TaggedVehicleFragment.OnListingSelectedListener,
+                                        FavoriteVehicleFragment.OnListingSelectedListener{
 
     private ViewPager viewPager;
     private ProfileSectionsAdapter profileSectionsAdapter;
+
+    @Override
+    public void onListingSelected (int pos) {
+
+    }
+
+
     @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);

@@ -10,14 +10,22 @@ import android.support.v4.view.ViewPager;
 
 import veme.cario.com.CARmera.fragment.NearbyListingFragment;
 import veme.cario.com.CARmera.fragment.NearbyTaggedFragment;
+import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
 
 /**
  * Created by bski on 11/22/14.
  */
-public class NearbyActivity extends BaseActivity {
+public class NearbyActivity extends BaseActivity
+                            implements NearbyListingFragment.OnListingSelectedListener{
 
     private ViewPager viewPager;
     private NeabyPagerAdapter nearbyPagerAdapter;
+
+    @Override
+    public void onListingSelected (int pos) {
+
+    }
+
     /* TODO:
         1. Query by geolocation
         2. Query by Edmund's API/other api
@@ -30,7 +38,7 @@ public class NearbyActivity extends BaseActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         nearbyPagerAdapter = new NeabyPagerAdapter (getSupportFragmentManager());
 
-        viewPager = (ViewPager) findViewById(R.id.neaby_pager);
+        viewPager = (ViewPager) findViewById(R.id.nearby_pager);
         viewPager.setAdapter(nearbyPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -40,7 +48,7 @@ public class NearbyActivity extends BaseActivity {
         });
         /* 1. nearby tags */
         actionBar.addTab(actionBar.newTab()
-                                  .setText("")
+                                  .setText("Listings")
                                   .setTabListener(new ActionBar.TabListener() {
                                       @Override
                                       public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

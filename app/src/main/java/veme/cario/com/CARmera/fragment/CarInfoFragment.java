@@ -84,7 +84,6 @@ public class CarInfoFragment extends Fragment {
 
         @Override
         protected Bitmap doInBackground (Void... params) {
-            byte[] newImageBytes;
             byte[] imageData = getArguments().getByteArray("imageData");
             /* first, make a bitmap out of original */
             Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
@@ -92,7 +91,6 @@ public class CarInfoFragment extends Fragment {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             /* third, create a new image out of byte array */
-            newImageBytes = bos.toByteArray();
             Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
             return scaled_bitmap;
         }

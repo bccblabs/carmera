@@ -35,7 +35,6 @@ public class FavoriteVehicleFragment extends ListFragment {
         super.onCreate(savedBundleInstance);
         vehicleListAdapter = new VehicleListAdapter(getActivity());
         this.setListAdapter(vehicleListAdapter);
-        this.setListShown(false);
         List<TaggedVehicle> favoriteVehicles = FavoriteVehicleList.get().getFavorites();
         for (TaggedVehicle vehicle : favoriteVehicles) {
             vehicleListAdapter.add (vehicle);
