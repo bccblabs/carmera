@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -24,7 +23,7 @@ import com.parse.ParseUser;
  * The set of tagged_vehicles that have been starred in the app.
  */
 
-public class MentionedVehicle {
+public class MentionedVehicleList {
     /**
      * A listener to notify other parts of the app when tagged_vehicles have been starred
      * or un-starred.
@@ -37,33 +36,33 @@ public class MentionedVehicle {
 
     // This class is a Singleton, since there's only one set of favorites for
     // the installation.
-    private static MentionedVehicle instance = new MentionedVehicle();
+    private static MentionedVehicleList instance = new MentionedVehicleList();
 
-    public static MentionedVehicle get() {
+    public static MentionedVehicleList get() {
         return instance;
     }
 
-    private List<TaggedVehicle> mentioned_vehicles = new ArrayList<TaggedVehicle>();
+    private List<TaggedVehicle> mentioned_vehicle_list = new ArrayList<TaggedVehicle>();
 
     // The set of objectIds for the tagged_vehicles that have been added to favorites.
-    private HashSet<String> mentioned_vehicleIds = new HashSet<String>();
+    private HashSet<String> mentioned_vehicle_ids = new HashSet<String>();
 
     // Listeners to notify when the set changes.
     private ArrayList<Listener> listeners = new ArrayList<Listener>();
 
-    private MentionedVehicle() {
+    private MentionedVehicleList() {
         fetchMentionedFromParse();
     }
 
     public List<TaggedVehicle> getMentionedVehicles() {
-        return mentioned_vehicles;
+        return mentioned_vehicle_list;
     }
 
     /**
      * Returns true if this tagged_vehicle has been added to favorites.
      */
     public boolean contains(TaggedVehicle mentioned_vehicle) {
-        return mentioned_vehicleIds.contains(mentioned_vehicle.getObjectId());
+        return mentioned_vehicle_ids.contains(mentioned_vehicle.getObjectId());
     }
 
     /**
@@ -72,8 +71,8 @@ public class MentionedVehicle {
     public void add(TaggedVehicle tagged_vehicle) {
         // For now, just add the favorite to this list; we will save it to the
         // relation later
-        mentioned_vehicles.add(tagged_vehicle);
-        mentioned_vehicleIds.add(tagged_vehicle.getObjectId());
+        mentioned_vehicle_list.add(tagged_vehicle);
+        mentioned_vehicle_ids.add(tagged_vehicle.getObjectId());
         /* Get Relation will add a new relation if not exists previously */
         ParseUser.getCurrentUser().getRelation("mentionedVehicles").add(tagged_vehicle);
         for (Listener listener : listeners) {
@@ -85,9 +84,9 @@ public class MentionedVehicle {
      * Removes a tagged_vehicle from the set of favorites.
      */
     public void remove(TaggedVehicle tagged_vehicle) {
-        mentioned_vehicles.remove(tagged_vehicle);
-        mentioned_vehicleIds.remove(tagged_vehicle.getObjectId());
-        ParseUser.getCurrentUser().getRelation("mentionedVehicleIds").remove(tagged_vehicle);
+        mentioned_vehicle_list.remove(tagged_vehicle);
+        mentioned_vehicle_ids.remove(tagged_vehicle.getObjectId());
+        ParseUser.getCurrentUser().getRelation("mentionedVehicles").remove(tagged_vehicle);
         for (Listener listener : listeners) {
             listener.onMentionedVehicleRemoved(tagged_vehicle);
         }
@@ -118,7 +117,7 @@ public class MentionedVehicle {
         }
 
         ArrayList<TaggedVehicle> toRemove = new ArrayList<TaggedVehicle>();
-        for (String objectId : mentioned_vehicleIds) {
+        for (String objectId : mentioned_vehicle_ids) {
             TaggedVehicle pointer = TaggedVehicle.createWithoutData(TaggedVehicle.class, objectId);
             toRemove.add(pointer);
         }
@@ -140,7 +139,7 @@ public class MentionedVehicle {
      */
     private JSONObject toJSON() {
         JSONArray favorites = new JSONArray();
-        for (String objectId : mentioned_vehicleIds) {
+        for (String objectId : mentioned_vehicle_ids) {
             favorites.put(objectId);
         }
 
@@ -243,8 +242,8 @@ public class MentionedVehicle {
             public void done(List<TaggedVehicle> objects, ParseException e) {
                 if ((objects != null) && (!objects.isEmpty())) {
                     for (TaggedVehicle tagged_vehicle : objects) {
-                        mentioned_vehicles.add(tagged_vehicle);
-                        mentioned_vehicleIds.add(tagged_vehicle.getObjectId());
+                        mentioned_vehicle_list.add(tagged_vehicle);
+                        mentioned_vehicle_ids.add(tagged_vehicle.getObjectId());
                     }
                 }
             }

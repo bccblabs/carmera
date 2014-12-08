@@ -1,7 +1,9 @@
 package veme.cario.com.CARmera.fragment;
 
+import android.support.v4.app.ListFragment;
+
 /**
  * Created by bski on 12/7/14.
  */
-public class MentionedVehicleFragment extends VehicleListFragment {
+public class MentionedVehicleFragment extends ListFragment {
 }

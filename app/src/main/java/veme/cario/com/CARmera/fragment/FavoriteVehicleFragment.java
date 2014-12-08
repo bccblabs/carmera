@@ -9,15 +9,16 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.model.UserModels.Favorites;
+import veme.cario.com.CARmera.model.UserModels.FavoriteVehicleList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 12/3/14.
  */
-public class VehicleListFragment extends ListFragment {
+public class FavoriteVehicleFragment extends ListFragment {
 
     OnListingSelectedListener listingCallback;
 
@@ -35,8 +36,8 @@ public class VehicleListFragment extends ListFragment {
         vehicleListAdapter = new VehicleListAdapter(getActivity());
         this.setListAdapter(vehicleListAdapter);
         this.setListShown(false);
-        List<TaggedVehicle> taggedVehicles = Favorites.get().getFavorites();
-        for (TaggedVehicle vehicle : taggedVehicles) {
+        List<TaggedVehicle> favoriteVehicles = FavoriteVehicleList.get().getFavorites();
+        for (TaggedVehicle vehicle : favoriteVehicles) {
             vehicleListAdapter.add (vehicle);
         }
     }
@@ -67,6 +68,4 @@ public class VehicleListFragment extends ListFragment {
         FragmentManager fm = getFragmentManager();
         vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
     }
-
-    /* need to have a specilized adapter */
 }

@@ -3,11 +3,9 @@ package veme.cario.com.CARmera;
 import android.app.Application;
 
 import com.parse.Parse;
-import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import veme.cario.com.CARmera.model.UserModels.BusinessRequest;
-import veme.cario.com.CARmera.model.UserModels.Favorites;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.UserModels.UserInfo;
 

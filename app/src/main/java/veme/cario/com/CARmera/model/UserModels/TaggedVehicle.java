@@ -47,21 +47,10 @@ public class TaggedVehicle extends ParseObject {
         return getParseFile("photo");
     }
 
-//    public void setUser (UserInfo user_info) {
-//        put("user_info", user_info);
-//    }
-
-    /* set a pointer to parse user */
-
     public void setUser (ParseUser parseUser) {
         ParseRelation<ParseUser> parentUser = getRelation("user");
         parentUser.add(parseUser);
         this.saveInBackground();
-    }
-
-    public ParseFile getUserPhoto() {
-        UserInfo userinfo = (UserInfo) getParseObject("user_info");
-        return userinfo.getThumbnail();
     }
 
     public void setTagPhoto (ParseFile photo) {

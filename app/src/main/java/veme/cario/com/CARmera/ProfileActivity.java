@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import veme.cario.com.CARmera.fragment.FavoriteVehicleFragment;
 import veme.cario.com.CARmera.fragment.MentionedVehicleFragment;
-import veme.cario.com.CARmera.fragment.SavedVehiclesFragment;
 import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
 
 /**
@@ -111,7 +111,7 @@ public class ProfileActivity extends BaseActivity {
                     frag = new TaggedVehicleFragment();
                     break;
                 case 1:
-                    frag = new SavedVehiclesFragment();
+                    frag = new FavoriteVehicleFragment();
                     break;
                 case 2:
                     frag = new MentionedVehicleFragment();

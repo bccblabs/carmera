@@ -12,25 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.ref.WeakReference;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
-import veme.cario.com.CARmera.model.UserModels.Favorites;
+import veme.cario.com.CARmera.model.UserModels.FavoriteVehicleList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
-import veme.cario.com.CARmera.requests.VehicleRequest;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 
 public class ImageFragment extends Fragment {
 
@@ -75,7 +72,8 @@ public class ImageFragment extends Fragment {
             taggedVehicle.setModel(model);
             taggedVehicle.saveInBackground();
 
-            Favorites.get().add(taggedVehicle);
+            TaggedVehicleList.get().add(taggedVehicle);
+            TaggedVehicleList.get().save(getActivity());
         }
     }
 
