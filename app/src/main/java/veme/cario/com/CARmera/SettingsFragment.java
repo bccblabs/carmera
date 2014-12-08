@@ -19,6 +19,7 @@ public class SettingsFragment extends PreferenceFragment
     public static final String KEY_PREF_USER_EMAIL = "pref_key_user_email";
     public static final String KEY_PREF_USER_ALLOW_CONTACT = "pref_key_user_allow_contact";
     public static final String KEY_PREF_SEARCH_RADIUS = "pref_key_search_radius";
+    public static final String KEY_PREF_WATCH_LIST = "pref_key_watch_list";
 
     EditTextPreference name_pref;
     EditTextPreference phone_pref;

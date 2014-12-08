@@ -4,14 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <fragment
+    <ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_tagged_vehicles"/>
-
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_saved_vehicles"/>
+        android:id="@+id/profile_pager"/>
 </LinearLayout>

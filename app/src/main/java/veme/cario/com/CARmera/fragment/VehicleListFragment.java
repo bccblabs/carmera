@@ -7,14 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.List;
+
+import veme.cario.com.CARmera.model.UserModels.Favorites;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.util.VehicleListAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 12/3/14.
  */
-public class ListingsFragment extends ListFragment {
+public class VehicleListFragment extends ListFragment {
 
     OnListingSelectedListener listingCallback;
+
+    /* do a find in background query from this guy's userinfp ? */
+    /* see the "favorites implementation */
+    private VehicleListAdapter vehicleListAdapter;
 
     public interface OnListingSelectedListener {
         public abstract void onListingSelected (int pos);
@@ -23,6 +32,13 @@ public class ListingsFragment extends ListFragment {
     @Override
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+        vehicleListAdapter = new VehicleListAdapter(getActivity(), false, false);
+        this.setListAdapter(vehicleListAdapter);
+        this.setListShown(false);
+        List<TaggedVehicle> taggedVehicles = Favorites.get().getFavorites();
+        for (TaggedVehicle vehicle : taggedVehicles) {
+            vehicleListAdapter.add (vehicle);
+        }
     }
 
     @Override

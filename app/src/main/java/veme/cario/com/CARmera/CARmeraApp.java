@@ -15,6 +15,8 @@ import veme.cario.com.CARmera.model.UserModels.UserInfo;
  * Created by bski on 11/5/14.
  */
 public class CARmeraApp extends Application {
+    /*  TODO: Refactor classes to use RoboGUICE for view injection.
+    /*  TODO: Autogenerate user preference based on tagging to populate nearby listings. */
     public static final String edmunds_app_key = "d442cka8a6mvgfnjcdt5fbns";
 
     public static final String edmunds_app_secret = "tVsB2tChr7wXqk47ZZMQneKq";

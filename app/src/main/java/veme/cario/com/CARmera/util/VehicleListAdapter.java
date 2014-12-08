@@ -1,7 +1,5 @@
 package veme.cario.com.CARmera.util;
 
-import android.app.Activity;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -40,11 +38,12 @@ import com.parse.ParseUser;
 public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
     private static int GREEN_BACKGROUND = 0x008000;
+    private static int WHITE_BACKGROUND = 0xFFFFFF;
     private boolean isFavorites = false;
     private boolean isListing = false;
     private LayoutInflater inflater;
 
-    private static String TAG = "SELLER_INFO_DIALOG";
+    private static String TAG = "Tagged Vehicle Adapter";
 
     private static class ViewHolder {
         RelativeLayout vehicleItemLayout;
@@ -158,7 +157,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                     likes_overlay.setBackgroundColor(GREEN_BACKGROUND);
                 } else {
                     taggedVehicle.addLiker(ParseUser.getCurrentUser().getObjectId());
-                    likes_overlay.setBackgroundColor(0xFFFFFF);
+                    likes_overlay.setBackgroundColor(WHITE_BACKGROUND);
                 }
             }
         });
@@ -235,7 +234,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         share_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* add to my tagged posts */
+                /* TODO: add to my tagged posts */
                 /* set acl to just the user to be shared, or public */
                 /* able to add users */
             }

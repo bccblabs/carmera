@@ -13,8 +13,8 @@ import java.util.List;
  */
 @ParseClassName("TaggedVehicle")
 public class TaggedVehicle extends ParseObject {
+    /* TODO: how to implement tagging? */
 
-    // Requires empty constructor
     public TaggedVehicle() {}
 
     public String getYear() {
