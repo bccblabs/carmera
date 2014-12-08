@@ -25,9 +25,9 @@ public class TaggedVehicleFragment extends ListFragment {
     /* see the "favorites implementation */
     private VehicleListAdapter vehicleListAdapter;
 
-    private OnListingSelectedListener listingCallback;
-    public interface OnListingSelectedListener {
-        public abstract void onListingSelected (int pos);
+    private OnTaggedListingSelectedListener listingCallback;
+    public interface OnTaggedListingSelectedListener {
+        public abstract void OnTaggedListingSelected (int pos);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TaggedVehicleFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnListingSelectedListener) activity;
+            listingCallback = (OnTaggedListingSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
@@ -59,7 +59,7 @@ public class TaggedVehicleFragment extends ListFragment {
 
     @Override
     public void onListItemClick (ListView l, View v, int pos, long id) {
-        listingCallback.onListingSelected(pos);
+        listingCallback.OnTaggedListingSelected(pos);
         VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
         /* year, make, model, listing_id */
         Bundle args = getArguments();

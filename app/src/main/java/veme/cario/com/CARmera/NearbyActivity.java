@@ -10,20 +10,23 @@ import android.support.v4.view.ViewPager;
 
 import veme.cario.com.CARmera.fragment.NearbyListingFragment;
 import veme.cario.com.CARmera.fragment.NearbyTaggedFragment;
-import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
 
 /**
  * Created by bski on 11/22/14.
  */
 public class NearbyActivity extends BaseActivity
-                            implements NearbyListingFragment.OnListingSelectedListener{
+                            implements NearbyListingFragment.OnNearbyListingSelectedListener,
+                                       NearbyTaggedFragment.OnNearbyTaggedSelectedListener{
 
     private ViewPager viewPager;
     private NeabyPagerAdapter nearbyPagerAdapter;
 
     @Override
-    public void onListingSelected (int pos) {
+    public void OnNearbyListingSelected(int pos) {
+    }
 
+    @Override
+    public void OnNearbyTaggedSelected(int pos) {
     }
 
     /* TODO:

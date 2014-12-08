@@ -20,14 +20,14 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
  */
 public class FavoriteVehicleFragment extends ListFragment {
 
-    OnListingSelectedListener listingCallback;
+    OnSavedListingSelectedListener listingCallback;
 
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
     private VehicleListAdapter vehicleListAdapter;
 
-    public interface OnListingSelectedListener {
-        public abstract void onListingSelected (int pos);
+    public interface OnSavedListingSelectedListener {
+        public abstract void OnSavedListingSelected (int pos);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class FavoriteVehicleFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnListingSelectedListener) activity;
+            listingCallback = (OnSavedListingSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
@@ -59,7 +59,7 @@ public class FavoriteVehicleFragment extends ListFragment {
 
     @Override
     public void onListItemClick (ListView l, View v, int pos, long id) {
-        listingCallback.onListingSelected(pos);
+        listingCallback.OnSavedListingSelected(pos);
         VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
         /* year, make, model, listing_id */
         Bundle args = getArguments();
