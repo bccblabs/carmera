@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.facebook.AppEventsLogger;
+
 import veme.cario.com.CARmera.fragment.FavoriteVehicleFragment;
 import veme.cario.com.CARmera.fragment.MentionedVehicleFragment;
 import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
@@ -113,6 +115,12 @@ public class ProfileActivity extends BaseActivity
 
                                         }
                                     }));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
     }
 
     private static class ProfileSectionsAdapter extends FragmentPagerAdapter {

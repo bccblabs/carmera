@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.facebook.AppEventsLogger;
+
 import veme.cario.com.CARmera.fragment.NearbyListingFragment;
 import veme.cario.com.CARmera.fragment.NearbyTaggedFragment;
 
@@ -89,6 +91,13 @@ public class NearbyActivity extends BaseActivity
                                        }
                                    })));
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
+    }
+
 
     private static class NeabyPagerAdapter extends FragmentPagerAdapter {
         public NeabyPagerAdapter (FragmentManager fm) {

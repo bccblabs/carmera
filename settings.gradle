@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':FriendPickerSample', ':PlacePickerSample', ':HelloFacebookSample', ':facebook', ':RPSSample', ':SwitchUserSample', ':Scrumptious'
 include ':app:libs:openCVLibrary2410'

@@ -15,19 +15,23 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.facebook.AppEventsLogger;
+
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.ImageFragment;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-public class CaptureActivity extends FragmentActivity
+public class CaptureActivity extends BaseActivity
                                     implements ImageFragment.ImageResultListener{
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
     private Camera camera;
     private byte[] imageData;
+    private ImageButton tagged_btn;
+    private ImageButton upload_btn;
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
     private Camera.PictureCallback pictureCallback  = new Camera.PictureCallback() {
@@ -51,8 +55,6 @@ public class CaptureActivity extends FragmentActivity
 
         /* Initialize camera layout */
         setContentView(R.layout.activity_capture);
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
         camera = getCameraInstance();
 
         /* Draw layout */
@@ -93,6 +95,7 @@ public class CaptureActivity extends FragmentActivity
     public void onPause() {
         super.onPause();
         releaseCamera();
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.facebook.AppEventsLogger;
 import com.parse.ParseUser;
 
 /**
@@ -13,14 +14,16 @@ public class DispatchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Check if there is current user info
-//        if (ParseUser.getCurrentUser() != null) {
-            // Start an intent for the logged in activity
-//            startActivity(new Intent(this, CaptureActivity.class));
-//        } else {
-            // Start and intent for the logged out activity
-//            startActivity(new Intent(this, WelcomeActivity.class));
+        if (ParseUser.getCurrentUser() != null) {
             startActivity(new Intent(this, ProfileActivity.class));
+        } else {
+            startActivity(new Intent(this, WelcomeActivity.class));
 
         }
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
+    }
+}

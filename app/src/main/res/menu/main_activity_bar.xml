@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:compat="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_profile"
-        android:orderInCategory="100"
-        compat:showAsAction="always"
+        android:icon="@drawable/ic_action_person"
         android:title="@string/title_activity_user_profile"
-        android:icon="@drawable/ic_profile"
-        android:layout_width="20dp"
-        />
-
-    <item
-        android:id="@+id/action_nearby"
-        android:orderInCategory="100"
-        compat:showAsAction="always"
-        android:title="@string/title_activity_nearby"
-        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/action_capture"
-        android:orderInCategory="100"
-        compat:showAsAction="always"
+        android:icon="@drawable/ic_action_photo"
         android:title="@string/title_activity_capture"
-        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/action_nearby"
+        android:icon="@drawable/ic_action_place"
+        android:title="@string/title_activity_nearby"
+        app:showAsAction="ifRoom"
         />
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        compat:showAsAction="always"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_action_settings"
         android:title="@string/title_activity_settings"
+        app:showAsAction="ifRoom"
         />
 
     <item
         android:id="@+id/action_notifications"
-        android:orderInCategory="100"
-        compat:showAsAction="always"
-        android:icon="@drawable/ic_following"
+        android:icon="@drawable/ic_action_about"
         android:title="@string/title_activity_notifications"
+        app:showAsAction="ifRoom"
         />
 
 </menu>

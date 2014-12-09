@@ -3,8 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Carmera.iml" filepath="$PROJECT_DIR$/Carmera.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FoShop.iml" filepath="$PROJECT_DIR$/FoShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" filepath="$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" filepath="$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" filepath="$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RPSSample/RPSSample.iml" filepath="$PROJECT_DIR$/RPSSample/RPSSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Scrumptious/Scrumptious.iml" filepath="$PROJECT_DIR$/Scrumptious/Scrumptious.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" filepath="$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" filepath="$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" />
     </modules>
   </component>

@@ -13,6 +13,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.facebook.AppEventsLogger;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.model.GraphUser;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GooglePlayServicesClient;
 //import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -42,6 +49,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
+        authenticateSession();
 
         /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();
@@ -52,12 +60,14 @@ public class BaseActivity extends FragmentActivity {
 
     }
 
-//    @Override
-//    public void onPause () {
+    @Override
+    public void onPause () {
+        super.onPause();
 //        if (locationClient.isConnected()) {
 //        }
 //        locationClient.disconnect();
-//    }
+        AppEventsLogger.deactivateApp(this);
+    }
 //
 //    @Override
 //    public void onResume() {
@@ -169,12 +179,13 @@ public class BaseActivity extends FragmentActivity {
             }
 
             case R.id.action_capture: {
-                Intent i = new Intent (this, CaptureActivity.class);
-                startActivity(i);
-//                startActivityForResult(i, 0);
-                finish();
+                if (!(this instanceof CaptureActivity)) {
+                    Intent i = new Intent(this, CaptureActivity.class);
+                    startActivityForResult(i, 0);
+                    finish();
+                }
+                break;
             }
-
             case R.id.action_profile: {
                 if (!(this instanceof ProfileActivity)) {
                     Intent i = new Intent(this, ProfileActivity.class);
@@ -209,4 +220,23 @@ public class BaseActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void authenticateSession() {
+        ParseFacebookUtils.initialize(getString(R.string.facebook_app_id));
+        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
+                new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        if (response.getError() != null) {
+                            ParseUser.logOut();
+                            Intent i = new Intent(BaseActivity.this, SettingsActivity.class);
+                            startActivityForResult(i, 0);
+                            finish();
+                        }
+                    }
+                });
+        request.executeAsync();
+    }
+
 }

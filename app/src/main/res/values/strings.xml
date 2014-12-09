@@ -32,13 +32,13 @@
     <string name="error_end">.</string>
     <string name="progress_login">Logging you in&#8230;</string>
     <string name="progress_sign_up">Signing you up&#8230;</string>
-
+    <string name="login_facebook">Login Using Facebook</string>
     <!-- Application credentials -->
     <string name="parse_app_id">4C3g4JMvuWMEuTVeTtjoQdvxCOv80XHRtIYnM3Kg</string>
     <string name="parse_app_key">OTwE5Qi7WuZ4gs8q66T2nKrDArWPbph3u1CmPjP1</string>
     <string name="insta_client_id">497c1f84497b43d8b663a94f9eef556e</string>
     <string name="insta_client_secret">9c02aa96435946b1b2bc31172fe9aeae</string>
-
+    <string name="facebook_app_id">316288161899047</string>
     <!-- Settings -->
 
     <string name="pref_user_privacy">Privacy</string>

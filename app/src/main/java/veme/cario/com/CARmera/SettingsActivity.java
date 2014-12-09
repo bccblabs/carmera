@@ -1,7 +1,10 @@
 package veme.cario.com.CARmera;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.facebook.AppEventsLogger;
+
+import veme.cario.com.CARmera.fragment.SettingsFragment;
 
 /**
  * Created by bski on 11/23/14.
@@ -14,4 +17,11 @@ public class SettingsActivity extends BaseActivity {
                             .replace(android.R.id.content, new SettingsFragment())
                             .commit();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
+    }
+
 }
