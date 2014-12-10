@@ -45,6 +45,10 @@ public class WelcomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        ParseUser current_user = ParseUser.getCurrentUser();
+        if (current_user != null && ParseFacebookUtils.isLinked(current_user)) {
+            startActivity(new Intent(WelcomeActivity.this, NearbyActivity.class));
+        }
         // Log in button click handler
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
@@ -70,10 +74,6 @@ public class WelcomeActivity extends Activity {
                 onLoginClick();
             }
         });
-        ParseUser current_user = ParseUser.getCurrentUser();
-        if (current_user != null && ParseFacebookUtils.isLinked(current_user)) {
-            startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
-        }
     }
 
     @Override
@@ -109,7 +109,7 @@ public class WelcomeActivity extends Activity {
                             "Oops, can't loggin through facebook", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
+                    startActivity(new Intent(WelcomeActivity.this, NearbyActivity.class));
                 }
             }
 

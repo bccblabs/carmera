@@ -1,17 +1,13 @@
 package veme.cario.com.CARmera;
 
-import android.app.ActionBar;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -21,10 +17,12 @@ import java.util.List;
 
 import veme.cario.com.CARmera.fragment.ImageFragment;
 import veme.cario.com.CARmera.view.CameraPreview;
+import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class CaptureActivity extends BaseActivity
-                                    implements ImageFragment.ImageResultListener{
+                                    implements ImageFragment.ImageResultListener,
+                                               SimpleTaggedVehicleDialog.OnSimpleTagSelectedListener {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -32,8 +30,10 @@ public class CaptureActivity extends BaseActivity
     private byte[] imageData;
     private ImageButton tagged_btn;
     private ImageButton upload_btn;
+
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
+    private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private Camera.PictureCallback pictureCallback  = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
@@ -89,6 +89,25 @@ public class CaptureActivity extends BaseActivity
         });
         preview.addView(cameraPreview);
 
+        tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
+        upload_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
+
+        tagged_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, " - tagged button");
+                FragmentManager fm = getSupportFragmentManager();
+                simpleTaggedVehicleDialog = new SimpleTaggedVehicleDialog();
+                simpleTaggedVehicleDialog.show(fm, "taggedVehiclesOverlay");
+            }
+        });
+
+        upload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, " - upload button");
+            }
+        });
     }
 
     @Override
@@ -170,4 +189,7 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
     }
 
+    @Override
+    public void onSimpleTagSelected (String year, String make, String model) {
+    }
 }

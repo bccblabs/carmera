@@ -24,8 +24,8 @@ public class TaggedVehicleFragment extends ListFragment {
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
     private VehicleListAdapter vehicleListAdapter;
-
     private OnTaggedListingSelectedListener listingCallback;
+
     public interface OnTaggedListingSelectedListener {
         public abstract void OnTaggedListingSelected (int pos);
     }

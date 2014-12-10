@@ -15,7 +15,7 @@ public class DispatchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (ParseUser.getCurrentUser() != null) {
-            startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, NearbyActivity.class));
         } else {
             startActivity(new Intent(this, WelcomeActivity.class));
 

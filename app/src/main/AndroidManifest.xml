@@ -69,7 +69,6 @@
             android:label="@string/title_activity_capture"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName="veme.cario.com.CARmera.ProfileActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:uiOptions="splitActionBarWhenNarrow" >
 
@@ -109,6 +108,10 @@
             android:screenOrientation="portrait"
             android:parentActivityName="veme.cario.com.CARmera.WelcomeActivity"
             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="veme.cario.com.CARmera.WelcomeActivity"
+                />
         </activity>
 
         <activity
@@ -117,6 +120,10 @@
             android:screenOrientation="portrait"
             android:parentActivityName="veme.cario.com.CARmera.WelcomeActivity"
             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="veme.cario.com.CARmera.WelcomeActivity"
+                />
         </activity>
 
         <activity

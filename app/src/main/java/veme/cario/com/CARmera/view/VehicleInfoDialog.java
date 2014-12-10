@@ -1,7 +1,5 @@
 package veme.cario.com.CARmera.view;
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -12,11 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
-
-import java.io.ByteArrayOutputStream;
-
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.DealershipFragment;
@@ -30,7 +23,6 @@ public class VehicleInfoDialog extends DialogFragment {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private PreviewPagerAdapter previewPagerAdapter;
     private ViewPager viewPager;
-    private final static int NUM_FRAG = 5;
 
     private ImageFragment imageFragment = null;
     private ReviewFragment reviewFragment = null;
@@ -54,6 +46,7 @@ public class VehicleInfoDialog extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_dialog, container);
         viewPager = (ViewPager)view.findViewById(R.id.pager);
+
         if (getArguments().getString("vehicle_year") == null) {
             previewPagerAdapter = new PreviewPagerAdapter(getChildFragmentManager());
             viewPager.setAdapter(previewPagerAdapter);
@@ -68,6 +61,7 @@ public class VehicleInfoDialog extends DialogFragment {
     /* Tab paging */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final static int NUM_FRAG = 5;
         private Bundle args;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -78,31 +72,26 @@ public class VehicleInfoDialog extends DialogFragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: {
-                    imageFragment = new ImageFragment();
-                    imageFragment.setArguments(args);
-                    return imageFragment;
-                }
-                case 1: {
                     carInfoFragment = new CarInfoFragment();
                     carInfoFragment.setArguments(args);
                     return carInfoFragment;
                 }
-                case 2: {
+                case 1: {
                     reviewFragment = new ReviewFragment();
                     reviewFragment.setArguments(args);
                     return reviewFragment;
                 }
-                case 3: {
+                case 2: {
                     specsFragment = new SpecsFragment();
                     specsFragment.setArguments(args);
                     return specsFragment;
                 }
-                case 4: {
+                case 3: {
                     ownershipCostFragment = new OwnershipCostFragment();
                     ownershipCostFragment.setArguments(args);
                     return ownershipCostFragment;
                 }
-                case 5: {
+                case 4: {
                     dealershipFragment = new DealershipFragment();
                     dealershipFragment.setArguments(args);
                     return dealershipFragment;
@@ -120,16 +109,14 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Figure this out";
-                case 1:
                     return "Car Info";
-                case 2:
+                case 1:
                     return "Customer Reviews";
-                case 3:
+                case 2:
                     return "Detailed Specifications";
-                case 4:
+                case 3:
                     return "Cost-To-Own";
-                case 5:
+                case 4:
                     return "Nearby Dealerships";
             }
             return null;
@@ -140,7 +127,6 @@ public class VehicleInfoDialog extends DialogFragment {
         public PreviewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             switch (position) {
@@ -153,7 +139,6 @@ public class VehicleInfoDialog extends DialogFragment {
             }
             return null;
         }
-
         @Override
         public int getCount() {
             return 1;
@@ -167,7 +152,6 @@ public class VehicleInfoDialog extends DialogFragment {
             }
             return null;
         }
-
     }
 
 }
