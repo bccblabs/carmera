@@ -32,7 +32,7 @@ public class CameraPreview extends SurfaceView
     private int zoom_factor = 0;
 
 
-    public CameraPreview (Context cxt_, Camera camera_, Bundle savedBundleInstance) {
+    public CameraPreview (Context cxt_, Camera camera_) {
         super(cxt_);
 
         /* initialize camera object */
@@ -42,11 +42,6 @@ public class CameraPreview extends SurfaceView
         surfaceHolder.addCallback(this);
         /* deprecated, required on android version < 3.0 */
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        /* retrieve the last zoom factor */
-        if (savedBundleInstance != null) {
-            zoom_factor = savedBundleInstance.getInt("zoom_factor");
-        }
     }
 
     @Override

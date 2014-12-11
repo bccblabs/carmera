@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -59,7 +60,16 @@ public class CaptureActivity extends BaseActivity
     };
 
 
-    /* Activity lifecycle */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        releaseCamera();
+        setContentView(R.layout.activity_capture);
+        initUIComponents();
+
+
+    }     /* Activity lifecycle */
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
@@ -67,10 +77,14 @@ public class CaptureActivity extends BaseActivity
 
         /* Initialize camera layout */
         setContentView(R.layout.activity_capture);
-        camera = getCameraInstance();
+        initUIComponents();
 
+    }
+
+    private void initUIComponents() {
+        camera = getCameraInstance();
         /* Draw layout */
-        cameraPreview = new CameraPreview(this, camera, savedBundleInstance);
+        cameraPreview = new CameraPreview(this, camera);
         Log.v(TAG, " - cameraPreview attached.");
 
         /* Settings camera parameters */
@@ -122,7 +136,6 @@ public class CaptureActivity extends BaseActivity
             }
         });
         setCameraDisplayOrientation(camera);
-
 
     }
 
