@@ -27,6 +27,7 @@ import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
+import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ImageFragment extends Fragment {
 
@@ -42,6 +43,7 @@ public class ImageFragment extends Fragment {
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
     private Button upload_btn;
+    private Button dismiss_btn;
 
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -127,6 +129,14 @@ public class ImageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 performRequest();
+            }
+        });
+
+        dismiss_btn = (Button) getView().findViewById(R.id.dismiss_vehicle_dialog);
+        dismiss_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

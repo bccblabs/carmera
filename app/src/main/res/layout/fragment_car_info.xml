@@ -38,16 +38,27 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/share_tagged_btn"
+            android:text="@string/str_share_to_friends"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/save_local_btn"/>
+            android:id="@+id/save_local_btn"
+            android:text="@string/str_save_to_local"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dismiss_vehicle_dialog"
+            android:text="@string/str_close_dialog"/>
+
     </LinearLayout>
 
 </LinearLayout>

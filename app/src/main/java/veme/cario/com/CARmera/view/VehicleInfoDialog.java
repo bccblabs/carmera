@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.DealershipFragment;
@@ -54,6 +55,7 @@ public class VehicleInfoDialog extends DialogFragment {
             sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
             viewPager.setAdapter(sectionsPagerAdapter);
         }
+
 
         return view;
     }

@@ -26,13 +26,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
         <Button
-            android:text="Upload Image"
+            android:text="@string/str_upload_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upload_btn"
             android:layout_gravity="center_horizontal"
         />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dismiss_vehicle_dialog"
+            android:text="@string/str_close_dialog"/>
+
     </LinearLayout>
 </LinearLayout>

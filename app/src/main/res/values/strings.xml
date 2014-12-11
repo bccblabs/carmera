@@ -143,4 +143,8 @@
     <string name="str_no_mention">No Tags Saved/Received, Invite Some Friends!</string>
     <string name="str_no_near_listings_found">No Near Listings Found, Try Change Search Circus</string>
     <string name="str_no_near_tags_found">No Near Tags Found, Try Change Search Circus</string>
+
+    <string name="str_share_to_friends">Share</string>
+    <string name="str_save_to_local">Save</string>
+    <string name="str_upload_image">Upload</string>
 </resources>
