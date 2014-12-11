@@ -61,6 +61,7 @@ public class SimpleTaggedVehicleDialog extends DialogFragment {
         no_vehicles_view = (LinearLayout) view.findViewById(R.id.no_tagged_vehicle_view);
         final SimpleVehicleListAdapter simpleVehicleListAdapter = new SimpleVehicleListAdapter(getActivity());
         tagged_vehicle_lv.setAdapter(simpleVehicleListAdapter);
+
         tagged_vehicle_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

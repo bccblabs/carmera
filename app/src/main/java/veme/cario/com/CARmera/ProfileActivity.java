@@ -10,16 +10,16 @@ import android.support.v4.view.ViewPager;
 
 import com.facebook.AppEventsLogger;
 
-import veme.cario.com.CARmera.fragment.FavoriteVehicleFragment;
-import veme.cario.com.CARmera.fragment.MentionedVehicleFragment;
-import veme.cario.com.CARmera.fragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.MentionedVehicleFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 
 /**
  * Created by bski on 11/23/14.
  */
 public class ProfileActivity extends BaseActivity
                              implements TaggedVehicleFragment.OnTaggedListingSelectedListener,
-                                        FavoriteVehicleFragment.OnSavedListingSelectedListener,
+                                        SavedListingsFragment.OnSavedListingSelectedListener,
                                         MentionedVehicleFragment.OnMentionedListingSelectedListener{
 
     private ViewPager viewPager;
@@ -136,7 +136,7 @@ public class ProfileActivity extends BaseActivity
                     frag = new TaggedVehicleFragment();
                     break;
                 case 1:
-                    frag = new FavoriteVehicleFragment();
+                    frag = new SavedListingsFragment();
                     break;
                 case 2:
                     frag = new MentionedVehicleFragment();

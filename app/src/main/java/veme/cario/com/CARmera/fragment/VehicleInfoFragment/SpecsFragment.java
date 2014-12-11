@@ -1,11 +1,10 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 

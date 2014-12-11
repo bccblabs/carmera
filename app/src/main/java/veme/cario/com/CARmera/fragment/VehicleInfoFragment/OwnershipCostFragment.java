@@ -1,11 +1,10 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +17,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import java.util.List;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 import veme.cario.com.CARmera.model.APIModels.VehicleOwnershipCost;
-import veme.cario.com.CARmera.requests.VehicleBaseInfoRequest;
 import veme.cario.com.CARmera.requests.VehicleNewOwnershipCostRequest;
 
 public class OwnershipCostFragment extends Fragment {

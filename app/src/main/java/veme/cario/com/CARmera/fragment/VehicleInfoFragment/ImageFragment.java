@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
-import veme.cario.com.CARmera.model.UserModels.FavoriteVehicleList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 

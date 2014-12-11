@@ -135,4 +135,12 @@
 
     <string name="str_see_listings">See Listings</string>
     <string name="str_no_vehicles_tagged">No Vehicles Tagged Yet!</string>
+    <string name="str_vehicle_search">Search for Cars</string>
+    <string name="str_vehicle_search_hint">Search For Cars</string>
+    <string name="str_no_vehicle_tagged">No Vehicle Tagged, Tag Some Cars!</string>
+
+    <string name="str_no_saved_listings">No Listings Saved!</string>
+    <string name="str_no_mention">No Tags Saved/Received, Invite Some Friends!</string>
+    <string name="str_no_near_listings_found">No Near Listings Found, Try Change Search Circus</string>
+    <string name="str_no_near_tags_found">No Near Tags Found, Try Change Search Circus</string>
 </resources>

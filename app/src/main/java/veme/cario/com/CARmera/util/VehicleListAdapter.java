@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.FavoriteVehicleList;
+import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -165,7 +165,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
         /* View item: Vehicle Favorite Button */
         final ImageButton favoriteButton = holder.favoriteButton;
-        if (FavoriteVehicleList.get().contains(taggedVehicle)) {
+        if (SavedListingsList.get().contains(taggedVehicle)) {
             if (taggedVehicle.isFavorites()) {
                 favoriteButton.setImageResource(R.drawable.x);
             } else {
@@ -179,13 +179,13 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
         favoriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                FavoriteVehicleList favoriteVehicleList = FavoriteVehicleList.get();
-                if (favoriteVehicleList.contains(taggedVehicle)) {
-                    favoriteVehicleList.remove(taggedVehicle);
+                SavedListingsList savedListingsList = SavedListingsList.get();
+                if (savedListingsList.contains(taggedVehicle)) {
+                    savedListingsList.remove(taggedVehicle);
                     favoriteButton
                             .setImageResource(R.drawable.tagged_not_favorite);
                 } else {
-                    favoriteVehicleList.add(taggedVehicle);
+                    savedListingsList.add(taggedVehicle);
                     if (taggedVehicle.isFavorites()) {
                         favoriteButton.setImageResource(R.drawable.x);
                     } else {
@@ -193,7 +193,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                                 .setImageResource(R.drawable.tagged_favorite);
                     }
                 }
-                favoriteVehicleList.save(getContext());
+                savedListingsList.save(getContext());
             }
         });
         favoriteButton.setFocusable(false);

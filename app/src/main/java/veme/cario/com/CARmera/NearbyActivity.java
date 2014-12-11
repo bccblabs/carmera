@@ -10,8 +10,8 @@ import android.support.v4.view.ViewPager;
 
 import com.facebook.AppEventsLogger;
 
-import veme.cario.com.CARmera.fragment.NearbyListingFragment;
-import veme.cario.com.CARmera.fragment.NearbyTaggedFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyListingFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyTaggedFragment;
 
 /**
  * Created by bski on 11/22/14.

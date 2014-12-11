@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.content.Intent;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -12,10 +13,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.facebook.AppEventsLogger;
-
 import java.util.List;
 
-import veme.cario.com.CARmera.fragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -29,8 +29,6 @@ public class CaptureActivity extends BaseActivity
     private Camera camera;
     private byte[] imageData;
     private ImageButton tagged_btn;
-    private ImageButton upload_btn;
-
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
@@ -47,6 +45,7 @@ public class CaptureActivity extends BaseActivity
             vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
         }
     };
+
 
     /* Activity lifecycle */
     @Override
@@ -80,8 +79,19 @@ public class CaptureActivity extends BaseActivity
                 if (vehicleInfoDialog == null) {
                     camera.takePicture(null, null, pictureCallback);
                 } else {
-                    vehicleInfoDialog.dismiss();
-                    vehicleInfoDialog = null;
+                    Log.i(TAG, "restart camera preview");
+                    if (vehicleInfoDialog != null) {
+                        vehicleInfoDialog.dismiss();
+                        vehicleInfoDialog = null;
+                    }
+                    if (simpleTaggedVehicleDialog != null) {
+                        simpleTaggedVehicleDialog.dismiss();
+                        simpleTaggedVehicleDialog = null;
+                    }
+                    if (camera == null) {
+                        Log.i(TAG, "camera null");
+                        camera = getCameraInstance();
+                    }
                     camera.startPreview();
                 }
                 return false;
@@ -90,7 +100,6 @@ public class CaptureActivity extends BaseActivity
         preview.addView(cameraPreview);
 
         tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
-        upload_btn = (ImageButton) findViewById(R.id.upload_from_album_btn);
 
         tagged_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +111,6 @@ public class CaptureActivity extends BaseActivity
             }
         });
 
-        upload_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, " - upload button");
-            }
-        });
     }
 
     @Override
@@ -123,22 +126,22 @@ public class CaptureActivity extends BaseActivity
         super.onStop();
     }
 
+    /* Camera helper functions */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open();
+        } catch (Exception e) {
+            Log.e(TAG," - camera opening error: " + e.getMessage());
+        }
+        return c;
+    }
+
     private void releaseCamera() {
         if (camera != null) {
             camera.release();
             camera = null;
         }
-    }
-
-    /* Camera helper functions */
-    public static Camera getCameraInstance() {
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        } catch (Exception e) {
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
     }
 
     public void setCameraDisplayOrientation(android.hardware.Camera camera) {
@@ -173,7 +176,7 @@ public class CaptureActivity extends BaseActivity
         camera.setDisplayOrientation(result);
     }
 
-
+    /* when a vehicle is recognized from the cloud server */
     @Override
     public void onRecognitionResult (String year, String make, String model) {
         /* once the image is recognized, adding the new fragments to the dialog */
@@ -182,6 +185,7 @@ public class CaptureActivity extends BaseActivity
         args.putString("vehicle_make", make);
         args.putString("vehicle_model", model);
         args.putByteArray("imageData", imageData);
+        /* save to parse here */
         vehicleInfoDialog.dismiss();
         FragmentManager fm = getSupportFragmentManager();
         vehicleInfoDialog = new VehicleInfoDialog();
@@ -189,7 +193,15 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
     }
 
+    /* when a vehicle is selected from the list of previously tagged cars using the yellow button */
     @Override
     public void onSimpleTagSelected (String year, String make, String model) {
+        Intent i = new Intent(CaptureActivity.this, NearbyActivity.class);
+        Bundle args = new Bundle();
+        args.putString("vehicle_search_make", make);
+        args.putString("vehicle_search_model", model);
+        i.putExtra("vehicle_search_criteria", args);
+        startActivity(i);
     }
+
 }

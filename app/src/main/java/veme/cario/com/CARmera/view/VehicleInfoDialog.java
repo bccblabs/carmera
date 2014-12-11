@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.fragment.CarInfoFragment;
-import veme.cario.com.CARmera.fragment.DealershipFragment;
-import veme.cario.com.CARmera.fragment.ImageFragment;
-import veme.cario.com.CARmera.fragment.OwnershipCostFragment;
-import veme.cario.com.CARmera.fragment.ReviewFragment;
-import veme.cario.com.CARmera.fragment.SpecsFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.DealershipFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ReviewFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SpecsFragment;
 
 public class VehicleInfoDialog extends DialogFragment {
 

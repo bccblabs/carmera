@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

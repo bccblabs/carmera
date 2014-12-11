@@ -230,7 +230,7 @@ public class BaseActivity extends FragmentActivity {
                     public void onCompleted(GraphUser user, Response response) {
                         if (response.getError() != null) {
                             ParseUser.logOut();
-                            Intent i = new Intent(BaseActivity.this, SettingsActivity.class);
+                            Intent i = new Intent(BaseActivity.this, WelcomeActivity.class);
                             startActivityForResult(i, 0);
                             finish();
                         }

@@ -23,7 +23,7 @@ import com.parse.ParseUser;
  * The set of tagged_vehicles that have been starred in the app.
  */
 
-public class FavoriteVehicleList {
+public class SavedListingsList {
 
     /* FAVORITEVEHICLELIST:
         - can be listings or tagged post
@@ -37,9 +37,9 @@ public class FavoriteVehicleList {
 
     // This class is a Singleton, since there's only one set of favorites for
     // the installation.
-    private static FavoriteVehicleList instance = new FavoriteVehicleList();
+    private static SavedListingsList instance = new SavedListingsList();
 
-    public static FavoriteVehicleList get() {
+    public static SavedListingsList get() {
         return instance;
     }
 
@@ -51,7 +51,7 @@ public class FavoriteVehicleList {
     // Listeners to notify when the set changes.
     private ArrayList<Listener> listeners = new ArrayList<Listener>();
 
-    private FavoriteVehicleList() {
+    private SavedListingsList() {
         fetchFavoritesFromParse();
     }
 
