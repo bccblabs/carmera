@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +21,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import veme.cario.com.CARmera.NearbyActivity;
+import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
@@ -102,7 +108,31 @@ public class SavedListingsFragment extends Fragment {
                 vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
             }
         });
-
+        setHasOptionsMenu(true);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.search, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        item.setTitle("searching for some car?");
+        SearchView sv = new SearchView( ((ProfileActivity) getActivity()).getActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, sv);
+//
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+////                System.out.println("search query submit");
+                return true;
+            }
+            //
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                System.out.println("tap");
+                return true;
+            }
+        });
     }
 }

@@ -24,7 +24,7 @@ public class NearbyActivity extends BaseActivity
     private NeabyPagerAdapter nearbyPagerAdapter;
 
     @Override
-    public void OnNearbyListingSelected(int pos) {
+    public void OnNearbyListingsSelected(int pos) {
     }
 
     @Override
@@ -53,7 +53,7 @@ public class NearbyActivity extends BaseActivity
         });
         /* 1. nearby tags */
         actionBar.addTab(actionBar.newTab()
-                                  .setText("Listings")
+                                  .setText("Tags")
                                   .setTabListener(new ActionBar.TabListener() {
                                       @Override
                                       public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -73,7 +73,7 @@ public class NearbyActivity extends BaseActivity
 
         /* 2. nearby listings */
         actionBar.addTab((actionBar.newTab()
-                                   .setText("Tags")
+                                   .setText("Listings")
                                    .setTabListener(new ActionBar.TabListener() {
                                        @Override
                                        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -95,7 +95,7 @@ public class NearbyActivity extends BaseActivity
     @Override
     public void onPause() {
         super.onPause();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 
 
@@ -125,4 +125,13 @@ public class NearbyActivity extends BaseActivity
             return 2;
         }
     }
+
+    @Override
+    public boolean onSearchRequested() {
+        Bundle args = new Bundle();
+//        appData.putBoolean(SearchableActivity.JARGON, true);
+//        startSearch(null, false, args, false);
+        return super.onSearchRequested();
+    }
+
 }

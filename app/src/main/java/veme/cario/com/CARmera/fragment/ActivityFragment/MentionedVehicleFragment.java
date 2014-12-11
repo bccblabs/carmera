@@ -1,12 +1,16 @@
 package veme.cario.com.CARmera.fragment.ActivityFragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,8 +20,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import veme.cario.com.CARmera.NearbyActivity;
+import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
+import veme.cario.com.CARmera.model.UserModels.MentionedVehicleList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -25,7 +30,7 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 /**
  * Created by bski on 12/3/14.
  */
-public class SavedListingsFragment extends Fragment {
+public class MentionedVehicleFragment extends Fragment {
 
     private static final String TAG = "SAVED_LISTINGS_FRAGMENT";
 
@@ -34,67 +39,68 @@ public class SavedListingsFragment extends Fragment {
     /* see the "favorites implementation */
     private VehicleListAdapter vehicleListAdapter;
 
-    private ListView saved_listings_listview;
-    private LinearLayout no_saved_listings_overlay;
+    private ListView mentioned_conversation_listview;
+    private LinearLayout no_mentioned_overlay;
 
-    private OnSavedListingSelectedListener listingCallback;
+    private OnMentionedListingSelectedListener mentionedCallback;
 
-    public interface OnSavedListingSelectedListener {
-        public abstract void OnSavedListingSelected (int pos);
+    public interface OnMentionedListingSelectedListener {
+        public abstract void OnMentionedListingSelected (int pos);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnSavedListingSelectedListener) activity;
+            mentionedCallback = (OnMentionedListingSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " has to implement the OnListingSelectedListener interface");
+                    + " has to implement the OnMentionedLister interface");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_saved_listings, container, false);
-        saved_listings_listview = (ListView) view.findViewById(R.id.saved_listings_listview);
-        no_saved_listings_overlay = (LinearLayout) view.findViewById(R.id.no_saved_listings_overlay);
-        no_saved_listings_overlay.setClickable(true);
-        no_saved_listings_overlay.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_mentioned, container, false);
+        mentioned_conversation_listview = (ListView) view.findViewById(R.id.mentioned_conversation_listview);
+        no_mentioned_overlay = (LinearLayout) view.findViewById(R.id.no_mentioned_overlay);
+        no_mentioned_overlay.setClickable(true);
+        no_mentioned_overlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), NearbyActivity.class);
-                startActivity(i);
+                /* open dialog conversation interface */
+//                Intent i = new Intent(getActivity(), NearbyActivity.class);
+//                startActivity(i);
             }
         });
-        saved_listings_listview.setEmptyView(no_saved_listings_overlay);
+        mentioned_conversation_listview.setEmptyView(no_mentioned_overlay);
 
         vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
-        saved_listings_listview.setAdapter(vehicleListAdapter);
+        mentioned_conversation_listview.setAdapter(vehicleListAdapter);
 
-        List<TaggedVehicle> savedVehicles = SavedListingsList.get().getFavorites();
-        for (TaggedVehicle vehicle : savedVehicles) {
+        List<TaggedVehicle> mentionedVehicles = MentionedVehicleList.get().getMentionedVehicles();
+        for (TaggedVehicle vehicle : mentionedVehicles) {
             vehicleListAdapter.add (vehicle);
         }
         vehicleListAdapter.notifyDataSetChanged();
 
-        saved_listings_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mentioned_conversation_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final TaggedVehicle taggedVehicle = (TaggedVehicle) saved_listings_listview.getItemAtPosition(position);
+                final TaggedVehicle mentionedVehicle = (TaggedVehicle) mentioned_conversation_listview.getItemAtPosition(position);
                 Bundle args = new Bundle();
                 byte[] vehicle_image = null;
                 try {
-                    vehicle_image = taggedVehicle.getTagPhoto().getData();
+                    vehicle_image = mentionedVehicle.getTagPhoto().getData();
 
                 } catch (com.parse.ParseException e) {
                     Log.d(TAG, " - " + e.getMessage());
                 }
 
                 args.putByteArray("imageData", vehicle_image);
-                args.putString("vehicle_year", taggedVehicle.getYear());
-                args.putString("vehicle_make", taggedVehicle.getMake());
-                args.putString("vehicle_model", taggedVehicle.getModel());
+                args.putString("vehicle_year", mentionedVehicle.getYear());
+                args.putString("vehicle_make", mentionedVehicle.getMake());
+                args.putString("vehicle_model", mentionedVehicle.getModel());
 
                 FragmentManager fm = getChildFragmentManager();
                 VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
@@ -103,6 +109,32 @@ public class SavedListingsFragment extends Fragment {
             }
         });
 
+        setHasOptionsMenu(true);
         return view;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.search, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        item.setTitle("searching for some car?");
+        SearchView sv = new SearchView( ((ProfileActivity) getActivity()).getActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, sv);
+//
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+////                System.out.println("search query submit");
+                return true;
+            }
+            //
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                System.out.println("tap");
+                return true;
+            }
+        });
     }
 }

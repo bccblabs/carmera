@@ -24,6 +24,6 @@ public class DispatchActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 }

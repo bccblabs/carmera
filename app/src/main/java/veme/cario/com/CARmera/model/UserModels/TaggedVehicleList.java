@@ -29,9 +29,9 @@ public class TaggedVehicleList {
      * or un-starred.
      */
     public static interface Listener {
-        void onFavoriteAdded(TaggedVehicle tagged_vehicle);
+        void onSavedListingsAdded(TaggedVehicle tagged_vehicle);
 
-        void onFavoriteRemoved(TaggedVehicle tagged_vehicle);
+        void onSavedListingsRemoved(TaggedVehicle tagged_vehicle);
     }
 
     // This class is a Singleton, since there's only one set of favorites for
@@ -76,7 +76,7 @@ public class TaggedVehicleList {
         /* Get Relation will add a new relation if not exists previously */
         ParseUser.getCurrentUser().getRelation("taggedVehicleList").add(tagged_vehicle);
         for (Listener listener : listeners) {
-            listener.onFavoriteAdded(tagged_vehicle);
+            listener.onSavedListingsAdded(tagged_vehicle);
         }
     }
 
@@ -88,7 +88,7 @@ public class TaggedVehicleList {
         tagged_vehicle_ids.remove(tagged_vehicle.getObjectId());
         ParseUser.getCurrentUser().getRelation("taggedVehicleList").remove(tagged_vehicle);
         for (Listener listener : listeners) {
-            listener.onFavoriteRemoved(tagged_vehicle);
+            listener.onSavedListingsRemoved(tagged_vehicle);
         }
     }
 

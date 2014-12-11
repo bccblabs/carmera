@@ -23,78 +23,78 @@ import com.parse.ParseUser;
  * The set of tagged_vehicles that have been starred in the app.
  */
 
-public class SavedListingsList {
+public class NearbyTagsList {
 
     /* FAVORITEVEHICLELIST:
         - can be listings or tagged post
      */
 
     public static interface Listener {
-        void onSavedListingsAdded(TaggedVehicle tagged_vehicle);
+        void onNearbyTagsAdded(TaggedVehicle tagged_vehicle);
 
-        void onSavedListingsRemoved(TaggedVehicle tagged_vehicle);
+        void fetchNearbyTagsFromParse(TaggedVehicle tagged_vehicle);
     }
 
-    // This class is a Singleton, since there's only one set of favorites for
+    // This class is a Singleton, since there's only one set of nearbyTags for
     // the installation.
-    private static SavedListingsList instance = new SavedListingsList();
+    private static NearbyTagsList instance = new NearbyTagsList();
 
-    public static SavedListingsList get() {
+    public static NearbyTagsList get() {
         return instance;
     }
 
-    private List<TaggedVehicle> saved_listings_list = new ArrayList<TaggedVehicle>();
+    private List<TaggedVehicle> nearby_tags_list = new ArrayList<TaggedVehicle>();
 
-    // The set of objectIds for the tagged_vehicles that have been added to favorites.
-    private HashSet<String> favorite_tagged_vehicle_ids = new HashSet<String>();
+    // The set of objectIds for the tagged_vehicles that have been added to nearbyTags.
+    private HashSet<String> nearby_tags_ids = new HashSet<String>();
 
     // Listeners to notify when the set changes.
     private ArrayList<Listener> listeners = new ArrayList<Listener>();
 
-    private SavedListingsList() {
-        fetchFavoritesFromParse();
+    private NearbyTagsList() {
+        fetchNearbyTagsFromParse();
     }
 
-    public List<TaggedVehicle> getFavorites() {
-        return saved_listings_list;
+    public List<TaggedVehicle> getNearbyTags() {
+        return nearby_tags_list;
     }
 
     /**
-     * Returns true if this tagged_vehicle has been added to favorites.
+     * Returns true if this tagged_vehicle has been added to nearbyTags.
      */
     public boolean contains(TaggedVehicle tagged_vehicle) {
-        return favorite_tagged_vehicle_ids.contains(tagged_vehicle.getObjectId());
+        return nearby_tags_ids.contains(tagged_vehicle.getObjectId());
     }
 
     /**
-     * Adds a tagged_vehicle to the set of favorites.
+     * Adds a tagged_vehicle to the set of nearbyTags.
      */
     public void add(TaggedVehicle tagged_vehicle) {
         // For now, just add the favorite to this list; we will save it to the
         // relation later
-        saved_listings_list.add(tagged_vehicle);
-        favorite_tagged_vehicle_ids.add(tagged_vehicle.getObjectId());
+        nearby_tags_list.add(tagged_vehicle);
+        nearby_tags_ids.add(tagged_vehicle.getObjectId());
         /* Get Relation will add a new relation if not exists previously */
-        ParseUser.getCurrentUser().getRelation("favoriteTaggedVehicles").add(tagged_vehicle);
+        ParseUser.getCurrentUser().getRelation("nearbyTags").add(tagged_vehicle);
         for (Listener listener : listeners) {
-            listener.onSavedListingsAdded(tagged_vehicle);
+            listener.onNearbyTagsAdded(tagged_vehicle);
         }
     }
 
     /**
-     * Removes a tagged_vehicle from the set of favorites.
+     * Removes a tagged_vehicle from the set of nearbyTags.
      */
     public void remove(TaggedVehicle tagged_vehicle) {
-        saved_listings_list.remove(tagged_vehicle);
-        favorite_tagged_vehicle_ids.remove(tagged_vehicle.getObjectId());
-        ParseUser.getCurrentUser().getRelation("favoriteTaggedVehicles").remove(tagged_vehicle);
+        nearby_tags_list.remove(tagged_vehicle);
+        nearby_tags_ids.remove(tagged_vehicle.getObjectId());
+        ParseUser.getCurrentUser().getRelation("nearbyTags").remove(tagged_vehicle);
         for (Listener listener : listeners) {
-            listener.onSavedListingsRemoved(tagged_vehicle);
+            listener.fetchNearbyTagsFromParse(tagged_vehicle);
         }
     }
 
     /**
-     * Adds a listener to be notified when the set of favorites changes.
+     * Adds a listener to be notified when the set of nearbyTags changes.
      */
     public void addListener(Listener listener) {
         listeners.add(listener);
@@ -108,17 +108,17 @@ public class SavedListingsList {
     }
 
     /**
-     * Populates the set of favorites from its JSON representation, as returned
+     * Populates the set of nearbyTags from its JSON representation, as returned
      * from toJSON.
      */
     private void setJSON(JSONObject json) {
-        JSONArray favorites = json.optJSONArray("favoriteTaggedVehicles");
-        if (favorites == null) {
-            favorites = new JSONArray();
+        JSONArray nearbyTags = json.optJSONArray("nearbyTags");
+        if (nearbyTags == null) {
+            nearbyTags = new JSONArray();
         }
 
         ArrayList<TaggedVehicle> toRemove = new ArrayList<TaggedVehicle>();
-        for (String objectId : favorite_tagged_vehicle_ids) {
+        for (String objectId : nearby_tags_ids) {
             TaggedVehicle pointer = TaggedVehicle.createWithoutData(TaggedVehicle.class, objectId);
             toRemove.add(pointer);
         }
@@ -126,8 +126,8 @@ public class SavedListingsList {
             remove(tagged_vehicle);
         }
 
-        for (int i = 0; i < favorites.length(); ++i) {
-            String objectId = favorites.optString(i);
+        for (int i = 0; i < nearbyTags.length(); ++i) {
+            String objectId = nearbyTags.optString(i);
             TaggedVehicle pointer = TaggedVehicle.createWithoutData(TaggedVehicle.class, objectId);
             add(pointer);
         }
@@ -136,17 +136,17 @@ public class SavedListingsList {
     /**
      * Returns a JSON representation of the set of favorited tagged_vehicles. The format
      * is something like:
-     * <code>{ "favorites": [ "tagged_vehicleObjectId1", "tagged_vehicleObjectId2", "tagged_vehicleObjectId3" ] }</code>
+     * <code>{ "nearbyTags": [ "tagged_vehicleObjectId1", "tagged_vehicleObjectId2", "tagged_vehicleObjectId3" ] }</code>
      */
     private JSONObject toJSON() {
-        JSONArray favorites = new JSONArray();
-        for (String objectId : favorite_tagged_vehicle_ids) {
-            favorites.put(objectId);
+        JSONArray nearbyTags = new JSONArray();
+        for (String objectId : nearby_tags_ids) {
+            nearbyTags.put(objectId);
         }
 
         JSONObject json = new JSONObject();
         try {
-            json.put("favoriteTaggedVehicles", favorites);
+            json.put("nearbyTags", nearbyTags);
         } catch (JSONException e) {
             // This can't happen.
             throw new RuntimeException(e);
@@ -155,7 +155,7 @@ public class SavedListingsList {
     }
 
     /**
-     * Saves the current set of favorites to a SharedPreferences file. This
+     * Saves the current set of nearbyTags to a SharedPreferences file. This
      * method returns quickly, while the saving runs asynchronously.
      */
     private void saveLocally(final Context context) {
@@ -167,7 +167,7 @@ public class SavedListingsList {
                 try {
                     String jsonString = json.toString();
                     SharedPreferences prefs = context.getSharedPreferences(
-                            "favoriteTaggedVehicles.json", Context.MODE_PRIVATE);
+                            "nearbyTags.json", Context.MODE_PRIVATE);
                     prefs.edit().putString("json", jsonString).commit();
                 } catch (Exception e) {
                     return e;
@@ -187,7 +187,7 @@ public class SavedListingsList {
     }
 
     /**
-     * Saves the current set of favorites to Parse, so that we can push to
+     * Saves the current set of nearbyTags to Parse, so that we can push to
      * people based on what tagged_vehicles they have favorited, and also to measure which
      * tagged_vehicles were the most favorited.
      */
@@ -197,15 +197,15 @@ public class SavedListingsList {
     }
 
     /**
-     * Loads the set of favorites from the SharedPreferences file, calling the
-     * listeners for all the favorites that get added.
+     * Loads the set of nearbyTags from the SharedPreferences file, calling the
+     * listeners for all the nearbyTags that get added.
      */
     public void findLocally(final Context context) {
         new AsyncTask<Void, Void, JSONObject>() {
             @Override
             protected JSONObject doInBackground(Void... unused) {
                 SharedPreferences prefs = context.getSharedPreferences(
-                        "favoriteTaggedVehicles.json", Context.MODE_PRIVATE);
+                        "nearbyTags.json", Context.MODE_PRIVATE);
                 String jsonString = prefs.getString("json", "{}");
                 try {
                     return new JSONObject(jsonString);
@@ -225,7 +225,7 @@ public class SavedListingsList {
     }
 
     /**
-     * Saves the current set of favorites both to the local disk and to Parse.
+     * Saves the current set of nearbyTags both to the local disk and to Parse.
      * This returns immediately, which the saves run asynchronously.
      */
     public void save(final Context context) {
@@ -233,18 +233,18 @@ public class SavedListingsList {
         saveToParse();
     }
 
-    private void fetchFavoritesFromParse() {
+    private void fetchNearbyTagsFromParse() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ParseRelation<TaggedVehicle> relation = currentUser.getRelation("favoriteTaggedVehicles");
-        ParseQuery<TaggedVehicle> favoriteTaggedVehiclesQuery = relation.getQuery();
-        favoriteTaggedVehiclesQuery.findInBackground(new FindCallback<TaggedVehicle>() {
+        ParseRelation<TaggedVehicle> relation = currentUser.getRelation("nearbyTags");
+        ParseQuery<TaggedVehicle> nearbyTagsQuery = relation.getQuery();
+        nearbyTagsQuery.findInBackground(new FindCallback<TaggedVehicle>() {
 
             @Override
             public void done(List<TaggedVehicle> objects, ParseException e) {
                 if ((objects != null) && (!objects.isEmpty())) {
                     for (TaggedVehicle tagged_vehicle : objects) {
-                        saved_listings_list.add(tagged_vehicle);
-                        favorite_tagged_vehicle_ids.add(tagged_vehicle.getObjectId());
+                        nearby_tags_list.add(tagged_vehicle);
+                        nearby_tags_ids.add(tagged_vehicle.getObjectId());
                     }
                 }
             }

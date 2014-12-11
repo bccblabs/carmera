@@ -49,7 +49,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
-        authenticateSession();
+//        authenticateSession();
 
         /* Set up location, orientation listeners, gesture detector */
 //        locationRequest = LocationRequest.create();
@@ -66,7 +66,7 @@ public class BaseActivity extends FragmentActivity {
 //        if (locationClient.isConnected()) {
 //        }
 //        locationClient.disconnect();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 //
 //    @Override

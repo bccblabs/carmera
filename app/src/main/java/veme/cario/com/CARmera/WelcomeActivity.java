@@ -79,13 +79,13 @@ public class WelcomeActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        AppEventsLogger.activateApp(this);
+        // AppEventsLogger.activateApp(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        AppEventsLogger.deactivateApp(this);
+        //AppEventsLogger.deactivateApp(this);
     }
 
     @Override

@@ -120,7 +120,7 @@ public class ProfileActivity extends BaseActivity
     @Override
     public void onPause() {
         super.onPause();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 
     private static class ProfileSectionsAdapter extends FragmentPagerAdapter {

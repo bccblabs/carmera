@@ -117,7 +117,7 @@ public class CaptureActivity extends BaseActivity
     public void onPause() {
         super.onPause();
         releaseCamera();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 
     @Override

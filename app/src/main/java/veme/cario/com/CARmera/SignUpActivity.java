@@ -128,7 +128,7 @@ public class SignUpActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        AppEventsLogger.deactivateApp(this);
+        // AppEventsLogger.deactivateApp(this);
     }
 
 }
