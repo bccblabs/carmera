@@ -5,8 +5,13 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import veme.cario.com.CARmera.fragment.ActivityFragment.MentionedVehicleFragment;
 import veme.cario.com.CARmera.model.UserModels.BusinessRequest;
+import veme.cario.com.CARmera.model.UserModels.MentionedVehicleList;
+import veme.cario.com.CARmera.model.UserModels.NearbyListingsList;
+import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 import veme.cario.com.CARmera.model.UserModels.UserInfo;
 
 /**
@@ -26,6 +31,11 @@ public class CARmeraApp extends Application {
         Parse.initialize(this,
                 getString(R.string.parse_app_id),
                 getString(R.string.parse_app_key));
+
+//        ParseObject.registerSubclass(MentionedVehicleList.class);
+//        ParseObject.registerSubclass(NearbyListingsList.class);
+//        ParseObject.registerSubclass(TaggedVehicleList.class);
+//        ParseObject.registerSubclass(SavedListingsList.class);
 
         ParseObject.registerSubclass(BusinessRequest.class);
         ParseObject.registerSubclass(TaggedVehicle.class);

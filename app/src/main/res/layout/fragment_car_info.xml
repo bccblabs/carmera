@@ -53,12 +53,6 @@
             android:text="@string/str_save_to_local"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dismiss_vehicle_dialog"
-            android:text="@string/str_close_dialog"/>
-
     </LinearLayout>
 
 </LinearLayout>

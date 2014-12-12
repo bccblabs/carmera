@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -17,23 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.parse.ParseException;
 import com.parse.ParseImageView;
-import com.parse.ParseUser;
-
-/*
-    Design issues:
-        why do we want to have explicit favorite class?
-        - implement listeners, so that we can tell users more on favorites
-
-    To-do:
-        1. incorporate dialog box
-        2. incorporate Ins/facebook/WeChat shares
-        3. wire up the dialog box
- */
 
 public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
 
@@ -44,23 +32,23 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
     private static String TAG = "Tagged Vehicle Adapter";
 
     private static class ViewHolder {
-        RelativeLayout vehicleItemLayout;
+        LinearLayout vehicleItemLayout;
         TextView vehicleInfoView;
         TextView sellerInfoView;
         TextView priceInfoView;
 
-        TextView likesCountView;
-        LinearLayout likesOverlay;
+//        TextView likesCountView;
+//        LinearLayout likesOverlay;
 
-        TextView refererInfo;
+//        TextView refererInfo;
 
         ParseImageView photo;
 
-        ImageButton favoriteButton;
-        ImageButton seeListingsBtn;
-        ImageButton contactSellerBtn;
-        ImageButton detailsBtn;
-        ImageButton shareBtn;
+        Button favoriteButton;
+        Button seeListingsBtn;
+        Button contactSellerBtn;
+        Button detailsBtn;
+        Button shareBtn;
     }
 
     public VehicleListAdapter (Context context) {
@@ -77,37 +65,37 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             view = inflater.inflate(R.layout.list_item_vehicle, parent, false);
             // Cache view components into the view holder
             holder = new ViewHolder();
-            holder.vehicleItemLayout = (RelativeLayout) view
+            holder.vehicleItemLayout = (LinearLayout) view
                     .findViewById(R.id.vehicle_item);
             holder.vehicleInfoView = (TextView) view.findViewById(R.id.vehicle_info_view);
             holder.sellerInfoView = (TextView) view.findViewById(R.id.seller_info_view);
             holder.priceInfoView = (TextView) view.findViewById(R.id.price_info_view);
 
-            holder.refererInfo = (TextView) view.findViewById(R.id.referer_view);
-            holder.likesCountView = (TextView) view.findViewById(R.id.likes_view);
-            holder.likesOverlay = (LinearLayout) view
-                    .findViewById(R.id.likes_overlay);
+//            holder.refererInfo = (TextView) view.findViewById(R.id.referer_view);
+//            holder.likesCountView = (TextView) view.findViewById(R.id.likes_view);
+//            holder.likesOverlay = (LinearLayout) view
+//                    .findViewById(R.id.likes_overlay);
 
             holder.photo = (ParseImageView) view
                     .findViewById(R.id.tagged_photo);
 
             /* set the object to be "favorite", for querying */
-            holder.favoriteButton = (ImageButton) view
+            holder.favoriteButton = (Button) view
                     .findViewById(R.id.favorite_button);
 
             /* display the dialog window with seller information */
-            holder.contactSellerBtn = (ImageButton) view
+            holder.contactSellerBtn = (Button) view
                     .findViewById(R.id.contact_seller_btn);
 
             /* only show when it's not a listing, send vehicle yr, mk, model to listing screen */
-            holder.seeListingsBtn = (ImageButton) view
+            holder.seeListingsBtn = (Button) view
                     .findViewById(R.id.see_listings_btn);
 
             /* display the dialog window with the vehicle information, and more photos */
-            holder.detailsBtn = (ImageButton) view
+            holder.detailsBtn = (Button) view
                     .findViewById(R.id.details_btn);
 
-            holder.shareBtn = (ImageButton) view
+            holder.shareBtn = (Button) view
                     .findViewById(R.id.share_btn);
 
             // Tag for lookup later
@@ -121,82 +109,82 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         final TaggedVehicle taggedVehicle = getItem(position);
 
         /* View item: Different relative layout button for favorite cars */
-        RelativeLayout vehicleLayout = holder.vehicleItemLayout;
+        LinearLayout vehicleLayout = holder.vehicleItemLayout;
         if (taggedVehicle.isFavorites()) {
             vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
         }
         /* View item: Vehicle Year, Make, Model Information */
         final TextView vehicle_info_tv = holder.vehicleInfoView;
-        vehicle_info_tv.setText(taggedVehicle.getMake() + " "
+        vehicle_info_tv.setText(taggedVehicle.getYear() + " "
                 + taggedVehicle.getMake() + " "
                 + taggedVehicle.getModel());
 
         /* View item: Referer */
-        ParseUser referer = taggedVehicle.getReferer();
-        TextView referer_info_tv = holder.refererInfo;
-        if ( referer != null ) {
-            referer_info_tv.setText(referer.getUsername());
-        } else {
-            referer_info_tv.setVisibility(View.GONE);
-        }
+//        ParseUser referer = taggedVehicle.getReferer();
+//        TextView referer_info_tv = holder.refererInfo;
+//        if ( referer != null ) {
+//            referer_info_tv.setText(referer.getUsername());
+//        } else {
+//            referer_info_tv.setVisibility(View.GONE);
+//        }
 
         /* View item: likes count */
-        TextView likes_cnt_tv = holder.likesCountView;
-        final LinearLayout likes_overlay = holder.likesOverlay;
-        likes_cnt_tv.setText(taggedVehicle.getLikesCnt());
-        likes_cnt_tv.setClickable(true);
-        likes_cnt_tv.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (taggedVehicle.isLikedByMe()) {
-                    taggedVehicle.removeLiker(ParseUser.getCurrentUser().getObjectId());
-                    likes_overlay.setBackgroundColor(GREEN_BACKGROUND);
-                } else {
-                    taggedVehicle.addLiker(ParseUser.getCurrentUser().getObjectId());
-                    likes_overlay.setBackgroundColor(WHITE_BACKGROUND);
-                }
-            }
-        });
+//        TextView likes_cnt_tv = holder.likesCountView;
+//        final LinearLayout likes_overlay = holder.likesOverlay;
+//        likes_cnt_tv.setText(taggedVehicle.getLikesCnt());
+//        likes_cnt_tv.setClickable(true);
+//        likes_cnt_tv.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (taggedVehicle.isLikedByMe()) {
+//                    taggedVehicle.removeLiker(ParseUser.getCurrentUser().getObjectId());
+//                    likes_overlay.setBackgroundColor(GREEN_BACKGROUND);
+//                } else {
+//                    taggedVehicle.addLiker(ParseUser.getCurrentUser().getObjectId());
+//                    likes_overlay.setBackgroundColor(WHITE_BACKGROUND);
+//                }
+//            }
+//        });
 
         /* View item: Vehicle Image */
         final ParseImageView photo = holder.photo;
         photo.setParseFile(taggedVehicle.getTagPhoto());
         photo.loadInBackground();
 
-        /* View item: Vehicle Favorite Button */
-        final ImageButton favoriteButton = holder.favoriteButton;
-        if (SavedListingsList.get().contains(taggedVehicle)) {
-            if (taggedVehicle.isFavorites()) {
-                favoriteButton.setImageResource(R.drawable.x);
-            } else {
-                favoriteButton
-                        .setImageResource(R.drawable.tagged_favorite);
-            }
-        } else {
-            favoriteButton
-                    .setImageResource(R.drawable.tagged_favorite);
-        }
+//        /* View item: Vehicle Favorite Button */
+//        final Button favoriteButton = holder.favoriteButton;
+//        if (SavedListingsList.get().contains(taggedVehicle)) {
+//            if (taggedVehicle.isFavorites()) {
+//                favoriteButton.setImageResource(R.drawable.x);
+//            } else {
+//                favoriteButton
+//                        .setImageResource(R.drawable.tagged_favorite);
+//            }
+//        } else {
+//            favoriteButton
+//                    .setImageResource(R.drawable.tagged_favorite);
+//        }
 
-        favoriteButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                SavedListingsList savedListingsList = SavedListingsList.get();
-                if (savedListingsList.contains(taggedVehicle)) {
-                    savedListingsList.remove(taggedVehicle);
-                    favoriteButton
-                            .setImageResource(R.drawable.tagged_not_favorite);
-                } else {
-                    savedListingsList.add(taggedVehicle);
-                    if (taggedVehicle.isFavorites()) {
-                        favoriteButton.setImageResource(R.drawable.x);
-                    } else {
-                        favoriteButton
-                                .setImageResource(R.drawable.tagged_favorite);
-                    }
-                }
-                savedListingsList.save(getContext());
-            }
-        });
-        favoriteButton.setFocusable(false);
+//        favoriteButton.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                SavedListingsList savedListingsList = SavedListingsList.get();
+//                if (savedListingsList.contains(taggedVehicle)) {
+//                    savedListingsList.remove(taggedVehicle);
+//                    favoriteButton
+//                            .setImageResource(R.drawable.tagged_not_favorite);
+//                } else {
+//                    savedListingsList.add(taggedVehicle);
+//                    if (taggedVehicle.isFavorites()) {
+//                        favoriteButton.setImageResource(R.drawable.x);
+//                    } else {
+//                        favoriteButton
+//                                .setImageResource(R.drawable.tagged_favorite);
+//                    }
+//                }
+//                savedListingsList.save(getContext());
+//            }
+//        });
+//        favoriteButton.setFocusable(false);
 
         /*
             View item:
@@ -206,23 +194,30 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         */
         TextView price_info_tv = holder.priceInfoView;
         final TextView seller_info_tv = holder.sellerInfoView;
-        final ImageButton contact_seller_btn = holder.contactSellerBtn;
-        final ImageButton see_listings_btn = holder.seeListingsBtn;
-        final ImageButton share_btn = holder.shareBtn;
-        final ImageButton details_btn = holder.detailsBtn;
+        final Button contact_seller_btn = holder.contactSellerBtn;
+        final Button see_listings_btn = holder.seeListingsBtn;
+        final Button share_btn = holder.shareBtn;
+        final Button details_btn = holder.detailsBtn;
 
         /* details btn */
         details_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = ((FragmentActivity)getContext()).getSupportFragmentManager();
+                FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
                 Bundle args = new Bundle();
-                args.putString ("vehicle_year", taggedVehicle.getYear());
-                args.putString ("vehicle_make", taggedVehicle.getMake());
-                args.putString ("vehicle_model", taggedVehicle.getModel());
-                VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
-                vehicleInfoDialog.setArguments(args);
-                vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+                try {
+                    args.putString("vehicle_year", taggedVehicle.getYear());
+                    args.putString("vehicle_make", taggedVehicle.getMake());
+                    args.putString("vehicle_model", taggedVehicle.getModel());
+                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
+                    args.putByteArray("imageData", imageData);
+
+                } catch (ParseException e) {
+                    Log.i(TAG, " - gettnig parse file raw data err: " + e.getMessage());
+                }
+                    VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
+                    vehicleInfoDialog.setArguments(args);
+                    vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
             }
         });
 
@@ -291,6 +286,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
             price_info_tv.setVisibility(View.GONE);
             seller_info_tv.setVisibility(View.GONE);
             contact_seller_btn.setVisibility(View.GONE);
+            see_listings_btn.setVisibility(View.GONE);
         }
         return view;
     }

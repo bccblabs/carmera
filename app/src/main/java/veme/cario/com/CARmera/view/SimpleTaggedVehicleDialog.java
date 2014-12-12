@@ -11,6 +11,12 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.SimpleVehicleListAdapter;
@@ -61,6 +67,19 @@ public class SimpleTaggedVehicleDialog extends DialogFragment {
         no_vehicles_view = (LinearLayout) view.findViewById(R.id.no_tagged_vehicle_view);
         final SimpleVehicleListAdapter simpleVehicleListAdapter = new SimpleVehicleListAdapter(getActivity());
         tagged_vehicle_lv.setAdapter(simpleVehicleListAdapter);
+
+        /* get all tagged vehicle data */
+        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
+        query.findInBackground(new FindCallback<TaggedVehicle>() {
+            @Override
+            public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
+                for (TaggedVehicle vehicle : taggedVehicles) {
+                    simpleVehicleListAdapter.add (vehicle);
+                }
+            }
+        });
+
+        simpleVehicleListAdapter.notifyDataSetChanged();
 
         tagged_vehicle_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

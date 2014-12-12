@@ -18,6 +18,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.util.List;
 
 import veme.cario.com.CARmera.CaptureActivity;
@@ -63,6 +67,7 @@ public class TaggedVehicleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_tagged_vehicle, container, false);
+        Log.i(TAG, " - tagged vehicle list created");
         tagged_vehicles_listview = (ListView) view.findViewById(R.id.tagged_cars_listview);
         no_vehicles_tagged_overlay = (LinearLayout) view.findViewById(R.id.no_tagged_vehicle_overlay);
         no_vehicles_tagged_overlay.setClickable(true);
@@ -78,36 +83,17 @@ public class TaggedVehicleFragment extends Fragment {
         vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
         tagged_vehicles_listview.setAdapter(vehicleListAdapter);
 
-        List<TaggedVehicle> taggedVehicles = TaggedVehicleList.get().getTaggedVehicleList();
-        for (TaggedVehicle vehicle : taggedVehicles) {
-            vehicleListAdapter.add (vehicle);
-        }
-        vehicleListAdapter.notifyDataSetChanged();
-
-        tagged_vehicles_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* sets data for all tagged vehicles */
+        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
+        query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final TaggedVehicle taggedVehicle = (TaggedVehicle) tagged_vehicles_listview.getItemAtPosition(position);
-                Bundle args = new Bundle();
-                byte[] vehicle_image = null;
-                try {
-                    vehicle_image = taggedVehicle.getTagPhoto().getData();
-
-                } catch (com.parse.ParseException e) {
-                    Log.d(TAG, " - " + e.getMessage());
+            public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
+                for (TaggedVehicle vehicle : taggedVehicles) {
+                    vehicleListAdapter.add (vehicle);
                 }
-
-                args.putByteArray("imageData", vehicle_image);
-                args.putString("vehicle_year", taggedVehicle.getYear());
-                args.putString("vehicle_make", taggedVehicle.getMake());
-                args.putString("vehicle_model", taggedVehicle.getModel());
-
-                FragmentManager fm = getChildFragmentManager();
-                VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
-                vehicleInfoDialog.setArguments(args);
-                vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
             }
         });
+        vehicleListAdapter.notifyDataSetChanged();
         setHasOptionsMenu(true);
         return view;
     }

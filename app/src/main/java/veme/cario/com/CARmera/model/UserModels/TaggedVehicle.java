@@ -96,11 +96,20 @@ public class TaggedVehicle extends ParseObject {
 
     public ParseFile getSellerThumbnail() { return getParseFile("seller_thumbnail"); }
 
-    public String getLikesCnt() { return Integer.toString(getList("likes").size()); }
+    public String getLikesCnt() {
+        if (containsKey("likers"))
+            return Integer.toString(getList("likers").size());
+        else
+            return Integer.toString(0);
+    }
 
     public boolean isLikedByMe() {
-        List<String> likers_id = getList("likes");
-        return likers_id.contains(ParseUser.getCurrentUser().getObjectId());
+        if (containsKey("likers")) {
+            List<String> likers_id = getList("likers");
+            return likers_id.contains(ParseUser.getCurrentUser().getObjectId());
+        } else {
+            return false;
+        }
     }
 
     public void addLiker(String id) {
@@ -108,10 +117,12 @@ public class TaggedVehicle extends ParseObject {
     }
 
     public void removeLiker (String id) {
-        List<String> likers_id = getList("likers");
-        likers_id.remove(likers_id);
-        remove("likers");
-        addAllUnique("likers", likers_id);
+        if (containsKey("likers")) {
+            List<String> likers_id = getList("likers");
+            likers_id.remove(likers_id);
+            remove("likers");
+            addAllUnique("likers", likers_id);
+        }
     }
 
     public ParseUser getReferer() { return getParseUser("referer");}

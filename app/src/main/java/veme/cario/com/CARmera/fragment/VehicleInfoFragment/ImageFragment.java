@@ -132,14 +132,6 @@ public class ImageFragment extends Fragment {
             }
         });
 
-        dismiss_btn = (Button) getView().findViewById(R.id.dismiss_vehicle_dialog);
-        dismiss_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         new BitmapLoaderTask().execute();
 
     }

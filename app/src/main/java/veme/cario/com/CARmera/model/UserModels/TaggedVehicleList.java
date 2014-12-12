@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -34,40 +35,27 @@ public class TaggedVehicleList {
         void onSavedListingsRemoved(TaggedVehicle tagged_vehicle);
     }
 
-    // This class is a Singleton, since there's only one set of favorites for
-    // the installation.
     private static TaggedVehicleList instance = new TaggedVehicleList();
-
-    public static TaggedVehicleList get() {
-        return instance;
-    }
-
     private List<TaggedVehicle> tagged_vehicle_list = new ArrayList<TaggedVehicle>();
-
-    // The set of objectIds for the tagged_vehicles that have been added to favorites.
     private HashSet<String> tagged_vehicle_ids = new HashSet<String>();
-
-    // Listeners to notify when the set changes.
     private ArrayList<Listener> listeners = new ArrayList<Listener>();
-
     private TaggedVehicleList() {
         fetchTaggedFromParse();
     }
 
+
+
+    public static TaggedVehicleList get() {
+        return instance;
+    }
     public List<TaggedVehicle> getTaggedVehicleList() {
         return tagged_vehicle_list;
     }
 
-    /**
-     * Returns true if this tagged_vehicle has been added to favorites.
-     */
     public boolean contains(TaggedVehicle tagged_vehicle) {
         return tagged_vehicle_ids.contains(tagged_vehicle.getObjectId());
     }
 
-    /**
-     * Adds a tagged_vehicle to the set of favorites.
-     */
     public void add(TaggedVehicle tagged_vehicle) {
         // For now, just add the favorite to this list; we will save it to the
         // relation later
@@ -78,6 +66,7 @@ public class TaggedVehicleList {
         for (Listener listener : listeners) {
             listener.onSavedListingsAdded(tagged_vehicle);
         }
+        ParseUser.getCurrentUser().saveInBackground();
     }
 
     /**

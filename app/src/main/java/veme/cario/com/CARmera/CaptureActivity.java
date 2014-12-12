@@ -16,19 +16,22 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import com.facebook.AppEventsLogger;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class CaptureActivity extends BaseActivity
                                     implements ImageFragment.ImageResultListener,
-                                               SimpleTaggedVehicleDialog.OnSimpleTagSelectedListener  {
+                                               SimpleTaggedVehicleDialog.OnSimpleTagSelectedListener {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -39,7 +42,7 @@ public class CaptureActivity extends BaseActivity
     private VehicleInfoDialog vehicleInfoDialog = null;
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
-    private Camera.PictureCallback pictureCallback  = new Camera.PictureCallback() {
+    private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Log.d(TAG, " - picture length: " + data.length);
@@ -61,8 +64,7 @@ public class CaptureActivity extends BaseActivity
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         releaseCamera();
         setContentView(R.layout.activity_capture);
@@ -70,6 +72,7 @@ public class CaptureActivity extends BaseActivity
 
 
     }     /* Activity lifecycle */
+
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
@@ -78,7 +81,6 @@ public class CaptureActivity extends BaseActivity
         /* Initialize camera layout */
         setContentView(R.layout.activity_capture);
         initUIComponents();
-
     }
 
     private void initUIComponents() {
@@ -94,7 +96,7 @@ public class CaptureActivity extends BaseActivity
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         }
         parameters.setPictureFormat(ImageFormat.JPEG);
-//        parameters.setPictureSize(640, 480);
+
         camera.setParameters(parameters);
         /* Wire up camera views */
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
@@ -122,6 +124,10 @@ public class CaptureActivity extends BaseActivity
                 return false;
             }
         });
+
+        /* auto-focus setup */
+//        setupAutofocus();
+
         preview.addView(cameraPreview);
 
         tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
@@ -151,49 +157,6 @@ public class CaptureActivity extends BaseActivity
         releaseCamera();
         super.onStop();
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (orientationEventListener == null) {
-//            orientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
-//                @Override
-//                public void onOrientationChanged(int orientation) {
-//
-//                    // determine our orientation based on sensor response
-//                    int lastOrientation = mOrientation;
-//
-//                    if (orientation >= 315 || orientation < 45) {
-//                        if (mOrientation != ORIENTATION_PORTRAIT_NORMAL) {
-//                            mOrientation = ORIENTATION_PORTRAIT_NORMAL;
-//                        }
-//                    }
-//                    else if (orientation < 315 && orientation >= 225) {
-//                        if (mOrientation != ORIENTATION_LANDSCAPE_NORMAL) {
-//                            mOrientation = ORIENTATION_LANDSCAPE_NORMAL;
-//                        }
-//                    }
-//                    else if (orientation < 225 && orientation >= 135) {
-//                        if (mOrientation != ORIENTATION_PORTRAIT_INVERTED) {
-//                            mOrientation = ORIENTATION_PORTRAIT_INVERTED;
-//                        }
-//                    }
-//                    else { // orientation <135 && orientation > 45
-//                        if (mOrientation != ORIENTATION_LANDSCAPE_INVERTED) {
-//                            mOrientation = ORIENTATION_LANDSCAPE_INVERTED;
-//                        }
-//                    }
-//
-//                    if (lastOrientation != mOrientation) {
-//                        changeRotation(mOrientation, lastOrientation);
-//                    }
-//                }
-//            };
-//        }
-//        if (orientationEventListener.canDetectOrientation()) {
-//            orientationEventListener.enable();
-//        }
-//    }
 
     /* Camera helper functions */
     public static Camera getCameraInstance() {
@@ -259,6 +222,18 @@ public class CaptureActivity extends BaseActivity
         args.putString("vehicle_model", model);
         args.putByteArray("imageData", imageData);
         /* save to parse here */
+        TaggedVehicle taggedVehicle = new TaggedVehicle();
+        taggedVehicle.setYear(year);
+        taggedVehicle.setMake(make);
+        taggedVehicle.setModel(model);
+        taggedVehicle.setTagPhoto(new ParseFile(imageData));
+        taggedVehicle.setUser(ParseUser.getCurrentUser());
+
+        /* save to tagged vehicles */
+        TaggedVehicleList.get().add(taggedVehicle);
+        TaggedVehicleList.get().save(CaptureActivity.this);
+
+
         vehicleInfoDialog.dismiss();
         FragmentManager fm = getSupportFragmentManager();
         vehicleInfoDialog = new VehicleInfoDialog();
@@ -277,34 +252,6 @@ public class CaptureActivity extends BaseActivity
         startActivity(i);
     }
 
-
-//
-//    private void changeRotation(int orientation, int lastOrientation) {
-//        switch (orientation) {
-//            case ORIENTATION_PORTRAIT_NORMAL:
-//                tagged_btn.setImageResource(R.drawable.ic_action_star);
-//                break;
-//            case ORIENTATION_LANDSCAPE_NORMAL:
-//                tagged_btn.setImageDrawable(getRotatedImage(R.drawable.ic_action_star, 270));
-//                Log.v("CameraActivity", "Orientation = 0");
-//                break;
-//            case ORIENTATION_PORTRAIT_INVERTED:
-//                tagged_btn.setImageDrawable(getRotatedImage(R.drawable.ic_action_star, 90));
-//                Log.v("CameraActivity", "Orientation = 270");
-//                break;
-//            case ORIENTATION_LANDSCAPE_INVERTED:
-//                tagged_btn.setImageDrawable(getRotatedImage(R.drawable.ic_action_star, 180));
-//                Log.v("CameraActivity", "Orientation = 180");
-//                break;
-//        }
-//    }
-//    private Drawable getRotatedImage(int drawableId, int degrees) {
-//        Bitmap original = BitmapFactory.decodeResource(getResources(), drawableId);
-//        Matrix matrix = new Matrix();
-//        matrix.postRotate(degrees);
-//        Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
-//        return new BitmapDrawable(rotated);
-//    }
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {
         int w = bitmap.getWidth();

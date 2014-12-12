@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -23,7 +24,7 @@ import com.parse.ParseUser;
  * The set of tagged_vehicles that have been starred in the app.
  */
 
-public class MentionedVehicleList {
+public class MentionedVehicleList{
     /**
      * A listener to notify other parts of the app when tagged_vehicles have been starred
      * or un-starred.
