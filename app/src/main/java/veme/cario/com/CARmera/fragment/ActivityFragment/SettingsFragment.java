@@ -1,4 +1,4 @@
-package veme.cario.com.CARmera.fragment;
+package veme.cario.com.CARmera.fragment.ActivityFragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

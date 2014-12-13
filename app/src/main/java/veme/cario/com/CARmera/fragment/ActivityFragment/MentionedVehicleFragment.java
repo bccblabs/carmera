@@ -78,6 +78,8 @@ public class MentionedVehicleFragment extends Fragment {
         vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
         mentioned_conversation_listview.setAdapter(vehicleListAdapter);
 
+        /* load data from parse */
+
         List<TaggedVehicle> mentionedVehicles = MentionedVehicleList.get().getMentionedVehicles();
         for (TaggedVehicle vehicle : mentionedVehicles) {
             vehicleListAdapter.add (vehicle);

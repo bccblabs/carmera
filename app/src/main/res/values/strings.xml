@@ -57,9 +57,9 @@
 
     <string name="str_price_info">Price Info</string>
     <string name="str_used_private">Used Private Party</string>
-    <string name="str_used_tmv">Used TMV Retail Price</string>
+    <string name="str_used_tmv">Used TMV</string>
     <string name="str_invoice">Invoice</string>
-    <string name="str_msrp">MSRP</string>
+    <string name="str_msrp">New MSRP</string>
 
     <string name="str_engine_info">Engine Details</string>
     <string name="str_hp">Horsepower</string>
@@ -86,42 +86,12 @@
     <string name="str_vehicle_name">Vehicle Name</string>
 
 
-    <string name="str_fuel_cost0">First Year Fuel Cost</string>
-    <string name="str_fuel_cost1">Second Year Fuel Cost</string>
-    <string name="str_fuel_cost2">Third Year Fuel Cost</string>
-    <string name="str_fuel_cost3">Fourth Year Fuel Cost</string>
-    <string name="str_fuel_cost4">Fifth Year Fuel Cost</string>
-
-    <string name="str_insurance_cost0">First Year Insurance Cost</string>
-    <string name="str_insurance_cost1">Second Year Insurance Cost</string>
-    <string name="str_insurance_cost2">Third Year Insurance Cost</string>
-    <string name="str_insurance_cost3">Fourth Year Insurance Cost</string>
-    <string name="str_insurance_cost4">Fifth Year Insurance Cost</string>
-
-    <string name="str_repair_cost0">First Year Repair Cost</string>
-    <string name="str_repair_cost1">Second Year Repair Cost</string>
-    <string name="str_repair_cost2">Third Year Repair Cost</string>
-    <string name="str_repair_cost3">Fourth Year Repair Cost</string>
-    <string name="str_repair_cost4">Fifth Year Repair Cost</string>
-
-    <string name="str_maintenance_cost0">First Year Maintenance Cost</string>
-    <string name="str_maintenance_cost1">Second Year Maintenance Cost</string>
-    <string name="str_maintenance_cost2">Third Year Maintenance Cost</string>
-    <string name="str_maintenance_cost3">Fourth Year Maintenance Cost</string>
-    <string name="str_maintenance_cost4">Fifth Year Maintenance Cost</string>
-
-    <string name="str_depr_cost0">First Year Depreciation Cost</string>
-    <string name="str_depr_cost1">Second Year Depreciation Cost</string>
-    <string name="str_depr_cost2">Third Year Depreciation Cost</string>
-    <string name="str_depr_cost3">Fourth Year Depreciation Cost</string>
-    <string name="str_depr_cost4">Fifth Year Depreciation Cost</string>
-
     <string name="str_total_cost_ownership">Total 5 Years Cost to Own</string>
-    <string name="str_total_fuel_cost">Total 5 Years Fuel Cost</string>
-    <string name="str_total_repair_cost">Total 5 Years Repair Cost</string>
-    <string name="str_total_maintenance_cost">Total 5 Years Maintenance Cost</string>
-    <string name="str_total_insurance_cost">Total 5 Years Insurance Cost</string>
-    <string name="str_total_depr_cost">Total 5 Years Depreciation Cost</string>
+    <string name="str_total_fuel_cost">Fuel</string>
+    <string name="str_total_repair_cost">Repair</string>
+    <string name="str_total_maintenance_cost">Maintenance</string>
+    <string name="str_total_insurance_cost">Insurance</string>
+    <string name="str_total_depr_cost">Depreciation</string>
 
     <string name="str_average_customer_rating">Average Customer Rating</string>
     <string name="str_customer_review_count">Customer Rating Count</string>

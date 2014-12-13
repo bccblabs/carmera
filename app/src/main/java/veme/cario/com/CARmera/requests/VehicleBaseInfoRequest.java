@@ -1,6 +1,8 @@
 package veme.cario.com.CARmera.requests;
 
 
+import android.util.Log;
+
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import veme.cario.com.CARmera.CARmeraApp;
@@ -14,7 +16,7 @@ public class VehicleBaseInfoRequest extends SpringAndroidSpiceRequest<VehicleBas
     private String make;
     private String model;
 
-
+    private static final String TAG = "VEHICLE_INFO_REQUEST";
     public VehicleBaseInfoRequest(String yr, String mk, String ml) {
         super(VehicleBaseInfo.class);
         this.year = yr;

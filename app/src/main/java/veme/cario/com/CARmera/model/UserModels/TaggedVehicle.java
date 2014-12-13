@@ -42,6 +42,13 @@ public class TaggedVehicle extends ParseObject {
         put ("model", model);
     }
 
+    public String getTrimId() { return getString("trim_id"); }
+
+    public void setTrimId(String id) { put("trim_id", id);}
+
+    public String getTrimName() { return getString("vehicle_trim_name"); }
+
+    public void setTrimName(String trim_name) { put("vehicle_trim_name", trim_name); }
 
     public ParseFile getTagPhoto() {
         return getParseFile("photo");

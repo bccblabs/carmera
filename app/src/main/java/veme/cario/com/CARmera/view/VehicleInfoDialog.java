@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +14,16 @@ import android.view.Window;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.DealershipFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ReviewFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SpecsFragment;
 
 public class VehicleInfoDialog extends DialogFragment {
 
-    private SectionsPagerAdapter sectionsPagerAdapter;
-    private PreviewPagerAdapter previewPagerAdapter;
     private ViewPager viewPager;
-
-    private ImageFragment imageFragment = null;
-    private ReviewFragment reviewFragment = null;
-    private SpecsFragment specsFragment = null;
-    private OwnershipCostFragment ownershipCostFragment = null;
-    private DealershipFragment dealershipFragment = null;
-    private CarInfoFragment carInfoFragment = null;
+    private FragmentPagerAdapter fragmentPagerAdapter = null;
+    private static String TAG = "VEHICLE_INFO_DIALOG";
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -48,58 +41,54 @@ public class VehicleInfoDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog, container);
         viewPager = (ViewPager)view.findViewById(R.id.pager);
 
-        if (getArguments().getString("vehicle_year") == null) {
-            previewPagerAdapter = new PreviewPagerAdapter(getChildFragmentManager());
-            viewPager.setAdapter(previewPagerAdapter);
-        } else {
-            sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-            viewPager.setAdapter(sectionsPagerAdapter);
-        }
 
+        String dialog_type = getArguments().getString("dialog_type");
+        if (dialog_type == "preview") {
+            fragmentPagerAdapter = new PreviewPagerAdapter(getChildFragmentManager());
+        } else if (dialog_type == "choose_style") {
+            fragmentPagerAdapter = new StylePagerAdapter(getChildFragmentManager());
+        } else if (dialog_type == "vehicle_info") {
+            fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
+        } else {
+            Log.d(TAG, " - no such type, default to info dialog");
+            fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
+        }
+        viewPager.setAdapter(fragmentPagerAdapter);
 
         return view;
     }
 
     /* Tab paging */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class InfoPagerAdapter extends FragmentPagerAdapter {
 
-        private final static int NUM_FRAG = 5;
+        private final static int NUM_FRAG = 3;
         private Bundle args;
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public InfoPagerAdapter(FragmentManager fm) {
             super(fm);
             args = getArguments();
         }
 
         @Override
         public Fragment getItem(int position) {
+            Fragment fragment = null;
             switch (position) {
                 case 0: {
-                    carInfoFragment = new CarInfoFragment();
-                    carInfoFragment.setArguments(args);
-                    return carInfoFragment;
+                    fragment = new CarInfoFragment();
+                    break;
                 }
                 case 1: {
-                    reviewFragment = new ReviewFragment();
-                    reviewFragment.setArguments(args);
-                    return reviewFragment;
+                    fragment = new SpecsFragment();
+                    break;
                 }
                 case 2: {
-                    specsFragment = new SpecsFragment();
-                    specsFragment.setArguments(args);
-                    return specsFragment;
-                }
-                case 3: {
-                    ownershipCostFragment = new OwnershipCostFragment();
-                    ownershipCostFragment.setArguments(args);
-                    return ownershipCostFragment;
-                }
-                case 4: {
-                    dealershipFragment = new DealershipFragment();
-                    dealershipFragment.setArguments(args);
-                    return dealershipFragment;
+                    fragment = new OwnershipCostFragment();
+                    break;
                 }
             }
-            return null;
+            if (fragment != null) {
+                fragment.setArguments(args);
+            }
+            return fragment;
         }
 
         @Override
@@ -111,15 +100,11 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Car Info";
+                    return "Snap Shot";
                 case 1:
-                    return "Customer Reviews";
+                    return "Powertrain";
                 case 2:
-                    return "Detailed Specifications";
-                case 3:
                     return "Cost-To-Own";
-                case 4:
-                    return "Nearby Dealerships";
             }
             return null;
         }
@@ -131,15 +116,10 @@ public class VehicleInfoDialog extends DialogFragment {
         }
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0: {
-                    imageFragment = new ImageFragment();
-                    Bundle args = getArguments();
-                    imageFragment.setArguments(args);
-                    return imageFragment;
-                }
-            }
-            return null;
+            Fragment imageFragment = new ImageFragment();
+            Bundle args = getArguments();
+            imageFragment.setArguments(args);
+            return imageFragment;
         }
         @Override
         public int getCount() {
@@ -150,7 +130,33 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Figure this out";
+                    return "Preview Photo";
+            }
+            return null;
+        }
+    }
+
+    public class StylePagerAdapter extends FragmentPagerAdapter {
+        public StylePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment selectStyleFragment = new SelectStyleFragment();
+            Bundle args = getArguments();
+            selectStyleFragment.setArguments(args);
+            return selectStyleFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Select Car Style";
             }
             return null;
         }

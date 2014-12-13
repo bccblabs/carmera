@@ -206,10 +206,11 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
                 FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
                 Bundle args = new Bundle();
                 try {
-                    args.putString("vehicle_year", taggedVehicle.getYear());
-                    args.putString("vehicle_make", taggedVehicle.getMake());
-                    args.putString("vehicle_model", taggedVehicle.getModel());
                     byte[] imageData = taggedVehicle.getTagPhoto().getData();
+                    args.putString("dialog_type", "vehicle_info");
+                    args.putString("vehicle_id", taggedVehicle.getTrimId());
+                    args.putString("vehicle_name", taggedVehicle.toString());
+                    args.putString("vehicle_trim_name", taggedVehicle.getTrimName());
                     args.putByteArray("imageData", imageData);
 
                 } catch (ParseException e) {

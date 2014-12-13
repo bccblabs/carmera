@@ -24,13 +24,7 @@ import veme.cario.com.CARmera.R;
 public class CarInfoFragment extends Fragment {
 
     private ImageView preview_view;
-    private Button save_local_btn;
     private Button share_btn;
-    private EditText edit_mention_et;
-
-    private TextView info_year_tv;
-    private TextView info_make_tv;
-    private TextView info_model_tv;
 
     private static final String TAG = "CAR_INFO_FRAGMENT";
 
@@ -53,16 +47,7 @@ public class CarInfoFragment extends Fragment {
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.info_preview_view);
 
-        save_local_btn = (Button) getView().findViewById(R.id.save_local_btn);
         share_btn = (Button) getView().findViewById(R.id.share_tagged_btn);
-        edit_mention_et = (EditText) getView().findViewById(R.id.edit_mention_et);
-
-        save_local_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            /* TODO: put image in local store */
-            }
-        });
 
         share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +55,6 @@ public class CarInfoFragment extends Fragment {
             /* TODO: share image via intent to other media (insta, fb, wechat, whatsapp, etc.) */
             }
         });
-
-        info_year_tv = (TextView) getView().findViewById(R.id.car_info_year_tv);
-        info_year_tv.setText(getArguments().getString("vehicle_year"));
-        info_make_tv = (TextView) getView().findViewById(R.id.car_info_make_tv);
-        info_make_tv.setText(getArguments().getString("vehicle_make"));
-        info_model_tv = (TextView) getView().findViewById(R.id.car_info_model_tv);
-        info_model_tv.setText(getArguments().getString("vehicle_model"));
 
         new BitmapLoaderTask().execute();
     }

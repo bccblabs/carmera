@@ -43,8 +43,6 @@ public class ImageFragment extends Fragment {
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
     private Button upload_btn;
-    private Button dismiss_btn;
-
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "IMAGE_FRAGMENT";

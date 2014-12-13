@@ -7,39 +7,83 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/car_info_year_tv"/>
+            style="@style/TableTitle"
+            android:id="@+id/car_base_info"
+            android:layout_marginTop="40dp"
+            android:text="2014 BMW X3"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/car_info_make_tv"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/car_info_model_tv"/>
-        </LinearLayout>
+            style="@style/TableTitle"
+            android:id="@+id/car_style_info"
+            android:text="xDrive28i"/>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/info_preview_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
         />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_mention_et"/>
 
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        >
+        <TableRow>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/TableEntryTitle"
+                android:text="@string/str_used_tmv"/>
+            <TextView
+                style="@style/TableEntry"
+                android:id="@+id/used_tmv"
+                android:text="$24,712"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/TableEntryTitle"
+                android:text="@string/str_msrp"/>
+            <TextView
+                style="@style/TableEntry"
+                android:id="@+id/msrp"
+                android:text="$42,128"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/TableEntryTitle"
+                android:text="@string/str_city_mpg"/>
+            <TextView
+                style="@style/TableEntry"
+                android:id="@+id/city_mpg"
+                android:text="24 mpg"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/TableEntryTitle"
+                android:text="@string/str_highway_mpg"/>
+            <TextView
+                style="@style/TableEntry"
+                android:id="@+id/highway_mpg"
+                android:text="30 mpg"/>
+        </TableRow>
+
+    </TableLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,10 +93,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/save_local_btn"
-            android:text="@string/str_save_to_local"
+            android:id="@+id/get_listings_btn"
+            android:text="@string/str_see_listings"
             />
-
     </LinearLayout>
 
 </LinearLayout>

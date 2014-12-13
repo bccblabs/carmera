@@ -2,9 +2,7 @@ package veme.cario.com.CARmera;
 
 import android.os.Bundle;
 
-import com.facebook.AppEventsLogger;
-
-import veme.cario.com.CARmera.fragment.SettingsFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SettingsFragment;
 
 /**
  * Created by bski on 11/23/14.

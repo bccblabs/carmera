@@ -31,12 +31,6 @@ public class CARmeraApp extends Application {
         Parse.initialize(this,
                 getString(R.string.parse_app_id),
                 getString(R.string.parse_app_key));
-
-//        ParseObject.registerSubclass(MentionedVehicleList.class);
-//        ParseObject.registerSubclass(NearbyListingsList.class);
-//        ParseObject.registerSubclass(TaggedVehicleList.class);
-//        ParseObject.registerSubclass(SavedListingsList.class);
-
         ParseObject.registerSubclass(BusinessRequest.class);
         ParseObject.registerSubclass(TaggedVehicle.class);
         ParseObject.registerSubclass(UserInfo.class);

@@ -18,6 +18,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.util.List;
 
 import veme.cario.com.CARmera.NearbyActivity;
@@ -78,10 +82,16 @@ public class SavedListingsFragment extends Fragment {
         vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
         saved_listings_listview.setAdapter(vehicleListAdapter);
 
-        List<TaggedVehicle> savedVehicles = SavedListingsList.get().getFavorites();
-        for (TaggedVehicle vehicle : savedVehicles) {
-            vehicleListAdapter.add (vehicle);
-        }
+        /* load data from parse query */
+        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("savedVehiclesList");
+        query.findInBackground(new FindCallback<TaggedVehicle>() {
+            @Override
+            public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
+                for (TaggedVehicle vehicle : taggedVehicles) {
+                    vehicleListAdapter.add (vehicle);
+                }
+            }
+        });
         vehicleListAdapter.notifyDataSetChanged();
 
         saved_listings_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -22,19 +22,6 @@ public class SpecsFragment extends Fragment {
 
     private static final String JSON_HASH_KEY = "base_info_json";
 
-    /* "name" */
-    private TextView vehicle_name;
-
-    /* "price" */
-    private TextView base_msrp; //baseMSRP
-    private TextView used_tmv_retail; // usedTmvRetail
-    private TextView used_private_party; // usedPrivateParty
-    private TextView base_invoice; // invoice
-
-    /* "MPG" */
-    private TextView hw_mpg; // highway
-    private TextView city_mpg; // city
-
     /* "engine" */
     private TextView engine_name; // name
     private TextView engine_hp;    // horsepower
@@ -69,15 +56,9 @@ public class SpecsFragment extends Fragment {
             getArguments().putString("vehicle_id", vehicleBaseInfo.getId());
 
             if (SpecsFragment.this.isAdded()) {
-                vehicle_name.setText(vehicleBaseInfo.getName());
                 drive_train.setText(vehicleBaseInfo.getDrivenWheels());
                 transmission_type.setText(vehicleBaseInfo.getTransmission().getTransmissionType());
                 transmission_speed.setText(vehicleBaseInfo.getTransmission().getNumberofSpeeds());
-
-                base_msrp.setText(vehicleBaseInfo.getPrice().getBaseMSRP());
-                used_tmv_retail.setText(vehicleBaseInfo.getPrice().getUsedTmvRetail());
-                used_private_party.setText(vehicleBaseInfo.getPrice().getUsedPrivateParty());
-                base_invoice.setText(vehicleBaseInfo.getPrice().getBaseInvoice());
 
                 engine_hp.setText(vehicleBaseInfo.getEngine().getHorsepower());
                 engine_torque.setText(vehicleBaseInfo.getEngine().getTorque());
@@ -90,9 +71,6 @@ public class SpecsFragment extends Fragment {
                 engine_compression.setText(vehicleBaseInfo.getEngine().getCompressionRatio());
                 engine_valves.setText(vehicleBaseInfo.getEngine().getTotalValves());
                 engine_code.setText(vehicleBaseInfo.getEngine().getManufacturerEngineCode());
-
-                city_mpg.setText(vehicleBaseInfo.getMpg().getCity());
-                hw_mpg.setText(vehicleBaseInfo.getMpg().getHighway());
 
                 SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }
@@ -134,36 +112,36 @@ public class SpecsFragment extends Fragment {
 
     private void initUIComponents () {
         /* Get year, make, model information from bundle */
-        vehicle_name = (TextView) getView().findViewById(R.id.name_view);
-
-        drive_train = (TextView) getView().findViewById(R.id.drivetrain);
-        transmission_type = (TextView) getView().findViewById(R.id.transmission_type);
-        transmission_speed = (TextView) getView().findViewById(R.id.transmission_speed);
-
-        base_invoice = (TextView) getView().findViewById(R.id.invoice);
-        used_private_party = (TextView) getView().findViewById(R.id.used_private);
-        used_tmv_retail = (TextView) getView().findViewById(R.id.used_tmv);
-        base_msrp = (TextView) getView().findViewById(R.id.msrp);
-
-        engine_hp = (TextView) getView().findViewById(R.id.hp);
-        engine_torque = (TextView) getView().findViewById(R.id.torque);
-        engine_fuelType = (TextView) getView().findViewById(R.id.fueltype);
-        engine_displacement = (TextView) getView().findViewById(R.id.displacement);
-        engine_cyl = (TextView) getView().findViewById(R.id.cylinder_cnt);
-        engine_config = (TextView) getView().findViewById(R.id.configuration);
-        engine_name = (TextView) getView().findViewById(R.id.engine_name);
-        engine_code = (TextView) getView().findViewById(R.id.engine_code);
-        engine_compressor = (TextView) getView().findViewById(R.id.compressor);
-        engine_compression = (TextView) getView().findViewById(R.id.compression_ratio);
-        engine_valves = (TextView) getView().findViewById(R.id.valve);
-
-
-        city_mpg = (TextView) getView().findViewById(R.id.city_mpg);
-        hw_mpg = (TextView) getView().findViewById(R.id.highway_mpg);
-
-
-//        performRequest(getArguments().getString("vehicle_yr"),
-//                        getArguments().getString("vehicle_mk"),
+//        vehicle_name = (TextView) getView().findViewById(R.id.name_view);
+//
+//        drive_train = (TextView) getView().findViewById(R.id.drivetrain);
+//        transmission_type = (TextView) getView().findViewById(R.id.transmission_type);
+//        transmission_speed = (TextView) getView().findViewById(R.id.transmission_speed);
+//
+//        base_invoice = (TextView) getView().findViewById(R.id.invoice);
+//        used_private_party = (TextView) getView().findViewById(R.id.used_private);
+//        used_tmv_retail = (TextView) getView().findViewById(R.id.used_tmv);
+//        base_msrp = (TextView) getView().findViewById(R.id.msrp);
+//
+//        engine_hp = (TextView) getView().findViewById(R.id.hp);
+//        engine_torque = (TextView) getView().findViewById(R.id.torque);
+//        engine_fuelType = (TextView) getView().findViewById(R.id.fueltype);
+//        engine_displacement = (TextView) getView().findViewById(R.id.displacement);
+//        engine_cyl = (TextView) getView().findViewById(R.id.cylinder_cnt);
+//        engine_config = (TextView) getView().findViewById(R.id.configuration);
+//        engine_name = (TextView) getView().findViewById(R.id.engine_name);
+//        engine_code = (TextView) getView().findViewById(R.id.engine_code);
+//        engine_compressor = (TextView) getView().findViewById(R.id.compressor);
+//        engine_compression = (TextView) getView().findViewById(R.id.compression_ratio);
+//        engine_valves = (TextView) getView().findViewById(R.id.valve);
+//
+//
+//        city_mpg = (TextView) getView().findViewById(R.id.city_mpg);
+//        hw_mpg = (TextView) getView().findViewById(R.id.highway_mpg);
+//
+//
+//        performRequest(getArguments().getString("vehicle_year"),
+//                        getArguments().getString("vehicle_make"),
 //                        getArguments().getString("vehicle_model"));
     }
 
