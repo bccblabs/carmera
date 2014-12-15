@@ -2,6 +2,7 @@ package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
-import java.util.List;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleOwnershipCost;
@@ -29,7 +28,7 @@ public class OwnershipCostFragment extends Fragment {
     private TextView total_maintenance_cost;
     private TextView total_depr_cost;
 
-    private static final String JSON_HASH_KEY = "ownership_cost_json";
+    private static String JSON_HASH_KEY;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
@@ -43,17 +42,18 @@ public class OwnershipCostFragment extends Fragment {
         @Override
         public void onRequestSuccess (VehicleOwnershipCost vehicleOwnershipCost) {
             if (OwnershipCostFragment.this.isAdded()) {
-                total_cost.setText(vehicleOwnershipCost.getDeprCost().getTotal()
-                                    + vehicleOwnershipCost.getFuelCost().getTotal()
-                                    + vehicleOwnershipCost.getInsuranceCost().getTotal()
-                                    + vehicleOwnershipCost.getRepairCost().getTotal()
-                                    + vehicleOwnershipCost.getMaintenanceCost().getTotal());
+                total_cost.setText( getTotalCost(
+                                    vehicleOwnershipCost.getDepreciation().getTotal(),
+                                    vehicleOwnershipCost.getFuel().getTotal(),
+                                    vehicleOwnershipCost.getInsurance().getTotal(),
+                                    vehicleOwnershipCost.getRepairs().getTotal(),
+                                    vehicleOwnershipCost.getMaintenance().getTotal()));
 
-                total_depr_cost.setText(vehicleOwnershipCost.getDeprCost().getTotal());
-                total_fuel_cost.setText(vehicleOwnershipCost.getFuelCost().getTotal());
-                total_insurance_cost.setText(vehicleOwnershipCost.getInsuranceCost().getTotal());
-                total_maintenance_cost.setText(vehicleOwnershipCost.getMaintenanceCost().getTotal());
-                total_repair_cost.setText(vehicleOwnershipCost.getRepairCost().getTotal());
+                total_depr_cost.setText("$" + vehicleOwnershipCost.getDepreciation().getTotal());
+                total_fuel_cost.setText("$" + vehicleOwnershipCost.getFuel().getTotal());
+                total_insurance_cost.setText("$" + vehicleOwnershipCost.getInsurance().getTotal());
+                total_maintenance_cost.setText("$" + vehicleOwnershipCost.getMaintenance().getTotal());
+                total_repair_cost.setText("$" + vehicleOwnershipCost.getRepairs().getTotal());
 
 
                 OwnershipCostFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
@@ -61,6 +61,10 @@ public class OwnershipCostFragment extends Fragment {
         }
     }
 
+    private String getTotalCost (String a, String b, String c, String d, String e) {
+        return "$" + Double.toString(Double.parseDouble(a) + Double.parseDouble(b) + Double.parseDouble(c) + Double.parseDouble(d)
+                + Double.parseDouble(e));
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,9 @@ public class OwnershipCostFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Time now = new Time();
+        now.setToNow();
+        JSON_HASH_KEY = getArguments().getString("vehicle_id") + now.toString() + "ownership_cost";
         spiceManager.start(getActivity());
         spiceManager.addListenerIfPending(VehicleOwnershipCost.class, JSON_HASH_KEY,
                 new OwnershipCostRequestListener());
@@ -110,7 +117,6 @@ public class OwnershipCostFragment extends Fragment {
         total_maintenance_cost = (TextView) getView().findViewById(R.id.total_maintenance_cost);
         total_depr_cost = (TextView) getView().findViewById(R.id.total_depreciation_cost);
 
-
-//        performRequest();
+        performRequest();
     }
 }

@@ -22,6 +22,7 @@ import com.parse.ParseUser;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
@@ -32,7 +33,8 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 public class CaptureActivity extends BaseActivity
                                     implements ImageFragment.ImageResultListener,
                                                SimpleTaggedVehicleDialog.OnSimpleTagSelectedListener,
-                                               SelectStyleFragment.SelectResultListener{
+                                               SelectStyleFragment.SelectResultListener,
+                                               CarInfoFragment.OnReselectClickListener {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -43,6 +45,10 @@ public class CaptureActivity extends BaseActivity
     private VehicleInfoDialog vehicleInfoDialog = null;
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
+
+
+
+
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
@@ -58,6 +64,7 @@ public class CaptureActivity extends BaseActivity
             args.putByteArray("imageData", imageData);
             args.putString("dialog_type", "preview");
             FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = null;
             vehicleInfoDialog = new VehicleInfoDialog();
             vehicleInfoDialog.setArguments(args);
             vehicleInfoDialog.show(fm, "previewOverlay");
@@ -71,6 +78,10 @@ public class CaptureActivity extends BaseActivity
         releaseCamera();
         setContentView(R.layout.activity_capture);
         initUIComponents();
+        if (vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
 
 
     }     /* Activity lifecycle */
@@ -215,8 +226,7 @@ public class CaptureActivity extends BaseActivity
     }
 
     /* when a vehicle is recognized from the cloud server */
-    @Override
-    public void onRecognitionResult (String year, String make, String model) {
+    public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
         /* once the image is recognized, adding the new fragments to the dialog */
         Bundle args = new Bundle();
         args.putString("dialog_type", "choose_style");
@@ -224,40 +234,74 @@ public class CaptureActivity extends BaseActivity
         args.putString("vehicle_make", make);
         args.putString("vehicle_model", model);
         args.putByteArray("imageData", imageData);
+
+        if (vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
         FragmentManager fm = getSupportFragmentManager();
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
-
-        vehicleInfoDialog.dismiss();
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
     }
 
+
     @Override
-    public void onStyleSelected (String trim_id, String trim_name, String yr, String mk, String md) {
+    public void onStyleSelected (byte[] data, String trim_id, String trim_name, String yr, String mk, String md) {
         /* save to parse here */
-        TaggedVehicle taggedVehicle = new TaggedVehicle();
-        taggedVehicle.setYear(yr);
-        taggedVehicle.setMake(mk);
-        taggedVehicle.setModel(md);
-        taggedVehicle.setTrimId(trim_id);
-        taggedVehicle.setTrimName(trim_name);
-        taggedVehicle.setTagPhoto(new ParseFile(imageData));
-        taggedVehicle.setUser(ParseUser.getCurrentUser());
-        taggedVehicle.saveInBackground();
+//        TaggedVehicle taggedVehicle = new TaggedVehicle();
+//        taggedVehicle.setYear(yr);
+//        taggedVehicle.setMake(mk);
+//        taggedVehicle.setModel(md);
+//        taggedVehicle.setTrimId(trim_id);
+//        taggedVehicle.setTrimName(trim_name);
+//        taggedVehicle.setTagPhoto(new ParseFile(imageData));
+//        taggedVehicle.setUser(ParseUser.getCurrentUser());
+//        taggedVehicle.saveInBackground();
 
         Bundle args = new Bundle();
         args.putString ("dialog_type", "vehicle_info");
         args.putString ("vehicle_id", trim_id);
-        args.putString ("vehicle_name", yr + " " + mk + " " + md);
+        args.putString ("vehicle_year", yr);
+        args.putString ("vehicle_make", mk);
+        args.putString ("vehicle_model", md);
         args.putString ("vehicle_trim_name", trim_name);
         args.putByteArray("imageData", imageData);
 
-        vehicleInfoDialog.dismiss();
+        Log.i (TAG, " - creating vehicle info dialog: " + trim_id + " "  + trim_name);
+
+
+        if (vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
         FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
 
     }
+
+    @Override
+    public void OnReselectClick (byte[] raw_photo, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", md);
+
+        args.putByteArray("imageData", raw_photo);
+        if (vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
+
     /* when a vehicle is selected from the list of previously tagged cars using the yellow button */
     @Override
     public void onSimpleTagSelected (String year, String make, String model) {
@@ -268,6 +312,7 @@ public class CaptureActivity extends BaseActivity
         i.putExtra("vehicle_search_criteria", args);
         startActivity(i);
     }
+
 
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {

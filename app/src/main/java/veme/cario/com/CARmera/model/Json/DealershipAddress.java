@@ -1,6 +1,6 @@
 package veme.cario.com.CARmera.model.Json;
 
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Created by bski on 11/16/14.

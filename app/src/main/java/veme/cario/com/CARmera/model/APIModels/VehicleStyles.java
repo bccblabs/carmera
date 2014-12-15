@@ -1,12 +1,21 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-import java.util.ArrayList;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+import java.util.List;
 
 import veme.cario.com.CARmera.model.Json.Style;
 
-/**
- * Created by bski on 12/12/14.
- */
-public class VehicleStyles extends ArrayList<Style> {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class VehicleStyles {
+    public List<Style> getStyles() {
+        return styles;
+    }
 
+    public void setStyles(List<Style> vehicleStyles) {
+        this.styles = vehicleStyles;
+    }
+
+    @JsonProperty
+    List<Style> styles;
 }

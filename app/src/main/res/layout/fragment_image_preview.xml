@@ -9,32 +9,19 @@
 
     <ImageView
         android:id="@+id/preview_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
     />
 
-
-    <TextView
+    <Button
+        android:text="@string/str_upload_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/status_view"
-    />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <Button
-            android:text="@string/str_upload_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upload_btn"
-            android:layout_gravity="center_horizontal"
-        />
-
-    </LinearLayout>
+        android:id="@+id/upload_btn"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

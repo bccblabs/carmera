@@ -1,7 +1,7 @@
 package veme.cario.com.CARmera.model.Json;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by bski on 11/15/14.
@@ -29,17 +29,6 @@ public class Model {
         this.name = name;
     }
 
-    @JsonProperty
-    public String getNiceName() {
-        return niceName;
-    }
-
-    @JsonProperty
-    public void setNiceName(String niceName) {
-        this.niceName = niceName;
-    }
-
     private String id;
     private String name;
-    private String niceName;
 }

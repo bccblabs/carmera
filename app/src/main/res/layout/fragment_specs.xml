@@ -18,7 +18,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
             >
             <TableRow>
@@ -27,8 +27,7 @@
                     android:text="@string/str_engine_name"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/engine_name"
-                    android:text="$24,712"/>
+                    android:id="@+id/engine_name_textview"/>
             </TableRow>
             <TableRow>
                 <TextView
@@ -36,8 +35,7 @@
                     android:text="@string/str_engine_info"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/engine_spec"
-                    android:text="3.0l l6 24v"/>
+                    android:id="@+id/engine_spec_textview"/>
             </TableRow>
             <TableRow>
                 <TextView
@@ -45,8 +43,7 @@
                     android:text="@string/str_hp"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/hp"
-                    android:text="300 hp"/>
+                    android:id="@+id/engine_hp_textview"/>
             </TableRow>
             <TableRow>
                 <TextView
@@ -54,8 +51,7 @@
                     android:text="@string/str_torque"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/torque"
-                    android:text="300 lb/ft"/>
+                    android:id="@+id/engine_torque_textview"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>
@@ -73,7 +69,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
             >
             <TableRow>
@@ -82,8 +78,7 @@
                     android:text="@string/str_transmission_type"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/transmission_type"
-                    android:text="Auto"/>
+                    android:id="@+id/transmission_type_textview"/>
             </TableRow>
             <TableRow>
                 <TextView
@@ -91,8 +86,7 @@
                     android:text="@string/str_transmission_speed"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/transmission_speed"
-                    android:text="6"/>
+                    android:id="@+id/transmission_speed_textview"/>
             </TableRow>
             <TableRow>
                 <TextView
@@ -100,8 +94,7 @@
                     android:text="@string/str_drivetrain"/>
                 <TextView
                     style="@style/TableEntry"
-                    android:id="@+id/drivetrain"
-                    android:text="4x4"/>
+                    android:id="@+id/driven_wheels_textview"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

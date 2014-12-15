@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleStyles;
 import veme.cario.com.CARmera.model.Json.Style;
-import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.requests.VehicleStylesRequest;
 import veme.cario.com.CARmera.util.VehicleStylesAdapter;
 
@@ -37,7 +36,7 @@ import veme.cario.com.CARmera.util.VehicleStylesAdapter;
 public class SelectStyleFragment extends Fragment {
 
     public interface SelectResultListener {
-        public void onStyleSelected (String trim_id, String trim_name, String yr, String mk, String md);
+        public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md);
     }
 
     private final class StyleListRequestListener implements RequestListener<VehicleStyles> {
@@ -52,9 +51,13 @@ public class SelectStyleFragment extends Fragment {
             if (vehicleStyles == null)
                 return;
             vehicleStylesAdapter.clear();
-            for (Style style : vehicleStyles)
+            for (Style style : vehicleStyles.getStyles()) {
                 vehicleStylesAdapter.add(style);
+                Log.i(TAG, " - style name: " + style.getName());
+            }
             vehicleStylesAdapter.notifyDataSetChanged();
+            getActivity().setProgressBarIndeterminateVisibility(false);
+
         }
     }
 
@@ -70,6 +73,7 @@ public class SelectStyleFragment extends Fragment {
     private String make;
     private String model;
     private Bitmap bitmap;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,9 @@ public class SelectStyleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Style style = vehicleStylesAdapter.getItem(position);
-                selectResultCallback.onStyleSelected(style.getId(), style.getName(), year, make, model);
+                selectResultCallback.onStyleSelected(getArguments().getByteArray("imageData"),
+                                                style.getId(), style.getName(), year, make, model);
+                Log.i (TAG, "style.id: " + style.getId());
             }
         });
         return view;

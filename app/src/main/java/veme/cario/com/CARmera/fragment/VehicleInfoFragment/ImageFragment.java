@@ -18,16 +18,10 @@ import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-
 import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
-import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
-import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
-import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ImageFragment extends Fragment {
 
@@ -37,7 +31,7 @@ public class ImageFragment extends Fragment {
     ImageResultListener imageResultCallback = null;
 
     public interface ImageResultListener {
-        public abstract void onRecognitionResult (String year, String make, String model);
+        public abstract void onRecognitionResult (byte[] imageData, String yr, String mk, String md);
     }
 
     private static final String JSON_HASH_KEY = "image_preview_json";
@@ -56,23 +50,7 @@ public class ImageFragment extends Fragment {
 
         @Override
         public void onRequestSuccess(Vehicle vehicle) {
-            String year = vehicle.getResult().getYear();
-            String make = vehicle.getResult().getMake();
-            String model = vehicle.getResult().getModel();
-            Log.i(TAG, " - " + year + " " + make + " " + model);
-
-            imageResultCallback.onRecognitionResult(year, make, model);
-
-            TaggedVehicle taggedVehicle = new TaggedVehicle();
-            taggedVehicle.setTagPhoto(new ParseFile(getArguments().getByteArray("imageData")));
-            taggedVehicle.setUser(ParseUser.getCurrentUser());
-            taggedVehicle.setYear(year);
-            taggedVehicle.setMake(make);
-            taggedVehicle.setModel(model);
-            taggedVehicle.saveInBackground();
-
-            TaggedVehicleList.get().add(taggedVehicle);
-            TaggedVehicleList.get().save(getActivity());
+//            imageResultCallback.onRecognitionResult("2014", "bmw", "x3");
         }
     }
 
@@ -140,7 +118,7 @@ public class ImageFragment extends Fragment {
 //        VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
 //        spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
 //                new VehicleRequestListener());
-        imageResultCallback.onRecognitionResult("2014", "bmw", "x3");
+        imageResultCallback.onRecognitionResult(getArguments().getByteArray("imageData"), "2014", "bmw", "x3");
     }
 
     public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {

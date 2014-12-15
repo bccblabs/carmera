@@ -1,6 +1,6 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by bski on 12/2/14.

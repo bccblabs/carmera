@@ -1,18 +1,26 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.facebook.AppEventsLogger;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.MentionedVehicleFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 11/23/14.
@@ -20,10 +28,14 @@ import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 public class ProfileActivity extends BaseActivity
                              implements TaggedVehicleFragment.OnTaggedListingSelectedListener,
                                         SavedListingsFragment.OnSavedListingSelectedListener,
-                                        MentionedVehicleFragment.OnMentionedListingSelectedListener{
+                                        MentionedVehicleFragment.OnMentionedListingSelectedListener,
+                                        SelectStyleFragment.SelectResultListener,
+                                        CarInfoFragment.OnReselectClickListener,
+                                        ImageFragment.ImageResultListener {
 
     private ViewPager viewPager;
     private ProfileSectionsAdapter profileSectionsAdapter;
+    private VehicleInfoDialog vehicleInfoDialog = null;
 
     @Override
     public void OnTaggedListingSelected (int pos) {
@@ -37,6 +49,68 @@ public class ProfileActivity extends BaseActivity
     public void OnMentionedListingSelected (int pos) {
     }
 
+    @Override
+    public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString ("dialog_type", "vehicle_info");
+        args.putString ("vehicle_id", trim_id);
+        args.putString ("vehicle_year", yr);
+        args.putString ("vehicle_make", mk);
+        args.putString ("vehicle_model", md);
+        args.putString ("vehicle_trim_name", trim_name);
+        args.putByteArray("imageData", imageData);
+
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+    }
+
+    @Override
+    public void OnReselectClick (byte[] raw_photo, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", md);
+
+        args.putByteArray("imageData", raw_photo);
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
+
+    @Override
+    public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
 
     @Override
     public void onCreate (Bundle savedBundleInst) {

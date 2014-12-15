@@ -1,7 +1,7 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import veme.cario.com.CARmera.model.Json.DeprCost;
 import veme.cario.com.CARmera.model.Json.FuelCost;
@@ -16,58 +16,58 @@ import veme.cario.com.CARmera.model.Json.RepairCost;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class VehicleOwnershipCost {
 
-    public FuelCost getFuelCost() {
-        return fuelCost;
+    @JsonProperty
+    private FuelCost fuel;
+
+    @JsonProperty
+    private InsuranceCost insurance;
+
+    @JsonProperty
+    private MaintenanceCost maintenance;
+
+    @JsonProperty
+    private RepairCost repairs;
+
+    public DeprCost getDepreciation() {
+        return depreciation;
     }
 
-    public void setFuelCost(FuelCost fuelCost) {
-        this.fuelCost = fuelCost;
+    public void setDepreciation(DeprCost depreciation) {
+        this.depreciation = depreciation;
     }
 
-    public InsuranceCost getInsuranceCost() {
-        return insuranceCost;
+    public FuelCost getFuel() {
+        return fuel;
     }
 
-    public void setInsuranceCost(InsuranceCost insuranceCost) {
-        this.insuranceCost = insuranceCost;
+    public void setFuel(FuelCost fuel) {
+        this.fuel = fuel;
     }
 
-    public MaintenanceCost getMaintenanceCost() {
-        return maintenanceCost;
+    public InsuranceCost getInsurance() {
+        return insurance;
     }
 
-    public void setMaintenanceCost(MaintenanceCost maintenanceCost) {
-        this.maintenanceCost = maintenanceCost;
+    public void setInsurance(InsuranceCost insurance) {
+        this.insurance = insurance;
     }
 
-    public RepairCost getRepairCost() {
-        return repairCost;
+    public MaintenanceCost getMaintenance() {
+        return maintenance;
     }
 
-    public void setRepairCost(RepairCost repairCost) {
-        this.repairCost = repairCost;
+    public void setMaintenance(MaintenanceCost maintenance) {
+        this.maintenance = maintenance;
     }
 
-    public DeprCost getDeprCost() {
-        return deprCost;
+    public RepairCost getRepairs() {
+        return repairs;
     }
 
-    public void setDeprCost(DeprCost deprCost) {
-        this.deprCost = deprCost;
+    public void setRepairs(RepairCost repairs) {
+        this.repairs = repairs;
     }
 
     @JsonProperty
-    private FuelCost fuelCost;
-
-    @JsonProperty
-    private InsuranceCost insuranceCost;
-
-    @JsonProperty
-    private MaintenanceCost maintenanceCost;
-
-    @JsonProperty
-    private RepairCost repairCost;
-
-    @JsonProperty
-    private DeprCost deprCost;
+    private DeprCost depreciation;
 }

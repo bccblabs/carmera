@@ -1,43 +1,13 @@
 package veme.cario.com.CARmera.model.Json;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by bski on 11/15/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Transmission {
-
-    @JsonProperty
-    public String getId() {
-        return id;
-    }
-
-    @JsonProperty
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @JsonProperty
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonProperty
-    public String getEquipmentType() {
-        return equipmentType;
-    }
-
-    @JsonProperty
-    public void setEquipmentType(String equipmentType) {
-        this.equipmentType = equipmentType;
-    }
 
     @JsonProperty
     public String getTransmissionType() {
@@ -50,27 +20,18 @@ public class Transmission {
     }
 
     @JsonProperty
-    public String getNumberofSpeeds() {
-        return numberofSpeeds;
+    public String getNumberOfSpeeds() {
+        return numberOfSpeeds;
     }
 
     @JsonProperty
-    public void setNumberofSpeeds(String numberofSpeeds) {
-        this.numberofSpeeds = numberofSpeeds;
+    public void setNumberOfSpeeds(String numberofSpeeds) {
+        this.numberOfSpeeds = numberofSpeeds;
     }
-
-    @JsonProperty
-    private String id;
-
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String equipmentType;
 
     @JsonProperty
     private String transmissionType;
 
     @JsonProperty
-    private String numberofSpeeds;
+    private String numberOfSpeeds;
 }

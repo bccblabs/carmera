@@ -10,8 +10,7 @@
         android:id="@+id/style_item_overlay"
         android:orientation="vertical">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TableEntry"
             android:id="@+id/vehicle_style_name"/>
     </LinearLayout>
 

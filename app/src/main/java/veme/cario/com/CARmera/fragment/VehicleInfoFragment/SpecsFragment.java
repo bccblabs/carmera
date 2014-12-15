@@ -2,6 +2,8 @@ package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,36 +17,30 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
-import veme.cario.com.CARmera.requests.VehicleBaseInfoRequest;
+import veme.cario.com.CARmera.requests.VehicleSpecsRequest;
 
 public class SpecsFragment extends Fragment {
 
-    private static final String JSON_HASH_KEY = "base_info_json";
+    private static final String TAG = "SPEC_FRAGMENT";
+    private static String JSON_HASH_KEY;
 
     /* "engine" */
-    private TextView engine_name; // name
-    private TextView engine_hp;    // horsepower
-    private TextView engine_torque; // torque
-    private TextView engine_cyl; // cylinder
-    private TextView engine_config; // configuration
-    private TextView engine_fuelType; // fuelType (gas, diesel, etc)
-    private TextView engine_compressor; // compressorType
-    private TextView engine_valves; // totalValves
-    private TextView engine_displacement;
-    private TextView engine_compression;
-    private TextView engine_code;
+    private TextView engine_name_textview; // name
+    private TextView engine_spec_textview;
+
+    private TextView engine_hp_textview;    // horsepower
+    private TextView engine_torque_textview; // torque
 
     /* transmission */
-    private TextView transmission_type; //transmissionType
-    private TextView transmission_speed; // numberOfSpeeds
+    private TextView transmission_type_textview; //transmissionType
+    private TextView transmission_speed_textview; // numberOfSpeeds
 
     /* drivenWheels */
-    private TextView drive_train;
+    private TextView driven_wheels_textview;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
-    private final class VehicleBaseInfoRequestListener implements RequestListener<VehicleBaseInfo> {
+    private final class VehicleSpecsRequestListener implements RequestListener<VehicleSpecs> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
@@ -52,25 +48,27 @@ public class SpecsFragment extends Fragment {
         }
 
         @Override
-        public void onRequestSuccess (VehicleBaseInfo vehicleBaseInfo) {
-            getArguments().putString("vehicle_id", vehicleBaseInfo.getId());
+        public void onRequestSuccess (VehicleSpecs vehicleBaseInfo) {
 
             if (SpecsFragment.this.isAdded()) {
-                drive_train.setText(vehicleBaseInfo.getDrivenWheels());
-                transmission_type.setText(vehicleBaseInfo.getTransmission().getTransmissionType());
-                transmission_speed.setText(vehicleBaseInfo.getTransmission().getNumberofSpeeds());
+                engine_name_textview.setText(vehicleBaseInfo.getEngine().getCode());
+                engine_spec_textview.setText(vehicleBaseInfo.getEngine().getSize() + "l "
+                                    + vehicleBaseInfo.getEngine().getConfiguration() + " "
+                                    + vehicleBaseInfo.getEngine().getCylinder()+ " "
+                                    + vehicleBaseInfo.getEngine().getTotalValves() + "v");
+                engine_hp_textview.setText(vehicleBaseInfo.getEngine().getHorsepower() + " hp");
+                engine_torque_textview.setText(vehicleBaseInfo.getEngine().getTorque() + " lb-ft");
 
-                engine_hp.setText(vehicleBaseInfo.getEngine().getHorsepower());
-                engine_torque.setText(vehicleBaseInfo.getEngine().getTorque());
-                engine_fuelType.setText(vehicleBaseInfo.getEngine().getFuelType());
-                engine_displacement.setText(vehicleBaseInfo.getEngine().getDisplacement());
-                engine_cyl.setText(vehicleBaseInfo.getEngine().getCylinder());
-                engine_config.setText(vehicleBaseInfo.getEngine().getConfiguration());
-                engine_name.setText(vehicleBaseInfo.getEngine().getName());
-                engine_compressor.setText(vehicleBaseInfo.getEngine().getCompressorType());
-                engine_compression.setText(vehicleBaseInfo.getEngine().getCompressionRatio());
-                engine_valves.setText(vehicleBaseInfo.getEngine().getTotalValves());
-                engine_code.setText(vehicleBaseInfo.getEngine().getManufacturerEngineCode());
+                driven_wheels_textview.setText(vehicleBaseInfo.getDrivenWheels());
+                String transmission_type = vehicleBaseInfo.getTransmission().getTransmissionType();
+                if (transmission_type.equals("AUTOMATIC"))
+                    transmission_type = "Auto";
+                else
+                    transmission_type = "Manual";
+                transmission_type_textview.setText(transmission_type);
+
+                Log.i(TAG, " - number of speeds: " + vehicleBaseInfo.getTransmission().getNumberOfSpeeds());
+                transmission_speed_textview.setText(vehicleBaseInfo.getTransmission().getNumberOfSpeeds() + " speed");
 
                 SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }
@@ -97,9 +95,12 @@ public class SpecsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Time now = new Time();
+        now.setToNow();
+        JSON_HASH_KEY = getArguments().getString("vehicle_id") + now.toString() + "specs_info";
         spiceManager.start(getActivity());
-        spiceManager.addListenerIfPending(VehicleBaseInfo.class, JSON_HASH_KEY,
-                new VehicleBaseInfoRequestListener());
+        spiceManager.addListenerIfPending(VehicleSpecs.class, JSON_HASH_KEY,
+                new VehicleSpecsRequestListener());
     }
 
     @Override
@@ -111,45 +112,23 @@ public class SpecsFragment extends Fragment {
     }
 
     private void initUIComponents () {
-        /* Get year, make, model information from bundle */
-//        vehicle_name = (TextView) getView().findViewById(R.id.name_view);
-//
-//        drive_train = (TextView) getView().findViewById(R.id.drivetrain);
-//        transmission_type = (TextView) getView().findViewById(R.id.transmission_type);
-//        transmission_speed = (TextView) getView().findViewById(R.id.transmission_speed);
-//
-//        base_invoice = (TextView) getView().findViewById(R.id.invoice);
-//        used_private_party = (TextView) getView().findViewById(R.id.used_private);
-//        used_tmv_retail = (TextView) getView().findViewById(R.id.used_tmv);
-//        base_msrp = (TextView) getView().findViewById(R.id.msrp);
-//
-//        engine_hp = (TextView) getView().findViewById(R.id.hp);
-//        engine_torque = (TextView) getView().findViewById(R.id.torque);
-//        engine_fuelType = (TextView) getView().findViewById(R.id.fueltype);
-//        engine_displacement = (TextView) getView().findViewById(R.id.displacement);
-//        engine_cyl = (TextView) getView().findViewById(R.id.cylinder_cnt);
-//        engine_config = (TextView) getView().findViewById(R.id.configuration);
-//        engine_name = (TextView) getView().findViewById(R.id.engine_name);
-//        engine_code = (TextView) getView().findViewById(R.id.engine_code);
-//        engine_compressor = (TextView) getView().findViewById(R.id.compressor);
-//        engine_compression = (TextView) getView().findViewById(R.id.compression_ratio);
-//        engine_valves = (TextView) getView().findViewById(R.id.valve);
-//
-//
-//        city_mpg = (TextView) getView().findViewById(R.id.city_mpg);
-//        hw_mpg = (TextView) getView().findViewById(R.id.highway_mpg);
-//
-//
-//        performRequest(getArguments().getString("vehicle_year"),
-//                        getArguments().getString("vehicle_make"),
-//                        getArguments().getString("vehicle_model"));
+        engine_name_textview = (TextView) getView().findViewById(R.id.engine_name_textview);
+        engine_spec_textview = (TextView) getView().findViewById(R.id.engine_spec_textview);
+        engine_hp_textview = (TextView) getView().findViewById(R.id.engine_hp_textview);
+        engine_torque_textview = (TextView) getView().findViewById(R.id.engine_torque_textview);
+        transmission_type_textview = (TextView) getView().findViewById(R.id.transmission_type_textview);
+        transmission_speed_textview = (TextView) getView().findViewById(R.id.transmission_speed_textview);
+        driven_wheels_textview = (TextView) getView().findViewById(R.id.driven_wheels_textview);
+
+
+        performRequest();
     }
 
-    private void performRequest(String year, String make, String model) {
+    private void performRequest() {
         SpecsFragment.this.getActivity().setProgressBarIndeterminate(true);
-        VehicleBaseInfoRequest vehicleBaseInfoRequest = new VehicleBaseInfoRequest(year, make, model);
-        spiceManager.execute(vehicleBaseInfoRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
-                new VehicleBaseInfoRequestListener());
+        VehicleSpecsRequest vehicleSpecsRequest = new VehicleSpecsRequest(getArguments().getString("vehicle_id"));
+        spiceManager.execute(vehicleSpecsRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
+                new VehicleSpecsRequestListener());
     }
 
 }

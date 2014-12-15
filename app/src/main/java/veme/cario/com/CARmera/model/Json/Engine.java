@@ -1,7 +1,7 @@
 package veme.cario.com.CARmera.model.Json;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by bski on 11/15/14.
@@ -10,69 +10,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Engine {
 
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String compressionRatio;
-
-    @JsonProperty
-    private String cylinder;
-
-    @JsonProperty
-    private String displacement;
-
-    @JsonProperty
-    private String configuration;
-
-    @JsonProperty
-    private String fuelType;
-
-    @JsonProperty
-    private String horsepower;
-
-    @JsonProperty
-    private String torque;
-
-    @JsonProperty
-    private String totalValves;
-
-    @JsonProperty
-    private String manufacturerEngineCode;
-
-    @JsonProperty
-    private String compressorType;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCompressionRatio() {
-        return compressionRatio;
-    }
-
-    public void setCompressionRatio(String compressionRatio) {
-        this.compressionRatio = compressionRatio;
-    }
-
     public String getCylinder() {
         return cylinder;
     }
 
     public void setCylinder(String cylinder) {
         this.cylinder = cylinder;
-    }
-
-    public String getDisplacement() {
-        return displacement;
-    }
-
-    public void setDisplacement(String displacement) {
-        this.displacement = displacement;
     }
 
     public String getConfiguration() {
@@ -99,6 +42,14 @@ public class Engine {
         this.horsepower = horsepower;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public String getTorque() {
         return torque;
     }
@@ -115,19 +66,36 @@ public class Engine {
         this.totalValves = totalValves;
     }
 
-    public String getManufacturerEngineCode() {
-        return manufacturerEngineCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setManufacturerEngineCode(String manufacturerEngineCode) {
-        this.manufacturerEngineCode = manufacturerEngineCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getCompressorType() {
-        return compressorType;
-    }
+    @JsonProperty
+    private String cylinder;
 
-    public void setCompressorType(String compressorType) {
-        this.compressorType = compressorType;
-    }
+    @JsonProperty
+    private String configuration;
+
+    @JsonProperty
+    private String fuelType;
+
+    @JsonProperty
+    private String horsepower;
+
+    @JsonProperty
+    private String size;
+
+    @JsonProperty
+    private String torque;
+
+    @JsonProperty
+    private String totalValves;
+
+    @JsonProperty
+    private String code;
+
 }

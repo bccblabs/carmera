@@ -46,7 +46,6 @@ public class VehicleStylesAdapter extends ArrayAdapter<Style> {
         final TextView style_name_tv = viewHolder.style_name_tv;
         final LinearLayout style_overlay = viewHolder.style_item_layout;
         style_overlay.setBackgroundColor(0x4169E1);
-        style_name_tv.setTextColor(0xFFFFFF);
         style_name_tv.setText(style.getName());
 
         return view;

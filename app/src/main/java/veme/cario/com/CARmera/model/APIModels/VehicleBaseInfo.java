@@ -1,16 +1,12 @@
 package veme.cario.com.CARmera.model.APIModels;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
-
-import veme.cario.com.CARmera.model.Json.Engine;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import veme.cario.com.CARmera.model.Json.MPG;
 import veme.cario.com.CARmera.model.Json.Make;
 import veme.cario.com.CARmera.model.Json.Model;
 import veme.cario.com.CARmera.model.Json.Price;
-import veme.cario.com.CARmera.model.Json.Transmission;
+import veme.cario.com.CARmera.model.Json.Year;
 
 /**
  * Created by bski on 11/14/14.
@@ -18,79 +14,12 @@ import veme.cario.com.CARmera.model.Json.Transmission;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleBaseInfo {
 
-    @JsonProperty
-    private String id;
-
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String niceName;
-
-    @JsonProperty
-    private Make make;
-
-    @JsonProperty
-    private Model model;
-
-    @JsonProperty
-    private Engine engine;
-
-    @JsonProperty
-    private Transmission transmission;
-
-    @JsonProperty
-    private String drivenWheels;
-
-    @JsonProperty
-    private Price price;
-
-    @JsonProperty
-    private MPG mpg;
-
-    @JsonProperty
-    private List<String> states;
-
-
-
-    public String getId() {
-        return id;
+    public String getTrim() {
+        return trim;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public MPG getMpg() {
-        return mpg;
-    }
-
-    public void setMpg(MPG mpg) {
-        this.mpg = mpg;
-    }
-
-    public List<String> getStates() {
-        return states;
-    }
-
-    public void setStates(List<String> states) {
-        this.states = states;
-    }
-
-    public String getNiceName() {
-        return niceName;
-    }
-
-    public void setNiceName(String niceName) {
-        this.niceName = niceName;
+    public void setTrim(String trim) {
+        this.trim = trim;
     }
 
     public Make getMake() {
@@ -109,28 +38,38 @@ public class VehicleBaseInfo {
         this.model = model;
     }
 
-    public Engine getEngine() {
-        return engine;
+    public Year getYear() {
+        return year;
     }
 
-    public void setEngine(Engine engine) {
-        this.engine = engine;
+    public void setYear(Year year) {
+        this.year = year;
     }
 
-    public Transmission getTransmission() {
-        return transmission;
+    @JsonProperty
+    private Price price;
+
+    @JsonProperty
+    private MPG MPG;
+
+    @JsonProperty
+    private String trim;
+
+    @JsonProperty
+    private Make make;
+
+    @JsonProperty
+    private Model model;
+
+    @JsonProperty
+    private Year year;
+
+    public MPG getMPG() {
+        return MPG;
     }
 
-    public void setTransmission(Transmission transmission) {
-        this.transmission = transmission;
-    }
-
-    public String getDrivenWheels() {
-        return drivenWheels;
-    }
-
-    public void setDrivenWheels(String dw) {
-        this.drivenWheels = dw;
+    public void setMPG(MPG mpg) {
+        this.MPG = mpg;
     }
 
     public Price getPrice() {

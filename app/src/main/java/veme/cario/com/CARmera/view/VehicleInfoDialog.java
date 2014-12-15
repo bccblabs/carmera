@@ -1,5 +1,8 @@
 package veme.cario.com.CARmera.view;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -25,12 +28,18 @@ public class VehicleInfoDialog extends DialogFragment {
     private FragmentPagerAdapter fragmentPagerAdapter = null;
     private static String TAG = "VEHICLE_INFO_DIALOG";
 
+
+
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        Drawable semi_transparent = new ColorDrawable(Color.BLACK);
+        semi_transparent.setAlpha(180);
+
+        dialog.getWindow().setBackgroundDrawable(semi_transparent);
         return dialog;
     }
 
@@ -58,14 +67,19 @@ public class VehicleInfoDialog extends DialogFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        getDialog().getWindow().setLayout(width, height);
+    }
     /* Tab paging */
     public class InfoPagerAdapter extends FragmentPagerAdapter {
 
         private final static int NUM_FRAG = 3;
-        private Bundle args;
         public InfoPagerAdapter(FragmentManager fm) {
             super(fm);
-            args = getArguments();
         }
 
         @Override
@@ -74,19 +88,19 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0: {
                     fragment = new CarInfoFragment();
+                    fragment.setArguments(getArguments());
                     break;
                 }
                 case 1: {
                     fragment = new SpecsFragment();
+                    fragment.setArguments(getArguments());
                     break;
                 }
                 case 2: {
                     fragment = new OwnershipCostFragment();
+                    fragment.setArguments(getArguments());
                     break;
                 }
-            }
-            if (fragment != null) {
-                fragment.setArguments(args);
             }
             return fragment;
         }

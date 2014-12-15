@@ -6,7 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.model.APIModels.Vehicle;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -23,12 +28,11 @@ import android.widget.TextView;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
 
-public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
+public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
 
     private static int GREEN_BACKGROUND = 0x008000;
     private static int WHITE_BACKGROUND = 0xFFFFFF;
     private LayoutInflater inflater;
-
     private static String TAG = "Tagged Vehicle Adapter";
 
     private static class ViewHolder {
@@ -36,14 +40,10 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         TextView vehicleInfoView;
         TextView sellerInfoView;
         TextView priceInfoView;
-
 //        TextView likesCountView;
 //        LinearLayout likesOverlay;
-
 //        TextView refererInfo;
-
         ParseImageView photo;
-
         Button favoriteButton;
         Button seeListingsBtn;
         Button contactSellerBtn;
@@ -203,22 +203,14 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         details_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
-                Bundle args = new Bundle();
                 try {
                     byte[] imageData = taggedVehicle.getTagPhoto().getData();
-                    args.putString("dialog_type", "vehicle_info");
-                    args.putString("vehicle_id", taggedVehicle.getTrimId());
-                    args.putString("vehicle_name", taggedVehicle.toString());
-                    args.putString("vehicle_trim_name", taggedVehicle.getTrimName());
-                    args.putByteArray("imageData", imageData);
-
+                    ((ProfileActivity)getContext()).onRecognitionResult(imageData, taggedVehicle.getYear(),
+                                                                           taggedVehicle.getMake(),
+                                                                           taggedVehicle.getModel());
                 } catch (ParseException e) {
-                    Log.i(TAG, " - gettnig parse file raw data err: " + e.getMessage());
+                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
                 }
-                    VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
-                    vehicleInfoDialog.setArguments(args);
-                    vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
             }
         });
 

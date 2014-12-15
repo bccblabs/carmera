@@ -103,7 +103,8 @@
     <string name="str_close_dialog">Close</string>
     <string name="str_seller_info">Seller Info</string>
 
-    <string name="str_see_listings">See Listings</string>
+    <string name="str_see_listings">Listings</string>
+    <string name="str_reselect_styles">All Styles</string>
     <string name="str_no_vehicles_tagged">No Vehicles Tagged Yet!</string>
     <string name="str_vehicle_search">Search for Cars</string>
     <string name="str_vehicle_search_hint">Search For Cars</string>
