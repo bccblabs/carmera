@@ -32,6 +32,7 @@ public class CameraPreview extends SurfaceView
     private int zoom_factor = 0;
 
 
+
     public CameraPreview (Context cxt_, Camera camera_) {
         super(cxt_);
 

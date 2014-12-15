@@ -25,4 +25,16 @@
         android:contentDescription="@string/str_tagged"
         />
 
+    <ImageButton
+        android:id="@+id/capture_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_camera"
+        android:contentDescription="@string/str_tagged"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/green_circle"
+        />
+
 </RelativeLayout>

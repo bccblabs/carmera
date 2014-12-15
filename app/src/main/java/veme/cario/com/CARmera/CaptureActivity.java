@@ -7,12 +7,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -41,12 +43,25 @@ public class CaptureActivity extends BaseActivity
     private Camera camera;
     private byte[] imageData;
     private ImageButton tagged_btn;
+    private ImageButton capture_btn;
+
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
 
 
+    private Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
+        @Override
+        public void onAutoFocus(boolean success, Camera camera) {
+            takePictureAutofocus();
+        }
+    };
+
+    private void takePictureAutofocus() {
+        camera = getCameraInstance();
+        camera.takePicture(null, null, pictureCallback);
+    }
 
 
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
@@ -82,16 +97,11 @@ public class CaptureActivity extends BaseActivity
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-
-
     }     /* Activity lifecycle */
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-        /* for camera orientation change */
-
-        /* Initialize camera layout */
         setContentView(R.layout.activity_capture);
         initUIComponents();
     }
@@ -102,20 +112,10 @@ public class CaptureActivity extends BaseActivity
         cameraPreview = new CameraPreview(this, camera);
         Log.v(TAG, " - cameraPreview attached.");
 
-        /* Settings camera parameters */
-        Camera.Parameters parameters = camera.getParameters();
-        List<String> focusModes = parameters.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        }
-        parameters.setPictureFormat(ImageFormat.JPEG);
-
-        camera.setParameters(parameters);
-        /* Wire up camera views */
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-        preview.setOnTouchListener(new View.OnTouchListener() {
+        capture_btn = (ImageButton) findViewById(R.id.capture_btn);
+        capture_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 if (vehicleInfoDialog == null) {
                     camera.takePicture(null, null, pictureCallback);
                 } else {
@@ -134,12 +134,20 @@ public class CaptureActivity extends BaseActivity
                     }
                     camera.startPreview();
                 }
-                return false;
+
             }
         });
+        /* Settings camera parameters */
+        Camera.Parameters parameters = camera.getParameters();
+        List<String> focusModes = parameters.getSupportedFocusModes();
+        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        }
+        parameters.setPictureFormat(ImageFormat.JPEG);
 
-        /* auto-focus setup */
-//        setupAutofocus();
+        camera.setParameters(parameters);
+        /* Wire up camera views */
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
 
         preview.addView(cameraPreview);
 
@@ -162,7 +170,6 @@ public class CaptureActivity extends BaseActivity
     public void onPause() {
         super.onPause();
         releaseCamera();
-        // AppEventsLogger.deactivateApp(this);
     }
 
     @Override
@@ -244,9 +251,7 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
-
     }
-
 
     @Override
     public void onStyleSelected (byte[] data, String trim_id, String trim_name, String yr, String mk, String md) {
@@ -313,7 +318,6 @@ public class CaptureActivity extends BaseActivity
         i.putExtra("vehicle_search_criteria", args);
         startActivity(i);
     }
-
 
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {
