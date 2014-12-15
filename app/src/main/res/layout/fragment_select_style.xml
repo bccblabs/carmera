@@ -8,8 +8,7 @@
     <TextView
         style="@style/TableTitle"
         android:id="@+id/car_base_info"
-        android:layout_marginTop="40dp"
-        android:text="2014 BMW X3"/>
+        android:layout_marginTop="40dp"/>
 
     <ImageView
         android:id="@+id/sel_style_preview_view"

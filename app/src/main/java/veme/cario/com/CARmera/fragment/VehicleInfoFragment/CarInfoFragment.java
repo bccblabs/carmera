@@ -62,6 +62,14 @@ public class CarInfoFragment extends Fragment {
                         + " " + vehicleBaseInfo.getModel().getName());
                 car_style_info.setText(vehicleBaseInfo.getTrim());
 
+                String tmv_price = vehicleBaseInfo.getPrice().getUsedTmvRetail();
+                String msrp_price = vehicleBaseInfo.getPrice().getBaseMSRP();
+                if (tmv_price == null) {
+                    used_tmv_textview.setText("N/A");
+                }
+                if (msrp_price == null) {
+                    msrp_textview.setText("N/A");
+                }
                 used_tmv_textview.setText("$" + vehicleBaseInfo.getPrice().getUsedTmvRetail());
                 msrp_textview.setText("$" + vehicleBaseInfo.getPrice().getBaseMSRP());
                 city_mpg_textview.setText(vehicleBaseInfo.getMPG().getCity());

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
@@ -63,29 +65,33 @@ public class SelectStyleFragment extends Fragment {
 
     private SelectResultListener selectResultCallback = null;
     private ImageView preview_view;
+    private static String JSON_HASH_KEY;
     private ListView styles_list_view;
     private LinearLayout no_styles_overlay;
     private VehicleStylesAdapter vehicleStylesAdapter;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "SELECT_STYLE_FRAGMENT";
-    private static final String JSON_HASH_KEY = "select_style_json";
     private String year;
     private String make;
     private String model;
     private Bitmap bitmap;
+    private TextView car_base_info;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        year = getArguments().getString("vehicle_year");
-        make = getArguments().getString("vehicle_make");
-        model = getArguments().getString("vehicle_model");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_style, container, false);
+        year = getArguments().getString("vehicle_year");
+        make = getArguments().getString("vehicle_make");
+        model = getArguments().getString("vehicle_model");
+
+        car_base_info = (TextView) view.findViewById(R.id.car_base_info);
+        car_base_info.setText(year+ " " + make + " " + model);
 
         styles_list_view = (ListView) view.findViewById(R.id.styles_list_view);
         no_styles_overlay = (LinearLayout) view.findViewById(R.id.no_styles_overlay);
@@ -95,6 +101,8 @@ public class SelectStyleFragment extends Fragment {
         vehicleStylesAdapter = new VehicleStylesAdapter(inflater.getContext());
         styles_list_view.setAdapter(vehicleStylesAdapter);
         styles_list_view.setEmptyView(no_styles_overlay);
+
+
         performRequest();
         styles_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -122,6 +130,9 @@ public class SelectStyleFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Time now = new Time();
+        now.setToNow();
+        JSON_HASH_KEY = getArguments().getString("year") + getArguments().getString("make") + getArguments().getString("model") + now.toString() + "select_style";
         spiceManager.start(getActivity());
         spiceManager.addListenerIfPending(VehicleStyles.class, JSON_HASH_KEY,
                 new StyleListRequestListener());

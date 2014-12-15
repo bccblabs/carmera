@@ -239,6 +239,7 @@ public class CaptureActivity extends BaseActivity
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
+        Log.i (TAG, year + " " + make + " " + model);
         FragmentManager fm = getSupportFragmentManager();
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
