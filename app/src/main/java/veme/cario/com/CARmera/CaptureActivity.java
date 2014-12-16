@@ -50,18 +50,7 @@ public class CaptureActivity extends BaseActivity
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
 
-
-    private Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
-        @Override
-        public void onAutoFocus(boolean success, Camera camera) {
-            takePictureAutofocus();
-        }
-    };
-
-    private void takePictureAutofocus() {
-        camera = getCameraInstance();
-        camera.takePicture(null, null, pictureCallback);
-    }
+    public Camera.AutoFocusCallback autoFocusCallback = null;
 
 
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
@@ -93,7 +82,7 @@ public class CaptureActivity extends BaseActivity
         releaseCamera();
         setContentView(R.layout.activity_capture);
         initUIComponents();
-        if (vehicleInfoDialog.isVisible()) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
