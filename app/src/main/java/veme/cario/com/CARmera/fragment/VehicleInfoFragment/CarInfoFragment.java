@@ -177,7 +177,7 @@ public class CarInfoFragment extends Fragment {
             raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             /* third, create a new image out of byte array */
             Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
-            return scaled_bitmap;
+            return raw_bitmap;
         }
 
         @Override

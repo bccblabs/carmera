@@ -169,7 +169,8 @@ public class SelectStyleFragment extends Fragment {
             newImageBytes = bos.toByteArray();
             bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
             Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
-            return scaled_bitmap;
+//            return scaled_bitmap;
+            return raw_bitmap;
         }
 
         @Override

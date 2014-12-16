@@ -25,6 +25,7 @@
         android:layout_height="185dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         />
 
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         >
         <TableRow>
         </TableRow>

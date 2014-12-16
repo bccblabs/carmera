@@ -17,15 +17,17 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         />
     <TextView
         style="@style/TableTitle"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:text="See Styles Details"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:id="@+id/styles_list_view">
     </ListView>
     <LinearLayout
