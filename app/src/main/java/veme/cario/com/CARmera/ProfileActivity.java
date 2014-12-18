@@ -1,21 +1,15 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
-import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 
-import com.facebook.AppEventsLogger;
-
+import veme.cario.com.CARmera.fragment.ActivityFragment.ChatFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
-import veme.cario.com.CARmera.fragment.ActivityFragment.MentionedVehicleFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
@@ -28,7 +22,7 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 public class ProfileActivity extends BaseActivity
                              implements TaggedVehicleFragment.OnTaggedListingSelectedListener,
                                         SavedListingsFragment.OnSavedListingSelectedListener,
-                                        MentionedVehicleFragment.OnMentionedListingSelectedListener,
+                                        ChatFragment.OnMentionedListingSelectedListener,
                                         SelectStyleFragment.SelectResultListener,
                                         CarInfoFragment.OnReselectClickListener,
                                         ImageFragment.ImageResultListener {
@@ -172,7 +166,7 @@ public class ProfileActivity extends BaseActivity
 
         /* 3. tagged by others */
         actionBar.addTab(actionBar.newTab()
-                                    .setText("Mentioned")
+                                    .setText("Chat")
                                     .setTabListener(new ActionBar.TabListener() {
                                         @Override
                                         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -213,7 +207,7 @@ public class ProfileActivity extends BaseActivity
                     frag = new SavedListingsFragment();
                     break;
                 case 2:
-                    frag = new MentionedVehicleFragment();
+                    frag = new ChatFragment();
                     break;
                 default:
                     return null;
