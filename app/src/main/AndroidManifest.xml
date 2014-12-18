@@ -216,6 +216,7 @@
         </activity>
 
 
+    <service android:name=".services.SinchMessageService"/>
     </application>
 
 

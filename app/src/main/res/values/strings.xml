@@ -125,4 +125,7 @@
 
     <string name="title_invite_friends">Invite Friends</string>
     <string name="title_new_chat">New Chat</string>
+
+    <string name="message_elipses">Message...</string>
+
 </resources>

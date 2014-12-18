@@ -2,4 +2,8 @@
 <resources>
     <color name="DarkGray">#A9A9A9</color>
     <color name="Ivory">#FFFFF0</color>
+    <color name="sinch_purple">#ff63029d</color>
+    <color name="off_white">#fffafafa</color>
+    <color name="dark_gray">#ffb3b3b3</color>
+    <color name="very_dark_gray">#636363</color>
 </resources>
