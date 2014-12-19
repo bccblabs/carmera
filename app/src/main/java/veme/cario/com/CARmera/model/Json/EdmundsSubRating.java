@@ -1,12 +1,11 @@
 package veme.cario.com.CARmera.model.Json;
 
-// import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-/**
- * Created by bski on 11/16/14.
- */
-// @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubRating {
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EdmundsSubRating {
     public String getTitle() {
         return title;
     }
@@ -39,8 +38,15 @@ public class SubRating {
         this.summary = summary;
     }
 
+    @JsonProperty
     private String title;
+
+    @JsonProperty
     private String grade;
+
+    @JsonProperty
     private String score;
+
+    @JsonProperty
     private String summary;
 }

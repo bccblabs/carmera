@@ -1,23 +1,20 @@
 package veme.cario.com.CARmera.model.APIModels;
 
 
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.model.Json.EdmundsSubRating;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EdmundsRating {
+public class EdmundsReview {
 
-    public String getTitle() {
-        return title;
+    public String getDate() {
+        return date;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getGrade() {
@@ -36,24 +33,16 @@ public class EdmundsRating {
         this.summary = summary;
     }
 
-    public List<EdmundsSubRating> getSubRatings() {
-        return subRatings;
+    public List<EdmundsRating> getRatings() {
+        return ratings;
     }
 
-    public void setSubRatings(List<EdmundsSubRating> subRatings) {
-        this.subRatings = subRatings;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
+    public void setRatings(List<EdmundsRating> ratings) {
+        this.ratings = ratings;
     }
 
     @JsonProperty
-    private String title;
+    private String date;
 
     @JsonProperty
     private String grade;
@@ -62,9 +51,5 @@ public class EdmundsRating {
     private String summary;
 
     @JsonProperty
-    private String score;
-
-    @JsonProperty
-    private List<EdmundsSubRating> subRatings;
-
+    private List<EdmundsRating> ratings;
 }

@@ -6,9 +6,6 @@ import veme.cario.com.CARmera.CARmeraApp;
 import veme.cario.com.CARmera.util.Utility;
 import veme.cario.com.CARmera.model.APIModels.VehicleOwnershipCost;
 
-/**
- * Created by bski on 11/16/14.
- */
 public class VehicleUsedOwnershipCostRequest extends SpringAndroidSpiceRequest<VehicleOwnershipCost> {
     private String vehicle_id;
 

@@ -1,10 +1,7 @@
 package veme.cario.com.CARmera.requests;
 
 
-import android.util.Log;
-
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
-
 import veme.cario.com.CARmera.CARmeraApp;
 import veme.cario.com.CARmera.model.APIModels.VehicleBaseInfo;
 
