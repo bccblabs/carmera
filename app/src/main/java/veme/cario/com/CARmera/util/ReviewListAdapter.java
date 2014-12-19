@@ -5,12 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.Json.CustomerRating;
 import veme.cario.com.CARmera.model.Json.CustomerReview;
 
 /**
@@ -18,7 +14,13 @@ import veme.cario.com.CARmera.model.Json.CustomerReview;
  */
 public class ReviewListAdapter extends ArrayAdapter<CustomerReview> {
     private LayoutInflater inflater;
-    private CustomerRatingListAdapter customerRatingListAdapter = null;
+    private static class ViewHolder {
+        TextView reviewer_name_textview;
+        TextView review_title_textview;
+        TextView review_text_textview;
+        TextView review_fav_features_textview;
+        TextView review_sug_improvements_textview;
+    }
 
     public ReviewListAdapter(Context context) {
         super(context, 0);
@@ -32,15 +34,12 @@ public class ReviewListAdapter extends ArrayAdapter<CustomerReview> {
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_review, parent, false);
-            // Cache view components into the view holder
             holder = new ViewHolder();
-            holder.review_item_layout = (LinearLayout) view
-                    .findViewById(R.id.review_item_layout);
             holder.reviewer_name_textview = (TextView) view.findViewById(R.id.reviewer_name_textview);
             holder.review_title_textview = (TextView) view.findViewById(R.id.review_title_textview);
             holder.review_text_textview = (TextView) view.findViewById(R.id.review_text_textview);
-            holder.customer_rating_listview = (ListView) view.findViewById(R.id.customer_rating_listview);
-
+            holder.review_fav_features_textview = (TextView) view.findViewById(R.id.review_favorite_features);
+            holder.review_sug_improvements_textview = (TextView) view.findViewById(R.id.review_suggested_improvements);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -50,28 +49,15 @@ public class ReviewListAdapter extends ArrayAdapter<CustomerReview> {
         TextView reviewer_name_tv = holder.reviewer_name_textview;
         TextView review_title_tv = holder.review_title_textview;
         TextView review_text_tv = holder.review_text_textview;
-        ListView customer_rating_lv = holder.customer_rating_listview;
+        TextView review_ff_tv = holder.review_fav_features_textview;
+        TextView review_si_tv = holder.review_sug_improvements_textview;
 
         reviewer_name_tv.setText(review.getAuthor().getAuthorName());
         review_title_tv.setText(review.getTitle());
         review_text_tv.setText(review.getText());
-
-        customerRatingListAdapter = new CustomerRatingListAdapter(getContext());
-        customerRatingListAdapter.clear();
-        for (CustomerRating rating : review.getRatings()) {
-            customerRatingListAdapter.add(rating);
-        }
-        customer_rating_lv.setAdapter(customerRatingListAdapter);
+        review_ff_tv.setText(review.getFavoriteFeatures());
+        review_si_tv.setText(review.getSuggestedImprovements());
 
         return view;
-    }
-
-
-    private static class ViewHolder {
-        LinearLayout review_item_layout;
-        TextView reviewer_name_textview;
-        TextView review_title_textview;
-        TextView review_text_textview;
-        ListView customer_rating_listview;
     }
 }

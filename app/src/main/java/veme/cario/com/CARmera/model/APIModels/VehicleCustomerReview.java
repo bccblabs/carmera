@@ -22,11 +22,11 @@ public class VehicleCustomerReview {
     }
 
     public String getReviewCount() {
-        return reviewCount;
+        return reviewsCount;
     }
 
-    public void setReviewCount(String reviewCount) {
-        this.reviewCount = reviewCount;
+    public void setReviewCount(String reviewsCount) {
+        this.reviewsCount = reviewsCount;
     }
 
     public List<CustomerReview> getReviews() {
@@ -41,7 +41,7 @@ public class VehicleCustomerReview {
     private String averageRating;
 
     @JsonProperty
-    private String reviewCount;
+    private String reviewsCount;
 
     @JsonProperty
     private List<CustomerReview> reviews;

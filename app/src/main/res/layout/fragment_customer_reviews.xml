@@ -5,22 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TableRow>
-            <TextView android:text="@string/str_average_customer_rating"/>
-            <TextView android:id="@+id/average_customer_rating"/>
-        </TableRow>
-        <TableRow>
-            <TextView android:text="@string/str_customer_review_count"/>
-            <TextView android:id="@+id/customer_review_cnt"/>
-        </TableRow>
-    </TableLayout>
 
-    <ListView
-        android:layout_width="match_parent"
+    <TextView
+        style="@style/TableTitle"
+        android:text="Customer Reviews"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/customer_reviews_listview"/>
+        android:layout_gravity="center_horizontal"
+        android:textColor="#4169E1"
+        android:id="@+id/review_info_text_view"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:text="5.0/5 out of 5 reviews"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_customer_review"
+        android:text="No Customer Reviews Found"/>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_list_view"/>
 
 </LinearLayout>

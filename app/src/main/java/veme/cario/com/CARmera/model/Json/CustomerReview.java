@@ -36,14 +36,29 @@ public class CustomerReview {
         this.text = text;
     }
 
-    public List<CustomerRating> getRatings() {
-        return ratings;
+    public String getCreated() {
+        return created;
     }
 
-    public void setRatings(List<CustomerRating> ratings) {
-        this.ratings = ratings;
+    public void setCreated(String created) {
+        this.created = created;
     }
 
+    public String getSuggestedImprovements() {
+        return suggestedImprovements;
+    }
+
+    public void setSuggestedImprovements(String suggestedImprovements) {
+        this.suggestedImprovements = suggestedImprovements;
+    }
+
+    public String getFavoriteFeatures() {
+        return favoriteFeatures;
+    }
+
+    public void setFavoriteFeatures(String favoriteFeatures) {
+        this.favoriteFeatures = favoriteFeatures;
+    }
     @JsonProperty
     private String title;
 
@@ -54,6 +69,12 @@ public class CustomerReview {
     private String text;
 
     @JsonProperty
-    private List<CustomerRating> ratings;
+    private String created;
+
+    @JsonProperty
+    private String suggestedImprovements;
+
+    @JsonProperty
+    private String favoriteFeatures;
 
 }
