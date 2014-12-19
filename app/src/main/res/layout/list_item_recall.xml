@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_number_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_component_desc_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_from_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_to_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_num_affected_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_consequence_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_corrective_tv"/>
+    <TextView
+        style="@style/TableEntry"
+        android:id="@+id/recall_desc_tv"/>
+</LinearLayout>
