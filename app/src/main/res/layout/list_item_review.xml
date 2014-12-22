@@ -4,28 +4,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reviewer_name_textview"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/review_title_textview"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TableEntry"
         android:id="@+id/review_text_textview"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TableEntryTitle"
+        android:text="Favorite Features"/>
+    <TextView
+        style="@style/TableEntry"
         android:id="@+id/review_favorite_features"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/review_suggested_improvements"/>
+        style="@style/TableEntryTitle"
+        android:text="Suggested Improvements"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/review_average_rating"/>
+        style="@style/TableEntry"
+        android:id="@+id/review_suggested_improvements"/>
 </LinearLayout>

@@ -10,6 +10,11 @@
         style="@style/TableTitle"
         android:text="Customer Reviews"
         />
+    <TextView
+        style="@style/EmptyView"
+        android:id="@+id/no_customer_review"
+        android:text="No Customer Reviews Found"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,13 +26,10 @@
         android:textStyle="bold"
         android:textSize="30sp"/>
 
-    <TextView
-        style="@style/EmptyView"
-        android:id="@+id/no_customer_review"
-        android:text="No Customer Reviews Found"/>
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/customer_list_view"/>
+    <veme.cario.com.CARmera.util.AnimatedExpandableListView
+        style="@style/ListStyle"
+        android:id="@+id/customer_review_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
