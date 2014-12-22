@@ -5,17 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         style="@style/TableTitle"
+        android:text="Edmunds Review"/>
+    <TextView
+        style="@style/EmptyView"
+        android:id="@+id/no_edmunds_review"
+        android:text="Sorry no Edmunds reviews found..."/>
+    <TextView
+        style="@style/TableEntry"
         android:id="@+id/edmunds_review_date_textview"/>
     <TextView
-        style="@style/TableTitle"
+        style="@style/TableEntry"
         android:id="@+id/edmunds_review_grade_textview"/>
     <TextView
-        style="@style/TableTitle"
+        style="@style/TableEntry"
         android:id="@+id/edmunds_review_summary_textview"/>
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edmunds_ratings_list_view"/>
+        style="@style/ListStyle"
+        android:id="@+id/edmunds_ratings_list_view"
+        />
 </LinearLayout>

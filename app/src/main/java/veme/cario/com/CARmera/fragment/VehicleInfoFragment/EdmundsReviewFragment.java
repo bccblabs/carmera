@@ -16,6 +16,8 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import org.w3c.dom.Text;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.EdmundsRating;
 import veme.cario.com.CARmera.model.APIModels.EdmundsReview;
@@ -30,6 +32,7 @@ public class EdmundsReviewFragment extends Fragment {
     private TextView date_textview;
     private TextView grade_textview;
     private TextView summary_textview;
+    private TextView no_edmunds_review;
 
     private ListView ratings_listview;
     private EdmundsRatingAdapter edmundsRatingAdapter;
@@ -48,6 +51,7 @@ public class EdmundsReviewFragment extends Fragment {
         @Override
         public void onRequestSuccess (EdmundsReview edmundsReview) {
             if (EdmundsReviewFragment.this.isAdded()) {
+                edmundsRatingAdapter.clear();
                 for (EdmundsRating edmundsRating : edmundsReview.getRatings()) {
                     edmundsRatingAdapter.add(edmundsRating);
                 }
@@ -68,13 +72,19 @@ public class EdmundsReviewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_customer_reviews, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_edmunds_review, container, false);
+        date_textview = (TextView) view.findViewById(R.id.edmunds_review_date_textview);
+        grade_textview = (TextView) view.findViewById(R.id.edmunds_review_grade_textview);
+        summary_textview = (TextView) view.findViewById(R.id.edmunds_review_summary_textview);
+        ratings_listview = (ListView) view.findViewById(R.id.edmunds_ratings_list_view);
+        no_edmunds_review = (TextView) view.findViewById(R.id.no_edmunds_review);
 
-    @Override
-    public void onViewCreated (View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initUIComponents();
+        ratings_listview.setEmptyView(no_edmunds_review);
+        edmundsRatingAdapter = new EdmundsRatingAdapter(getActivity());
+        ratings_listview.setAdapter(edmundsRatingAdapter);
+
+        performRequest();
+        return view;
     }
 
     @Override
@@ -102,18 +112,6 @@ public class EdmundsReviewFragment extends Fragment {
                 new EdmundsReviewRequest(getArguments().getString("vehicle_id"));
         spiceManager.execute(edmundsReviewRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new EdmundsReviewRequestListener());
-    }
-
-    private void initUIComponents () {
-        date_textview = (TextView) getView().findViewById(R.id.edmunds_review_date_textview);
-        grade_textview = (TextView) getView().findViewById(R.id.edmunds_review_grade_textview);
-        summary_textview = (TextView) getView().findViewById(R.id.edmunds_review_summary_textview);
-        ratings_listview = (ListView) getView().findViewById(R.id.edmunds_ratings_list_view);
-
-        edmundsRatingAdapter = new EdmundsRatingAdapter(getActivity());
-        ratings_listview.setAdapter(edmundsRatingAdapter);
-
-        performRequest();
     }
 
 }

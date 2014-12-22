@@ -44,8 +44,9 @@ public class CustomerReviewFragment extends Fragment {
                 for (CustomerReview customerReview : vehicleCustomerReview.getReviews()) {
                     reviewListAdapter.add(customerReview);
                 }
-                review_info.setText(vehicleCustomerReview.getAverageRating() + " /5 out from "
-                                    + vehicleCustomerReview.getReviewCount() + " customers");
+                String reviewCount = vehicleCustomerReview.getReviewCount();
+                review_info.setText(vehicleCustomerReview.getAverageRating() + "/5 from "
+                                    + reviewCount + " reviewers." );
                 reviewListAdapter.notifyDataSetChanged();
                 CustomerReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }

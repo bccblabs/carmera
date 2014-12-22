@@ -16,7 +16,7 @@ public class EdmundsReviewRequest extends SpringAndroidSpiceRequest<EdmundsRevie
 
     @Override
     public EdmundsReview loadDataFromNetwork () throws Exception {
-        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/grade/%s?fmt=json&api_key=%s\n",
+        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/grade/%s?fmt=json&api_key=%s",
                 this.vehicle_id, CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, EdmundsReview.class);
     }

@@ -25,9 +25,7 @@
         android:text="See Styles Details"/>
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        style="@style/ListStyle"
         android:id="@+id/styles_list_view">
     </ListView>
     <LinearLayout

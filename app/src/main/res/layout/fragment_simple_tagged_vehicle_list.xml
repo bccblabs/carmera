@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/ListStyle"
         android:id="@+id/simple_tagged_vehicles_list_view"/>
 
     <LinearLayout

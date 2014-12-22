@@ -20,7 +20,7 @@ public class VehicleRecallRequest extends SpringAndroidSpiceRequest<VehicleRecal
     @Override
     public VehicleRecall loadDataFromNetwork() throws Exception {
         Log.i(TAG, "vehicle_id:" + vehicle_id);
-        String url = String.format("https://api.edmunds.com/v1/api/maintenance/recallrepository/findbymodelyearid?modelyearid=%s&fmt=json&api_key=%s\n",
+        String url = String.format("https://api.edmunds.com/v1/api/maintenance/recallrepository/findbymodelyearid?modelyearid=%s&fmt=json&api_key=%s",
                 this.vehicle_id, CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, VehicleRecall.class);
     }

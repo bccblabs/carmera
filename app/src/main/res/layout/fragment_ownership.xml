@@ -8,11 +8,11 @@
 
     <TextView
         style="@style/TableTitle"
-        android:text="Total Five Year"
-        android:layout_marginTop="40dp"/>
+        android:text="Total Five Year"/>
 
     <TextView
         style="@style/TableTitle"
+        android:layout_marginTop="0dp"
         android:text="Ownership Costs"/>
 
     <TextView

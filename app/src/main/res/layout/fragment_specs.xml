@@ -12,7 +12,6 @@
         android:orientation="vertical">
         <TextView
             style="@style/TableTitle"
-            android:layout_marginTop="40dp"
             android:text="ENGINE"/>
         <TableLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

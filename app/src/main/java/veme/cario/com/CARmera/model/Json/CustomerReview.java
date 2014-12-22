@@ -77,4 +77,15 @@ public class CustomerReview {
     @JsonProperty
     private String favoriteFeatures;
 
+    public String getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(String averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    @JsonProperty
+    private String averageRating;
+
 }

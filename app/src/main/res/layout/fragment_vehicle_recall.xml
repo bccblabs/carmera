@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        style="@style/TableTitle"
+        android:text="Manufacturer Recalls"/>
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ListStyle"
         android:id="@+id/vehicle_recall_listview"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/EmptyView"
         android:text="No Recall Found!"
         android:id="@+id/no_recalls_textview"/>
 </LinearLayout>

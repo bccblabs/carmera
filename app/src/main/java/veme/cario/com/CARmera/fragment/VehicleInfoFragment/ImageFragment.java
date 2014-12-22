@@ -117,7 +117,7 @@ public class ImageFragment extends Fragment {
 //        VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
 //        spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
 //                new VehicleRequestListener());
-        imageResultCallback.onRecognitionResult(getArguments().getByteArray("imageData"), "2012", "Audi", "TTS");
+        imageResultCallback.onRecognitionResult(getArguments().getByteArray("imageData"), "2013", "Honda", "Accord");
     }
 
     public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {

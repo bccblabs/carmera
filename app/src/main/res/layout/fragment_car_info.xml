@@ -12,10 +12,10 @@
         android:orientation="vertical">
         <TextView
             style="@style/TableTitle"
-            android:id="@+id/car_base_info"
-            android:layout_marginTop="40dp"/>
+            android:id="@+id/car_base_info"/>
         <TextView
             style="@style/TableTitle"
+            android:layout_marginTop="0dp"
             android:id="@+id/car_style_info"/>
     </LinearLayout>
 
