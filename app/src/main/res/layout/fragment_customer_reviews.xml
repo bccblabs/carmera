@@ -23,13 +23,19 @@
         android:textColor="#4169E1"
         android:id="@+id/review_info_text_view"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:textSize="30sp"/>
 
-    <veme.cario.com.CARmera.util.AnimatedExpandableListView
-        style="@style/ListStyle"
-        android:id="@+id/customer_review_listview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/customer_review_swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp">
+        <veme.cario.com.CARmera.util.AnimatedExpandableListView
+            style="@style/ListStyle"
+            android:id="@+id/customer_review_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -231,7 +231,7 @@ public class CaptureActivity extends BaseActivity
         args.putString("vehicle_model", model);
         args.putByteArray("imageData", imageData);
 
-        if (vehicleInfoDialog.isVisible()) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
@@ -262,12 +262,12 @@ public class CaptureActivity extends BaseActivity
         args.putString ("vehicle_make", mk);
         args.putString ("vehicle_model", md);
         args.putString ("vehicle_trim_name", trim_name);
-        args.putByteArray("imageData", imageData);
+        args.putByteArray("imageData", data);
 
         Log.i (TAG, " - creating vehicle info dialog: " + trim_id + " "  + trim_name);
 
 
-        if (vehicleInfoDialog.isVisible()) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
@@ -287,7 +287,7 @@ public class CaptureActivity extends BaseActivity
         args.putString("vehicle_model", md);
 
         args.putByteArray("imageData", raw_photo);
-        if (vehicleInfoDialog.isVisible()) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
@@ -299,13 +299,27 @@ public class CaptureActivity extends BaseActivity
 
     /* when a vehicle is selected from the list of previously tagged cars using the yellow button */
     @Override
-    public void onSimpleTagSelected (String year, String make, String model) {
-        Intent i = new Intent(CaptureActivity.this, NearbyActivity.class);
+    public void onSimpleTagSelected (byte[] imageData, String year, String make, String model) {
         Bundle args = new Bundle();
-        args.putString("vehicle_search_make", make);
-        args.putString("vehicle_search_model", model);
-        i.putExtra("vehicle_search_criteria", args);
-        startActivity(i);
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        if (simpleTaggedVehicleDialog != null && simpleTaggedVehicleDialog.isVisible()) {
+            simpleTaggedVehicleDialog.dismiss();
+            simpleTaggedVehicleDialog = null;
+        }
+        Log.i (TAG, year + " " + make + " " + model);
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
     }
 
 

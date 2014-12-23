@@ -44,8 +44,6 @@ public class EdmundsReviewFragment extends Fragment {
     private final class EdmundsReviewRequestListener implements RequestListener<EdmundsReview> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-            EdmundsReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
         }
 
         @Override

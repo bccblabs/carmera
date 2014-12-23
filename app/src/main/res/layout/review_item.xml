@@ -3,45 +3,40 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="25dp"
+    android:layout_marginBottom="25dp"
     android:background="@color/very_dark_gray"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reviewed by: "
-            android:textColor="@color/Ivory"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:textAllCaps="true"/>
-        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Ivory"
             android:textStyle="bold"
-            android:layout_weight="1"
             android:textAllCaps="true"
             android:id="@+id/reviewer_name_textview"/>
         <TextView
+            android:layout_marginLeft="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="4 out of 5"
             android:textStyle="bold"
-            android:layout_weight="1"
             android:textColor="@color/Ivory"
             android:id="@+id/review_average_rating"/>
     </LinearLayout>
     <TextView
         style="@style/TableEntry"
-        android:id="@+id/review_title_textview"
-        android:color="@color/DarkGray"/>
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/review_title_textview"/>
 
 
 </LinearLayout>

@@ -4,20 +4,32 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
-        style="@style/ListStyle"
-        android:id="@+id/simple_tagged_vehicles_list_view"/>
+
+    <TextView
+        style="@style/TableTitle"
+        android:text="Tagged Vehicles"
+        android:layout_marginBottom="40dp"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/simple_tagged_swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                style="@style/ListStyle"
+                android:id="@+id/simple_tagged_vehicles_list_view"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/no_tagged_vehicle_view">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_no_vehicles_tagged"
-            android:fontFamily="sans-serif-light"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-        </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_no_vehicles_tagged"
+        android:fontFamily="sans-serif-light"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+    </LinearLayout>
+
 </LinearLayout>

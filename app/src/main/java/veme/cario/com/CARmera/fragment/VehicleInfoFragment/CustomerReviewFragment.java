@@ -2,7 +2,9 @@ package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +37,16 @@ public class CustomerReviewFragment extends Fragment {
     private TextView review_info;
     private TextView no_customer_review;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private AnimatedExpandableListView customer_review_listview;
     private ReviewListAdapter review_list_adapter;
     private List<ReviewListAdapter.ReviewItem> customer_reviews_items = new ArrayList<ReviewListAdapter.ReviewItem>();
-
+    private int page_num = 0;
 
 
     private final class CustomerReviewRequestListener implements RequestListener<VehicleCustomerReview> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-            CustomerReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
         }
 
         @Override
@@ -79,6 +80,7 @@ public class CustomerReviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        page_num = 0;
         /* set fragment to be retained across Activity recreation */
     }
 
@@ -115,13 +117,30 @@ public class CustomerReviewFragment extends Fragment {
     private void performRequest() {
         CustomerReviewFragment.this.getActivity().setProgressBarIndeterminate(true);
         VehicleCustomerReviewRequest vehicleCustomerReviewRequest =
-                new VehicleCustomerReviewRequest(getArguments().getString("vehicle_id"));
+                new VehicleCustomerReviewRequest(getArguments().getString("vehicle_id"), Integer.toString(++page_num));
         spiceManager.execute(vehicleCustomerReviewRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new CustomerReviewRequestListener());
     }
 
     private void initUIComponents () {
         review_info = (TextView) getView().findViewById(R.id.review_info_text_view);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.customer_review_swipe_layout);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(true);
+                }
+                performRequest();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         customer_review_listview = (AnimatedExpandableListView) getView().findViewById(R.id.customer_review_listview);
         review_list_adapter = new ReviewListAdapter(getActivity());

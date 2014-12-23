@@ -38,8 +38,6 @@ public class RecallFragment extends Fragment {
     private final class VehicleRecallRequestListener implements RequestListener<VehicleRecall> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-            RecallFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
         }
 
         @Override

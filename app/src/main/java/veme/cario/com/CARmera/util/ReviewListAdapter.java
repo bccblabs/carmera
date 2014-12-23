@@ -115,7 +115,7 @@ public class ReviewListAdapter extends AnimatedExpandableListView.AnimatedExpand
             holder = (ReviewHolder) convertView.getTag();
         }
 
-        holder.name_tv.setText(item.name);
+        holder.name_tv.setText("Reviewed By: " + item.name);
         holder.title_tv.setText(item.title);
         holder.rating_tv.setText(item.rating + " out of 5");
 

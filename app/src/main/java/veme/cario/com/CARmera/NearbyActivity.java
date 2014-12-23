@@ -2,11 +2,14 @@ package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.AppEventsLogger;
 
@@ -20,6 +23,7 @@ public class NearbyActivity extends BaseActivity
                             implements NearbyListingFragment.OnNearbyListingSelectedListener,
                                        NearbyTaggedFragment.OnNearbyTaggedSelectedListener{
 
+    private final String TAG = "NEARBY_ACTIVITY";
     private ViewPager viewPager;
     private NeabyPagerAdapter nearbyPagerAdapter;
 
@@ -41,6 +45,14 @@ public class NearbyActivity extends BaseActivity
         setContentView(R.layout.activity_nearby);
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+
+        Intent i = getIntent();
+        Bundle args = i.getExtras();
+        if (args != null) {
+            Log.i(TAG, "Year: " + args.getString("vehicle_year"));
+        }
+
         nearbyPagerAdapter = new NeabyPagerAdapter (getSupportFragmentManager());
 
         viewPager = (ViewPager) findViewById(R.id.nearby_pager);
