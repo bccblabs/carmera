@@ -12,9 +12,11 @@
         android:orientation="vertical">
         <TextView
             style="@style/TableTitle"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/car_base_info"/>
         <TextView
             style="@style/TableTitle"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp"
             android:id="@+id/car_style_info"/>
     </LinearLayout>
@@ -78,26 +80,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
             android:id="@+id/share_tagged_btn"
-            android:text="@string/str_share_to_friends"
-            />
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_share"
+            android:contentDescription="@string/str_share_to_friends"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/small_green_circle"
+            />
+        <ImageButton
             android:id="@+id/get_listings_btn"
-            android:text="@string/str_see_listings"
-            />
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/reselect_style_btn"
-            android:text="@string/str_reselect_styles"
+            android:src="@drawable/ic_action_storage"
+            android:contentDescription="@string/str_see_listings"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/small_green_circle"
             />
+        <ImageButton
+            android:id="@+id/reselect_style_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_back"
+            android:contentDescription="@string/str_reselect_styles"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/small_green_circle"
+            />
+
+
+
+
+
     </LinearLayout>
 
 </LinearLayout>

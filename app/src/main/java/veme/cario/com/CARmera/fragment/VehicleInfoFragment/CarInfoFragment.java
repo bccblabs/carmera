@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +35,8 @@ public class CarInfoFragment extends Fragment {
     private static final String TAG = "CAR_INFO_FRAGMENT";
     private static String JSON_HASH_KEY;
     private ImageView preview_view;
-    private Button share_btn;
-    private Button reselect_styles_btn;
+    private ImageButton share_btn;
+    private ImageButton reselect_styles_btn;
     private TextView car_base_info;
     private TextView car_style_info;
 
@@ -136,7 +137,7 @@ public class CarInfoFragment extends Fragment {
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.info_preview_view);
 
-        share_btn = (Button) getView().findViewById(R.id.share_tagged_btn);
+        share_btn = (ImageButton) getView().findViewById(R.id.share_tagged_btn);
         share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +145,7 @@ public class CarInfoFragment extends Fragment {
             }
         });
 
-        reselect_styles_btn = (Button) getView().findViewById(R.id.reselect_style_btn);
+        reselect_styles_btn = (ImageButton) getView().findViewById(R.id.reselect_style_btn);
         reselect_styles_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
