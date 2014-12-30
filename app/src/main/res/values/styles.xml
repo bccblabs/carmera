@@ -48,10 +48,48 @@
     </style>
 
     <style name="ListStyle">
-        <item name="android:layout_marginTop">40dp</item>
-        <item name="android:layout_marginBottom">40dp</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="VehicleListStyle"
+        parent="@android:style/Widget.ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">10dp</item>
+    </style>
+
+    <style name="VehicleInfoHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/medius_orchid</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="ButtonLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+    <style name="ButtonStyle">
+        <item name="android:layout_width">26dp</item>
+        <item name="android:layout_height">26dp</item>
+    </style>
+
+    <style name="ButtonText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:textColor">@color/medius_orchid</item>
+    </style>
+
 </resources>

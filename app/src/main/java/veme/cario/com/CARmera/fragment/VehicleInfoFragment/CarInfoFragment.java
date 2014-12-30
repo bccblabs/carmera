@@ -3,6 +3,7 @@ package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,6 +60,7 @@ public class CarInfoFragment extends Fragment {
         public void onRequestSuccess (VehicleBaseInfo vehicleBaseInfo) {
             if (CarInfoFragment.this.isAdded()) {
 
+                Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
                 car_base_info.setText(vehicleBaseInfo.getYear().getYear() + " " + vehicleBaseInfo.getMake().getName()
                         + " " + vehicleBaseInfo.getModel().getName());
                 car_style_info.setText(vehicleBaseInfo.getTrim());
@@ -75,6 +77,13 @@ public class CarInfoFragment extends Fragment {
                 msrp_textview.setText("$" + vehicleBaseInfo.getPrice().getBaseMSRP());
                 city_mpg_textview.setText(vehicleBaseInfo.getMPG().getCity());
                 highway_mpg_textview.setText(vehicleBaseInfo.getMPG().getHighway());
+
+                car_base_info.setTypeface(fa);
+                car_style_info.setTypeface(fa);
+                used_tmv_textview.setTypeface(fa);
+                msrp_textview.setTypeface(fa);
+                city_mpg_textview.setTypeface(fa);
+                highway_mpg_textview.setTypeface(fa);
 
                 CarInfoFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }

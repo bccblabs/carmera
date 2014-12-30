@@ -1,72 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/vehicle_item"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:descendantFocusability="beforeDescendants"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text_info_overlay"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/vehicle_info_view"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/seller_info_view"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/price_info_view"/>
-    </LinearLayout>
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/card_background_selector"
+        android:orientation="vertical"
+        android:descendantFocusability="afterDescendants">
 
-    <com.parse.ParseImageView
-        android:id="@+id/tagged_photo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/VehicleInfoHeader"
+                    android:id="@+id/vehicle_info_view"/>
+                <LinearLayout
+                    style="@style/ButtonLayout">
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:background="@drawable/ic_action_balloon"
+                        android:id="@+id/details_btn"/>
+                    <TextView
+                        style="@style/ButtonText"
+                        android:text="car details"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                style="@style/VehicleInfoHeader"
+                android:id="@+id/seller_info_view"/>
+            <TextView
+                style="@style/VehicleInfoHeader"
+                android:layout_gravity="end"
+                android:id="@+id/price_info_view"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/basic_btn_overlay"
-        android:layout_gravity="center_horizontal">
-        <Button
-            android:layout_width="wrap_content"
+        <com.parse.ParseImageView
+            android:id="@+id/tagged_photo"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Favorite"
-            android:id="@+id/favorite_button"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_btn"
-            android:text="Details"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/share_btn"
-            android:text="Share"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/basic_btn_overlay">
+
+            <LinearLayout
+                style="@style/ButtonLayout">
+                <Button
+                    style="@style/ButtonStyle"
+                    android:background="@drawable/ic_action_mustache"
+                    android:id="@+id/favorite_button"/>
+                <TextView
+                    style="@style/ButtonText"
+                    android:text="51"
+                    android:id="@+id/likes_count_textview"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ButtonLayout">
+                <Button
+                    style="@style/ButtonStyle"
+                    android:background="@drawable/ic_action_share_blue"
+                    android:id="@+id/share_btn"/>
+                <TextView
+                    style="@style/ButtonText"
+                    android:text="share"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ButtonLayout">
+                <Button
+                    style="@style/ButtonStyle"
+                    android:background="@drawable/ic_action_list_2"
+                    android:id="@+id/see_listings_btn"/>
+                <TextView
+                    style="@style/ButtonText"
+                    android:text="listings"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ButtonLayout">
+                <Button
+                    style="@style/ButtonStyle"
+                    android:id="@+id/contact_seller_btn"
+                    android:background="@drawable/ic_action_send"/>
+                <TextView
+                    style="@style/ButtonText"
+                    android:text="contact"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/see_listings_btn"
-            android:text="See Listings"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/contact_seller_btn"
-            android:text="Contact Seller"/>
-    </LinearLayout>
-</LinearLayout>
+</FrameLayout>

@@ -88,8 +88,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_share"
             android:contentDescription="@string/str_share_to_friends"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
             android:background="@drawable/small_green_circle"
             />
@@ -99,8 +97,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_storage"
             android:contentDescription="@string/str_see_listings"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/small_green_circle"
             />
         <ImageButton
@@ -109,8 +105,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_back"
             android:contentDescription="@string/str_reselect_styles"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginLeft="20dp"
             android:background="@drawable/small_green_circle"
             />

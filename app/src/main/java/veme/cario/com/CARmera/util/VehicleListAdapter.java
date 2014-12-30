@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.util;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -36,7 +37,6 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
     private static String TAG = "Tagged Vehicle Adapter";
 
     private static class ViewHolder {
-        LinearLayout vehicleItemLayout;
         TextView vehicleInfoView;
         TextView sellerInfoView;
         TextView priceInfoView;
@@ -65,8 +65,6 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
             view = inflater.inflate(R.layout.list_item_vehicle, parent, false);
             // Cache view components into the view holder
             holder = new ViewHolder();
-            holder.vehicleItemLayout = (LinearLayout) view
-                    .findViewById(R.id.vehicle_item);
             holder.vehicleInfoView = (TextView) view.findViewById(R.id.vehicle_info_view);
             holder.sellerInfoView = (TextView) view.findViewById(R.id.seller_info_view);
             holder.priceInfoView = (TextView) view.findViewById(R.id.price_info_view);
@@ -108,16 +106,15 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
         /* vehicle: object for the entire getView function */
         final TaggedVehicle taggedVehicle = getItem(position);
 
-        /* View item: Different relative layout button for favorite cars */
-        LinearLayout vehicleLayout = holder.vehicleItemLayout;
-        if (taggedVehicle.isFavorites()) {
-            vehicleLayout.setBackgroundColor(GREEN_BACKGROUND);
-        }
         /* View item: Vehicle Year, Make, Model Information */
         final TextView vehicle_info_tv = holder.vehicleInfoView;
         vehicle_info_tv.setText(taggedVehicle.getYear() + " "
                 + taggedVehicle.getMake() + " "
                 + taggedVehicle.getModel());
+
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "android-robot.ttf");
+
+        vehicle_info_tv.setTypeface(ar);
 
         /* View item: Referer */
 //        ParseUser referer = taggedVehicle.getReferer();
@@ -278,8 +275,8 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
             });
             price_info_tv.setVisibility(View.GONE);
             seller_info_tv.setVisibility(View.GONE);
-            contact_seller_btn.setVisibility(View.GONE);
-            see_listings_btn.setVisibility(View.GONE);
+//            contact_seller_btn.setVisibility(View.GONE);
+//            see_listings_btn.setVisibility(View.GONE);
         }
         return view;
     }
