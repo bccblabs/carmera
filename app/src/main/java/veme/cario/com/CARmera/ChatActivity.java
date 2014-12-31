@@ -32,7 +32,7 @@ import veme.cario.com.CARmera.util.MessageAdapter;
 /**
  * Created by bski on 12/18/14.
  */
-public class ChatActivity extends Activity {
+public class ChatActivity extends BaseActivity {
     /* TODO: Group chat
        TODO: Add vehicle to chat
        TODO: Add Contact information dialog (reuse sellerinfodialog)
@@ -48,9 +48,12 @@ public class ChatActivity extends Activity {
     private MessageClientListener messageClientListener = new MyMessageClientListener();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+
+        getLayoutInflater().inflate(R.layout.activity_chat, frame_layout);
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("Chats");
 
         bindService(new Intent(this, SinchMessageService.class), serviceConnection, BIND_AUTO_CREATE);
 

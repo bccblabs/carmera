@@ -1,242 +1,165 @@
 package veme.cario.com.CARmera;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.facebook.AppEventsLogger;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
+import veme.cario.com.CARmera.nav_drawer.DrawerAdapter;
+import veme.cario.com.CARmera.nav_drawer.DrawerItem;
 
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.GooglePlayServicesClient;
-//import com.google.android.gms.common.GooglePlayServicesUtil;
-//import com.google.android.gms.location.LocationClient;
-//import com.google.android.gms.location.LocationRequest;
 
-/**
- * Created by bski on 11/22/14.
- */
 public class BaseActivity extends FragmentActivity {
-//                                implements LocationListener,
-//                                           GooglePlayServicesClient.ConnectionCallbacks,
-//                                           GooglePlayServicesClient.OnConnectionFailedListener {
-    /* Access user location object */
-//    private LocationClient locationClient;
-//    private LocationRequest locationRequest;
-//    private Location curr_location;
-//    private Location last_location;
-    private final static int LOCATION_UPDATE_INTERVAL = 5000;
-    private final static int LOCATION_UPDATE_CEILING = 60 * 1000;
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    static final private String TAG = "BASEACTIVITY";
+    /* Navigation Drawer Variables */
+    protected FrameLayout frame_layout;
+    private DrawerLayout drawer_layout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    protected ListView drawer_listview;
+    protected static int drawer_pos;
+    private static boolean is_launch = true;
+    protected DrawerAdapter drawer_adapter;
+    protected List<DrawerItem> drawer_item_list;
+
+    private CharSequence drawerTitle;
+    private CharSequence title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-//        authenticateSession();
+        setContentView(R.layout.activity_base);
+        frame_layout = (FrameLayout) findViewById(R.id.content_frame);
+        title = drawerTitle = getTitle();
 
-        /* Set up location, orientation listeners, gesture detector */
-//        locationRequest = LocationRequest.create();
-//        locationRequest.setInterval(LOCATION_UPDATE_INTERVAL);
-//        locationRequest.setFastestInterval(LOCATION_UPDATE_CEILING);
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationClient = new LocationClient(this, null, null); // cxt, gs cnx cb, gs bad cnx cb
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawer_listview = (ListView) findViewById(R.id.left_drawer);
 
+        /* Initializing drawer items */
+        drawer_item_list = new ArrayList<DrawerItem>();
+        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_tags));
+        drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
+        drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
+        drawer_item_list.add(new DrawerItem("Notifications", R.drawable.ic_action_globe));
+        drawer_item_list.add(new DrawerItem("Chat", R.drawable.ic_action_send));
+        drawer_item_list.add(new DrawerItem("Friends", R.drawable.ic_action_emo_cool));
+        drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
+
+        /* set item actions */
+        drawer_adapter = new DrawerAdapter(this, R.layout.drawer_item_layout, drawer_item_list);
+        drawer_listview.setAdapter(drawer_adapter);
+        drawer_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openActivity(position);
+            }
+        });
+
+        /* configure action bar */
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        /* set up drawer toggle */
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout,
+                R.drawable.ic_drawer, R.string.drawer_open,
+                R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(title);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+
+        drawer_layout.setDrawerListener(actionBarDrawerToggle);
+        if (is_launch) {
+            is_launch = false;
+            openActivity(0);
+        }
     }
 
-    @Override
-    public void onPause () {
-        super.onPause();
-//        if (locationClient.isConnected()) {
-//        }
-//        locationClient.disconnect();
-        // AppEventsLogger.deactivateApp(this);
+    protected void openActivity(int position) {
+        drawer_layout.closeDrawer(drawer_listview);
+        BaseActivity.drawer_pos = position; //Setting currently selected position in this field so that it will be available in our child activities.
+
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, NearbyActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, CaptureActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, NotificationsActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, ChatActivity.class));
+                break;
+            case 5:
+                startActivity(new Intent(this, ContactListActivity.class));
+                break;
+            default:
+                break;
+        }
     }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        locationClient.connect();
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        if (locationClient.isConnected()) {
-//            stopLocationUpdates();
-//        }
-//        locationClient.disconnect();
-//    }
-//
-//    /* Google location services functions */
-//    private Location getLocation() {
-//        if (servicesConnected()) {
-//            return locationClient.getLastLocation();
-//        } else {
-//            return null;
-//        }
-//    }
-//
-//    private void startLocationUpdates() {
-//    }
-//
-//    public void stopLocationUpdates() {
-//    }
-//
-//    @Override
-//    public void onConnected(Bundle savedBundleInst) {
-//        curr_location = getLocation();
-//        startLocationUpdates();
-//    }
-//
-//    @Override
-//    public void onDisconnected() {
-//        Log.d(TAG, " - service disconnected.");
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(ConnectionResult con_res) {
-//        if (con_res.hasResolution()) {
-//            try {
-//                con_res.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-//            } catch (IntentSender.SendIntentException e) {
-//                Log.d (TAG, " - error connecting location services.");
-//            }
-//        } else {
-//            Log.d (TAG, " - resolution not available.");
-//        }
-//    }
-//
-//    private boolean servicesConnected() {
-//        int res = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-//        if (res == ConnectionResult.SUCCESS) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public void onProviderEnabled(String provider) {
-//
-//    }
-//
-//    @Override
-//    public void onProviderDisabled(String provider) {
-//
-//    }
-//
-//    @Override
-//    public void onLocationChanged(Location location) {
-//
-//    }
-//
-//    @Override
-//    public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_bar, menu);
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-
-
-            case R.id.action_nearby: {
-                if (!(this instanceof NearbyActivity)) {
-                    Intent i = new Intent(this, NearbyActivity.class);
-                    startActivityForResult(i, 0);
-                    finish();
-                }
-                break;
-            }
-
-            case R.id.action_capture: {
-                if (!(this instanceof CaptureActivity)) {
-                    Intent i = new Intent(this, CaptureActivity.class);
-                    startActivityForResult(i, 0);
-                    finish();
-                }
-                break;
-            }
-            case R.id.action_profile: {
-                if (!(this instanceof ProfileActivity)) {
-                    Intent i = new Intent(this, ProfileActivity.class);
-                    startActivityForResult(i, 0);
-                    finish();
-                }
-                break;
-            }
-
-            case R.id.action_notifications: {
-                if (!(this instanceof NotificationsActivity)) {
-                    Intent i = new Intent(this, NotificationsActivity.class);
-                    startActivityForResult(i, 0);
-                    finish();
-                }
-                break;
-            }
-
-            case R.id.action_settings: {
-                if (!(this instanceof SettingsActivity)) {
-                    Intent i = new Intent(this, SettingsActivity.class);
-                    startActivityForResult(i, 0);
-                    finish();
-                }
-                break;
-            }
-            default: {
-                finish();
-            }
-
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-
-    private void authenticateSession() {
-        ParseFacebookUtils.initialize(getString(R.string.facebook_app_id));
-        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
-                new Request.GraphUserCallback() {
-                    @Override
-                    public void onCompleted(GraphUser user, Response response) {
-                        if (response.getError() != null) {
-                            ParseUser.logOut();
-                            Intent i = new Intent(BaseActivity.this, WelcomeActivity.class);
-                            startActivityForResult(i, 0);
-                            finish();
-                        }
-                    }
-                });
-        request.executeAsync();
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = drawer_layout.isDrawerOpen(drawer_listview);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
+    /* We can override onBackPressed method to toggle navigation drawer*/
+    @Override
+    public void onBackPressed() {
+        if (drawer_layout.isDrawerOpen(drawer_listview)) {
+            drawer_layout.closeDrawer(drawer_listview);
+        } else {
+            drawer_layout.openDrawer(drawer_listview);
+        }
+    }
 }

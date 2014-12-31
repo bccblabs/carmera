@@ -16,9 +16,6 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-/**
- * Created by bski on 11/23/14.
- */
 public class ProfileActivity extends BaseActivity
                              implements TaggedVehicleFragment.OnTaggedListingSelectedListener,
                                         SavedListingsFragment.OnSavedListingSelectedListener,
@@ -109,7 +106,10 @@ public class ProfileActivity extends BaseActivity
     @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
-        setContentView(R.layout.activity_user_profile);
+
+        getLayoutInflater().inflate(R.layout.activity_user_profile, frame_layout);
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("My Tags");
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -164,25 +164,6 @@ public class ProfileActivity extends BaseActivity
                                         }
                                     }));
 
-        /* 3. tagged by others */
-        actionBar.addTab(actionBar.newTab()
-                                    .setText("Chat")
-                                    .setTabListener(new ActionBar.TabListener() {
-                                        @Override
-                                        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                                            viewPager.setCurrentItem(tab.getPosition());
-                                        }
-
-                                        @Override
-                                        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                        }
-
-                                        @Override
-                                        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                        }
-                                    }));
     }
 
     @Override
@@ -206,9 +187,6 @@ public class ProfileActivity extends BaseActivity
                 case 1:
                     frag = new SavedListingsFragment();
                     break;
-                case 2:
-                    frag = new ChatFragment();
-                    break;
                 default:
                     return null;
             }
@@ -217,7 +195,7 @@ public class ProfileActivity extends BaseActivity
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
     }
 }

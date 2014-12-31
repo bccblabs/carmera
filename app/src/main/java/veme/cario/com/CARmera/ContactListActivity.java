@@ -20,16 +20,20 @@ import java.util.List;
 import veme.cario.com.CARmera.model.UserModels.Contact;
 import veme.cario.com.CARmera.util.ContactListAdapter;
 
-public class ContactListActivity extends Activity {
+public class ContactListActivity extends BaseActivity {
     private ListView contact_list_view;
     private ProgressDialog progress_dialog;
     private ContactListAdapter contact_list_adapter;
     private BroadcastReceiver receiver = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
+
+        getLayoutInflater().inflate(R.layout.activity_contact_list, frame_layout);
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("Friends");
+
         showSpinner();
         initUIComponents();
     }

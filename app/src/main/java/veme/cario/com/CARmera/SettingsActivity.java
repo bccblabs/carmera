@@ -11,6 +11,11 @@ public class SettingsActivity extends BaseActivity {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("Settings");
+
+
         getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, new SettingsFragment())
                             .commit();
@@ -20,6 +25,7 @@ public class SettingsActivity extends BaseActivity {
     public void onPause() {
         super.onPause();
         // AppEventsLogger.deactivateApp(this);
+
     }
 
 }

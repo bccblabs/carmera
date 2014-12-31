@@ -86,12 +86,18 @@ public class CaptureActivity extends BaseActivity
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-    }     /* Activity lifecycle */
+    }
+    /* Activity lifecycle */
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-        setContentView(R.layout.activity_capture);
+
+        /* sets up drawer list */
+        getLayoutInflater().inflate(R.layout.activity_capture, frame_layout);
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("Capture");
+
         initUIComponents();
     }
 

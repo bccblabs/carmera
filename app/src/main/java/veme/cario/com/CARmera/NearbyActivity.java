@@ -42,7 +42,11 @@ public class NearbyActivity extends BaseActivity
     @Override
     public void onCreate (Bundle savedBundleinst) {
         super.onCreate(savedBundleinst);
-        setContentView(R.layout.activity_nearby);
+
+        getLayoutInflater().inflate(R.layout.activity_nearby, frame_layout);
+        drawer_listview.setItemChecked(drawer_pos, true);
+        setTitle("Nearby");
+
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -136,14 +140,6 @@ public class NearbyActivity extends BaseActivity
         public int getCount() {
             return 2;
         }
-    }
-
-    @Override
-    public boolean onSearchRequested() {
-        Bundle args = new Bundle();
-//        appData.putBoolean(SearchableActivity.JARGON, true);
-//        startSearch(null, false, args, false);
-        return super.onSearchRequested();
     }
 
 }
