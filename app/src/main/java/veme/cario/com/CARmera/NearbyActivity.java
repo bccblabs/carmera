@@ -15,20 +15,92 @@ import com.facebook.AppEventsLogger;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyListingFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyTaggedFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 11/22/14.
  */
 public class NearbyActivity extends BaseActivity
                             implements NearbyListingFragment.OnNearbyListingSelectedListener,
-                                       NearbyTaggedFragment.OnNearbyTaggedSelectedListener{
+                                       NearbyTaggedFragment.OnNearbyTaggedSelectedListener,
+                                       SelectStyleFragment.SelectResultListener,
+                                       CarInfoFragment.OnReselectClickListener,
+                                       ImageFragment.ImageResultListener {
 
-    private final String TAG = "NEARBY_ACTIVITY";
+
     private ViewPager viewPager;
     private NeabyPagerAdapter nearbyPagerAdapter;
+    private VehicleInfoDialog vehicleInfoDialog = null;
+
+    @Override
+    public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString ("dialog_type", "vehicle_info");
+        args.putString ("vehicle_id", trim_id);
+        args.putString ("vehicle_year", yr);
+        args.putString ("vehicle_make", mk);
+        args.putString ("vehicle_model", md);
+        args.putString ("vehicle_trim_name", trim_name);
+        args.putByteArray("imageData", imageData);
+
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+    }
+
+    @Override
+    public void OnReselectClick (byte[] raw_photo, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", md);
+
+        args.putByteArray("imageData", raw_photo);
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
+
+    @Override
+    public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
 
     @Override
     public void OnNearbyListingsSelected(int pos) {
+        /* needs it to display listings details */
     }
 
     @Override
@@ -53,11 +125,8 @@ public class NearbyActivity extends BaseActivity
 
         Intent i = getIntent();
         Bundle args = i.getExtras();
-        if (args != null) {
-            Log.i(TAG, "Year: " + args.getString("vehicle_year"));
-        }
 
-        nearbyPagerAdapter = new NeabyPagerAdapter (getSupportFragmentManager());
+        nearbyPagerAdapter = new NeabyPagerAdapter (getSupportFragmentManager(), args);
 
         viewPager = (ViewPager) findViewById(R.id.nearby_pager);
         viewPager.setAdapter(nearbyPagerAdapter);
@@ -67,7 +136,28 @@ public class NearbyActivity extends BaseActivity
                 actionBar.setSelectedNavigationItem(pos);
             }
         });
-        /* 1. nearby tags */
+
+        /* nearby listings */
+        actionBar.addTab((actionBar.newTab()
+                .setText("Listings")
+                .setTabListener(new ActionBar.TabListener() {
+                    @Override
+                    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                    }
+
+                    @Override
+                    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+                    }
+                })));
+
+        /* nearby tags */
         actionBar.addTab(actionBar.newTab()
                                   .setText("Tags")
                                   .setTabListener(new ActionBar.TabListener() {
@@ -87,25 +177,7 @@ public class NearbyActivity extends BaseActivity
                                       }
                                   }));
 
-        /* 2. nearby listings */
-        actionBar.addTab((actionBar.newTab()
-                                   .setText("Listings")
-                                   .setTabListener(new ActionBar.TabListener() {
-                                       @Override
-                                       public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                                           viewPager.setCurrentItem(tab.getPosition());
-                                       }
 
-                                       @Override
-                                       public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                       }
-
-                                       @Override
-                                       public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                       }
-                                   })));
     }
 
     @Override
@@ -116,8 +188,11 @@ public class NearbyActivity extends BaseActivity
 
 
     private static class NeabyPagerAdapter extends FragmentPagerAdapter {
-        public NeabyPagerAdapter (FragmentManager fm) {
+        private Bundle args;
+
+        public NeabyPagerAdapter (FragmentManager fm, Bundle args_) {
             super(fm);
+            this.args = args_;
         }
 
         @Override
@@ -125,17 +200,17 @@ public class NearbyActivity extends BaseActivity
             Fragment frag;
             switch(pos) {
                 case 0:
-                    frag = new NearbyTaggedFragment();
+                    frag = new NearbyListingFragment();
+                    frag.setArguments(this.args);
                     break;
                 case 1:
-                    frag = new NearbyListingFragment();
+                    frag = new NearbyTaggedFragment();
                     break;
                 default:
                     return null;
             }
             return frag;
         }
-
         @Override
         public int getCount() {
             return 2;

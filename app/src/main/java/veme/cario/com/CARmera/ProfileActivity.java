@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ProfileActivity extends BaseActivity
-                             implements TaggedVehicleFragment.OnTaggedListingSelectedListener,
+                             implements TaggedVehicleFragment.OnSeeListingsSelectedListener,
                                         SavedListingsFragment.OnSavedListingSelectedListener,
                                         ChatFragment.OnMentionedListingSelectedListener,
                                         SelectStyleFragment.SelectResultListener,
@@ -29,7 +30,14 @@ public class ProfileActivity extends BaseActivity
     private VehicleInfoDialog vehicleInfoDialog = null;
 
     @Override
-    public void OnTaggedListingSelected (int pos) {
+    public void OnSeeListingsSelected(String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("listings_year", year);
+        args.putString("listings_make", make);
+        args.putString("listings_model", model);
+        Intent i = new Intent (this, NearbyActivity.class);
+        i.putExtras(args);
+        startActivity(i);
     }
 
     @Override

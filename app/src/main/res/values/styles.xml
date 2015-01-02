@@ -5,6 +5,16 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="TitleCenter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">40dp</item>
+    </style>
+
     <style name="TableTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -84,12 +94,35 @@
         <item name="android:layout_width">26dp</item>
         <item name="android:layout_height">26dp</item>
     </style>
-
     <style name="ButtonText">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:paddingLeft">3dp</item>
         <item name="android:textColor">@color/medius_orchid</item>
+    </style>
+    <style name="SpinnerStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:background">@color/Ivory</item>
+    </style>
+    <style name="SpinnerTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+    </style>
+    <style name="SpinnerContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
 </resources>

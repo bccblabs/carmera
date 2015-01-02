@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    android:descendantFocusability="beforeDescendants"
-    >
+    android:descendantFocusability="beforeDescendants">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,13 +41,6 @@
                         android:text="car details"/>
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                style="@style/VehicleInfoHeader"
-                android:id="@+id/seller_info_view"/>
-            <TextView
-                style="@style/VehicleInfoHeader"
-                android:layout_gravity="end"
-                android:id="@+id/price_info_view"/>
         </LinearLayout>
 
         <com.parse.ParseImageView
@@ -82,36 +74,12 @@
                 style="@style/ButtonLayout">
                 <Button
                     style="@style/ButtonStyle"
-                    android:background="@drawable/ic_action_share_blue"
-                    android:id="@+id/share_btn"/>
-                <TextView
-                    style="@style/ButtonText"
-                    android:text="share"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ButtonLayout">
-                <Button
-                    style="@style/ButtonStyle"
                     android:background="@drawable/ic_action_list_2"
                     android:id="@+id/see_listings_btn"/>
                 <TextView
                     style="@style/ButtonText"
                     android:text="listings"/>
             </LinearLayout>
-
-            <LinearLayout
-                style="@style/ButtonLayout">
-                <Button
-                    style="@style/ButtonStyle"
-                    android:id="@+id/contact_seller_btn"
-                    android:background="@drawable/ic_action_send"/>
-                <TextView
-                    style="@style/ButtonText"
-                    android:text="contact"/>
-            </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 </FrameLayout>

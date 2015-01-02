@@ -104,6 +104,7 @@
     <orderEntry type="library" exported="" name="robospice-1.4.11" level="project" />
     <orderEntry type="module" module-name="openCVLibrary2410" exported="" />
     <orderEntry type="module" module-name="facebook" exported="" />
+    <orderEntry type="module" module-name="ParallaxScroll" exported="" />
   </component>
 </module>
 

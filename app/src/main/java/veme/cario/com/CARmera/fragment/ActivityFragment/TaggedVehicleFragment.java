@@ -3,18 +3,11 @@ package veme.cario.com.CARmera.fragment.ActivityFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -25,12 +18,9 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 import veme.cario.com.CARmera.CaptureActivity;
-import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
-import veme.cario.com.CARmera.model.UserModels.TaggedVehicleList;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
-import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 12/3/14.
@@ -46,17 +36,17 @@ public class TaggedVehicleFragment extends Fragment {
     private ListView tagged_vehicles_listview;
     private LinearLayout no_vehicles_tagged_overlay;
 
-    private OnTaggedListingSelectedListener listingCallback;
+    private OnSeeListingsSelectedListener listingCallback;
 
-    public interface OnTaggedListingSelectedListener {
-        public abstract void OnTaggedListingSelected (int pos);
+    public interface OnSeeListingsSelectedListener {
+        public abstract void OnSeeListingsSelected(String year, String make, String model);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnTaggedListingSelectedListener) activity;
+            listingCallback = (OnSeeListingsSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
@@ -85,6 +75,7 @@ public class TaggedVehicleFragment extends Fragment {
 
         /* sets data for all tagged vehicles */
         ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
+        query.setLimit(10);
         query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override
             public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
