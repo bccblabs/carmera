@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/bski/AndroidStudioProjects/CARmera/ParallaxScroll/src/main/assets"/><source path="/Users/bski/AndroidStudioProjects/CARmera/ParallaxScroll/assets"/></dataSet><dataSet config="release"><source path="/Users/bski/AndroidStudioProjects/CARmera/ParallaxScroll/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/bski/Project/carmera/ParallaxScroll/src/main/assets"/><source path="/Users/bski/Project/carmera/ParallaxScroll/assets"/></dataSet><dataSet config="release"><source path="/Users/bski/Project/carmera/ParallaxScroll/src/release/assets"/></dataSet></merger>

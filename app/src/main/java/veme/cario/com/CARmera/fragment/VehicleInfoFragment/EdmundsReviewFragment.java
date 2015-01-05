@@ -37,6 +37,9 @@ public class EdmundsReviewFragment extends Fragment {
     private ListView ratings_listview;
     private EdmundsRatingAdapter edmundsRatingAdapter;
 
+    private View edmunds_review_layout;
+    private View edmunds_loading_view;
+
     private static String JSON_HASH_KEY;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -44,11 +47,16 @@ public class EdmundsReviewFragment extends Fragment {
     private final class EdmundsReviewRequestListener implements RequestListener<EdmundsReview> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
+            edmunds_review_layout.setAlpha(0f);
+            edmunds_review_layout.setVisibility(View.VISIBLE);
+            edmunds_review_layout.animate().alpha(1f);
         }
 
         @Override
         public void onRequestSuccess (EdmundsReview edmundsReview) {
             if (EdmundsReviewFragment.this.isAdded()) {
+
+                edmunds_review_layout.setAlpha(0f);
                 edmundsRatingAdapter.clear();
                 for (EdmundsRating edmundsRating : edmundsReview.getRatings()) {
                     edmundsRatingAdapter.add(edmundsRating);
@@ -58,6 +66,10 @@ public class EdmundsReviewFragment extends Fragment {
                 grade_textview.setText(edmundsReview.getGrade());
                 summary_textview.setText(edmundsReview.getSummary());
                 EdmundsReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+
+                edmunds_review_layout.setVisibility(View.VISIBLE);
+                edmunds_loading_view.setVisibility(View.GONE);
+                edmunds_review_layout.animate().alpha(1f);
             }
         }
     }
@@ -80,6 +92,14 @@ public class EdmundsReviewFragment extends Fragment {
         ratings_listview.setEmptyView(no_edmunds_review);
         edmundsRatingAdapter = new EdmundsRatingAdapter(getActivity());
         ratings_listview.setAdapter(edmundsRatingAdapter);
+
+        edmunds_review_layout = view.findViewById(R.id.edmunds_review_layout);
+        edmunds_loading_view = view.findViewById(R.id.edmunds_review_progress);
+
+        edmunds_review_layout.setVisibility(View.GONE);
+        edmunds_loading_view.setAlpha(0f);
+        edmunds_loading_view.setVisibility(View.VISIBLE);
+        edmunds_loading_view.animate().alpha(1f);
 
         performRequest();
         return view;

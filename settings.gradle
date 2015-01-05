@@ -1,2 +1,2 @@
-include ':app', ':FriendPickerSample', ':PlacePickerSample', ':HelloFacebookSample', ':facebook', ':RPSSample', ':SwitchUserSample', ':Scrumptious', ':ParallaxScrollExample', ':ParallaxScroll'
+include ':app', ':FriendPickerSample', ':PlacePickerSample', ':HelloFacebookSample', ':facebook', ':RPSSample', ':SwitchUserSample', ':Scrumptious', ':ParallaxScrollExample', ':ParallaxScroll', 'materialDesign'
 include ':app:libs:openCVLibrary2410'

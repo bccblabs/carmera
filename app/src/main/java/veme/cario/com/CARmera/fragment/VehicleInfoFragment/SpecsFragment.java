@@ -40,6 +40,13 @@ public class SpecsFragment extends Fragment {
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
+    /* loading and table view */
+    private View engineloadingView;
+    private View enginetableLayout;
+    private View transmissionloadingView;
+    private View transmissiontableLayout;
+
+
     private final class VehicleSpecsRequestListener implements RequestListener<VehicleSpecs> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
@@ -71,6 +78,17 @@ public class SpecsFragment extends Fragment {
                 transmission_speed_textview.setText(vehicleBaseInfo.getTransmission().getNumberOfSpeeds() + " speed");
 
                 SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+                enginetableLayout.setAlpha(0f);
+                transmissiontableLayout.setAlpha(0f);
+                enginetableLayout.setVisibility(View.VISIBLE);
+                transmissiontableLayout.setVisibility(View.VISIBLE);
+
+                engineloadingView.setVisibility(View.GONE);
+                transmissionloadingView.setVisibility(View.GONE);
+                enginetableLayout.animate().alpha(1f);
+                transmissiontableLayout.animate().alpha(1f);
+
+
             }
         }
     }
@@ -112,6 +130,25 @@ public class SpecsFragment extends Fragment {
     }
 
     private void initUIComponents () {
+
+        enginetableLayout = getView().findViewById(R.id.engine_table);
+        engineloadingView = getView().findViewById(R.id.engine_progress_bar);
+
+        transmissiontableLayout = getView().findViewById(R.id.transmission_table);
+        transmissionloadingView = getView().findViewById(R.id.transmission_progress_bar);
+
+        transmissiontableLayout.setVisibility(View.GONE);
+        enginetableLayout.setVisibility(View.GONE);
+
+        engineloadingView.setAlpha(0f);
+        engineloadingView.setVisibility(View.VISIBLE);
+        engineloadingView.animate().alpha(1f);
+
+        transmissionloadingView.setAlpha(0f);
+        transmissionloadingView.setVisibility(View.VISIBLE);
+        transmissionloadingView.animate().alpha(1f);
+
+
         engine_name_textview = (TextView) getView().findViewById(R.id.engine_name_textview);
         engine_spec_textview = (TextView) getView().findViewById(R.id.engine_spec_textview);
         engine_hp_textview = (TextView) getView().findViewById(R.id.engine_hp_textview);

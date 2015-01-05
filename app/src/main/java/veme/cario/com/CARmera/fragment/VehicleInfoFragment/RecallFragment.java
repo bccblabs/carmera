@@ -32,21 +32,30 @@ public class RecallFragment extends Fragment {
     private ListView recall_list_view;
     private TextView no_recall_view;
     private VehicleRecallAdapter recallAdapter;
+    private View recallsLoadingView;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     private final class VehicleRecallRequestListener implements RequestListener<VehicleRecall> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
+            recall_list_view.setAlpha(0f);
+            recall_list_view.setVisibility(View.VISIBLE);
+            recall_list_view.animate().alpha(1f);
         }
 
         @Override
         public void onRequestSuccess (VehicleRecall vehicleRecall) {
 
             if (RecallFragment.this.isAdded()) {
+                recall_list_view.setAlpha(0f);
+
                 for (Recall recall : vehicleRecall.getRecallHolder())
                     recallAdapter.add(recall);
                 recallAdapter.notifyDataSetChanged();
+                recall_list_view.setVisibility(View.VISIBLE);
+                recallsLoadingView.setVisibility(View.GONE);
+                recall_list_view.animate().alpha(1f);
                 RecallFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }
         }
@@ -90,6 +99,15 @@ public class RecallFragment extends Fragment {
 
     private void initUIComponents () {
         recall_list_view = (ListView) getView().findViewById(R.id.vehicle_recall_listview);
+
+
+        recallsLoadingView = getView().findViewById(R.id.recall_progress);
+
+        recall_list_view.setVisibility(View.GONE);
+        recallsLoadingView.setAlpha(0f);
+        recallsLoadingView.setVisibility(View.VISIBLE);
+        recallsLoadingView.animate().alpha(1f);
+
         recallAdapter = new VehicleRecallAdapter(getActivity());
         recall_list_view.setAdapter(recallAdapter);
 

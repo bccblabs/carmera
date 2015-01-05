@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/cost_table_view"
         android:layout_height="wrap_content">
         <TableRow>
             <TextView
@@ -77,5 +78,14 @@
                 android:id="@+id/total_depreciation_cost"/>
         </TableRow>
     </TableLayout>
+
+    <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+        style="@style/ProgressBarExtraLarge"
+        android:layout_marginTop="100dp"
+        android:paddingTop="100dp"
+        android:background="#FFD700"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/cost_table_progress"/>
+
 
 </LinearLayout>

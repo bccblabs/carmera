@@ -10,6 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
+        <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+            style="@style/ProgressBarLarge"
+            android:id="@+id/engine_progress_bar"/>
+
         <TextView
             style="@style/TableTitle"
             android:text="ENGINE"/>
@@ -19,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:id="@+id/engine_table"
             >
             <TableRow>
                 <TextView
@@ -64,12 +69,17 @@
             style="@style/TableTitle"
             android:layout_marginTop="40dp"
             android:text="DRIVETRAIN"/>
+        <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+            style="@style/ProgressBarLarge"
+            android:id="@+id/transmission_progress_bar"/>
+
         <TableLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:id="@+id/transmission_table"
             >
             <TableRow>
                 <TextView

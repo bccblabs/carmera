@@ -6,4 +6,4 @@
     android:layout_height="match_parent"
     app:parallax_factor="1.9"
     tools:context=".MainActivity" />
-<!-- From: file:/Users/bski/AndroidStudioProjects/CARmera/ParallaxScrollExample/res/layout/list_one_parallax.xml -->
+<!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/res/layout/list_one_parallax.xml -->

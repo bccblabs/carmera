@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/app/libs" />
             <option value="$PROJECT_DIR$/app/libs/openCVLibrary2410" />
             <option value="$PROJECT_DIR$/facebook" />
+            <option value="$PROJECT_DIR$/materialDesign" />
           </set>
         </option>
       </GradleProjectSettings>

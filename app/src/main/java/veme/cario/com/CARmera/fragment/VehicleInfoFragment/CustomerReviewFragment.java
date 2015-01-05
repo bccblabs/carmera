@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,6 +42,7 @@ public class CustomerReviewFragment extends Fragment {
     private AnimatedExpandableListView customer_review_listview;
     private ReviewListAdapter review_list_adapter;
     private List<ReviewListAdapter.ReviewItem> customer_reviews_items = new ArrayList<ReviewListAdapter.ReviewItem>();
+    private View customer_review_loading_view;
     private int page_num = 0;
 
 
@@ -52,6 +54,9 @@ public class CustomerReviewFragment extends Fragment {
         @Override
         public void onRequestSuccess (VehicleCustomerReview vehicleCustomerReview) {
             if (CustomerReviewFragment.this.isAdded()) {
+
+                customer_review_listview.setAlpha(0f);
+
                 String reviewCount = vehicleCustomerReview.getReviewCount();
                 review_info.setText(vehicleCustomerReview.getAverageRating() + "/5 from "
                         + reviewCount + " reviewers." );
@@ -72,6 +77,11 @@ public class CustomerReviewFragment extends Fragment {
                 }
                 review_list_adapter.setData(customer_reviews_items);
                 review_list_adapter.notifyDataSetChanged();
+
+                customer_review_listview.setVisibility(View.VISIBLE);
+                customer_review_loading_view.setVisibility(View.GONE);
+                customer_review_listview.animate().alpha(1f);
+
                 CustomerReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }
         }
@@ -143,10 +153,20 @@ public class CustomerReviewFragment extends Fragment {
 
 
         customer_review_listview = (AnimatedExpandableListView) getView().findViewById(R.id.customer_review_listview);
+        customer_review_listview.setVisibility(View.GONE);
+        customer_review_loading_view = getView().findViewById(R.id.customer_review_progress);
+
+        customer_review_loading_view.setAlpha(0f);
+        customer_review_loading_view.setVisibility(View.VISIBLE);
+        customer_review_loading_view.animate().alpha(1f);
+
+
         review_list_adapter = new ReviewListAdapter(getActivity());
         review_list_adapter.setData(customer_reviews_items);
 
         customer_review_listview.setAdapter(review_list_adapter);
+
+
 
         no_customer_review = (TextView) getView().findViewById(R.id.no_customer_review);
         customer_review_listview.setEmptyView(no_customer_review);

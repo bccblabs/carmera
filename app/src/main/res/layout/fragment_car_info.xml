@@ -31,51 +31,58 @@
         android:layout_gravity="center_horizontal"
         />
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+    <LinearLayout
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        >
-        <TableRow>
-        </TableRow>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/car_info_table"
+            >
+            <TableRow>
+            </TableRow>
 
-        <TableRow>
-            <TextView
-                style="@style/TableEntryTitle"
-                android:text="@string/str_used_tmv"/>
-            <TextView
-                style="@style/TableEntry"
-                android:id="@+id/used_tmv_textview"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                style="@style/TableEntryTitle"
-                android:text="@string/str_msrp"/>
-            <TextView
-                style="@style/TableEntry"
-                android:id="@+id/msrp_textview"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                style="@style/TableEntryTitle"
-                android:text="@string/str_city_mpg"/>
-            <TextView
-                style="@style/TableEntry"
-                android:id="@+id/city_mpg_textview"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                style="@style/TableEntryTitle"
-                android:text="@string/str_highway_mpg"/>
-            <TextView
-                style="@style/TableEntry"
-                android:id="@+id/highway_mpg_textview"/>
-        </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/TableEntryTitle"
+                    android:text="@string/str_used_tmv"/>
+                <TextView
+                    style="@style/TableEntry"
+                    android:id="@+id/used_tmv_textview"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/TableEntryTitle"
+                    android:text="@string/str_msrp"/>
+                <TextView
+                    style="@style/TableEntry"
+                    android:id="@+id/msrp_textview"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/TableEntryTitle"
+                    android:text="@string/str_city_mpg"/>
+                <TextView
+                    style="@style/TableEntry"
+                    android:id="@+id/city_mpg_textview"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/TableEntryTitle"
+                    android:text="@string/str_highway_mpg"/>
+                <TextView
+                    style="@style/TableEntry"
+                    android:id="@+id/highway_mpg_textview"/>
+            </TableRow>
 
-    </TableLayout>
+        </TableLayout>
+        <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+            style="@style/ProgressBarLarge"
+            android:id="@+id/car_info_progress"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,11 +115,6 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/small_green_circle"
             />
-
-
-
-
-
     </LinearLayout>
 
 </LinearLayout>

@@ -38,4 +38,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+        style="@style/ProgressBarExtraLarge"
+        android:layout_marginTop="100dp"
+        android:paddingTop="100dp"
+        android:background="#FFD700"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/customer_review_progress"/>
+
 </LinearLayout>

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class CarInfoFragment extends Fragment {
     private TextView msrp_textview;
     private TextView city_mpg_textview;
     private TextView highway_mpg_textview;
+    private View loadingView;
+    private View tableLayout;
 
     private OnReselectClickListener onReselectClickCallback = null;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -52,6 +56,7 @@ public class CarInfoFragment extends Fragment {
     private final class VehicleInfoRequestListener implements RequestListener<VehicleBaseInfo> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
+            loadingView.animate().alpha(1f);
             Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
             CarInfoFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
         }
@@ -59,6 +64,7 @@ public class CarInfoFragment extends Fragment {
         @Override
         public void onRequestSuccess (VehicleBaseInfo vehicleBaseInfo) {
             if (CarInfoFragment.this.isAdded()) {
+                tableLayout.setAlpha(0f);
 
                 Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
                 car_base_info.setText(vehicleBaseInfo.getYear().getYear() + " " + vehicleBaseInfo.getMake().getName()
@@ -86,6 +92,10 @@ public class CarInfoFragment extends Fragment {
                 highway_mpg_textview.setTypeface(fa);
 
                 CarInfoFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+
+                tableLayout.setVisibility(View.VISIBLE);
+                tableLayout.animate().alpha(1f);
+                loadingView.animate().alpha(0f);
             }
         }
     }
@@ -146,6 +156,9 @@ public class CarInfoFragment extends Fragment {
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.info_preview_view);
 
+        tableLayout = getView().findViewById(R.id.car_info_table);
+        loadingView = getView().findViewById(R.id.car_info_progress);
+
         share_btn = (ImageButton) getView().findViewById(R.id.share_tagged_btn);
         share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +184,12 @@ public class CarInfoFragment extends Fragment {
         msrp_textview = (TextView) getView().findViewById(R.id.msrp_textview);
         city_mpg_textview = (TextView) getView().findViewById(R.id.city_mpg_textview);
         highway_mpg_textview = (TextView) getView().findViewById(R.id.highway_mpg_textview);
+
+
+        tableLayout.setVisibility(View.GONE);
+        loadingView.setAlpha(0f);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.animate().alpha(1f);
 
         performRequest();
         new BitmapLoaderTask().execute();

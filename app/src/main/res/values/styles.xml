@@ -125,4 +125,16 @@
         <item name="android:paddingBottom">10dp</item>
     </style>
 
+    <style name="ProgressBarLarge">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">#1E88E5</item>
+    </style>
+
+    <style name="ProgressBarExtraLarge">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:background">#FFD700</item>
+    </style>
+
 </resources>

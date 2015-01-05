@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ParallaxScroll"><attr format="float" name="parallax_factor"/><attr format="float" name="alpha_factor"/><attr format="float" name="inner_parallax_factor"/><attr format="integer" name="parallax_views_num"/><attr format="boolean" name="circular_parallax"/></declare-styleable>
-    <!-- From: file:/Users/bski/AndroidStudioProjects/CARmera/ParallaxScrollExample/res/values/strings.xml -->
+    <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">ParallaxScrollExample</string>
-    <!-- From: file:/Users/bski/AndroidStudioProjects/CARmera/ParallaxScrollExample/build/intermediates/exploded-aar/CARmera/ParallaxScroll/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/build/intermediates/exploded-aar/CARmera/ParallaxScroll/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="define_parallaxscroll"/>
     <string name="library_parallaxscroll_author">Nir Hartmann</string>
@@ -16,7 +16,7 @@
     <string name="library_parallaxscroll_libraryWebsite">https://github.com/nirhart/ParallaxScroll</string>
     <string name="library_parallaxscroll_licenseId">mit</string>
     <string name="library_parallaxscroll_repositoryLink">https://github.com/nirhart/ParallaxScroll.git</string>
-    <!-- From: file:/Users/bski/AndroidStudioProjects/CARmera/ParallaxScrollExample/res/values/styles.xml -->
+    <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--

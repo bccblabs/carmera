@@ -28,6 +28,9 @@ public class OwnershipCostFragment extends Fragment {
     private TextView total_maintenance_cost;
     private TextView total_depr_cost;
 
+    private View cost_table_loading_view;
+    private View cost_table_view;
+
     private static String JSON_HASH_KEY;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -42,6 +45,9 @@ public class OwnershipCostFragment extends Fragment {
         @Override
         public void onRequestSuccess (VehicleOwnershipCost vehicleOwnershipCost) {
             if (OwnershipCostFragment.this.isAdded()) {
+                total_cost.setAlpha(0f);
+                cost_table_view.setAlpha(0f);
+
                 total_cost.setText( getTotalCost(
                                     vehicleOwnershipCost.getDepreciation().getTotal(),
                                     vehicleOwnershipCost.getFuel().getTotal(),
@@ -55,8 +61,15 @@ public class OwnershipCostFragment extends Fragment {
                 total_maintenance_cost.setText("$" + vehicleOwnershipCost.getMaintenance().getTotal());
                 total_repair_cost.setText("$" + vehicleOwnershipCost.getRepairs().getTotal());
 
-
                 OwnershipCostFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+
+                total_cost.setVisibility(View.VISIBLE);
+                cost_table_view.setVisibility(View.VISIBLE);
+
+                cost_table_loading_view.setVisibility(View.GONE);
+
+                total_cost.animate().alpha(1f);
+                cost_table_view.animate().alpha(1f);
             }
         }
     }
@@ -116,6 +129,16 @@ public class OwnershipCostFragment extends Fragment {
         total_repair_cost = (TextView) getView().findViewById(R.id.total_repair_cost);
         total_maintenance_cost = (TextView) getView().findViewById(R.id.total_maintenance_cost);
         total_depr_cost = (TextView) getView().findViewById(R.id.total_depreciation_cost);
+
+        cost_table_view = getView().findViewById(R.id.cost_table_view);
+        cost_table_loading_view = getView().findViewById(R.id.cost_table_progress);
+
+        cost_table_view.setVisibility(View.GONE);
+        total_cost.setVisibility(View.GONE);
+
+        cost_table_loading_view.setAlpha(0f);
+        cost_table_loading_view.setVisibility(View.VISIBLE);
+        cost_table_loading_view.animate().alpha(1f);
 
         performRequest();
     }

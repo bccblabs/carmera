@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,21 +45,32 @@ public class SelectStyleFragment extends Fragment {
     private final class StyleListRequestListener implements RequestListener<VehicleStyles> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            loadingView.animate().alpha(1f);
             Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
             SelectStyleFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
+            styles_list_view.setEmptyView(no_styles_overlay);
+            no_styles_overlay.setVisibility(View.VISIBLE);
+
         }
 
         @Override
         public void onRequestSuccess(VehicleStyles vehicleStyles) {
-            if (vehicleStyles == null)
+            styles_list_view.setAlpha(0f);
+            if (vehicleStyles == null) {
+                styles_list_view.setEmptyView(no_styles_overlay);
+                no_styles_overlay.setVisibility(View.VISIBLE);
                 return;
+            }
+
             vehicleStylesAdapter.clear();
             for (Style style : vehicleStyles.getStyles()) {
                 vehicleStylesAdapter.add(style);
                 Log.i(TAG, " - style name: " + style.getName());
             }
             vehicleStylesAdapter.notifyDataSetChanged();
-            getActivity().setProgressBarIndeterminateVisibility(false);
+            styles_list_view.setVisibility(View.VISIBLE);
+            styles_list_view.animate().alpha(1f);
+            loadingView.animate().alpha(0f);
 
         }
     }
@@ -67,7 +79,7 @@ public class SelectStyleFragment extends Fragment {
     private ImageView preview_view;
     private static String JSON_HASH_KEY;
     private ListView styles_list_view;
-    private LinearLayout no_styles_overlay;
+    private TextView no_styles_overlay;
     private VehicleStylesAdapter vehicleStylesAdapter;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "SELECT_STYLE_FRAGMENT";
@@ -77,6 +89,7 @@ public class SelectStyleFragment extends Fragment {
     private Bitmap bitmap;
     private TextView car_base_info;
 
+    private View loadingView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,13 +107,23 @@ public class SelectStyleFragment extends Fragment {
         car_base_info.setText(year+ " " + make + " " + model);
 
         styles_list_view = (ListView) view.findViewById(R.id.styles_list_view);
-        no_styles_overlay = (LinearLayout) view.findViewById(R.id.no_styles_overlay);
+        no_styles_overlay = (TextView) view.findViewById(R.id.no_styles_overlay);
+        no_styles_overlay.setVisibility(View.GONE);
+
         preview_view = (ImageView) view.findViewById(R.id.sel_style_preview_view);
         new BitmapLoaderTask().execute();
 
         vehicleStylesAdapter = new VehicleStylesAdapter(inflater.getContext());
         styles_list_view.setAdapter(vehicleStylesAdapter);
-        styles_list_view.setEmptyView(no_styles_overlay);
+
+
+
+        loadingView = view.findViewById (R.id.style_progress_bar);
+
+        styles_list_view.setVisibility(View.GONE);
+        loadingView.setAlpha(0f);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.animate().alpha(1f);
 
 
         performRequest();

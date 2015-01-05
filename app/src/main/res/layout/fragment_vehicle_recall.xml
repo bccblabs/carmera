@@ -12,6 +12,14 @@
         style="@style/ListStyle"
         android:id="@+id/vehicle_recall_listview"/>
 
+    <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+        style="@style/ProgressBarExtraLarge"
+        android:layout_marginTop="100dp"
+        android:paddingTop="100dp"
+        android:background="#FFD700"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/recall_progress"/>
+
     <TextView
         style="@style/EmptyView"
         android:text="No Recall Found!"
