@@ -99,7 +99,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
 
         /* View item: Vehicle Image */
         final ParseImageView photo = holder.photo;
-        photo.setParseFile(taggedVehicle.getTagPhoto());
+        photo.setParseFile(taggedVehicle.getThumbnail());
         photo.loadInBackground();
 
 

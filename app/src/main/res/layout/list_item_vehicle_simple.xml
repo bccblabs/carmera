@@ -8,8 +8,8 @@
     android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <com.parse.ParseImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="start"
         android:id="@+id/tagged_vehicle_image_view"/>
     <LinearLayout

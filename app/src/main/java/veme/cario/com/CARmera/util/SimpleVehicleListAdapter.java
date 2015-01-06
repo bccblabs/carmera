@@ -54,7 +54,7 @@ public class SimpleVehicleListAdapter extends ArrayAdapter<TaggedVehicle> {
         Button show_listings_btn = holder.show_listings_btn;
 
         ParseImageView vehicle_image_view = holder.vehile_image_view;
-        vehicle_image_view.setParseFile(taggedVehicle.getTagPhoto());
+        vehicle_image_view.setParseFile(taggedVehicle.getThumbnail());
         vehicle_image_view.loadInBackground();
 
         vehicle_yr_mk_model_tv.setText(taggedVehicle.toString());

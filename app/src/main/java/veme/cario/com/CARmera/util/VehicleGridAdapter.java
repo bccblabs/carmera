@@ -38,7 +38,7 @@ public class VehicleGridAdapter extends ArrayAdapter<TaggedVehicle> {
         }
 
         TaggedVehicle vehicle = getItem(position);
-        holder.photo.setParseFile(vehicle.getTagPhoto());
+        holder.photo.setParseFile(vehicle.getThumbnail());
         holder.photo.loadInBackground();
         return view;
     }

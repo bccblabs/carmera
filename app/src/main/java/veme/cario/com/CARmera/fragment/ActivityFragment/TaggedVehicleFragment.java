@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -23,11 +21,7 @@ import veme.cario.com.CARmera.CaptureActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.VehicleGridAdapter;
-import veme.cario.com.CARmera.util.VehicleListAdapter;
 
-/**
- * Created by bski on 12/3/14.
- */
 public class TaggedVehicleFragment extends Fragment {
 
     private static final String TAG = "TAGGED_VEHICLE_FRAGMENT";

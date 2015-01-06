@@ -22,6 +22,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
@@ -50,6 +51,7 @@ public class CaptureActivity extends BaseActivity
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
 
+    private int img_height, img_width;
     public Camera.AutoFocusCallback autoFocusCallback = null;
 
 
@@ -138,8 +140,7 @@ public class CaptureActivity extends BaseActivity
         if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         }
-        parameters.setPictureFormat(ImageFormat.JPEG);
-
+        parameters.setPictureSize(640, 480);
         camera.setParameters(parameters);
         /* Wire up camera views */
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
@@ -151,14 +152,12 @@ public class CaptureActivity extends BaseActivity
         tagged_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, " - tagged button");
-                FragmentManager fm = getSupportFragmentManager();
-                simpleTaggedVehicleDialog = new SimpleTaggedVehicleDialog();
-                simpleTaggedVehicleDialog.show(fm, "taggedVehiclesOverlay");
+                openActivity(0);
             }
         });
+        img_height = parameters.getPictureSize().height;
+        img_width = parameters.getPictureSize().width;
         setCameraDisplayOrientation(camera);
-
     }
 
     @Override
@@ -230,6 +229,32 @@ public class CaptureActivity extends BaseActivity
     /* when a vehicle is recognized from the cloud server */
     public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
         /* once the image is recognized, adding the new fragments to the dialog */
+
+        Bitmap orig_img = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        Bitmap cropped_image = Bitmap.createScaledBitmap(orig_img, 100, 100, true);
+//        Bitmap cropped_image = Bitmap.createBitmap(orig_img, img_width/2 - 50, img_height/2 - 50, 100, 100);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        cropped_image.compress(Bitmap.CompressFormat.PNG, 50, stream);
+        byte[] thumbnail = stream.toByteArray();
+
+        TaggedVehicle taggedVehicle = new TaggedVehicle();
+        taggedVehicle.setYear(year);
+        taggedVehicle.setMake(make);
+        taggedVehicle.setModel(model);
+        taggedVehicle.setTagPhoto(new ParseFile(imageData));
+        taggedVehicle.setThumbnail(new ParseFile(thumbnail));
+        taggedVehicle.setFavorite(true);
+        taggedVehicle.setPrice("51,102");
+        taggedVehicle.setSellerInfo("BMW of BimmerVille");
+        taggedVehicle.setSellerEmail("info@bmwbimmerville.com");
+        taggedVehicle.setSellerPhone("888-888-8888");
+        taggedVehicle.setListing(true);
+
+        taggedVehicle.setUser(ParseUser.getCurrentUser());
+        taggedVehicle.saveInBackground();
+
+
         Bundle args = new Bundle();
         args.putString("dialog_type", "choose_style");
         args.putString("vehicle_year", year);
@@ -251,15 +276,6 @@ public class CaptureActivity extends BaseActivity
     @Override
     public void onStyleSelected (byte[] data, String trim_id, String trim_name, String yr, String mk, String md) {
         /* save to parse here */
-//        TaggedVehicle taggedVehicle = new TaggedVehicle();
-//        taggedVehicle.setYear(yr);
-//        taggedVehicle.setMake(mk);
-//        taggedVehicle.setModel(md);
-//        taggedVehicle.setTrimId(trim_id);
-//        taggedVehicle.setTrimName(trim_name);
-//        taggedVehicle.setTagPhoto(new ParseFile(imageData));
-//        taggedVehicle.setUser(ParseUser.getCurrentUser());
-//        taggedVehicle.saveInBackground();
 
         Bundle args = new Bundle();
         args.putString ("dialog_type", "vehicle_info");

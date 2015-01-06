@@ -42,14 +42,6 @@ public class TaggedVehicle extends ParseObject {
         put ("model", model);
     }
 
-    public String getTrimId() { return getString("trim_id"); }
-
-    public void setTrimId(String id) { put("trim_id", id);}
-
-    public String getTrimName() { return getString("vehicle_trim_name"); }
-
-    public void setTrimName(String trim_name) { put("vehicle_trim_name", trim_name); }
-
     public ParseFile getTagPhoto() {
         return getParseFile("photo");
     }
@@ -67,6 +59,8 @@ public class TaggedVehicle extends ParseObject {
     public void setFavorite(boolean fav) {
         put ("favorite", fav);
     }
+
+    public boolean isFavorites() { return getBoolean("favorites");}
 
     public void setLocation (ParseGeoPoint location) {
         put ("location", location);
@@ -89,19 +83,31 @@ public class TaggedVehicle extends ParseObject {
         return getString("price");
     }
 
+    public void setPrice (String price) { put("price", price);}
+
     public String getSellerInfo () {
         return getString ("seller_info");
+    }
+
+    public void setSellerInfo (String sellerInfo) {
+        put ("seller_info", sellerInfo);
     }
 
     public String getSellerPhone() {
         return getString("seller_phone");
     }
 
+    public void setSellerPhone (String phone) { put ("seller_phone", phone); }
+
     public String getSellerEmail() {
         return getString ("seller_email");
     }
 
+    public void setSellerEmail (String email) { put ("seller_email", email); }
+
     public ParseFile getSellerThumbnail() { return getParseFile("seller_thumbnail"); }
+
+    public void setSellerThumbnail (ParseFile thumbnail) { put ("seller_thumbnail", thumbnail); }
 
     public String getLikesCnt() {
         if (containsKey("likers"))
@@ -136,5 +142,9 @@ public class TaggedVehicle extends ParseObject {
 
     public boolean isListing() { return getBoolean("listing");}
 
-    public boolean isFavorites() { return getBoolean("favorites");}
+    public void setListing(boolean listing) { put("listing", listing); }
+
+    public void setThumbnail (ParseFile thumbnail) { put ("thumbnail", thumbnail); }
+
+    public ParseFile getThumbnail () { return getParseFile ("thumbnail"); }
 }

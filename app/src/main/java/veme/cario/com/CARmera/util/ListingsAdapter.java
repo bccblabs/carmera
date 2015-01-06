@@ -108,7 +108,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
 
         /* View item: Vehicle Image */
         final ParseImageView photo = holder.photo;
-        photo.setParseFile(taggedVehicle.getTagPhoto());
+        photo.setParseFile(taggedVehicle.getThumbnail());
         photo.loadInBackground();
 
         final Button contact_seller_btn = holder.contactSellerBtn;
