@@ -48,6 +48,7 @@ public class EdmundsReviewFragment extends Fragment {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             edmunds_review_layout.setAlpha(0f);
+            edmunds_loading_view.setVisibility(View.GONE);
             edmunds_review_layout.setVisibility(View.VISIBLE);
             edmunds_review_layout.animate().alpha(1f);
         }
@@ -67,8 +68,8 @@ public class EdmundsReviewFragment extends Fragment {
                 summary_textview.setText(edmundsReview.getSummary());
                 EdmundsReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
 
-                edmunds_review_layout.setVisibility(View.VISIBLE);
                 edmunds_loading_view.setVisibility(View.GONE);
+                edmunds_review_layout.setVisibility(View.VISIBLE);
                 edmunds_review_layout.animate().alpha(1f);
             }
         }

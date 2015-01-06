@@ -41,6 +41,7 @@ public class RecallFragment extends Fragment {
         public void onRequestFailure (SpiceException spiceException) {
             recall_list_view.setAlpha(0f);
             recall_list_view.setVisibility(View.VISIBLE);
+            recallsLoadingView.setVisibility(View.GONE);
             recall_list_view.animate().alpha(1f);
         }
 
