@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -20,6 +22,7 @@ import java.util.List;
 import veme.cario.com.CARmera.CaptureActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.util.VehicleGridAdapter;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
 
 /**
@@ -31,9 +34,10 @@ public class TaggedVehicleFragment extends Fragment {
 
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
-    private VehicleListAdapter vehicleListAdapter;
 
-    private ListView tagged_vehicles_listview;
+    private VehicleGridAdapter vehicleGridAdapter;
+    private GridView vehicle_grid_view;
+
     private LinearLayout no_vehicles_tagged_overlay;
 
     private OnSeeListingsSelectedListener listingCallback;
@@ -42,11 +46,18 @@ public class TaggedVehicleFragment extends Fragment {
         public abstract void OnSeeListingsSelected(String year, String make, String model);
     }
 
+    private OnVehicleSelectedListener vehicleSelectedCallback;
+
+    public interface OnVehicleSelectedListener {
+            public void OnVehicleSelected (byte[] imageData, String year, String make, String model);
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
             listingCallback = (OnSeeListingsSelectedListener) activity;
+            vehicleSelectedCallback = (OnVehicleSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
@@ -58,7 +69,8 @@ public class TaggedVehicleFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tagged_vehicle, container, false);
         Log.i(TAG, " - tagged vehicle list created");
-        tagged_vehicles_listview = (ListView) view.findViewById(R.id.tagged_cars_listview);
+        vehicle_grid_view = (GridView) view.findViewById(R.id.vehicle_grid_view);
+
         no_vehicles_tagged_overlay = (LinearLayout) view.findViewById(R.id.no_tagged_vehicle_overlay);
         no_vehicles_tagged_overlay.setClickable(true);
         no_vehicles_tagged_overlay.setOnClickListener(new View.OnClickListener() {
@@ -68,23 +80,38 @@ public class TaggedVehicleFragment extends Fragment {
                 startActivity(i);
             }
         });
-        tagged_vehicles_listview.setEmptyView(no_vehicles_tagged_overlay);
-
-        vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
-        tagged_vehicles_listview.setAdapter(vehicleListAdapter);
-
+        vehicle_grid_view.setEmptyView(no_vehicles_tagged_overlay);
+        vehicleGridAdapter = new VehicleGridAdapter(inflater.getContext());
+        vehicle_grid_view.setAdapter(vehicleGridAdapter);
         /* sets data for all tagged vehicles */
+
         ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
-        query.setLimit(3);
+        query.setLimit(5);
         query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override
             public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
                 for (TaggedVehicle vehicle : taggedVehicles) {
-                    vehicleListAdapter.add (vehicle);
+                    vehicleGridAdapter.add (vehicle);
                 }
             }
         });
-        vehicleListAdapter.notifyDataSetChanged();
+        vehicleGridAdapter.notifyDataSetChanged();
+
+        vehicle_grid_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final TaggedVehicle taggedVehicle = (TaggedVehicle) vehicle_grid_view.getItemAtPosition(position);
+                try {
+                    vehicleSelectedCallback.OnVehicleSelected (taggedVehicle.getTagPhoto().getData(),
+                            taggedVehicle.getYear(),
+                            taggedVehicle.getMake(),
+                            taggedVehicle.getModel());
+                } catch (ParseException e) {
+                    Log.e (TAG, "image data conversion prob...");
+                }
+
+            }
+        });
         return view;
     }
 }

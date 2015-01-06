@@ -9,4 +9,6 @@
     <color name="medius_orchid">#BA55D3</color>
     <color name="light_grey">#cccccc</color>
     <color name="sky_blue">#87CEEB</color>
+    <color name="transparent_sky_blue">#8087CEEB</color>
+    <color name="transparent_dark_gray">#80636363</color>
 </resources>

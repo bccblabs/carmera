@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+
+import com.gc.materialdesign.views.ButtonFloatSmall;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.ChatFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
@@ -23,12 +26,11 @@ public class ProfileActivity extends BaseActivity
                                         ChatFragment.OnMentionedListingSelectedListener,
                                         SelectStyleFragment.SelectResultListener,
                                         CarInfoFragment.OnReselectClickListener,
+                                        TaggedVehicleFragment.OnVehicleSelectedListener,
                                         ImageFragment.ImageResultListener {
 
-    private ViewPager viewPager;
-    private ProfileSectionsAdapter profileSectionsAdapter;
     private VehicleInfoDialog vehicleInfoDialog = null;
-
+    private ButtonFloatSmall my_tags, saved_vehicles, saved_search, shared_vehicles;
     @Override
     public void OnSeeListingsSelected(String year, String make, String model) {
         Bundle args = new Bundle();
@@ -112,98 +114,29 @@ public class ProfileActivity extends BaseActivity
     }
 
     @Override
+    public void OnVehicleSelected (byte[] imageData, String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
+    @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
-
-        getLayoutInflater().inflate(R.layout.activity_user_profile, frame_layout);
+        getLayoutInflater().inflate(R.layout.activity_profile, frame_layout);
         drawer_listview.setItemChecked(drawer_pos, true);
         setTitle("My Tags");
-
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        profileSectionsAdapter = new ProfileSectionsAdapter(getSupportFragmentManager());
-
-        viewPager = (ViewPager) findViewById(R.id.profile_pager);
-        viewPager.setAdapter(profileSectionsAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                                        @Override
-                                        public void onPageSelected(int pos) {
-                                            actionBar.setSelectedNavigationItem(pos);
-                                        }
-                                    });
-
-        /* 1. tagged/favorited */
-        actionBar.addTab(actionBar.newTab()
-                                  .setText("Tagged")
-                                  .setTabListener(new ActionBar.TabListener() {
-                                      @Override
-                                      public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                                            viewPager.setCurrentItem(tab.getPosition());
-                                      }
-
-                                      @Override
-                                      public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                      }
-
-                                      @Override
-                                      public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                      }
-                                  }));
-
-        /* 2. saved/favorites */
-        actionBar.addTab(actionBar.newTab()
-                                    .setText("Saved Listings")
-                                    .setTabListener(new ActionBar.TabListener() {
-                                        @Override
-                                        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                                            viewPager.setCurrentItem(tab.getPosition());
-                                        }
-
-                                        @Override
-                                        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                        }
-
-                                        @Override
-                                        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                        }
-                                    }));
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // AppEventsLogger.deactivateApp(this);
-    }
-
-    private static class ProfileSectionsAdapter extends FragmentPagerAdapter {
-        public ProfileSectionsAdapter (FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int pos) {
-            Fragment frag;
-            switch(pos) {
-                case 0:
-                    frag = new TaggedVehicleFragment();
-                    break;
-                case 1:
-                    frag = new SavedListingsFragment();
-                    break;
-                default:
-                    return null;
-            }
-            return frag;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
     }
 }

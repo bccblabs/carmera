@@ -6,11 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        style="@style/VehicleListStyle"
-        android:id="@+id/tagged_cars_listview">
-    </ListView>
-
+    <!--<ListView-->
+        <!--style="@style/VehicleListStyle"-->
+        <!--android:id="@+id/tagged_cars_listview">-->
+    <!--</ListView>-->
+    <GridView
+        android:id="@+id/vehicle_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:columnWidth="80dp"
+        android:gravity="center"
+        android:background="@android:color/background_dark"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" >
+    </GridView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,4 +34,5 @@
             android:textAlignment="center"
             android:textSize="20sp" />
     </LinearLayout>
+
 </LinearLayout>
