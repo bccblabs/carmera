@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CaptureActivity">
@@ -12,29 +12,62 @@
         android:id="@+id/camera_preview"
         />
 
-    <ImageButton
-        android:id="@+id/tagged_photo_btn"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/green_circle"
-        android:src="@drawable/ic_action_star"
-        android:layout_alignRight="@id/camera_preview"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_alignEnd="@id/camera_preview"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="90dp"
         android:layout_centerInParent="true"
-        android:contentDescription="@string/str_tagged"
-        />
+        fab:fab_expandDirection="down"
+        fab:fab_addButtonColorNormal="@color/medius_orchid"
+        fab:fab_addButtonColorPressed="@color/sky_blue"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_labelStyle="@style/menu_labels_style">
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/starts_nearby_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_location_white"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_size="mini"
+            fab:fab_title="Nearby"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/start_tags_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_tags_white"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_size="mini"
+            fab:fab_title="My Tags"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/start_listings_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_list_2_white"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_size="mini"
+            fab:fab_title="Search Listings"/>
 
-    <ImageButton
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/capture_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_camera"
-        android:contentDescription="@string/str_tagged"
+        android:src="@drawable/ic_action_camera_white_small"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/green_circle"
+        fab:fab_size="normal"
+        fab:fab_colorNormal="@color/medius_orchid"
+        fab:fab_colorPressed="@color/sky_blue"
         />
+
 
 </RelativeLayout>

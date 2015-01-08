@@ -1,28 +1,22 @@
 package veme.cario.com.CARmera;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
@@ -43,8 +37,8 @@ public class CaptureActivity extends BaseActivity
     /* Camera Object */
     private Camera camera;
     private byte[] imageData;
-    private ImageButton tagged_btn;
-    private ImageButton capture_btn;
+    private FloatingActionButton tagged_btn, listings_btn, nearby_btn;
+    private FloatingActionButton capture_btn;
 
     private CameraPreview cameraPreview = null;
     private VehicleInfoDialog vehicleInfoDialog = null;
@@ -95,6 +89,7 @@ public class CaptureActivity extends BaseActivity
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
 
+        getActionBar().hide();
         /* sets up drawer list */
         getLayoutInflater().inflate(R.layout.activity_capture, frame_layout);
         drawer_listview.setItemChecked(drawer_pos, true);
@@ -109,7 +104,7 @@ public class CaptureActivity extends BaseActivity
         cameraPreview = new CameraPreview(this, camera);
         Log.v(TAG, " - cameraPreview attached.");
 
-        capture_btn = (ImageButton) findViewById(R.id.capture_btn);
+        capture_btn = (FloatingActionButton) findViewById(R.id.capture_btn);
         capture_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,14 +142,29 @@ public class CaptureActivity extends BaseActivity
 
         preview.addView(cameraPreview);
 
-        tagged_btn = (ImageButton) findViewById(R.id.tagged_photo_btn);
-
+        tagged_btn = (FloatingActionButton) findViewById(R.id.start_tags_activity_btn);
         tagged_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity(0);
             }
         });
+        listings_btn = (FloatingActionButton) findViewById(R.id.start_listings_activity_btn);
+        listings_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(1);
+            }
+        });
+
+        nearby_btn = (FloatingActionButton) findViewById(R.id.starts_nearby_activity_btn);
+        nearby_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(2);
+            }
+        });
+
         img_height = parameters.getPictureSize().height;
         img_width = parameters.getPictureSize().width;
         setCameraDisplayOrientation(camera);

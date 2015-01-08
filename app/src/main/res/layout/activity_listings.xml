@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/simple_tagged_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            style="@style/ListStyle"
+            android:id="@+id/listings_view"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_addButtonColorNormal="@color/medius_orchid"
+        fab:fab_addButtonColorPressed="@color/sky_blue"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_expandDirection="down"
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="Edit Seach"
+            fab:fab_icon="@drawable/ic_action_edit"
+            fab:fab_colorPressed="@color/pink_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="Save Search"
+            fab:fab_icon="@drawable/ic_action_save"
+            fab:fab_colorPressed="@color/pink_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saved_cars_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="Saved Cars"
+            fab:fab_icon="@drawable/ic_action_car_white"
+            fab:fab_colorPressed="@color/pink_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saved_searches_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="Saved Search"
+            fab:fab_icon="@drawable/ic_action_search"
+            fab:fab_colorPressed="@color/pink_pressed"/>
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</FrameLayout>
