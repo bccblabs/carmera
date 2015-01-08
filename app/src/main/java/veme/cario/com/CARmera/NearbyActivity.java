@@ -1,37 +1,35 @@
 package veme.cario.com.CARmera;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.facebook.AppEventsLogger;
-
-import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyListingFragment;
-import veme.cario.com.CARmera.fragment.ActivityFragment.NearbyTaggedFragment;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import java.util.List;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.util.VehicleGridAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 11/22/14.
  */
 public class NearbyActivity extends BaseActivity
-                            implements NearbyListingFragment.OnNearbyListingSelectedListener,
-                                       NearbyTaggedFragment.OnNearbyTaggedSelectedListener,
-                                       SelectStyleFragment.SelectResultListener,
+                            implements SelectStyleFragment.SelectResultListener,
                                        CarInfoFragment.OnReselectClickListener,
                                        ImageFragment.ImageResultListener {
 
 
     private VehicleInfoDialog vehicleInfoDialog = null;
+    private GridView nearby_vehicles_gridview;
+    private LinearLayout no_nearby_vehicles_layout;
+    private VehicleGridAdapter vehicleGridAdapter;
 
     @Override
     public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
@@ -40,7 +38,7 @@ public class NearbyActivity extends BaseActivity
         args.putString ("vehicle_id", trim_id);
         args.putString ("vehicle_year", yr);
         args.putString ("vehicle_make", mk);
-        args.putString ("vehicle_model", md);
+        args.putString("vehicle_model", md);
         args.putString ("vehicle_trim_name", trim_name);
         args.putByteArray("imageData", imageData);
 
@@ -96,15 +94,6 @@ public class NearbyActivity extends BaseActivity
 
     }
 
-    @Override
-    public void OnNearbyListingsSelected(int pos) {
-        /* needs it to display listings details */
-    }
-
-    @Override
-    public void OnNearbyTaggedSelected(int pos) {
-    }
-
     /* TODO:
         1. Query by geolocation
         2. Query by Edmund's API/other api
@@ -117,5 +106,34 @@ public class NearbyActivity extends BaseActivity
         drawer_listview.setItemChecked(drawer_pos, true);
         setTitle("Nearby");
 
+        nearby_vehicles_gridview = (GridView) findViewById(R.id.nearby_vehicle_grid_view);
+
+        no_nearby_vehicles_layout = (LinearLayout) findViewById(R.id.no_tagged_vehicle_overlay);
+
+        nearby_vehicles_gridview.setEmptyView(no_nearby_vehicles_layout);
+
+        vehicleGridAdapter = new VehicleGridAdapter(NearbyActivity.this, true);
+
+        nearby_vehicles_gridview.setAdapter(vehicleGridAdapter);
+
+        /* sets data for all tagged vehicles */
+        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
+        query.findInBackground(new FindCallback<TaggedVehicle>() {
+            @Override
+            public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {
+                for (TaggedVehicle vehicle : taggedVehicles) {
+                    vehicleGridAdapter.add (vehicle);
+                }
+            }
+        });
+        vehicleGridAdapter.notifyDataSetChanged();
+
+        nearby_vehicles_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                final TaggedVehicle taggedVehicle = (TaggedVehicle) nearby_vehicles_gridview.getItemAtPosition(position);
+                /* show a dialog here, very simple */
+            }
+        });
     }
 }

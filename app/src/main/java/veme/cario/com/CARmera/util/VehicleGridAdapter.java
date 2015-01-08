@@ -13,12 +13,13 @@ import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
 public class VehicleGridAdapter extends ArrayAdapter<TaggedVehicle> {
     private LayoutInflater inflater;
-
+    private boolean is_compact;
     private static class ViewHolder {
         ParseImageView photo;
     }
-    public VehicleGridAdapter (Context cxt) {
+    public VehicleGridAdapter (Context cxt, boolean compact) {
         super(cxt, 0);
+        is_compact = compact;
         inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -27,9 +28,14 @@ public class VehicleGridAdapter extends ArrayAdapter<TaggedVehicle> {
         ViewHolder holder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.grid_item, parent, false);
             holder = new ViewHolder();
-            holder.photo = (ParseImageView) view.findViewById(R.id.vehicle_image_grid_item);
+            if (is_compact) {
+                view = inflater.inflate(R.layout.grid_item_small, parent, false);
+                holder.photo = (ParseImageView) view.findViewById(R.id.vehicle_image_grid_item_compact);
+            } else {
+                view = inflater.inflate(R.layout.grid_item, parent, false);
+                holder.photo = (ParseImageView) view.findViewById(R.id.vehicle_image_grid_item);
+            }
             view.setTag(holder);
 
         } else {

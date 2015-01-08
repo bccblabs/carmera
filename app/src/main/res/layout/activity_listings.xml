@@ -15,6 +15,11 @@
             android:id="@+id/listings_view"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_listings_textview"
+        android:text="No listings found matching criteria!"/>
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
         android:layout_gravity="end|center_vertical"

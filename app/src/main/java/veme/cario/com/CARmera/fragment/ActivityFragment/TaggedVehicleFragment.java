@@ -31,9 +31,7 @@ public class TaggedVehicleFragment extends Fragment {
 
     private VehicleGridAdapter vehicleGridAdapter;
     private GridView vehicle_grid_view;
-
     private LinearLayout no_vehicles_tagged_overlay;
-
     private OnSeeListingsSelectedListener listingCallback;
 
     public interface OnSeeListingsSelectedListener {
@@ -76,7 +74,7 @@ public class TaggedVehicleFragment extends Fragment {
             }
         });
         vehicle_grid_view.setEmptyView(no_vehicles_tagged_overlay);
-        vehicleGridAdapter = new VehicleGridAdapter(inflater.getContext());
+        vehicleGridAdapter = new VehicleGridAdapter(inflater.getContext(), false);
         vehicle_grid_view.setAdapter(vehicleGridAdapter);
         /* sets data for all tagged vehicles */
 
