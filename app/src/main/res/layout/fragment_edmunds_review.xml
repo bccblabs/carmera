@@ -39,4 +39,11 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/edmunds_review_progress"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/edmunds_branding"/>
+
 </LinearLayout>

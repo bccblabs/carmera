@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="150dp">
         <ListView
             style="@style/ListStyle"
             android:id="@+id/styles_list_view">
@@ -47,4 +47,12 @@
             android:id="@+id/no_styles_overlay"
             android:textSize="20sp" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/edmunds_branding"/>
+
 </LinearLayout>

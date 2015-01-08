@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         style="@style/TableTitle"
         android:text="Customer Reviews"
@@ -30,14 +29,21 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/customer_review_swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="100dp">
+        android:layout_height="200dp">
         <veme.cario.com.CARmera.util.AnimatedExpandableListView
             style="@style/ListStyle"
             android:id="@+id/customer_review_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="200dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/edmunds_branding"/>
 
     <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
         style="@style/ProgressBarExtraLarge"

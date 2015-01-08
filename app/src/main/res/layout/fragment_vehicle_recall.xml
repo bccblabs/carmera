@@ -24,4 +24,12 @@
         style="@style/EmptyView"
         android:text="No Recall Found!"
         android:id="@+id/no_recalls_textview"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:src="@drawable/edmunds_branding"/>
+
 </LinearLayout>
