@@ -31,8 +31,6 @@ public class NearbyActivity extends BaseActivity
                                        ImageFragment.ImageResultListener {
 
 
-    private ViewPager viewPager;
-    private NeabyPagerAdapter nearbyPagerAdapter;
     private VehicleInfoDialog vehicleInfoDialog = null;
 
     @Override
@@ -119,102 +117,5 @@ public class NearbyActivity extends BaseActivity
         drawer_listview.setItemChecked(drawer_pos, true);
         setTitle("Nearby");
 
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-
-        Intent i = getIntent();
-        Bundle args = i.getExtras();
-
-        nearbyPagerAdapter = new NeabyPagerAdapter (getSupportFragmentManager(), args);
-
-        viewPager = (ViewPager) findViewById(R.id.nearby_pager);
-        viewPager.setAdapter(nearbyPagerAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int pos) {
-                actionBar.setSelectedNavigationItem(pos);
-            }
-        });
-
-        /* nearby listings */
-        actionBar.addTab((actionBar.newTab()
-                .setText("Listings")
-                .setTabListener(new ActionBar.TabListener() {
-                    @Override
-                    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                        viewPager.setCurrentItem(tab.getPosition());
-                    }
-
-                    @Override
-                    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                    }
-                })));
-
-        /* nearby tags */
-        actionBar.addTab(actionBar.newTab()
-                                  .setText("Tags")
-                                  .setTabListener(new ActionBar.TabListener() {
-                                      @Override
-                                      public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                                          viewPager.setCurrentItem(tab.getPosition());
-                                      }
-
-                                      @Override
-                                      public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                      }
-
-                                      @Override
-                                      public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-                                      }
-                                  }));
-
-
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // AppEventsLogger.deactivateApp(this);
-    }
-
-
-    private static class NeabyPagerAdapter extends FragmentPagerAdapter {
-        private Bundle args;
-
-        public NeabyPagerAdapter (FragmentManager fm, Bundle args_) {
-            super(fm);
-            this.args = args_;
-        }
-
-        @Override
-        public Fragment getItem(int pos) {
-            Fragment frag;
-            switch(pos) {
-                case 0:
-                    frag = new NearbyListingFragment();
-                    frag.setArguments(this.args);
-                    break;
-                case 1:
-                    frag = new NearbyTaggedFragment();
-                    break;
-                default:
-                    return null;
-            }
-            return frag;
-        }
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    }
-
 }

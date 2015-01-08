@@ -1,6 +1,5 @@
 package veme.cario.com.CARmera.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

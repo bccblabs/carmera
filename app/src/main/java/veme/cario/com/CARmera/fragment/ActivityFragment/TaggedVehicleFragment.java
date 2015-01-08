@@ -43,7 +43,8 @@ public class TaggedVehicleFragment extends Fragment {
     private OnVehicleSelectedListener vehicleSelectedCallback;
 
     public interface OnVehicleSelectedListener {
-            public void OnVehicleSelected (byte[] imageData, String year, String make, String model);
+//            public void OnVehicleSelected (byte[] imageData, String year, String make, String model);
+            public void OnVehicleSelected (String post_id);
     }
 
     @Override
@@ -95,15 +96,7 @@ public class TaggedVehicleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final TaggedVehicle taggedVehicle = (TaggedVehicle) vehicle_grid_view.getItemAtPosition(position);
-                try {
-                    vehicleSelectedCallback.OnVehicleSelected (taggedVehicle.getTagPhoto().getData(),
-                            taggedVehicle.getYear(),
-                            taggedVehicle.getMake(),
-                            taggedVehicle.getModel());
-                } catch (ParseException e) {
-                    Log.e (TAG, "image data conversion prob...");
-                }
-
+                vehicleSelectedCallback.OnVehicleSelected(taggedVehicle.getObjectId());
             }
         });
         return view;

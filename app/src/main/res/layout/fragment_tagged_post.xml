@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+        <com.facebook.widget.ProfilePictureView
+            android:id="@+id/fb_profile_pic_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="center_vertical|start"
+            android:background="@drawable/com_facebook_profile_default_icon"/>
+        <TextView
+            style="@style/TableEntryTitle"
+            android:id="@+id/post_info_view"
+            android:paddingLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:text="Bo Chen - tagged on 1/5/2014"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/TableTitle"
+        android:id="@+id/vehicle_info_tv"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="2014 BMW X3"/>
+
+    <com.parse.ParseImageView
+        android:layout_width="276dp"
+        android:layout_height="276dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tagged_photo_fullview"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+        <ImageButton
+            android:id="@+id/share_tagged_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_share"
+            android:contentDescription="@string/str_share_to_friends"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/small_green_circle"
+            />
+        <ImageButton
+            android:id="@+id/get_listings_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_storage"
+            android:contentDescription="@string/str_see_listings"
+            android:background="@drawable/small_green_circle"
+            />
+        <ImageButton
+            android:id="@+id/reselect_style_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_back"
+            android:contentDescription="@string/str_reselect_styles"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/small_green_circle"
+            />
+    </LinearLayout>
+
+</LinearLayout>

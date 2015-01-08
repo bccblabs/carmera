@@ -163,7 +163,7 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
             public void onClick(View v) {
                 try {
                     byte[] imageData = taggedVehicle.getTagPhoto().getData();
-                    ((ProfileActivity) getContext()).onRecognitionResult(imageData, taggedVehicle.getYear(),
+                    ((ProfileActivity) getContext()).onDetailsSelected(imageData, taggedVehicle.getYear(),
                             taggedVehicle.getMake(),
                             taggedVehicle.getModel());
                 } catch (ParseException e) {

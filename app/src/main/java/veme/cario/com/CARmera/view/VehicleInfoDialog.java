@@ -24,6 +24,7 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.RecallFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SpecsFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 
 public class VehicleInfoDialog extends DialogFragment {
 
@@ -92,12 +93,14 @@ public class VehicleInfoDialog extends DialogFragment {
         viewPager.setPageTransformer(true, new AnimatedPageTransformer());
 
         String dialog_type = getArguments().getString("dialog_type");
-        if (dialog_type == "preview") {
+        if (dialog_type.equals("preview")) {
             fragmentPagerAdapter = new PreviewPagerAdapter(getChildFragmentManager());
-        } else if (dialog_type == "choose_style") {
+        } else if (dialog_type.equals("choose_style")) {
             fragmentPagerAdapter = new StylePagerAdapter(getChildFragmentManager());
-        } else if (dialog_type == "vehicle_info") {
+        } else if (dialog_type.equals("vehicle_info")) {
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("post_details")) {
+            fragmentPagerAdapter = new PostDetailsAdapter(getChildFragmentManager());
         } else {
             Log.d(TAG, " - no such type, default to info dialog");
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
@@ -228,6 +231,32 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0:
                     return "Select Car Style";
+            }
+            return null;
+        }
+    }
+
+    public class PostDetailsAdapter extends FragmentPagerAdapter {
+        public PostDetailsAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment taggedPostFragment = new TaggedPostFragment();
+            Bundle args = getArguments();
+            taggedPostFragment.setArguments(args);
+            return taggedPostFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Post Details";
             }
             return null;
         }

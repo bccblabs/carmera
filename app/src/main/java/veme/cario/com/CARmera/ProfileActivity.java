@@ -1,33 +1,24 @@
 package veme.cario.com.CARmera;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-
 import com.gc.materialdesign.views.ButtonFloatSmall;
 
-import veme.cario.com.CARmera.fragment.ActivityFragment.ChatFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ProfileActivity extends BaseActivity
                              implements TaggedVehicleFragment.OnSeeListingsSelectedListener,
                                         SavedListingsFragment.OnSavedListingSelectedListener,
-                                        ChatFragment.OnMentionedListingSelectedListener,
                                         SelectStyleFragment.SelectResultListener,
                                         CarInfoFragment.OnReselectClickListener,
                                         TaggedVehicleFragment.OnVehicleSelectedListener,
-                                        ImageFragment.ImageResultListener {
+                                        TaggedPostFragment.DetailsSelectedListener {
 
     private VehicleInfoDialog vehicleInfoDialog = null;
     private ButtonFloatSmall my_tags, saved_vehicles, saved_search, shared_vehicles;
@@ -44,10 +35,6 @@ public class ProfileActivity extends BaseActivity
 
     @Override
     public void OnSavedListingSelected (int pos) {
-    }
-
-    @Override
-    public void OnMentionedListingSelected (int pos) {
     }
 
     @Override
@@ -93,7 +80,23 @@ public class ProfileActivity extends BaseActivity
     }
 
     @Override
-    public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
+    public void OnVehicleSelected (String post_id) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "post_details");
+        args.putString("tagged_post_id", post_id);
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show (fm, "postDetailsOverlay");
+    }
+
+    @Override
+    public void onDetailsSelected (byte[] imageData, String year, String make, String model) {
         Bundle args = new Bundle();
         args.putString("dialog_type", "choose_style");
         args.putString("vehicle_year", year);
@@ -113,25 +116,6 @@ public class ProfileActivity extends BaseActivity
 
     }
 
-    @Override
-    public void OnVehicleSelected (byte[] imageData, String year, String make, String model) {
-        Bundle args = new Bundle();
-        args.putString("dialog_type", "choose_style");
-        args.putString("vehicle_year", year);
-        args.putString("vehicle_make", make);
-        args.putString("vehicle_model", model);
-        args.putByteArray("imageData", imageData);
-
-        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-            vehicleInfoDialog.dismiss();
-            vehicleInfoDialog = null;
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show(fm, "styleChooserOverlay");
-
-    }
     @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);

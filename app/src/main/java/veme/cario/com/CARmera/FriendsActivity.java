@@ -1,6 +1,5 @@
 package veme.cario.com.CARmera;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,7 +19,7 @@ import java.util.List;
 import veme.cario.com.CARmera.model.UserModels.Contact;
 import veme.cario.com.CARmera.util.ContactListAdapter;
 
-public class ContactListActivity extends BaseActivity {
+public class FriendsActivity extends BaseActivity {
     private ListView contact_list_view;
     private ProgressDialog progress_dialog;
     private ContactListAdapter contact_list_adapter;
@@ -60,7 +59,7 @@ public class ContactListActivity extends BaseActivity {
     private void initUIComponents() {
 
         contact_list_view = (ListView)findViewById(R.id.contact_list_view);
-        contact_list_adapter = new ContactListAdapter(ContactListActivity.this);
+        contact_list_adapter = new ContactListAdapter(FriendsActivity.this);
         contact_list_view.setAdapter(contact_list_adapter);
 
         ParseQuery<Contact> query = ParseQuery.getQuery("Contact");
@@ -78,16 +77,16 @@ public class ContactListActivity extends BaseActivity {
             }
         });
 
-        contact_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Contact contact = (Contact) contact_list_view.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                /* here we use the parseuser's id to get consistent with the sample code */
-                intent.putExtra("RECIPIENT_ID", contact.getParseUser().getObjectId());
-                startActivity(intent);
-            }
-        });
+//        contact_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                final Contact contact = (Contact) contact_list_view.getItemAtPosition(position);
+//                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+//                /* here we use the parseuser's id to get consistent with the sample code */
+//                intent.putExtra("RECIPIENT_ID", contact.getParseUser().getObjectId());
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
