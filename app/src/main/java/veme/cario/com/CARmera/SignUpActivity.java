@@ -33,7 +33,7 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_sign_up);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d(TAG, " - onCreate()");
         // Set up the sign up form.

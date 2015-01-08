@@ -26,7 +26,7 @@ public class TaggedPostFragment extends Fragment {
 
     private ParseImageView tagged_photo_view;
     private ProfilePictureView fb_profile_pic_view;
-    private TextView post_info_tv;  /* user name, time */
+    private TextView post_date_tv, user_info_tv;  /* user name, time */
     private TextView vehicle_info_tv; /* vehicle mk, yr, model */
     private Button like_btn, details_btn, listings_btn, share_btn;
     private TaggedVehicle taggedVehicle;
@@ -58,7 +58,8 @@ public class TaggedPostFragment extends Fragment {
         String post_id = getArguments().getString("tagged_post_id");
         Log.i(TAG, " vehicle post id: " + post_id);
 
-        post_info_tv = (TextView) view.findViewById(R.id.post_info_view);
+        user_info_tv = (TextView) view.findViewById(R.id.user_info_view);
+        post_date_tv = (TextView) view.findViewById(R.id.post_date_view);
         vehicle_info_tv = (TextView) view.findViewById(R.id.vehicle_info_tv);
         tagged_photo_view = (ParseImageView) view.findViewById(R.id.tagged_photo_fullview);
         fb_profile_pic_view = (ProfilePictureView) view.findViewById(R.id.fb_profile_pic_view);
@@ -71,8 +72,8 @@ public class TaggedPostFragment extends Fragment {
                     TaggedVehicle vehicle = (TaggedVehicle) taggedVehicle;
                     Log.d(TAG, "tagged vehicle object" + vehicle.getMake());
                     TaggedPostFragment.this.taggedVehicle = vehicle;
-                    post_info_tv.setText(ParseUser.getCurrentUser().getUsername() + " tagged on " + vehicle.getCreatedAt());
-                    vehicle_info_tv.setText(vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel());
+                    post_date_tv.setText(vehicle.getCreatedAt().toString());
+                    vehicle_info_tv.setText(vehicle.getMake() + " " + vehicle.getModel());
                     tagged_photo_view.setParseFile(vehicle.getTagPhoto());
                     tagged_photo_view.loadInBackground();
                 } else {

@@ -65,21 +65,17 @@ public class BaseActivity extends FragmentActivity {
             }
         });
 
-        /* configure action bar */
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
         /* set up drawer toggle */
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout,
                 R.drawable.ic_drawer, R.string.drawer_open,
                 R.string.drawer_close) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(title);
+//                getActionBar().setTitle(title);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(drawerTitle);
+//                getActionBar().setTitle(drawerTitle);
                 invalidateOptionsMenu();
             }
         };

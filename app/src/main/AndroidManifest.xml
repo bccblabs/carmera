@@ -4,7 +4,7 @@
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="20" />
+        android:targetSdkVersion="21.1.2" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

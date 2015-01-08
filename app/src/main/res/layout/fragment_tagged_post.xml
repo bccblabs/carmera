@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:paddingTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
         <com.facebook.widget.ProfilePictureView
             android:id="@+id/fb_profile_pic_view"
@@ -17,63 +18,84 @@
             android:layout_marginStart="30dp"
             android:layout_gravity="center_vertical|start"
             android:background="@drawable/com_facebook_profile_default_icon"/>
-        <TextView
-            style="@style/TableEntryTitle"
-            android:id="@+id/post_info_view"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:text="Bo Chen - tagged on 1/5/2014"/>
+        <LinearLayout
+            android:paddingStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/TableEntryTitle"
+                android:id="@+id/user_info_view"
+                android:text="bskihabs677"/>
+            <TextView
+                style="@style/TableEntryTitle"
+                android:id="@+id/post_date_view"
+                android:paddingTop="5dp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
         style="@style/TableTitle"
         android:id="@+id/vehicle_info_tv"
-        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
         android:layout_gravity="center_horizontal"
         android:text="2014 BMW X3"/>
-
-    <com.parse.ParseImageView
-        android:layout_width="276dp"
-        android:layout_height="276dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/tagged_photo_fullview"
-        />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="40dp"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal">
-        <ImageButton
-            android:id="@+id/share_tagged_btn"
+        <com.parse.ParseImageView
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_gravity="start"
+            android:id="@+id/tagged_photo_fullview"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/multiple_actions_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_share"
-            android:contentDescription="@string/str_share_to_friends"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/small_green_circle"
-            />
-        <ImageButton
-            android:id="@+id/get_listings_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_storage"
-            android:contentDescription="@string/str_see_listings"
-            android:background="@drawable/small_green_circle"
-            />
-        <ImageButton
-            android:id="@+id/reselect_style_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_back"
-            android:contentDescription="@string/str_reselect_styles"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/small_green_circle"
-            />
+            android:layout_marginStart="20dp"
+            android:layout_gravity="end"
+            fab:fab_addButtonColorNormal="@color/white"
+            fab:fab_addButtonColorPressed="@color/white_pressed"
+            fab:fab_addButtonPlusIconColor="@color/half_black"
+            fab:fab_addButtonStrokeVisible="false"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:fab_expandDirection="down">
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/post_vehicle_details_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_title="Specs"
+                fab:fab_icon="@drawable/ic_action_info_white"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_size="mini"
+                />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/post_vehicle_listings_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_title="Listings"
+                fab:fab_icon="@drawable/ic_action_list_2_white"
+                fab:fab_colorNormal="@color/blue_semi_transparent"
+                fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                fab:fab_size="mini"
+                />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/post_vehicle_share_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_title="Share"
+                fab:fab_icon="@drawable/ic_action_share_2_white"
+                fab:fab_colorNormal="@color/sky_blue"
+                fab:fab_colorPressed="@color/transparent_sky_blue"
+                fab:fab_size="mini"
+                />
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </LinearLayout>
-
 </LinearLayout>

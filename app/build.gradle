@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.1'
-    compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.android.support:support-v4:21.+'
+    compile 'com.android.support:appcompat-v7:21.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/Parse-1.6.0.jar')
     compile project(':app:libs:openCVLibrary2410')
@@ -11,17 +11,18 @@ dependencies {
     compile project(':ParallaxScroll')
     compile files('sinch/sinch-android-rtc-3.4.2.jar')
     compile project(':materialDesign')
+    compile project(':library')
 }
 
 
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "20"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId 'veme.cario.com.CARmera'
         minSdkVersion 19
-        targetSdkVersion 20
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
