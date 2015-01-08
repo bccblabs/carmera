@@ -5,9 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout
-        android:paddingTop="40dp"
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -33,27 +32,61 @@
                 android:paddingTop="5dp"/>
         </LinearLayout>
     </LinearLayout>
-
     <TextView
         style="@style/TableTitle"
         android:id="@+id/vehicle_info_tv"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:text="2014 BMW X3"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="40dp"
+        android:paddingTop="35dp"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
-        <com.parse.ParseImageView
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_gravity="start"
-            android:id="@+id/tagged_photo_fullview"
-            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.parse.ParseImageView
+                android:layout_width="175dp"
+                android:layout_height="175dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_gravity="start"
+                android:id="@+id/tagged_photo_fullview"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:id="@+id/likers_overlay"
+                android:orientation="horizontal"
+                android:background="@color/blue_semi_transparent_pressed">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/ic_action_mustache"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/likers_cnt"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:text=" x 6"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Bo, Kai, Kobe, Adam, Timmy, Koivu"
+                android:textColor="@color/sky_blue"/>
+        </LinearLayout>
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions_left"
             android:layout_width="wrap_content"
@@ -98,4 +131,6 @@
                 />
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </LinearLayout>
+
+
 </LinearLayout>
