@@ -2,22 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@android:color/background_dark"
+    android:background="@android:color/background_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<ListView-->
-        <!--style="@style/VehicleListStyle"-->
-        <!--android:id="@+id/tagged_cars_listview">-->
-    <!--</ListView>-->
     <GridView
         android:id="@+id/vehicle_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:columnWidth="80dp"
+        android:layout_margin="5dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:columnWidth="110dp"
         android:gravity="center"
-        android:background="@android:color/background_dark"
+        android:background="@android:color/background_light"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth" >
     </GridView>

@@ -6,6 +6,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,10 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
         setContentView(R.layout.activity_base);
         frame_layout = (FrameLayout) findViewById(R.id.content_frame);
         title = drawerTitle = getTitle();
@@ -70,12 +75,12 @@ public class BaseActivity extends FragmentActivity {
                 R.drawable.ic_drawer, R.string.drawer_open,
                 R.string.drawer_close) {
             public void onDrawerClosed(View view) {
-//                getActionBar().setTitle(title);
+                getActionBar().setTitle(title);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-//                getActionBar().setTitle(drawerTitle);
+                getActionBar().setTitle(drawerTitle);
                 invalidateOptionsMenu();
             }
         };

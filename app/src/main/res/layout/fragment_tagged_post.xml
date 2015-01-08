@@ -46,7 +46,8 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <com.parse.ParseImageView
@@ -87,23 +88,20 @@
                 android:text="Bo, Kai, Kobe, Adam, Timmy, Koivu"
                 android:textColor="@color/sky_blue"/>
         </LinearLayout>
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
+        <LinearLayout
             android:id="@+id/multiple_actions_left"
-            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_gravity="end"
-            fab:fab_addButtonColorNormal="@color/white"
-            fab:fab_addButtonColorPressed="@color/white_pressed"
-            fab:fab_addButtonPlusIconColor="@color/half_black"
-            fab:fab_addButtonStrokeVisible="false"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            fab:fab_expandDirection="down">
+            android:layout_gravity="end">
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/post_vehicle_details_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_title="Specs"
+                fab:fab_labelStyle="@style/menu_labels_style"
                 fab:fab_icon="@drawable/ic_action_info_white"
                 fab:fab_colorNormal="@color/pink"
                 fab:fab_colorPressed="@color/pink_pressed"
@@ -129,7 +127,7 @@
                 fab:fab_colorPressed="@color/transparent_sky_blue"
                 fab:fab_size="mini"
                 />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        </LinearLayout>
     </LinearLayout>
 
 

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:divider="@drawable/divider_horizontal"
     android:orientation="vertical"
-    android:background="@android:color/background_dark"
+    android:background="@android:color/background_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,14 +16,14 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/profile_background"
+            android:layout_height="210dp"
+            android:background="@drawable/header"
             android:orientation="vertical">
             <com.facebook.widget.ProfilePictureView
                 android:id="@+id/fb_profile_pic_view"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/com_facebook_profile_default_icon"/>
             <TextView
@@ -30,91 +31,74 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:textColor="@color/Ivory"
+                android:textColor="@color/off_white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:text="bskihabs677"
                 />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/Ivory" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:orientation="horizontal">
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:id="@+id/my_tags_btn"
-                    android:layout_width="wrap_content"
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@android:color/background_dark"
-                    android:text="Tags" />
-            </RelativeLayout>
+                    fab:fab_icon="@drawable/ic_action_tags"
+                    fab:fab_colorNormal="@color/white"
+                    fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                    fab:fab_size="mini"/>
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/Ivory" />
-            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:id="@+id/saved_listings_btn"
-                    android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light" />
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@android:color/background_dark"
-                    android:text="Listings" />
-            </RelativeLayout>
+                    fab:fab_icon="@drawable/ic_action_star_10"
+                    fab:fab_colorNormal="@color/white"
+                    fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                    fab:fab_size="mini"/>
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/Ivory" />
-            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:id="@+id/shared_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@android:color/background_dark"
-                    android:text="\@" />
-            </RelativeLayout>
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_action_share_blue"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                fab:fab_size="mini"/>
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/Ivory" />
-            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:id="@+id/saved_search_btn"
-                    android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@android:color/background_dark"
-                    android:text="searches"/>
-
-            </RelativeLayout>
-
+                    fab:fab_icon="@drawable/ic_action_search_purple"
+                    fab:fab_colorNormal="@color/white"
+                    fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                    fab:fab_size="mini"/>
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="1dp"
-            android:background="@color/Ivory" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/Ivory" />-->
     </LinearLayout>
 
     <fragment
