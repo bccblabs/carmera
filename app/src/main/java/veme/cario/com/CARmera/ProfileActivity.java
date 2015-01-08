@@ -3,10 +3,16 @@ package veme.cario.com.CARmera;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+
 import com.gc.materialdesign.views.ButtonFloatSmall;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SharedTagsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
@@ -21,7 +27,7 @@ public class ProfileActivity extends BaseActivity
                                         TaggedPostFragment.DetailsSelectedListener {
 
     private VehicleInfoDialog vehicleInfoDialog = null;
-    private ButtonFloatSmall my_tags, saved_vehicles, saved_search, shared_vehicles;
+    private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
     @Override
     public void OnSeeListingsSelected(String year, String make, String model) {
         Bundle args = new Bundle();
@@ -122,5 +128,91 @@ public class ProfileActivity extends BaseActivity
         getLayoutInflater().inflate(R.layout.activity_profile, frame_layout);
         drawer_listview.setItemChecked(drawer_pos, true);
         setTitle("My Tags");
+        my_tags_btn = (FloatingActionButton) findViewById(R.id.my_tags_btn);
+        saved_search_btn = (FloatingActionButton) findViewById(R.id.saved_search_btn);
+        shared_vehicles_btn = (FloatingActionButton) findViewById(R.id.shared_tags_btn);
+        saved_vehicles_btn = (FloatingActionButton) findViewById(R.id.saved_listings_btn);
+
+        my_tags_btn.setColorNormalResId(R.color.light_spring_green);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager
+                .beginTransaction();
+
+        TaggedVehicleFragment taggedVehicleFragment = new TaggedVehicleFragment();
+        fragmentTransaction.add (R.id.profile_fragment_holder, taggedVehicleFragment);
+        fragmentTransaction.commit();
+
+        my_tags_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                my_tags_btn.setColorNormalResId(R.color.light_spring_green);
+                saved_vehicles_btn.setColorNormalResId(R.color.white);
+                shared_vehicles_btn.setColorNormalResId(R.color.white);
+                saved_search_btn.setColorNormalResId(R.color.white);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction();
+
+                TaggedVehicleFragment taggedVehicleFragment = new TaggedVehicleFragment();
+                fragmentTransaction.replace(R.id.profile_fragment_holder, taggedVehicleFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        saved_vehicles_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saved_vehicles_btn.setColorNormalResId(R.color.light_spring_green);
+                my_tags_btn.setColorNormalResId(R.color.white);
+                saved_search_btn.setColorNormalResId(R.color.white);
+                shared_vehicles_btn.setColorNormalResId(R.color.white);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction();
+
+                SavedListingsFragment savedListingsFragment = new SavedListingsFragment();
+                fragmentTransaction.replace(R.id.profile_fragment_holder, savedListingsFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+        shared_vehicles_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shared_vehicles_btn.setColorNormalResId(R.color.light_spring_green);
+                my_tags_btn.setColorNormalResId(R.color.white);
+                saved_vehicles_btn.setColorNormalResId(R.color.white);
+                saved_search_btn.setColorNormalResId(R.color.white);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction();
+
+                SharedTagsFragment sharedTagsFragment = new SharedTagsFragment();
+                fragmentTransaction.replace(R.id.profile_fragment_holder, sharedTagsFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        saved_search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saved_search_btn.setColorNormalResId(R.color.light_spring_green);
+                my_tags_btn.setColorNormalResId(R.color.white);
+                saved_vehicles_btn.setColorNormalResId(R.color.white);
+                shared_vehicles_btn.setColorNormalResId(R.color.white);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager
+                        .beginTransaction();
+
+                SavedSearchFragment savedSearchFragment = new SavedSearchFragment();
+                fragmentTransaction.replace(R.id.profile_fragment_holder, savedSearchFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
     }
+
+
 }

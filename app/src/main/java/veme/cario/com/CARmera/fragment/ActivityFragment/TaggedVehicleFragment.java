@@ -81,7 +81,6 @@ public class TaggedVehicleFragment extends Fragment {
         /* sets data for all tagged vehicles */
 
         ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
-        query.setLimit(5);
         query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override
             public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {

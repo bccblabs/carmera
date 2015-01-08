@@ -47,6 +47,7 @@
             android:paddingBottom="15dp"
             android:orientation="horizontal">
             <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/my_tags_btn"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/background_light" />
                 <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/saved_listings_btn"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -73,6 +75,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/background_light" />
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/shared_tags_btn"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
@@ -86,6 +89,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/background_light" />
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/saved_search_btn"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -94,17 +98,11 @@
                     fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
                     fab:fab_size="mini"/>
         </LinearLayout>
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:background="@color/Ivory" />-->
     </LinearLayout>
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/profile_fragment_holder"
-        android:name="veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment"/>
-
+        android:id="@+id/profile_fragment_holder">
+    </FrameLayout>
 </LinearLayout>
