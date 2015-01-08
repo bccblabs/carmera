@@ -22,4 +22,7 @@
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
     <color name="light_spring_green">#00FA9A</color>
     <color name="dark_green">#006400</color>
+    <color name="gold">#FFD700</color>
+    <color name="gold_transparent">#80FFD700</color>
+
 </resources>

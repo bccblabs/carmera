@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     fab:fab_icon="@drawable/ic_action_tags"
                     fab:fab_colorNormal="@color/white"
-                    fab:fab_colorPressed="@color/light_spring_green"
+                    fab:fab_colorPressed="@color/white"
                     fab:fab_size="mini"/>
             <View
                 android:layout_width="0dp"
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     fab:fab_icon="@drawable/ic_action_star_10"
                     fab:fab_colorNormal="@color/white"
-                    fab:fab_colorPressed="@color/light_spring_green"
+                    fab:fab_colorPressed="@color/white"
                     fab:fab_size="mini"/>
             <View
                 android:layout_width="0dp"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 fab:fab_icon="@drawable/ic_action_share_blue"
                 fab:fab_colorNormal="@color/white"
-                fab:fab_colorPressed="@color/light_spring_green"
+                fab:fab_colorPressed="@color/white"
                 fab:fab_size="mini"/>
             <View
                 android:layout_width="0dp"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     fab:fab_icon="@drawable/ic_action_search_purple"
                     fab:fab_colorNormal="@color/white"
-                    fab:fab_colorPressed="@color/light_spring_green"
+                    fab:fab_colorPressed="@color/white"
                     fab:fab_size="mini"/>
         </LinearLayout>
     </LinearLayout>

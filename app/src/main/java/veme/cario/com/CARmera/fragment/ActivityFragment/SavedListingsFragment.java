@@ -29,6 +29,7 @@ import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.util.ListingsAdapter;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
@@ -42,7 +43,7 @@ public class SavedListingsFragment extends Fragment {
 
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
-    private VehicleListAdapter vehicleListAdapter;
+    private ListingsAdapter vehicleListAdapter;
 
     private ListView saved_listings_listview;
     private LinearLayout no_saved_listings_overlay;
@@ -79,11 +80,11 @@ public class SavedListingsFragment extends Fragment {
         });
         saved_listings_listview.setEmptyView(no_saved_listings_overlay);
 
-        vehicleListAdapter = new VehicleListAdapter(inflater.getContext());
+        vehicleListAdapter = new ListingsAdapter(inflater.getContext());
         saved_listings_listview.setAdapter(vehicleListAdapter);
 
         /* load data from parse query */
-        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("savedVehiclesList");
+        ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
         query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override
             public void done(List<TaggedVehicle> taggedVehicles, ParseException e) {

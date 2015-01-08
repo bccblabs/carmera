@@ -35,9 +35,9 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         TextView priceInfoView;
         TextView listing_date_view;
         ParseImageView photo;
-        Button favoriteButton;
-        Button contactSellerBtn;
-        Button listing_vehicle_details_btn;
+//        Button favoriteButton;
+//        Button contactSellerBtn;
+//        Button listing_vehicle_details_btn;
 //        Button commentBtn;
 //        TextView likesCountView;
 //        LinearLayout likesOverlay;
@@ -64,17 +64,17 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
             holder.photo = (ParseImageView) view
                     .findViewById(R.id.listing_photo_view);
 
-            /* set the object to be "favorite", for querying */
-            holder.favoriteButton = (Button) view
-                    .findViewById(R.id.listing_favorite_button);
-
-            /* display the dialog window with seller information */
-            holder.contactSellerBtn = (Button) view
-                    .findViewById(R.id.listing_contact_seller_btn);
-
-            /* display the dialog window with the vehicle information, and more photos */
-            holder.listing_vehicle_details_btn = (Button) view
-                    .findViewById(R.id.listing_vehicle_info_btn);
+//            /* set the object to be "favorite", for querying */
+//            holder.favoriteButton = (Button) view
+//                    .findViewById(R.id.listing_favorite_button);
+//
+//            /* display the dialog window with seller information */
+//            holder.contactSellerBtn = (Button) view
+//                    .findViewById(R.id.listing_contact_seller_btn);
+//
+//            /* display the dialog window with the vehicle information, and more photos */
+//            holder.listing_vehicle_details_btn = (Button) view
+//                    .findViewById(R.id.listing_vehicle_info_btn);
 
             // Tag for lookup later
             view.setTag(holder);
@@ -91,7 +91,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         vehicle_info_tv.setText(taggedVehicle.getYear() + " "
                 + taggedVehicle.getMake() + " "
                 + taggedVehicle.getModel());
-        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "android-robot.ttf");
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
         vehicle_info_tv.setTypeface(ar);
 
         TextView price_info_tv = holder.priceInfoView;
@@ -103,7 +103,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         seller_info_tv.setTypeface(ar);
 
         TextView listing_date_view = holder.listing_date_view;
-        listing_date_view.setText(taggedVehicle.getCreatedAt().toString());
+//        listing_date_view.setText(taggedVehicle.getCreatedAt().toString());
         listing_date_view.setTypeface(ar);
 
         /* View item: Vehicle Image */
@@ -111,59 +111,59 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         photo.setParseFile(taggedVehicle.getThumbnail());
         photo.loadInBackground();
 
-        final Button contact_seller_btn = holder.contactSellerBtn;
-        final Button details_btn = holder.listing_vehicle_details_btn;
+//        final Button contact_seller_btn = holder.contactSellerBtn;
+//        final Button details_btn = holder.listing_vehicle_details_btn;
 
         /* details btn */
-        details_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
-                    ((NearbyActivity) getContext()).onRecognitionResult(imageData,
-                                                                            taggedVehicle.getYear(),
-                                                                            taggedVehicle.getMake(),
-                                                                            taggedVehicle.getModel());
-                } catch (ParseException e) {
-                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
-                }
-            }
-        });
-
-        contact_seller_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SellerInfoDialog sellerInfoDialog = new SellerInfoDialog();
-                    /* pass info to the dialog */
-                    Bundle args = new Bundle();
-//                    String sellerEmail = taggedVehicle.getSellerEmail();
-//                    String sellerPhone = taggedVehicle.getSellerPhone();
-//                    try {
-//                        byte[] seller_thumbnail = taggedVehicle.getSellerThumbnail().getData();
-//                        if (seller_thumbnail != null) {
-//                            args.putByteArray("seller_thumbnail", seller_thumbnail);
-//                        }
-//                    } catch (com.parse.ParseException e) {
-//                        Log.d(TAG, e.getMessage());
-//                    }
-
-//                    if (sellerEmail != null) {
-//                        args.putString("seller_email", taggedVehicle.getSellerEmail());
-//                    }
-
-//                    if (sellerPhone != null) {
-//                        args.putString("seller_phone", taggedVehicle.getSellerPhone());
-//                    }
-
-//                    args.putString("seller_info", taggedVehicle.getSellerInfo());
-
-
-                    /* starts the dialog */
-                    FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
-                    sellerInfoDialog.setArguments(args);
-                    sellerInfoDialog.show(fm, "sellerInfoDialog");
-                }
-            });
+//        details_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
+//                    ((NearbyActivity) getContext()).onRecognitionResult(imageData,
+//                                                                            taggedVehicle.getYear(),
+//                                                                            taggedVehicle.getMake(),
+//                                                                            taggedVehicle.getModel());
+//                } catch (ParseException e) {
+//                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
+//                }
+//            }
+//        });
+//
+//        contact_seller_btn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    SellerInfoDialog sellerInfoDialog = new SellerInfoDialog();
+//                    /* pass info to the dialog */
+//                    Bundle args = new Bundle();
+////                    String sellerEmail = taggedVehicle.getSellerEmail();
+////                    String sellerPhone = taggedVehicle.getSellerPhone();
+////                    try {
+////                        byte[] seller_thumbnail = taggedVehicle.getSellerThumbnail().getData();
+////                        if (seller_thumbnail != null) {
+////                            args.putByteArray("seller_thumbnail", seller_thumbnail);
+////                        }
+////                    } catch (com.parse.ParseException e) {
+////                        Log.d(TAG, e.getMessage());
+////                    }
+//
+////                    if (sellerEmail != null) {
+////                        args.putString("seller_email", taggedVehicle.getSellerEmail());
+////                    }
+//
+////                    if (sellerPhone != null) {
+////                        args.putString("seller_phone", taggedVehicle.getSellerPhone());
+////                    }
+//
+////                    args.putString("seller_info", taggedVehicle.getSellerInfo());
+//
+//
+//                    /* starts the dialog */
+//                    FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
+//                    sellerInfoDialog.setArguments(args);
+//                    sellerInfoDialog.show(fm, "sellerInfoDialog");
+//                }
+//            });
 //        TextView likes_cnt_tv = holder.likesCountView;
 //        final LinearLayout likes_overlay = holder.likesOverlay;
 //        likes_cnt_tv.setText(taggedVehicle.getLikesCnt());

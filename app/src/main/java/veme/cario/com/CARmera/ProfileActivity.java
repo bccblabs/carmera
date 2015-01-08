@@ -133,7 +133,7 @@ public class ProfileActivity extends BaseActivity
         shared_vehicles_btn = (FloatingActionButton) findViewById(R.id.shared_tags_btn);
         saved_vehicles_btn = (FloatingActionButton) findViewById(R.id.saved_listings_btn);
 
-        my_tags_btn.setColorNormalResId(R.color.light_spring_green);
+        my_tags_btn.setIcon(R.drawable.ic_action_tags_green);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
@@ -145,10 +145,11 @@ public class ProfileActivity extends BaseActivity
         my_tags_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                my_tags_btn.setColorNormalResId(R.color.light_spring_green);
-                saved_vehicles_btn.setColorNormalResId(R.color.white);
-                shared_vehicles_btn.setColorNormalResId(R.color.white);
-                saved_search_btn.setColorNormalResId(R.color.white);
+                my_tags_btn.setIcon(R.drawable.ic_action_tags_green);
+                saved_vehicles_btn.setIcon(R.drawable.ic_action_star_10);
+                shared_vehicles_btn.setIcon(R.drawable.ic_action_share_blue);
+                saved_search_btn.setIcon(R.drawable.ic_action_search_purple);
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager
                         .beginTransaction();
@@ -162,10 +163,11 @@ public class ProfileActivity extends BaseActivity
         saved_vehicles_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saved_vehicles_btn.setColorNormalResId(R.color.light_spring_green);
-                my_tags_btn.setColorNormalResId(R.color.white);
-                saved_search_btn.setColorNormalResId(R.color.white);
-                shared_vehicles_btn.setColorNormalResId(R.color.white);
+                my_tags_btn.setIcon(R.drawable.ic_action_tags_purple);
+                saved_vehicles_btn.setIcon(R.drawable.ic_action_star_10_green);
+                shared_vehicles_btn.setIcon(R.drawable.ic_action_share_blue);
+                saved_search_btn.setIcon(R.drawable.ic_action_search_purple);
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager
                         .beginTransaction();
@@ -180,10 +182,11 @@ public class ProfileActivity extends BaseActivity
         shared_vehicles_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shared_vehicles_btn.setColorNormalResId(R.color.light_spring_green);
-                my_tags_btn.setColorNormalResId(R.color.white);
-                saved_vehicles_btn.setColorNormalResId(R.color.white);
-                saved_search_btn.setColorNormalResId(R.color.white);
+                my_tags_btn.setIcon(R.drawable.ic_action_tags_purple);
+                saved_vehicles_btn.setIcon(R.drawable.ic_action_star_10);
+                shared_vehicles_btn.setIcon(R.drawable.ic_action_share_green);
+                saved_search_btn.setIcon(R.drawable.ic_action_search_purple);
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager
                         .beginTransaction();
@@ -197,10 +200,11 @@ public class ProfileActivity extends BaseActivity
         saved_search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saved_search_btn.setColorNormalResId(R.color.light_spring_green);
-                my_tags_btn.setColorNormalResId(R.color.white);
-                saved_vehicles_btn.setColorNormalResId(R.color.white);
-                shared_vehicles_btn.setColorNormalResId(R.color.white);
+                my_tags_btn.setIcon(R.drawable.ic_action_tags_purple);
+                saved_vehicles_btn.setIcon(R.drawable.ic_action_star_10);
+                shared_vehicles_btn.setIcon(R.drawable.ic_action_share_blue);
+                saved_search_btn.setIcon(R.drawable.ic_action_search_green);
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager
                         .beginTransaction();
