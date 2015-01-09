@@ -8,6 +8,15 @@
     android:descendantFocusability="beforeDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="2014 BMW x3"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/light_spring_green"
+        android:id="@+id/listing_yr_mk_md_view"/>
 
     <LinearLayout
         android:paddingTop="20dp"
@@ -36,11 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_spring_green"
-                android:id="@+id/listing_yr_mk_md_view"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
