@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -38,11 +39,9 @@ public class CarInfoFragment extends Fragment {
     private static final String TAG = "CAR_INFO_FRAGMENT";
     private static String JSON_HASH_KEY;
     private ImageView preview_view;
-    private ImageButton share_btn;
-    private ImageButton reselect_styles_btn;
     private TextView car_base_info;
     private TextView car_style_info;
-
+    private FloatingActionButton back_btn;
     private TextView used_tmv_textview;
     private TextView msrp_textview;
     private TextView city_mpg_textview;
@@ -159,16 +158,9 @@ public class CarInfoFragment extends Fragment {
         tableLayout = getView().findViewById(R.id.car_info_table);
         loadingView = getView().findViewById(R.id.car_info_progress);
 
-        share_btn = (ImageButton) getView().findViewById(R.id.share_tagged_btn);
-        share_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            /* TODO: share image via intent to other media (insta, fb, wechat, whatsapp, etc.) */
-            }
-        });
 
-        reselect_styles_btn = (ImageButton) getView().findViewById(R.id.reselect_style_btn);
-        reselect_styles_btn.setOnClickListener(new View.OnClickListener() {
+        back_btn = (FloatingActionButton) getView().findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                onReselectClickCallback.OnReselectClick(getArguments().getByteArray("imageData"),

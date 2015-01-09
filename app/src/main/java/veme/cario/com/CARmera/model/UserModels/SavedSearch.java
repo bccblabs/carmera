@@ -59,12 +59,12 @@ public class SavedSearch extends ParseObject {
         put ("body_style", val);
     }
 
-    public void setMinYear(String val) {
-        put("min_year", val);
+    public void addYear(String val) {
+        add("year", val);
     }
 
-    public void setMaxYear(String val) {
-        put("max_year", val);
+    public List<String> getYear() {
+        return getList("year");
     }
 
     public void addMake(String val) {
@@ -83,6 +83,10 @@ public class SavedSearch extends ParseObject {
         add ("cylinderCnts", val);
     }
 
+    public void addCompressorType (String val) { add ("compressor_type", val); }
+
+    public List<String> getCompressorType () { return getList("compressor_type"); }
+
     public String getSearchName () {
         return getString ("search_name");
     }
@@ -98,5 +102,14 @@ public class SavedSearch extends ParseObject {
     public void setSearchRadius (String val) {
         put ("search_radius", val);
     }
+
+    public void addEquipment (String val)  { add ("equipment", val); }
+
+    public List<String> getEquipments () { return getList("equipment"); }
+
+    public void addColor (String val) { add ("color", val); }
+
+    public List<String> getColor () { return getList("color"); }
+
 
 }

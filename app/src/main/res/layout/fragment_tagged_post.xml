@@ -117,16 +117,27 @@
                 fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
                 fab:fab_size="mini"
                 />
+
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/post_vehicle_share_btn"
+                android:id="@+id/share_facebook_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_title="Share"
-                fab:fab_icon="@drawable/ic_action_share_2_white"
-                fab:fab_colorNormal="@color/sky_blue"
-                fab:fab_colorPressed="@color/transparent_sky_blue"
                 fab:fab_size="mini"
-                />
+                fab:fab_title="facebook chat"
+                fab:fab_icon="@drawable/ic_action_facebook_white"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/share_email_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_title="email"
+                fab:fab_icon="@drawable/ic_action_mail"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+
+
         </LinearLayout>
     </LinearLayout>
 

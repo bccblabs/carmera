@@ -13,6 +13,7 @@ import java.util.List;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.VehicleGridAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -23,13 +24,15 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 public class NearbyActivity extends BaseActivity
                             implements SelectStyleFragment.SelectResultListener,
                                        CarInfoFragment.OnReselectClickListener,
-                                       ImageFragment.ImageResultListener {
+                                       ImageFragment.ImageResultListener,
+                                       TaggedPostFragment.DetailsSelectedListener {
 
 
     private VehicleInfoDialog vehicleInfoDialog = null;
     private GridView nearby_vehicles_gridview;
     private LinearLayout no_nearby_vehicles_layout;
     private VehicleGridAdapter vehicleGridAdapter;
+
 
     @Override
     public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
@@ -94,6 +97,25 @@ public class NearbyActivity extends BaseActivity
 
     }
 
+    @Override
+    public void onDetailsSelected (byte[] imageData, String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
+
     /* TODO:
         1. Query by geolocation
         2. Query by Edmund's API/other api
@@ -131,8 +153,19 @@ public class NearbyActivity extends BaseActivity
         nearby_vehicles_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                final TaggedVehicle taggedVehicle = (TaggedVehicle) nearby_vehicles_gridview.getItemAtPosition(position);
-                /* show a dialog here, very simple */
+                final TaggedVehicle taggedVehicle = (TaggedVehicle) nearby_vehicles_gridview.getItemAtPosition(position);
+                Bundle args = new Bundle();
+                args.putString("dialog_type", "post_details");
+                args.putString("tagged_post_id", taggedVehicle.getObjectId());
+
+                if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+                    vehicleInfoDialog.dismiss();
+                    vehicleInfoDialog = null;
+                }
+                FragmentManager fm = getSupportFragmentManager();
+                vehicleInfoDialog = new VehicleInfoDialog();
+                vehicleInfoDialog.setArguments(args);
+                vehicleInfoDialog.show (fm, "postDetailsOverlay");
             }
         });
     }

@@ -7,17 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.widget.ProfilePictureView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
@@ -28,22 +26,32 @@ public class TaggedPostFragment extends Fragment {
     private ProfilePictureView fb_profile_pic_view;
     private TextView post_date_tv, user_info_tv;  /* user name, time */
     private TextView vehicle_info_tv; /* vehicle mk, yr, model */
-    private Button like_btn, details_btn, listings_btn, share_btn;
     private TaggedVehicle taggedVehicle;
+
     private DetailsSelectedListener detailSelectedCallback = null;
+    private CreateSearchListner createSearchListner = null;
+
+    private FloatingActionButton details_btn, see_listings_btn, share_email_btn, share_facebook_btn;
+
 
     public interface DetailsSelectedListener {
         public abstract void onDetailsSelected (byte[] image, String yr, String mk, String model);
     }
+
+    public interface CreateSearchListner {
+        public abstract void onCreateSearch (String yr, String mk, String model);
+    }
+
 
     @Override
     public void onAttach (Activity activity) {
         super.onAttach(activity);
         try {
             detailSelectedCallback = (DetailsSelectedListener) activity;
+            createSearchListner = (CreateSearchListner) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + ": "
-                    + " needs to implement the OnReselectClickListener!");
+                    + " needs to implement the Listeners!");
         }
     }
 
@@ -82,7 +90,33 @@ public class TaggedPostFragment extends Fragment {
             }
         });
 
+        details_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_details_btn);
+        see_listings_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_listings_btn);
+        share_facebook_btn = (FloatingActionButton) view.findViewById(R.id.share_facebook_btn);
+        share_email_btn = (FloatingActionButton) view.findViewById(R.id.share_email_btn);
 
+        details_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
+                    detailSelectedCallback.onDetailsSelected(imageData, taggedVehicle.getYear(),
+                            taggedVehicle.getMake(),
+                            taggedVehicle.getModel());
+                } catch (ParseException e) {
+                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
+                }
+            }
+        });
+
+        see_listings_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createSearchListner.onCreateSearch(taggedVehicle.getYear(),
+                                                    taggedVehicle.getMake(),
+                                                    taggedVehicle.getModel());
+            }
+        });
 
         return view;
     }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
@@ -101,6 +102,8 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("post_details")) {
             fragmentPagerAdapter = new PostDetailsAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("create_search")) {
+            fragmentPagerAdapter = new CreateSearchAdapter(getChildFragmentManager());
         } else {
             Log.d(TAG, " - no such type, default to info dialog");
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
@@ -257,6 +260,33 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0:
                     return "Post Details";
+            }
+            return null;
+        }
+    }
+
+
+    public class CreateSearchAdapter extends FragmentPagerAdapter {
+        public CreateSearchAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment createSearchFragment = new CreateSearchFragment();
+            Bundle args = getArguments();
+            createSearchFragment.setArguments(args);
+            return createSearchFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Create Search Criteria";
             }
             return null;
         }

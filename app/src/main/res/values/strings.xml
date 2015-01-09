@@ -132,14 +132,13 @@
     <string name="drawer_close">Close drawer</string>
 
 
-    <string name="year">Year: </string>
-    <string name="make">Make: </string>
-    <string name="model">Model: </string>
+    <string name="make">Enter car make</string>
+    <string name="model">Enter car model </string>
 
+    <string name="any">Any</string>
     <string name="dist">Distance: </string>
     <string name="min_price">Min Price: </string>
     <string name="max_price">Max Price: </string>
-
 
     <string name="fa_glass">&#xf000;</string>
     <string name="fa_music">&#xf001;</string>

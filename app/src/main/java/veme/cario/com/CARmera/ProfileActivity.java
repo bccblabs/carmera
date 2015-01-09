@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
-import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SharedTagsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
@@ -16,6 +16,7 @@ import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
+import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ProfileActivity extends BaseActivity
@@ -24,7 +25,9 @@ public class ProfileActivity extends BaseActivity
                                         SelectStyleFragment.SelectResultListener,
                                         CarInfoFragment.OnReselectClickListener,
                                         TaggedVehicleFragment.OnVehicleSelectedListener,
-                                        TaggedPostFragment.DetailsSelectedListener {
+                                        TaggedPostFragment.DetailsSelectedListener,
+                                        TaggedPostFragment.CreateSearchListner,
+                                        CreateSearchFragment.ListingSearchCreatedListener{
 
     private VehicleInfoDialog vehicleInfoDialog = null;
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
@@ -114,12 +117,32 @@ public class ProfileActivity extends BaseActivity
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-
         FragmentManager fm = getSupportFragmentManager();
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
 
+    @Override
+    public void onCreateSearch (String yr, String mk, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "create_search");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", model);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "createSearchOverlay");
+    }
+
+    @Override
+    public void onSearchCreated(SavedSearch savedSearch) {
     }
 
     @Override
@@ -139,7 +162,7 @@ public class ProfileActivity extends BaseActivity
                 .beginTransaction();
 
         TaggedVehicleFragment taggedVehicleFragment = new TaggedVehicleFragment();
-        fragmentTransaction.add (R.id.profile_fragment_holder, taggedVehicleFragment);
+        fragmentTransaction.add(R.id.profile_fragment_holder, taggedVehicleFragment);
         fragmentTransaction.commit();
 
         my_tags_btn.setOnClickListener(new View.OnClickListener() {

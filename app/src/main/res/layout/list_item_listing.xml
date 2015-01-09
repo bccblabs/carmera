@@ -118,26 +118,26 @@
             fab:fab_colorPressed="@color/transparent_sky_blue"
             fab:fab_size="mini"
             />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/saved_vehicle_incentives_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_title="Incentives"
-            fab:fab_icon="@drawable/ic_action_achievement_white"
-            fab:fab_colorNormal="@color/gold"
-            fab:fab_colorPressed="@color/gold_transparent"
-            fab:fab_size="mini"
-            />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/saved_vehicle_similar_listings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_title="Incentives"
-            fab:fab_icon="@drawable/ic_action_eye_open_white"
-            fab:fab_colorNormal="@color/dark_green"
-            fab:fab_colorPressed="@color/light_spring_green"
-            fab:fab_size="mini"
-            />
+        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+            <!--android:id="@+id/saved_vehicle_incentives_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--fab:fab_title="Incentives"-->
+            <!--fab:fab_icon="@drawable/ic_action_achievement_white"-->
+            <!--fab:fab_colorNormal="@color/gold"-->
+            <!--fab:fab_colorPressed="@color/gold_transparent"-->
+            <!--fab:fab_size="mini"-->
+            <!--/>-->
+        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+            <!--android:id="@+id/saved_vehicle_similar_listings"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--fab:fab_title="Incentives"-->
+            <!--fab:fab_icon="@drawable/ic_action_eye_open_white"-->
+            <!--fab:fab_colorNormal="@color/dark_green"-->
+            <!--fab:fab_colorPressed="@color/light_spring_green"-->
+            <!--fab:fab_size="mini"-->
+            <!--/>-->
 
     </LinearLayout>
 </LinearLayout>

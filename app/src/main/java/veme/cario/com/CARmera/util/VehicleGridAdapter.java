@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseImageView;
 
 import veme.cario.com.CARmera.R;
@@ -14,6 +15,8 @@ import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 public class VehicleGridAdapter extends ArrayAdapter<TaggedVehicle> {
     private LayoutInflater inflater;
     private boolean is_compact;
+
+
     private static class ViewHolder {
         ParseImageView photo;
     }
@@ -41,6 +44,7 @@ public class VehicleGridAdapter extends ArrayAdapter<TaggedVehicle> {
         } else {
             holder = (ViewHolder) view.getTag();
         }
+
 
         TaggedVehicle vehicle = getItem(position);
         holder.photo.setParseFile(vehicle.getThumbnail());
