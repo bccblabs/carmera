@@ -1,5 +1,8 @@
 package veme.cario.com.CARmera.model.UserModels;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -9,7 +12,18 @@ import java.util.List;
  * Created by bski on 1/8/15.
  */
 @ParseClassName("SavedSearch")
-public class SavedSearch extends ParseObject {
+public class SavedSearch extends ParseObject implements Parcelable {
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
     public SavedSearch() {}
 
     public String getMinPrice() {
@@ -111,5 +125,8 @@ public class SavedSearch extends ParseObject {
 
     public List<String> getColor () { return getList("color"); }
 
+    public void setFavorite (boolean val) { put("favorite", val); }
+
+    public boolean getFavorite () { return getBoolean("favorite"); }
 
 }

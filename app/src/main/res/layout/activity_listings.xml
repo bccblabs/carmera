@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/pink"
             fab:fab_size="mini"
-            fab:fab_title="Edit Seach"
+            fab:fab_title="New/Edit Seach"
             fab:fab_icon="@drawable/ic_action_edit"
             fab:fab_colorPressed="@color/pink_pressed"/>
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/pink"
             fab:fab_size="mini"
-            fab:fab_title="Save Search"
+            fab:fab_title="Mark This Search!"
             fab:fab_icon="@drawable/ic_action_save"
             fab:fab_colorPressed="@color/pink_pressed"/>
 

@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,10 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
 
+import veme.cario.com.CARmera.ListingsActivity;
 import veme.cario.com.CARmera.NearbyActivity;
+import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
@@ -35,12 +39,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         TextView priceInfoView;
         TextView listing_date_view;
         ParseImageView photo;
-//        Button favoriteButton;
-//        Button contactSellerBtn;
-//        Button listing_vehicle_details_btn;
-//        Button commentBtn;
-//        TextView likesCountView;
-//        LinearLayout likesOverlay;
+        FloatingActionButton heart_btn, info_btn, contact_btn, share_btn, incentives_btn;
     }
 
     public ListingsAdapter (Context context) {
@@ -51,7 +50,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_listing, parent, false);
@@ -60,21 +59,14 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
             holder.priceInfoView = (TextView) view.findViewById(R.id.listing_price_view);
             holder.vehicleInfoView = (TextView) view.findViewById(R.id.listing_yr_mk_md_view);
             holder.listing_date_view = (TextView) view.findViewById(R.id.listing_post_date);
-
             holder.photo = (ParseImageView) view
                     .findViewById(R.id.listing_photo_view);
 
-//            /* set the object to be "favorite", for querying */
-//            holder.favoriteButton = (Button) view
-//                    .findViewById(R.id.listing_favorite_button);
-//
-//            /* display the dialog window with seller information */
-//            holder.contactSellerBtn = (Button) view
-//                    .findViewById(R.id.listing_contact_seller_btn);
-//
-//            /* display the dialog window with the vehicle information, and more photos */
-//            holder.listing_vehicle_details_btn = (Button) view
-//                    .findViewById(R.id.listing_vehicle_info_btn);
+            holder.heart_btn = (FloatingActionButton) view.findViewById(R.id.heart_btn);
+            holder.info_btn = (FloatingActionButton) view.findViewById(R.id.info_btn);
+            holder.contact_btn = (FloatingActionButton) view.findViewById(R.id.listings_contact_btn);
+            holder.share_btn = (FloatingActionButton) view.findViewById(R.id.listings_share_btn);
+            holder.incentives_btn = (FloatingActionButton) view.findViewById(R.id.listings_incentives_btn);
 
             // Tag for lookup later
             view.setTag(holder);
@@ -111,24 +103,48 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         photo.setParseFile(taggedVehicle.getThumbnail());
         photo.loadInBackground();
 
-//        final Button contact_seller_btn = holder.contactSellerBtn;
-//        final Button details_btn = holder.listing_vehicle_details_btn;
+        if (taggedVehicle.isFavorites()) {
+            holder.heart_btn.setIcon(R.drawable.ic_action_heart_mid);
+        } else {
+            holder.heart_btn.setIcon(R.drawable.ic_action_heart_white);
+        }
+        holder.heart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (taggedVehicle.isFavorites()) {
+                    holder.heart_btn.setIcon(R.drawable.ic_action_heart_white);
+                    taggedVehicle.setFavorite(false);
+                } else {
+                    holder.heart_btn.setIcon(R.drawable.ic_action_heart_mid);
+                    taggedVehicle.setFavorite(true);
+                }
+            }
+        });
 
         /* details btn */
-//        details_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
-//                    ((NearbyActivity) getContext()).onRecognitionResult(imageData,
-//                                                                            taggedVehicle.getYear(),
-//                                                                            taggedVehicle.getMake(),
-//                                                                            taggedVehicle.getModel());
-//                } catch (ParseException e) {
-//                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
-//                }
-//            }
-//        });
+        holder.info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
+                    Activity containing_activity = (Activity) getContext();
+                    if (containing_activity.getLocalClassName().equals(ListingsActivity.class)) {
+                        ((ListingsActivity) getContext()).onDetailsSelected(imageData,
+                                taggedVehicle.getYear(),
+                                taggedVehicle.getMake(),
+                                taggedVehicle.getModel());
+                    } else {
+                        ((ProfileActivity) getContext()).onDetailsSelected(imageData,
+                                taggedVehicle.getYear(),
+                                taggedVehicle.getMake(),
+                                taggedVehicle.getModel());
+                    }
+
+                } catch (ParseException e) {
+                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
+                }
+            }
+        });
 //
 //        contact_seller_btn.setOnClickListener(new View.OnClickListener() {
 //                @Override

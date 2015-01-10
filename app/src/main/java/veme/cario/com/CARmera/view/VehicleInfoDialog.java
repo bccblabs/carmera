@@ -17,6 +17,8 @@ import android.view.Window;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
@@ -104,6 +106,10 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new PostDetailsAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("create_search")) {
             fragmentPagerAdapter = new CreateSearchAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("saved_listings")) {
+            fragmentPagerAdapter = new SavedListingsAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("saved_search")) {
+            fragmentPagerAdapter = new SavedSearchesAdapter(getChildFragmentManager());
         } else {
             Log.d(TAG, " - no such type, default to info dialog");
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
@@ -287,6 +293,65 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0:
                     return "Create Search Criteria";
+            }
+            return null;
+        }
+    }
+
+    public class SavedListingsAdapter extends FragmentPagerAdapter {
+        public SavedListingsAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment savedListingsFragment = new SavedListingsFragment();
+            Bundle args = getArguments();
+            savedListingsFragment.setArguments(args);
+            return savedListingsFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Saved Listings";
+            }
+            return null;
+        }
+    }
+
+    public class SavedSearchesAdapter extends FragmentPagerAdapter {
+        public SavedSearchesAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment savedSearchesFragment = new SavedSearchFragment();
+            Bundle args = getArguments();
+            if (position == 1) {
+                args.putBoolean("show_history", true);
+            } else {
+                args.putBoolean("show_history", false);
+            }
+            savedSearchesFragment.setArguments(args);
+            return savedSearchesFragment;
+        }
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Favorite Searches";
+                case 1:
+                    return "All Search History";
             }
             return null;
         }

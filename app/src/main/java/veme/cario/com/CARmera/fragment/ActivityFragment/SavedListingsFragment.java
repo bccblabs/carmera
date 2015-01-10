@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -44,12 +45,12 @@ public class SavedListingsFragment extends Fragment {
     /* do a find in background query from this guy's userinfp ? */
     /* see the "favorites implementation */
     private ListingsAdapter vehicleListAdapter;
-
     private ListView saved_listings_listview;
     private LinearLayout no_saved_listings_overlay;
-
     private OnSavedListingSelectedListener listingCallback;
 
+    private TextView header_view;
+    private boolean has_header = true;
     public interface OnSavedListingSelectedListener {
         public abstract void OnSavedListingSelected (int pos);
     }
@@ -62,6 +63,9 @@ public class SavedListingsFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
+        }
+        if (activity instanceof ProfileActivity) {
+            has_header = false;
         }
     }
 
@@ -119,6 +123,10 @@ public class SavedListingsFragment extends Fragment {
                 vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
             }
         });
+
+        header_view = (TextView) view.findViewById(R.id.saved_listings_header);
+        if (!has_header)
+            header_view.setVisibility(View.GONE);
         return view;
     }
 

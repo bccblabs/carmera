@@ -17,8 +17,9 @@ import veme.cario.com.CARmera.model.UserModels.SavedSearch;
  */
 public class CreateSearchFragment extends Fragment {
     private Spinner year_spnr, make_spnr, model_spnr, dist_spnr, pr_min_spnr, pr_max_spnr;
-    private ButtonRectangle search_btn;
+    private ButtonRectangle search_btn, save_search_btn;
     private ListingSearchCreatedListener listingsCallback = null;
+    private SavedSearch savedSearch;
 
     public interface ListingSearchCreatedListener {
         public abstract void onSearchCreated(SavedSearch savedSearch);
@@ -96,14 +97,25 @@ public class CreateSearchFragment extends Fragment {
 //            set_spinner_value (makes_adapter, pr_min_spnr, "0");
 //            set_spinner_value (models_adapter, pr_max_spnr, "100,000");
 //        }
-//        search_btn = (ButtonRectangle) view.findViewById(R.id.search_listings_btn);
-//        search_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SavedSearch savedSearch = new SavedSearch();
-//                listingsCallback.onSearchCreated(savedSearch);
-//            }
-//        });
+        savedSearch = new SavedSearch();
+
+        save_search_btn = (ButtonRectangle) view.findViewById(R.id.create_listings_save_search_btn);
+        save_search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* create a dialog box */
+                savedSearch.setSearchName("blah");
+                savedSearch.saveInBackground();
+            }
+        });
+
+        search_btn = (ButtonRectangle) view.findViewById(R.id.search_listings_btn);
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listingsCallback.onSearchCreated(savedSearch);
+            }
+        });
 //        setHasOptionsMenu(true);
         return view;
     }

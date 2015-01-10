@@ -24,10 +24,10 @@ public class ProfileActivity extends BaseActivity
                                         SavedListingsFragment.OnSavedListingSelectedListener,
                                         SelectStyleFragment.SelectResultListener,
                                         CarInfoFragment.OnReselectClickListener,
-                                        TaggedVehicleFragment.OnVehicleSelectedListener,
                                         TaggedPostFragment.DetailsSelectedListener,
+                                        TaggedVehicleFragment.OnVehicleSelectedListener,
                                         TaggedPostFragment.CreateSearchListner,
-                                        CreateSearchFragment.ListingSearchCreatedListener{
+                                        CreateSearchFragment.ListingSearchCreatedListener {
 
     private VehicleInfoDialog vehicleInfoDialog = null;
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
@@ -142,7 +142,11 @@ public class ProfileActivity extends BaseActivity
     }
 
     @Override
-    public void onSearchCreated(SavedSearch savedSearch) {
+    public void onSearchCreated (SavedSearch savedSearch) {
+        /* directs to listings activity to retrieve listings */
+        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
+        i.putExtra ("search_obj", savedSearch);
+        startActivity(i);
     }
 
     @Override

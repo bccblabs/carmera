@@ -245,13 +245,31 @@
             </LinearLayout>
 
             </LinearLayout>
-            <com.gc.materialdesign.views.ButtonRectangle
-                android:id="@+id/search_listings_btn"
-                android:layout_width="200dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:background="#1E88E5"
-                android:text="Find My Car" />
+                android:layout_margin="40dp">
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/create_listings_save_search_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@color/dark_green"
+                    android:text="Save this Search" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"/>
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/search_listings_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="#1E88E5"
+                    android:text="Find My Car" />
+                </LinearLayout>
 
         </LinearLayout>
 </ScrollView>

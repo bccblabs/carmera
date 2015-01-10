@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        style="@style/TableTitle"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/saved_listings_header"
+        android:text="31 saved cars"/>
+
     <ListView
         style="@style/ListStyle"
         android:id="@+id/saved_listings_listview">

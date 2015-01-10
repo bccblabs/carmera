@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -10,10 +11,13 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import java.util.List;
+
+import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
+import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.VehicleGridAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
@@ -25,7 +29,8 @@ public class NearbyActivity extends BaseActivity
                             implements SelectStyleFragment.SelectResultListener,
                                        CarInfoFragment.OnReselectClickListener,
                                        ImageFragment.ImageResultListener,
-                                       TaggedPostFragment.DetailsSelectedListener {
+                                       TaggedPostFragment.DetailsSelectedListener,
+                                       CreateSearchFragment.ListingSearchCreatedListener{
 
 
     private VehicleInfoDialog vehicleInfoDialog = null;
@@ -114,6 +119,14 @@ public class NearbyActivity extends BaseActivity
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
+
+    @Override
+    public void onSearchCreated (SavedSearch savedSearch) {
+        /* directs to listings activity to retrieve listings */
+        Intent i = new Intent(NearbyActivity.this, ListingsActivity.class);
+        i.putExtra ("search_obj", savedSearch);
+        startActivity(i);
     }
 
     /* TODO:
