@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.app.ActionBar;
@@ -16,11 +17,25 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
+import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.nav_drawer.DrawerAdapter;
 import veme.cario.com.CARmera.nav_drawer.DrawerItem;
+import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends FragmentActivity implements
+        SelectStyleFragment.SelectResultListener,
+        CarInfoFragment.OnReselectClickListener,
+        TaggedPostFragment.DetailsSelectedListener,
+        TaggedVehicleFragment.OnVehicleSelectedListener,
+        TaggedPostFragment.CreateSearchListner,
+        CreateSearchFragment.ListingSearchCreatedListener {
 
     /* Navigation Drawer Variables */
     protected FrameLayout frame_layout;
@@ -34,6 +49,8 @@ public class BaseActivity extends FragmentActivity {
 
     private CharSequence drawerTitle;
     private CharSequence title;
+
+    private VehicleInfoDialog vehicleInfoDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,4 +180,106 @@ public class BaseActivity extends FragmentActivity {
             drawer_layout.openDrawer(drawer_listview);
         }
     }
+
+
+    @Override
+    public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString ("dialog_type", "vehicle_info");
+        args.putString ("vehicle_id", trim_id);
+        args.putString ("vehicle_year", yr);
+        args.putString ("vehicle_make", mk);
+        args.putString ("vehicle_model", md);
+        args.putString ("vehicle_trim_name", trim_name);
+        args.putByteArray("imageData", imageData);
+
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+    }
+
+    @Override
+    public void OnReselectClick (byte[] raw_photo, String yr, String mk, String md) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", md);
+
+        args.putByteArray("imageData", raw_photo);
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+
+    }
+
+    @Override
+    public void OnVehicleSelected (String post_id) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "post_details");
+        args.putString("tagged_post_id", post_id);
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show (fm, "postDetailsOverlay");
+    }
+
+    @Override
+    public void onDetailsSelected (byte[] imageData, String year, String make, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "choose_style");
+        args.putString("vehicle_year", year);
+        args.putString("vehicle_make", make);
+        args.putString("vehicle_model", model);
+        args.putByteArray("imageData", imageData);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
+
+    @Override
+    public void onCreateSearch (String yr, String mk, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "create_search");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", model);
+
+        if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "createSearchOverlay");
+    }
+
+    @Override
+    public void onSearchCreated (SavedSearch savedSearch) {
+    }
+
 }
+

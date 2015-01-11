@@ -172,14 +172,6 @@ public class VehicleListAdapter extends ArrayAdapter<TaggedVehicle>  {
             }
         });
 
-        see_listings_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((ProfileActivity) getContext()).OnSeeListingsSelected(taggedVehicle.getYear(),
-                                                                        taggedVehicle.getMake(),
-                                                                        taggedVehicle.getModel());
-            }
-        });
         return view;
     }
 

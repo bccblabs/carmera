@@ -18,6 +18,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
 
+import veme.cario.com.CARmera.BaseActivity;
 import veme.cario.com.CARmera.ListingsActivity;
 import veme.cario.com.CARmera.NearbyActivity;
 import veme.cario.com.CARmera.ProfileActivity;
@@ -127,19 +128,10 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
             public void onClick(View v) {
                 try {
                     byte[] imageData = taggedVehicle.getTagPhoto().getData();
-                    Activity containing_activity = (Activity) getContext();
-                    if (containing_activity.getLocalClassName().equals(ListingsActivity.class)) {
-                        ((ListingsActivity) getContext()).onDetailsSelected(imageData,
-                                taggedVehicle.getYear(),
-                                taggedVehicle.getMake(),
-                                taggedVehicle.getModel());
-                    } else {
-                        ((ProfileActivity) getContext()).onDetailsSelected(imageData,
-                                taggedVehicle.getYear(),
-                                taggedVehicle.getMake(),
-                                taggedVehicle.getModel());
-                    }
-
+                    ((BaseActivity) getContext()).onDetailsSelected(imageData,
+                            taggedVehicle.getYear(),
+                            taggedVehicle.getMake(),
+                            taggedVehicle.getModel());
                 } catch (ParseException e) {
                     Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
                 }

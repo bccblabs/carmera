@@ -32,11 +32,6 @@ public class TaggedVehicleFragment extends Fragment {
     private VehicleGridAdapter vehicleGridAdapter;
     private GridView vehicle_grid_view;
     private LinearLayout no_vehicles_tagged_overlay;
-    private OnSeeListingsSelectedListener listingCallback;
-
-    public interface OnSeeListingsSelectedListener {
-        public abstract void OnSeeListingsSelected(String year, String make, String model);
-    }
 
     private OnVehicleSelectedListener vehicleSelectedCallback;
 
@@ -49,7 +44,7 @@ public class TaggedVehicleFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnSeeListingsSelectedListener) activity;
+//            listingCallback = (OnSeeListingsSelectedListener) activity;
             vehicleSelectedCallback = (OnVehicleSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()

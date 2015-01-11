@@ -19,19 +19,14 @@ import com.parse.ParseUser;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.CameraPreview;
 import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class CaptureActivity extends BaseActivity
-                                    implements ImageFragment.ImageResultListener,
-                                               SimpleTaggedVehicleDialog.OnSimpleTagSelectedListener,
-                                               SelectStyleFragment.SelectResultListener,
-                                               CarInfoFragment.OnReselectClickListener {
+                                    implements ImageFragment.ImageResultListener {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -282,78 +277,6 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
     }
-
-    @Override
-    public void onStyleSelected (byte[] data, String trim_id, String trim_name, String yr, String mk, String md) {
-        /* save to parse here */
-
-        Bundle args = new Bundle();
-        args.putString ("dialog_type", "vehicle_info");
-        args.putString ("vehicle_id", trim_id);
-        args.putString ("vehicle_year", yr);
-        args.putString ("vehicle_make", mk);
-        args.putString ("vehicle_model", md);
-        args.putString ("vehicle_trim_name", trim_name);
-        args.putByteArray("imageData", data);
-
-        Log.i (TAG, " - creating vehicle info dialog: " + trim_id + " "  + trim_name);
-
-
-        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-            vehicleInfoDialog.dismiss();
-            vehicleInfoDialog = null;
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
-
-    }
-
-    @Override
-    public void OnReselectClick (byte[] raw_photo, String yr, String mk, String md) {
-        Bundle args = new Bundle();
-        args.putString("dialog_type", "choose_style");
-        args.putString("vehicle_year", yr);
-        args.putString("vehicle_make", mk);
-        args.putString("vehicle_model", md);
-
-        args.putByteArray("imageData", raw_photo);
-        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-            vehicleInfoDialog.dismiss();
-            vehicleInfoDialog = null;
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show(fm, "styleChooserOverlay");
-    }
-
-    /* when a vehicle is selected from the list of previously tagged cars using the yellow button */
-    @Override
-    public void onSimpleTagSelected (byte[] imageData, String year, String make, String model) {
-        Bundle args = new Bundle();
-        args.putString("dialog_type", "choose_style");
-        args.putString("vehicle_year", year);
-        args.putString("vehicle_make", make);
-        args.putString("vehicle_model", model);
-        args.putByteArray("imageData", imageData);
-
-        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-            vehicleInfoDialog.dismiss();
-            vehicleInfoDialog = null;
-        }
-        if (simpleTaggedVehicleDialog != null && simpleTaggedVehicleDialog.isVisible()) {
-            simpleTaggedVehicleDialog.dismiss();
-            simpleTaggedVehicleDialog = null;
-        }
-        Log.i (TAG, year + " " + make + " " + model);
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show(fm, "styleChooserOverlay");
-    }
-
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {
         int w = bitmap.getWidth();
