@@ -18,7 +18,7 @@ public class VehicleStylesRequest extends SpringAndroidSpiceRequest<VehicleStyle
 
     @Override
     public VehicleStyles loadDataFromNetwork () throws Exception {
-        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/%s/%s/%s/styles?state=used&view=basic&fmt=json&api_key=%s",
+        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/%s/%s/%s/styles?state=used&view=full&fmt=json&api_key=%s",
                 this.make, this.model, this.year, CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, VehicleStyles.class);
     }

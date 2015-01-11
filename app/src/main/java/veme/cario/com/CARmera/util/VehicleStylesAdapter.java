@@ -22,7 +22,7 @@ public class VehicleStylesAdapter extends ArrayAdapter<Style> {
     private LayoutInflater layoutInflater;
     private static class ViewHolder {
         LinearLayout style_item_layout;
-        TextView style_name_tv;
+        TextView style_name_tv, style_price_tv;
     }
     public VehicleStylesAdapter (Context context) {
         super(context, 0);
@@ -38,16 +38,16 @@ public class VehicleStylesAdapter extends ArrayAdapter<Style> {
             viewHolder = new ViewHolder();
             viewHolder.style_item_layout = (LinearLayout) view.findViewById(R.id.style_item_overlay);
             viewHolder.style_name_tv = (TextView) view.findViewById(R.id.vehicle_style_name);
+            viewHolder.style_price_tv = (TextView) view.findViewById(R.id.starting_price);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
         final Style style = getItem(pos);
-        final TextView style_name_tv = viewHolder.style_name_tv;
         final LinearLayout style_overlay = viewHolder.style_item_layout;
         style_overlay.setBackgroundColor(0x4169E1);
-        style_name_tv.setText(style.getName());
-
+        viewHolder.style_name_tv.setText(style.getName());
+        viewHolder.style_price_tv.setText("New MSRP from $" + style.getPrice().getBaseMSRP());
         return view;
     }
 }

@@ -50,6 +50,17 @@ public class Style {
     @JsonProperty
     private String id;
 
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    @JsonProperty
+    private Price price;
+
     @JsonProperty
     private String name;
 
