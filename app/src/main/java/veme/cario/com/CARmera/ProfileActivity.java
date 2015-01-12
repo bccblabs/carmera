@@ -19,18 +19,9 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements SavedListingsFragment.OnSavedListingSelectedListener {
 
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
-
-
-    @Override
-    public void onSearchCreated (SavedSearch savedSearch) {
-        /* directs to listings activity to retrieve listings */
-        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
-        i.putExtra ("search_obj", savedSearch);
-        startActivity(i);
-    }
 
     @Override
     public void onCreate (Bundle savedBundleInst) {
@@ -125,8 +116,18 @@ public class ProfileActivity extends BaseActivity {
             }
         });
 
-
     }
 
+    @Override
+    public void onSearchCreated (SavedSearch savedSearch) {
+        /* directs to listings activity to retrieve listings */
+        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
+        i.putExtra ("search_obj", savedSearch);
+        startActivity(i);
+    }
+
+
+    @Override
+    public void OnSavedListingSelected (int pos) {}
 
 }

@@ -60,8 +60,7 @@
         <item>Volkswagen</item>
         <item>Volvo</item>
     </string-array>
-    <string-array
-        name="model_array">
+    <string-array name="model_array">
         <item>"x3"</item>
         <item>"TTs"</item>
         <item>"Mustang"</item>
@@ -113,6 +112,85 @@
         <item>90,000</item>
         <item>95,000</item>
         <item>100,000</item>
+    </string-array>
+
+    <string-array name="acura_md">
+        <item>TLX</item>
+        <item>MDX</item>
+        <item>TL</item>
+        <item>RDX</item>
+        <item>TSX</item>
+        <item>ILX</item>
+        <item>ILX Hybrid</item>
+        <item>RLX</item>
+        <item>NSX</item>
+        <item>ZDX</item>
+        <item>Integra</item>
+        <item>RL</item>
+        <item>Legend</item>
+        <item>CL</item>
+        <item>Vigor</item>
+        <item>SLX</item>
+        <item>NSX-T</item>
+    </string-array>
+    <string-array name="toyota_md">
+        <item>4Runner</item>
+        <item>Avalon</item>
+        <item>Avalon Hybrid</item>
+        <item>Camry</item>
+        <item>Camry Hybrid</item>
+        <item>Corolla</item>
+        <item>FJ Cruiser</item>
+        <item>Highlander</item>
+        <item>Highlander Hybrid</item>
+        <item>Land Cruiser</item>
+        <item>Matrix</item>
+        <item>Mirai</item>
+        <item>Prius Hatchback</item>
+        <item>Prius C</item>
+        <item>Prius Plug-in Hatchback</item>
+        <item>Prius v Wagon</item>
+        <item>RAV4</item>
+        <item>Sequoia</item>
+        <item>Sienna</item>
+        <item>Tacoma</item>
+        <item>Tundra</item>
+        <item>Venza</item>
+        <item>Yaris</item>
+    </string-array>
+    <string-array name="honda_md">
+        <item>Accord</item>
+        <item>Civic</item>
+        <item>CR-V</item>
+        <item>CR-Z</item>
+        <item>Fit</item>
+        <item>HR-V</item>
+        <item>Insight</item>
+        <item>Odyssey</item>
+        <item>Pilot</item>
+        <item>Ridgeline</item>
+    </string-array>
+    <string-array name="nissan_md">
+        <item>370Z</item>
+        <item>Altima</item>
+        <item>Armada</item>
+        <item>Cube</item>
+        <item>Frontier</item>
+        <item>GT-R</item>
+        <item>Juke</item>
+        <item>Leaf</item>
+        <item>Maxima</item>
+        <item>Murano</item>
+        <item>Murano CrossCabriolet</item>
+        <item>NV</item>
+        <item>NV200</item>
+        <item>Pathfinder</item>
+        <item>Quest</item>
+        <item>Rogue</item>
+        <item>Sentra</item>
+        <item>Titan</item>
+        <item>Versa</item>
+        <item>Xterra</item>
     </string-array>
 
 </resources>

@@ -32,24 +32,15 @@
         fab:fab_expandDirection="down"
         fab:fab_labelStyle="@style/menu_labels_style">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listing_activity_edit_srch_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/pink"
-            fab:fab_size="mini"
-            fab:fab_title="New/Edit Seach"
-            fab:fab_icon="@drawable/ic_action_edit"
-            fab:fab_colorPressed="@color/pink_pressed"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listing_activity_save_srch_btn"
+            android:id="@+id/listing_activity_saved_searches_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/pink"
             fab:fab_size="mini"
-            fab:fab_title="Mark This Search!"
-            fab:fab_icon="@drawable/ic_action_save"
+            fab:fab_title="Saved Search"
+            fab:fab_icon="@drawable/ic_action_search"
             fab:fab_colorPressed="@color/pink_pressed"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -63,15 +54,24 @@
             fab:fab_colorPressed="@color/pink_pressed"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listing_activity_saved_searches_btn"
+            android:id="@+id/listing_activity_save_srch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/pink"
             fab:fab_size="mini"
-            fab:fab_title="Saved Search"
-            fab:fab_icon="@drawable/ic_action_search"
+            fab:fab_title="Mark This Search!"
+            fab:fab_icon="@drawable/ic_action_save"
             fab:fab_colorPressed="@color/pink_pressed"/>
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/listing_activity_edit_srch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="New/Edit Seach"
+            fab:fab_icon="@drawable/ic_action_edit"
+            fab:fab_colorPressed="@color/pink_pressed"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </FrameLayout>

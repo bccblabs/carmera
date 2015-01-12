@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.List;
+
+import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.ListingsAdapter;
@@ -21,7 +24,8 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 /**
  * Created by bski on 1/6/15.
  */
-public class ListingsActivity extends BaseActivity {
+public class ListingsActivity extends BaseActivity
+                              implements SavedListingsFragment.OnSavedListingSelectedListener {
 
     private ListView listings_view;
     private TextView no_listings_view;
@@ -32,6 +36,10 @@ public class ListingsActivity extends BaseActivity {
     private String TAG = ListingsActivity.class.toString();
 
     private FloatingActionButton edit_search_btn, save_search_btn, saved_cars_btn, saved_search_btn;
+
+
+    @Override
+    public void OnSavedListingSelected (int pos) {}
 
     @Override
     public void onSearchCreated (SavedSearch savedSearch) {
@@ -54,8 +62,8 @@ public class ListingsActivity extends BaseActivity {
         listings_view.setAdapter(listingsAdapter);
 
         edit_search_btn = (FloatingActionButton) findViewById(R.id.listing_activity_edit_srch_btn);
-        saved_search_btn = (FloatingActionButton) findViewById(R.id.listing_activity_save_srch_btn);
-        save_search_btn = (FloatingActionButton) findViewById(R.id.listing_activity_saved_searches_btn);
+        saved_search_btn = (FloatingActionButton) findViewById(R.id.listing_activity_saved_searches_btn);
+        save_search_btn = (FloatingActionButton) findViewById(R.id.listing_activity_save_srch_btn);
         saved_cars_btn = (FloatingActionButton) findViewById(R.id.listing_activity_saved_cars_btn);
 
         /* Button listeners: each opens a fragment with information */
@@ -64,11 +72,11 @@ public class ListingsActivity extends BaseActivity {
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putString("dialog_type", "create_search");
-                args.putParcelable("search_obj", savedSearch);
-                if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-                    vehicleInfoDialog.dismiss();
-                    vehicleInfoDialog = null;
-                }
+//                args.putParcelable("search_obj", savedSearch);
+//                if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+//                    vehicleInfoDialog.dismiss();
+//                    vehicleInfoDialog = null;
+//                }
                 FragmentManager fm = getSupportFragmentManager();
                 vehicleInfoDialog = new VehicleInfoDialog();
                 vehicleInfoDialog.setArguments(args);
@@ -114,8 +122,9 @@ public class ListingsActivity extends BaseActivity {
         save_search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedSearch.setFavorite(true);
-                savedSearch.saveInBackground();
+//                savedSearch = new SavedSearch() ;
+//                savedSearch.setFavorite(true);
+//                savedSearch.saveInBackground();
                 Toast.makeText(getApplicationContext(), "Search Saved!", Toast.LENGTH_LONG).show();
             }
         });

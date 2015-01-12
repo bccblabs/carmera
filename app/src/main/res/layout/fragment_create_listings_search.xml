@@ -248,7 +248,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp">
+                android:layout_margin="20dp">
                 <com.gc.materialdesign.views.ButtonRectangle
                     android:id="@+id/create_listings_save_search_btn"
                     android:layout_width="0dp"
