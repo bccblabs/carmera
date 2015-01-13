@@ -21,16 +21,16 @@
             android:orientation="vertical">
             <com.facebook.widget.ProfilePictureView
                 android:id="@+id/fb_profile_pic_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="70dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="30dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/com_facebook_profile_default_icon"/>
             <TextView
                 android:id="@+id/username_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:textColor="@color/off_white"
                 android:textSize="18sp"
                 android:textStyle="bold"

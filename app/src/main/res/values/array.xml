@@ -569,4 +569,64 @@
         <item>V60 Cross Country</item>
     </string-array>
 
+    <string-array name="body_style_array">
+        <item>Coupe</item>
+        <item>Sedan</item>
+        <item>Truck</item>
+        <item>SUV</item>
+        <item>Van</item>
+        <item>Wagon</item>
+        <item>Convertible</item>
+        <item>Crossover</item>
+        <item>Any</item>
+    </string-array>
+
+    <string-array name="origin_array">
+        <item>European</item>
+        <item>Domestic</item>
+        <item>Japanese</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="color_array">
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Gray</item>
+        <item>Silver</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Any</item>
+    </string-array>
+    <string-array name="equipment_array">
+        <item>Sport Package</item>
+        <item>Moon roof</item>
+        <item>Sun roof</item>
+        <item>Navigation</item>
+        <item>Any</item>
+    </string-array>
+    <string-array name="txn_array">
+        <item>Manual</item>
+        <item>Automanual</item>
+        <item>Automatic</item>
+        <item>Any</item>
+    </string-array>
+    <string-array name="cylinder_array">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>12+</item>
+        <item>Any</item>
+    </string-array>
+    <string-array name="compressor_array">
+        <item>Any</item>
+        <item>None</item>
+        <item>Turbo</item>
+        <item>Supercharged</item>
+    </string-array>
 </resources>

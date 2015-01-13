@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,11 @@ import com.parse.ParseException;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
@@ -71,6 +77,23 @@ public class TaggedPostFragment extends Fragment {
         vehicle_info_tv = (TextView) view.findViewById(R.id.vehicle_info_tv);
         tagged_photo_view = (ParseImageView) view.findViewById(R.id.tagged_photo_fullview);
         fb_profile_pic_view = (ProfilePictureView) view.findViewById(R.id.fb_profile_pic_view);
+
+        Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser.has("profile")) {
+            JSONObject userProfile = currentUser.getJSONObject("profile");
+            try {
+                if (userProfile.has("facebookId")) {
+                    fb_profile_pic_view.setProfileId(userProfile.getString("facebookId"));
+                } else {
+                    fb_profile_pic_view.setProfileId(null);
+                }
+                user_info_tv.setText(userProfile.getString("name"));
+                user_info_tv.setTypeface(fa);
+            } catch (JSONException e) {
+                Log.d(TAG, "Error parsing saved user data.");
+            }
+        }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
         query.getInBackground(post_id, new GetCallback<ParseObject>() {

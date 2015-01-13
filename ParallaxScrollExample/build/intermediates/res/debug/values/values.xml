@@ -4,7 +4,7 @@
     <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">ParallaxScrollExample</string>
-    <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/build/intermediates/exploded-aar/CARmera/ParallaxScroll/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/bski/Project/carmera/ParallaxScrollExample/build/intermediates/exploded-aar/carmera/ParallaxScroll/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="define_parallaxscroll"/>
     <string name="library_parallaxscroll_author">Nir Hartmann</string>

@@ -3,6 +3,7 @@ package veme.cario.com.CARmera;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 
 import veme.cario.com.CARmera.model.UserModels.BusinessRequest;
@@ -20,17 +21,19 @@ public class CARmeraApp extends Application {
 
     public static final String edmunds_app_secret = "tVsB2tChr7wXqk47ZZMQneKq";
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         Parse.initialize(this,
                 getString(R.string.parse_app_id),
                 getString(R.string.parse_app_key));
+        ParseFacebookUtils.initialize(getString(R.string.facebook_app_id));
+
         ParseObject.registerSubclass(BusinessRequest.class);
         ParseObject.registerSubclass(TaggedVehicle.class);
         ParseObject.registerSubclass(UserInfo.class);
         ParseObject.registerSubclass(Contact.class);
         ParseObject.registerSubclass(SavedSearch.class);
     }
+
 }

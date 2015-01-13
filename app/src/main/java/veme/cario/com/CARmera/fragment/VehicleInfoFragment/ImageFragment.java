@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -36,7 +37,7 @@ public class ImageFragment extends Fragment {
 
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
-    private Button upload_btn;
+    private FloatingActionButton upload_btn;
     private Bitmap bitmap;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static final String TAG = "IMAGE_FRAGMENT";
@@ -100,7 +101,7 @@ public class ImageFragment extends Fragment {
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.preview_view);
 
-        upload_btn = (Button) getView().findViewById(R.id.upload_btn);
+        upload_btn = (FloatingActionButton) getView().findViewById(R.id.upload_btn);
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

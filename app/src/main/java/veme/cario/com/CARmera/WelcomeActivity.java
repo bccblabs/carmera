@@ -44,29 +44,12 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        getActionBar().hide();
 
         ParseUser current_user = ParseUser.getCurrentUser();
         if (current_user != null && ParseFacebookUtils.isLinked(current_user)) {
-            startActivity(new Intent(WelcomeActivity.this, NearbyActivity.class));
+            startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
         }
-        // Log in button click handler
-        Button loginButton = (Button) findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                // Starts an intent of the log in activity
-                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
-            }
-        });
-
-        // Sign up button click handler
-        Button signUpButton = (Button) findViewById(R.id.signup_button);
-        signUpButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                // Starts an intent for the sign up activity
-                startActivity(new Intent(WelcomeActivity.this, SignUpActivity.class));
-            }
-        });
-
         Button loginFacebook = (Button) findViewById(R.id.login_facebook_btn);
         loginFacebook.setOnClickListener(new OnClickListener() {
             @Override
@@ -98,7 +81,7 @@ public class WelcomeActivity extends Activity {
         progressDialog = ProgressDialog.show(WelcomeActivity.this, "",
                 "Loggin in using Facebook", true);
         List<String> permissions = Arrays.asList("public_profile",
-                "user_friends", "user_location", "email");
+                "user_friends", "email");
 
         ParseFacebookUtils.logIn(permissions, this,new LogInCallback() {
             @Override
@@ -109,7 +92,7 @@ public class WelcomeActivity extends Activity {
                             "Oops, can't loggin through facebook", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    startActivity(new Intent(WelcomeActivity.this, NearbyActivity.class));
+                    startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
                 }
             }
 

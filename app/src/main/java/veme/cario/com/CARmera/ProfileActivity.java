@@ -1,12 +1,20 @@
 package veme.cario.com.CARmera;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import com.facebook.widget.ProfilePictureView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
@@ -22,11 +30,34 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 public class ProfileActivity extends BaseActivity implements SavedListingsFragment.OnSavedListingSelectedListener {
 
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
+    private ProfilePictureView profilePictureView;
+    private TextView name_view;
+    private static final String TAG = ProfileActivity.class.getSimpleName();
 
     @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
         getLayoutInflater().inflate(R.layout.activity_profile, frame_layout);
+
+        Typeface fa = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+        profilePictureView = (ProfilePictureView) findViewById(R.id.fb_profile_pic_view);
+        name_view = (TextView) findViewById(R.id.username_view);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser.has("profile")) {
+            JSONObject userProfile = currentUser.getJSONObject("profile");
+            try {
+                if (userProfile.has("facebookId")) {
+                    profilePictureView.setProfileId(userProfile.getString("facebookId"));
+                } else {
+                    profilePictureView.setProfileId(null);
+                }
+                name_view.setText(userProfile.getString("name"));
+                name_view.setTypeface(fa);
+            } catch (JSONException e) {
+                Log.d(TAG, "Error parsing saved user data.");
+            }
+        }
+
         drawer_listview.setItemChecked(drawer_pos, true);
         setTitle("My Tags");
         my_tags_btn = (FloatingActionButton) findViewById(R.id.my_tags_btn);

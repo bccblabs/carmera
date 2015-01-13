@@ -1,24 +1,44 @@
 package veme.cario.com.CARmera;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.facebook.AppEventsLogger;
+import com.facebook.FacebookRequestError;
+import com.facebook.Request;
+import com.facebook.RequestBatch;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphObject;
+import com.facebook.model.GraphUser;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
-import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
@@ -37,6 +57,7 @@ public class BaseActivity extends FragmentActivity implements
         TaggedPostFragment.CreateSearchListner,
         CreateSearchFragment.ListingSearchCreatedListener {
 
+    private static final String TAG = BaseActivity.class.getSimpleName();
     /* Navigation Drawer Variables */
     protected FrameLayout frame_layout;
     private DrawerLayout drawer_layout;
@@ -52,62 +73,284 @@ public class BaseActivity extends FragmentActivity implements
 
     private VehicleInfoDialog vehicleInfoDialog;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    /* facebook utilities */
+    private static final String CURRENT_FB_USER_KEY = "current_fb_user";
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+    private FacebookRequestError fb_req_err = null;
 
-        setContentView(R.layout.activity_base);
-        frame_layout = (FrameLayout) findViewById(R.id.content_frame);
-        title = drawerTitle = getTitle();
+    private List<GraphUser> friends;
+    private List<JSONObject> invitable_friends;
+    private static final String FRIENDS_KEY = "friends";
 
-        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        drawer_listview = (ListView) findViewById(R.id.left_drawer);
+    private boolean has_denied_friend_permission = false;
 
-        /* Initializing drawer items */
-        drawer_item_list = new ArrayList<DrawerItem>();
-        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_tags));
-        drawer_item_list.add(new DrawerItem("Listings", R.drawable.ic_action_list_2));
-        drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
-        drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
-        drawer_item_list.add(new DrawerItem("Notifications", R.drawable.ic_action_globe));
-        drawer_item_list.add(new DrawerItem("Friends", R.drawable.ic_action_emo_cool));
-        drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
+    private static final Uri FACEBOOK_URL = Uri.parse("http://m.facebook.com");
 
-        /* set item actions */
-        drawer_adapter = new DrawerAdapter(this, R.layout.drawer_item_layout, drawer_item_list);
-        drawer_listview.setAdapter(drawer_adapter);
-        drawer_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openActivity(position);
-            }
-        });
 
-        /* set up drawer toggle */
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout,
-                R.drawable.ic_drawer, R.string.drawer_open,
-                R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(title);
-                invalidateOptionsMenu();
-            }
+    public static String getCurrentFbUserKey() {
+        return CURRENT_FB_USER_KEY;
+    }
 
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(drawerTitle);
-                invalidateOptionsMenu();
-            }
-        };
+    public static String getFriendsKey() {
+        return FRIENDS_KEY;
+    }
 
-        drawer_layout.setDrawerListener(actionBarDrawerToggle);
-        if (is_launch) {
-            is_launch = false;
-            openActivity(0);
+
+    public FacebookRequestError getFBReqErr() {
+        return fb_req_err;
+    }
+
+    public void setFBReqErr(FacebookRequestError fb_req_err) {
+        this.fb_req_err = fb_req_err;
+    }
+
+    public List<GraphUser> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<GraphUser> friends) {
+        this.friends = friends;
+    }
+
+    public boolean hasDeniedFriendPermission() {
+        return has_denied_friend_permission;
+    }
+
+    public void setHasDeniedFriendPermission(boolean val) {
+        this.has_denied_friend_permission = val;
+    }
+
+    public List<JSONObject> getInvitableFriends() {
+        return invitable_friends;
+    }
+
+    public void setInvitableFriends(List<JSONObject> invitableFriends) {
+        this.invitable_friends = invitableFriends;
+    }
+
+    public ArrayList<String> getFriendsAsArrayListOfStrings() {
+        ArrayList<String> friendsAsArrayListOfStrings = new ArrayList<String>();
+        Iterator<GraphUser> friendsIterator = friends.iterator();
+        while (friendsIterator.hasNext()) {
+            friendsAsArrayListOfStrings.add(friendsIterator.next().getInnerJSONObject().toString());
+        }
+        return friendsAsArrayListOfStrings;
+    }
+
+    public GraphUser getFriend(int index) {
+        if (friends != null && friends.size() > index) {
+            return friends.get(index);
+        } else {
+            return null;
         }
     }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            startActivity(new Intent (BaseActivity.this, WelcomeActivity.class));
+        }
+        AppEventsLogger.activateApp(this, getString(R.string.facebook_app_id));
+    }
+
+
+    private void makeMeRequest() {
+        RequestBatch requestBatch = new RequestBatch();
+        /* req 1 */
+        final Session session = ParseFacebookUtils.getSession();
+        Request meRequest = Request.newMeRequest(session ,
+                new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        if (user != null) {
+                            // Create a JSON object to hold the profile info
+                            JSONObject userProfile = new JSONObject();
+                            try {
+                                // Populate the JSON object
+                                userProfile.put("facebookId", user.getId());
+                                Log.i (TAG, "facebook id : " + user.getId());
+                                userProfile.put("name", user.getName());
+                                if (user.getProperty("gender") != null) {
+                                    userProfile.put("gender", user.getProperty("gender"));
+                                }
+                                if (user.getProperty("email") != null) {
+                                    userProfile.put("email", user.getProperty("email"));
+                                }
+                                ParseUser currentUser = ParseUser.getCurrentUser();
+                                currentUser.put("profile", userProfile);
+                                currentUser.saveInBackground();
+                            } catch (JSONException e) {
+                                Log.d(TAG, "Error parsing returned user data. " + e);
+                            }
+
+                        } else if (response.getError() != null) {
+                            if ((response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_RETRY) ||
+                                    (response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_REOPEN_SESSION)) {
+                                Log.d(TAG, "The facebook session was invalidated." + response.getError());
+                                logout();
+                            } else {
+                                Log.d(TAG, "Some other error: " + response.getError());
+                            }
+                        }
+                    }
+                }
+        );
+        requestBatch.add(meRequest);
+
+//        /* req 2 */
+        Request invitableFriendsRequest = Request.newGraphPathRequest(session,
+                    "/me/invitable_friends", new Request.Callback() {
+                        @Override
+                        public void onCompleted(Response response) {
+                            FacebookRequestError error = response.getError();
+                            if (error != null) {
+                                handleError(error, true);
+                            if (response != null) {
+                                GraphObject graphObject = response.getGraphObject();
+                                if (graphObject != null) {
+                                    JSONArray dataArray = (JSONArray) graphObject.getProperty("data");
+                                    List<JSONObject> invitableFriends = new ArrayList<JSONObject>();
+                                    if (dataArray.length() > 0) {
+                                        for (int i = 0; i < dataArray.length(); i++) {
+                                            invitableFriends.add(dataArray.optJSONObject(i));
+                                        }
+                                    }
+                                    setInvitableFriends(invitableFriends);
+                                }
+                            }
+                        }
+                    }
+                });
+        Bundle invitableParams = new Bundle();
+        invitableParams.putString("fields", "id,first_name,picture");
+        invitableFriendsRequest.setParameters(invitableParams);
+        requestBatch.add(invitableFriendsRequest);
+//
+        /* req 3 */
+        Request friendsRequest = Request.newMyFriendsRequest(session,
+                new Request.GraphUserListCallback() {
+                    @Override
+                    public void onCompleted(List<GraphUser> users, Response response) {
+                        FacebookRequestError error = response.getError();
+                        if (error != null) {
+                            handleError(error, true);
+                        } else {
+                            setFriends(users);
+                        }
+                    }
+                });
+        Bundle params = new Bundle();
+        params.putString("fields", "name,first_name,last_name");
+        friendsRequest.setParameters(params);
+        requestBatch.add(friendsRequest);
+
+        requestBatch.executeAsync();
+    }
+    public void handleError(FacebookRequestError error, boolean logout) {
+        Log.d(TAG, "handleError: " + error.getErrorMessage());
+
+        DialogInterface.OnClickListener listener = null;
+        String dialogBody = null;
+
+        if (error == null) {
+            dialogBody = getString(R.string.error_dialog_default_text);
+        } else {
+            switch (error.getCategory()) {
+                case AUTHENTICATION_RETRY:
+                    // tell the user what happened by getting the message id, and
+                    // retry the operation later
+                    String userAction = (error.shouldNotifyUser()) ? "" :
+                            getString(error.getUserActionMessageId());
+                    dialogBody = getString(R.string.error_authentication_retry, userAction);
+                    listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, FACEBOOK_URL);
+                            startActivity(intent);
+                        }
+                    };
+                    break;
+
+                case AUTHENTICATION_REOPEN_SESSION:
+                    // close the session and reopen it.
+                    dialogBody = getString(R.string.error_authentication_reopen);
+                    listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Session session = Session.getActiveSession();
+                            if (session != null && !session.isClosed()) {
+                                session.closeAndClearTokenInformation();
+                            }
+                        }
+                    };
+                    break;
+
+                case PERMISSION:
+                    // request the publish permission
+                    dialogBody = getString(R.string.error_permission);
+                    listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    };
+                    break;
+
+                case SERVER:
+                case THROTTLING:
+                    // this is usually temporary, don't clear the fields, and
+                    // ask the user to try again
+                    dialogBody = getString(R.string.error_server);
+                    break;
+
+                case BAD_REQUEST:
+                    // this is likely a coding error, ask the user to file a bug
+                    dialogBody = getString(R.string.error_bad_request, error.getErrorMessage());
+                    break;
+
+                case CLIENT:
+                    // this is likely an IO error, so tell the user they have a network issue
+                    dialogBody = getString(R.string.network_error);
+                    break;
+
+                case OTHER:
+                default:
+                    // an unknown issue occurred, this could be a code error, or
+                    // a server side issue, log the issue, and either ask the
+                    // user to retry, or file a bug
+                    dialogBody = getString(R.string.error_unknown, error.getErrorMessage());
+                    break;
+            }
+        }
+
+        new AlertDialog.Builder(this)
+                .setPositiveButton(R.string.error_dialog_button_text, listener)
+                .setTitle(R.string.error_dialog_title)
+                .setMessage(dialogBody)
+                .show();
+
+        if (logout) {
+            logout();
+        }
+    }
+
+    public void showError(String error, boolean logout) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        if (logout) {
+            logout();
+        }
+    }
+
+    private void logout() {
+        Log.d(TAG, "Logging user out.");
+        if (ParseUser.getCurrentUser() != null)
+            ParseUser.logOut();
+        Session.getActiveSession().closeAndClearTokenInformation();
+    }
+
 
     protected void openActivity(int position) {
         drawer_layout.closeDrawer(drawer_listview);
@@ -131,6 +374,10 @@ public class BaseActivity extends FragmentActivity implements
                 break;
             case 5:
                 startActivity(new Intent(this, FriendsActivity.class));
+                break;
+            case 6:
+                logout();
+                startActivity(new Intent(this, WelcomeActivity.class));
                 break;
             default:
                 break;
@@ -281,5 +528,67 @@ public class BaseActivity extends FragmentActivity implements
     public void onSearchCreated (SavedSearch savedSearch) {
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        setContentView(R.layout.activity_base);
+        frame_layout = (FrameLayout) findViewById(R.id.content_frame);
+        title = drawerTitle = getTitle();
+
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawer_listview = (ListView) findViewById(R.id.left_drawer);
+
+        /* Initializing drawer items */
+        drawer_item_list = new ArrayList<DrawerItem>();
+        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_tags));
+        drawer_item_list.add(new DrawerItem("Listings", R.drawable.ic_action_list_2));
+        drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
+        drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
+        drawer_item_list.add(new DrawerItem("Notifications", R.drawable.ic_action_globe));
+        drawer_item_list.add(new DrawerItem("Friends", R.drawable.ic_action_emo_cool));
+        drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
+
+        /* set item actions */
+        drawer_adapter = new DrawerAdapter(this, R.layout.drawer_item_layout, drawer_item_list);
+        drawer_listview.setAdapter(drawer_adapter);
+        drawer_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openActivity(position);
+            }
+        });
+
+        /* set up drawer toggle */
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout,
+                R.drawable.ic_drawer, R.string.drawer_open,
+                R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(title);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+
+        drawer_layout.setDrawerListener(actionBarDrawerToggle);
+        if (is_launch) {
+            is_launch = false;
+            openActivity(0);
+        }
+
+        Session session = ParseFacebookUtils.getSession();
+        if (session != null && session.isOpened()) {
+//            fetchUserInformation();
+            makeMeRequest();
+        }
+
+    }
 }
 

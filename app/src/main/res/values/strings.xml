@@ -140,6 +140,24 @@
     <string name="min_price">Min Price: </string>
     <string name="max_price">Max Price: </string>
 
+
+    <string name="network_error">Please check your network connection</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_button_text">OK</string>
+    <string name="error_dialog_default_text">No response from server.</string>
+    <string name="error_authentication_retry">An error occurred that requires your attention. %1$s</string>
+    <string name="error_authentication_reopen">An error occurred, please re-login.</string>
+    <string name="error_permission">Please allow us to post on your behalf.</string>
+    <string name="error_server">The server is busy, please retry later.</string>
+    <string name="error_bad_request">An error occurred, please contact the developer with the following message: %1$s</string>
+    <string name="error_unknown">An unknown error occurred, please contact the developer with the following message: %1$s</string>
+    <string name="error_fetching_profile">Error fetching your user profile - Please try again</string>
+    <string name="error_fetching_friend_bitmap">Error fetching your friend\'s profile picture - Please try again</string>
+    <string name="error_switching_screens">Error switching screens - Please try again</string>
+    <string name="error_no_scores">"No scores to display"</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="welcome_message">CARmera</string>
     <string name="fa_glass">&#xf000;</string>
     <string name="fa_music">&#xf001;</string>
     <string name="fa_search">&#xf002;</string>
