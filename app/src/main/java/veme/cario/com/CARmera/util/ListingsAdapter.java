@@ -128,6 +128,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                     holder.heart_btn.setIcon(R.drawable.ic_action_heart_mid);
                     taggedVehicle.setFavorite(true);
                 }
+                taggedVehicle.saveInBackground();
             }
         });
 

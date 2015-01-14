@@ -1,6 +1,8 @@
 package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.ProfilePictureView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.GetCallback;
@@ -22,6 +25,10 @@ import com.parse.ParseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
@@ -33,11 +40,10 @@ public class TaggedPostFragment extends Fragment {
     private TextView post_date_tv, user_info_tv;  /* user name, time */
     private TextView vehicle_info_tv; /* vehicle mk, yr, model */
     private TaggedVehicle taggedVehicle;
-
     private DetailsSelectedListener detailSelectedCallback = null;
     private CreateSearchListner createSearchListner = null;
 
-    private FloatingActionButton details_btn, see_listings_btn, share_email_btn, share_facebook_btn;
+    private FloatingActionButton details_btn, see_listings_btn, share_facebook_btn;
 
 
     public interface DetailsSelectedListener {
@@ -116,7 +122,6 @@ public class TaggedPostFragment extends Fragment {
         details_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_details_btn);
         see_listings_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_listings_btn);
         share_facebook_btn = (FloatingActionButton) view.findViewById(R.id.share_facebook_btn);
-        share_email_btn = (FloatingActionButton) view.findViewById(R.id.share_email_btn);
 
         details_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +146,24 @@ public class TaggedPostFragment extends Fragment {
             }
         });
 
+        share_facebook_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FacebookDialog.canPresentMessageDialog(getActivity())) {
+                    FacebookDialog.MessageDialogBuilder builder = new FacebookDialog.MessageDialogBuilder(getActivity());
+                    builder.setLink("http://www.carmera.io")
+                            .setName(taggedVehicle.toString())
+                            .setPicture (taggedVehicle.getTagPhoto().getUrl())
+                            .setFragment(TaggedPostFragment.this);
+                    builder.build().present();
+                } else {
+                    // The user doesn't have the Facebook Messenger app for Android app installed.
+                }
+            }
+        });
+
         return view;
     }
+
 
 }

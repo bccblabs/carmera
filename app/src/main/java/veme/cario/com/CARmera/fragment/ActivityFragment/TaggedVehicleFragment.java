@@ -36,7 +36,6 @@ public class TaggedVehicleFragment extends Fragment {
     private OnVehicleSelectedListener vehicleSelectedCallback;
 
     public interface OnVehicleSelectedListener {
-//            public void OnVehicleSelected (byte[] imageData, String year, String make, String model);
             public void OnVehicleSelected (String post_id);
     }
 
@@ -44,7 +43,6 @@ public class TaggedVehicleFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-//            listingCallback = (OnSeeListingsSelectedListener) activity;
             vehicleSelectedCallback = (OnVehicleSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
