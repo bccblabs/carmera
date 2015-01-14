@@ -492,6 +492,22 @@ public class BaseActivity extends FragmentActivity implements
     public void onSearchCreated (SavedSearch savedSearch) {
     }
 
+    public void onIncentivesSelected (String style_id) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "incentive_rebate");
+        args.putString("vehicle_id", style_id);
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show (fm, "incentivesOverlay");
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

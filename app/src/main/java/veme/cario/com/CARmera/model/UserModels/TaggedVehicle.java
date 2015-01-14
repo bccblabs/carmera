@@ -18,6 +18,15 @@ public class TaggedVehicle extends ParseObject {
 
     public TaggedVehicle() {}
 
+
+    public String getStyleId () {
+        return getString ("style_id");
+    }
+
+    public void setStyleId (String val) {
+        put ("style_id", val);
+    }
+
     public String getYear() {
         return getString("year");
     }

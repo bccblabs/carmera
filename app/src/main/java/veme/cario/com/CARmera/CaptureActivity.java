@@ -39,6 +39,7 @@ public class CaptureActivity extends BaseActivity
     private VehicleInfoDialog vehicleInfoDialog = null;
     private SimpleTaggedVehicleDialog simpleTaggedVehicleDialog = null;
     private int rotate_deg = 0;
+    private TaggedVehicle taggedVehicle;
 
     private int img_height, img_width;
     public Camera.AutoFocusCallback autoFocusCallback = null;
@@ -243,7 +244,7 @@ public class CaptureActivity extends BaseActivity
         cropped_image.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] thumbnail = stream.toByteArray();
 
-        TaggedVehicle taggedVehicle = new TaggedVehicle();
+        taggedVehicle = new TaggedVehicle();
         taggedVehicle.setYear(year);
         taggedVehicle.setMake(make);
         taggedVehicle.setModel(model);
@@ -276,6 +277,31 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
+
+    @Override
+    public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
+//        Bundle args = new Bundle();
+//        args.putString ("dialog_type", "vehicle_info");
+//        args.putString ("vehicle_id", trim_id);
+//        args.putString ("vehicle_year", yr);
+//        args.putString ("vehicle_make", mk);
+//        args.putString ("vehicle_model", md);
+//        args.putString ("vehicle_trim_name", trim_name);
+//        args.putByteArray("imageData", imageData);
+//
+//
+//        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+//            vehicleInfoDialog.dismiss();
+//            vehicleInfoDialog = null;
+//        }
+//        FragmentManager fm = getSupportFragmentManager();
+//        vehicleInfoDialog = new VehicleInfoDialog();
+//        vehicleInfoDialog.setArguments(args);
+//        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+        super.onStyleSelected(imageData, trim_id, trim_name, yr, mk, md);
+        taggedVehicle.setStyleId(trim_id);
+        taggedVehicle.saveInBackground();
     }
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {

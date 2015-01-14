@@ -23,6 +23,7 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.IncentivesFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.RecallFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
@@ -110,6 +111,8 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new SavedListingsAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("saved_search")) {
             fragmentPagerAdapter = new SavedSearchesAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("incentive_rebate")) {
+            fragmentPagerAdapter = new IncentivesAdapter(getChildFragmentManager());
         } else {
             Log.d(TAG, " - no such type, default to info dialog");
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
@@ -357,4 +360,29 @@ public class VehicleInfoDialog extends DialogFragment {
         }
     }
 
+    public class IncentivesAdapter extends FragmentPagerAdapter {
+        public IncentivesAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment incentivesFragment = new IncentivesFragment();
+            Bundle args = getArguments();
+            incentivesFragment.setArguments(args);
+            return incentivesFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Incentives & Rebates";
+            }
+            return null;
+        }
+    }
 }

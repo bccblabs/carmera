@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -34,6 +35,7 @@ import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
+import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 1/1/15.
@@ -189,92 +191,14 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                 });
             }
         });
-//
-//        contact_seller_btn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    SellerInfoDialog sellerInfoDialog = new SellerInfoDialog();
-//                    /* pass info to the dialog */
-//                    Bundle args = new Bundle();
-////                    String sellerEmail = taggedVehicle.getSellerEmail();
-////                    String sellerPhone = taggedVehicle.getSellerPhone();
-////                    try {
-////                        byte[] seller_thumbnail = taggedVehicle.getSellerThumbnail().getData();
-////                        if (seller_thumbnail != null) {
-////                            args.putByteArray("seller_thumbnail", seller_thumbnail);
-////                        }
-////                    } catch (com.parse.ParseException e) {
-////                        Log.d(TAG, e.getMessage());
-////                    }
-//
-////                    if (sellerEmail != null) {
-////                        args.putString("seller_email", taggedVehicle.getSellerEmail());
-////                    }
-//
-////                    if (sellerPhone != null) {
-////                        args.putString("seller_phone", taggedVehicle.getSellerPhone());
-////                    }
-//
-////                    args.putString("seller_info", taggedVehicle.getSellerInfo());
-//
-//
-//                    /* starts the dialog */
-//                    FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
-//                    sellerInfoDialog.setArguments(args);
-//                    sellerInfoDialog.show(fm, "sellerInfoDialog");
-//                }
-//            });
-//        TextView likes_cnt_tv = holder.likesCountView;
-//        final LinearLayout likes_overlay = holder.likesOverlay;
-//        likes_cnt_tv.setText(taggedVehicle.getLikesCnt());
-//        likes_cnt_tv.setClickable(true);
-//        likes_cnt_tv.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (taggedVehicle.isLikedByMe()) {
-//                    taggedVehicle.removeLiker(ParseUser.getCurrentUser().getObjectId());
-//                    likes_overlay.setBackgroundColor(GREEN_BACKGROUND);
-//                } else {
-//                    taggedVehicle.addLiker(ParseUser.getCurrentUser().getObjectId());
-//                    likes_overlay.setBackgroundColor(WHITE_BACKGROUND);
-//                }
-//            }
-//        });
 
-//        /* View item: Vehicle Favorite Button */
-//        final Button favoriteButton = holder.favoriteButton;
-//        if (SavedListingsList.get().contains(taggedVehicle)) {
-//            if (taggedVehicle.isFavorites()) {
-//                favoriteButton.setImageResource(R.drawable.x);
-//            } else {
-//                favoriteButton
-//                        .setImageResource(R.drawable.tagged_favorite);
-//            }
-//        } else {
-//            favoriteButton
-//                    .setImageResource(R.drawable.tagged_favorite);
-//        }
+        holder.incentives_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity) getContext()).onIncentivesSelected(taggedVehicle.getStyleId());
+            }
+        });
 
-//        favoriteButton.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//                SavedListingsList savedListingsList = SavedListingsList.get();
-//                if (savedListingsList.contains(taggedVehicle)) {
-//                    savedListingsList.remove(taggedVehicle);
-//                    favoriteButton
-//                            .setImageResource(R.drawable.tagged_not_favorite);
-//                } else {
-//                    savedListingsList.add(taggedVehicle);
-//                    if (taggedVehicle.isFavorites()) {
-//                        favoriteButton.setImageResource(R.drawable.x);
-//                    } else {
-//                        favoriteButton
-//                                .setImageResource(R.drawable.tagged_favorite);
-//                    }
-//                }
-//                savedListingsList.save(getContext());
-//            }
-//        });
-//        favoriteButton.setFocusable(false);
         return view;
     }
 

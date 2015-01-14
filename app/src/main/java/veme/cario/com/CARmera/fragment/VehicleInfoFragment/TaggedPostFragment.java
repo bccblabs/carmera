@@ -25,10 +25,6 @@ import com.parse.ParseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
