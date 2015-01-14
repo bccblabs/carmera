@@ -21,6 +21,7 @@ public class CARmeraApp extends Application {
 
     public static final String edmunds_app_secret = "tVsB2tChr7wXqk47ZZMQneKq";
 
+    public static String userName;
     @Override
     public void onCreate() {
         super.onCreate();

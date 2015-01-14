@@ -51,6 +51,8 @@ public class ProfileActivity extends BaseActivity implements SavedListingsFragme
                 } else {
                     profilePictureView.setProfileId(null);
                 }
+                String userName = userProfile.getString("name");
+                CARmeraApp.userName = userName;
                 name_view.setText(userProfile.getString("name"));
                 name_view.setTypeface(fa);
             } catch (JSONException e) {

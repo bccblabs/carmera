@@ -1,29 +1,24 @@
 package veme.cario.com.CARmera;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-
 import java.util.List;
-
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.ListingsAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-/**
- * Created by bski on 1/6/15.
- */
 public class ListingsActivity extends BaseActivity
                               implements SavedListingsFragment.OnSavedListingSelectedListener {
 
@@ -31,7 +26,7 @@ public class ListingsActivity extends BaseActivity
     private TextView no_listings_view;
     private ListingsAdapter listingsAdapter;
     private VehicleInfoDialog vehicleInfoDialog;
-    private SavedSearch savedSearch;
+    private EditText search_name;
 
     private String TAG = ListingsActivity.class.toString();
 
@@ -122,10 +117,25 @@ public class ListingsActivity extends BaseActivity
         save_search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                savedSearch = new SavedSearch() ;
-//                savedSearch.setFavorite(true);
-//                savedSearch.saveInBackground();
-                Toast.makeText(getApplicationContext(), "Search Saved!", Toast.LENGTH_LONG).show();
+                MaterialDialog save_search_dialog = new MaterialDialog.Builder(ListingsActivity.this)
+                                  .title("Save Search")
+                                  .customView(R.layout.dialog_save_search)
+                                  .positiveText("Save")
+                                  .negativeText("Cancel")
+                                  .callback(new MaterialDialog.ButtonCallback() {
+                                      @Override
+                                      public void onPositive(MaterialDialog dialog) {
+                                          super.onPositive(dialog);
+                                          SavedSearch savedSearch = new SavedSearch();
+                                          savedSearch.setSearchName(search_name.getText().toString());
+                                          savedSearch.saveInBackground();
+                                          Toast.makeText(ListingsActivity.this, "\"" + search_name.getText().toString() +
+                                                  "\" saved! ", Toast.LENGTH_SHORT).show();
+                                      }
+                                  })
+                                  .build();
+                search_name = (EditText) save_search_dialog.getCustomView().findViewById(R.id.search_name_edittext);
+                save_search_dialog.show();
             }
         });
 

@@ -2,7 +2,9 @@ package veme.cario.com.CARmera.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,17 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
+import com.parse.ParseUser;
 
 import veme.cario.com.CARmera.BaseActivity;
+import veme.cario.com.CARmera.CARmeraApp;
 import veme.cario.com.CARmera.ListingsActivity;
 import veme.cario.com.CARmera.NearbyActivity;
 import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
 
@@ -91,7 +100,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
 //        price_info_tv.setText(taggedVehicle.getPrice());
         price_info_tv.setTypeface(ar);
 
-        TextView seller_info_tv = holder.sellerInfoView;
+        final TextView seller_info_tv = holder.sellerInfoView;
 //        seller_info_tv.setText(taggedVehicle.getSellerInfo());
         seller_info_tv.setTypeface(ar);
 
@@ -135,6 +144,48 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                 } catch (ParseException e) {
                     Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
                 }
+            }
+        });
+        holder.contact_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDialog contact_seller_dialog = new MaterialDialog.Builder(getContext())
+                        .title("Contact Seller")
+                        .customView(R.layout.seller_info_dialog)
+                        .neutralText("Got it!")
+                        .build();
+                contact_seller_dialog.show();
+                View seller_info_view = contact_seller_dialog.getCustomView();
+                FloatingActionButton phone_btn = (FloatingActionButton) seller_info_view.findViewById(R.id.contact_seller_phone_btn);
+                FloatingActionButton email_btn = (FloatingActionButton) seller_info_view.findViewById(R.id.contact_seller_email_btn);
+                LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
+                LinearLayout email_layout = (LinearLayout) seller_info_view.findViewById(R.id.email_overlay);
+                TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
+                TextView email_tv = (TextView) seller_info_view.findViewById(R.id.seller_email_textview);
+                phone_tv.setText(taggedVehicle.getSellerPhone());
+                email_tv.setText(taggedVehicle.getSellerEmail());
+                phone_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String phone_num = taggedVehicle.getSellerPhone().replaceAll("[^0-9|\\+]", "");
+                        Intent i = new Intent (Intent.ACTION_DIAL, Uri.fromParts("tel", phone_num, null));
+                        getContext().startActivity(i);
+                    }
+                });
+                email_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String email_uri = "mailto:" + Uri.encode(taggedVehicle.getSellerEmail()) +
+                                           "?subject=" + Uri.encode(taggedVehicle.toString()) +
+                                           "&body=" + Uri.encode("Hello \n\nI am interested in your " + taggedVehicle.toString() +
+                                                                "\nPlease let me know more, thanks! \n\n" + " -" + CARmeraApp.userName +
+                                                                "\n\nReferred from Carmera.io");
+                        Uri uri = Uri.parse(email_uri);
+                        Intent i = new Intent(Intent.ACTION_SENDTO);
+                        i.setData(uri);
+                        getContext().startActivity(i);
+                    }
+                });
             }
         });
 //

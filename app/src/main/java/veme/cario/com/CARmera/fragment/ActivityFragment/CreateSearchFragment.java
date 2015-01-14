@@ -192,14 +192,6 @@ public class CreateSearchFragment extends Fragment {
         compress_spnr = (Spinner) view.findViewById(R.id.compressor_spinner);
         compress_spnr.setAdapter(compressor_adapter);
 
-//        Bundle args = getArguments();
-//        if (args != null) {
-//            set_spinner_value (year_adapter, year_spnr, args.getString("listings_year"));
-//            set_spinner_value (makes_adapter, make_spnr, args.getString("listings_make"));
-//            set_spinner_value (models_adapter, model_spnr, args.getString("listings_model"));
-//            set_spinner_value (makes_adapter, pr_min_spnr, "0");
-//            set_spinner_value (models_adapter, pr_max_spnr, "100,000");
-//        }
         savedSearch = new SavedSearch();
 
         save_search_btn = (ButtonRectangle) view.findViewById(R.id.create_listings_save_search_btn);
@@ -207,6 +199,7 @@ public class CreateSearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 /* create a dialog box */
+
 //                savedSearch.setSearchName("blah");
 //                savedSearch.saveInBackground();
             }

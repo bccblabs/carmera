@@ -12,6 +12,7 @@ dependencies {
     compile files('sinch/sinch-android-rtc-3.4.2.jar')
     compile project(':materialDesign')
     compile project(':library')
+    compile project(':MaterialDialog')
 }
 
 

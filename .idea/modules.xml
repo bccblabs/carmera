@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" filepath="$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" filepath="$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" filepath="$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/ParallaxScrollExample/ParallaxScrollExample.iml" filepath="$PROJECT_DIR$/ParallaxScrollExample/ParallaxScrollExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" filepath="$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" />

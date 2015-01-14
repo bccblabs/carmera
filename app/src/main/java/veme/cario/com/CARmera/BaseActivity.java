@@ -201,36 +201,7 @@ public class BaseActivity extends FragmentActivity implements
         );
         requestBatch.add(meRequest);
 
-//        /* req 2 */
-        Request invitableFriendsRequest = Request.newGraphPathRequest(session,
-                    "/me/invitable_friends", new Request.Callback() {
-                        @Override
-                        public void onCompleted(Response response) {
-                            FacebookRequestError error = response.getError();
-                            if (error != null) {
-                                handleError(error, true);
-                            if (response != null) {
-                                GraphObject graphObject = response.getGraphObject();
-                                if (graphObject != null) {
-                                    JSONArray dataArray = (JSONArray) graphObject.getProperty("data");
-                                    List<JSONObject> invitableFriends = new ArrayList<JSONObject>();
-                                    if (dataArray.length() > 0) {
-                                        for (int i = 0; i < dataArray.length(); i++) {
-                                            invitableFriends.add(dataArray.optJSONObject(i));
-                                        }
-                                    }
-                                    setInvitableFriends(invitableFriends);
-                                }
-                            }
-                        }
-                    }
-                });
-        Bundle invitableParams = new Bundle();
-        invitableParams.putString("fields", "id,first_name,picture");
-        invitableFriendsRequest.setParameters(invitableParams);
-        requestBatch.add(invitableFriendsRequest);
-//
-        /* req 3 */
+        /* req 2 */
         Request friendsRequest = Request.newMyFriendsRequest(session,
                 new Request.GraphUserListCallback() {
                     @Override
@@ -332,13 +303,6 @@ public class BaseActivity extends FragmentActivity implements
                 .setMessage(dialogBody)
                 .show();
 
-        if (logout) {
-            logout();
-        }
-    }
-
-    public void showError(String error, boolean logout) {
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         if (logout) {
             logout();
         }
