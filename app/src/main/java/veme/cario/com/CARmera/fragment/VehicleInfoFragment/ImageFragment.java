@@ -14,46 +14,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseFile;
+
 import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Vehicle;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 
 public class ImageFragment extends Fragment {
 
     /* TODO: disable the scroll on vehicle request not complete*/
 
+    UploadListener uploadCallback = null;
 
-    ImageResultListener imageResultCallback = null;
-
-    public interface ImageResultListener {
-        public abstract void onRecognitionResult (byte[] imageData, String yr, String mk, String md);
+    public interface UploadListener {
+        public abstract void onUploadResult (String tagged_vehicle_id);
     }
+
 
     private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
-    private FloatingActionButton upload_btn;
-    private Bitmap bitmap;
-    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+    private ButtonRectangle upload_btn, discard_btn;
+    private Bitmap bitmap = null;
+    private byte[] imageData;
     private static final String TAG = "IMAGE_FRAGMENT";
-
-    private final class VehicleRequestListener implements RequestListener<Vehicle> {
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-            ImageFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
-        }
-
-        @Override
-        public void onRequestSuccess(Vehicle vehicle) {
-//            imageResultCallback.onRecognitionResult("2014", "bmw", "x3");
-        }
-    }
+    private TaggedVehicle taggedVehicle = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,76 +67,62 @@ public class ImageFragment extends Fragment {
     public void onAttach (Activity activity) {
         super.onAttach(activity);
         try {
-            imageResultCallback = (ImageResultListener) activity;
+            uploadCallback = (UploadListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + ": "
                     + " needs to implement the ImageResultListener!");
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        spiceManager.start(getActivity());
-        spiceManager.addListenerIfPending(Vehicle.class, JSON_HASH_KEY,
-                new VehicleRequestListener());
-    }
-
-    @Override
-    public void onStop() {
-        if (spiceManager.isStarted()) {
-            spiceManager.shouldStop();
-        }
-        super.onStop();
-    }
-
     private void initUIComponents() {
         preview_view = (ImageView) getView().findViewById(R.id.preview_view);
+        new BitmapLoaderTask().execute();
 
-        upload_btn = (FloatingActionButton) getView().findViewById(R.id.upload_btn);
+        upload_btn = (ButtonRectangle) getView().findViewById(R.id.upload_btn);
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performRequest();
+                taggedVehicle = new TaggedVehicle();
+                new BitmapCompressTask().execute();
+                uploadCallback.onUploadResult(taggedVehicle.getObjectId());
             }
         });
-
-        new BitmapLoaderTask().execute();
-    }
-
-    private void performRequest() {
-//        ImageFragment.this.getActivity().setProgressBarIndeterminate(true);
-//        /* image file */
-//        VehicleRequest vehicleRequest = new VehicleRequest (bitmap);
-//        spiceManager.execute(vehicleRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
-//                new VehicleRequestListener());
-        imageResultCallback.onRecognitionResult(getArguments().getByteArray("imageData"), "2014", "audi", "a4");
+        discard_btn = (ButtonRectangle) getView().findViewById(R.id.discard_image_btn);
+        discard_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadCallback.onUploadResult(null);
+            }
+        });
     }
 
     public class BitmapLoaderTask extends AsyncTask <Void, Void, Bitmap> {
-
         @Override
         protected Bitmap doInBackground (Void... params) {
-            byte[] newImageBytes;
-            byte[] imageData = getArguments().getByteArray("imageData");
-            /* first, make a bitmap out of original */
-            Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-            /* second, compress it using a byte array */
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            /* third, create a new image out of byte array */
-            newImageBytes = bos.toByteArray();
-            bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
-            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
-            return raw_bitmap;
+            imageData = getArguments().getByteArray("imageData");
+            bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            return bitmap;
         }
-
         @Override
         protected void onPostExecute (Bitmap res) {
             preview_view.setImageBitmap(res);
         }
     }
 
-
-
+    public class BitmapCompressTask extends AsyncTask <Void, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground (Void... params) {
+            Bitmap cropped_image = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+            return cropped_image;
+        }
+        @Override
+        protected void onPostExecute (Bitmap cropped_image) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            cropped_image.compress(Bitmap.CompressFormat.PNG, 80, stream);
+            byte[] thumbnail = stream.toByteArray();
+            taggedVehicle.setTagPhoto(new ParseFile(imageData));
+            taggedVehicle.setThumbnail(new ParseFile(thumbnail));
+            taggedVehicle.saveInBackground();
+        }
+    }
 }

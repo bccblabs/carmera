@@ -269,7 +269,7 @@
                     android:layout_gravity="bottom|center_horizontal"
                     android:background="#1E88E5"
                     android:text="Find My Car" />
-                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 </ScrollView>

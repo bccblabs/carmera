@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.parse.ParseImageView
+        android:layout_width="300"
+        android:layout_height="300"
+        android:layout_marginTop="100dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:id="@+id/recognition_res_listview">
+    </ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@+id/no_recognitions_view"/>
+
+    <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+        style="@style/ProgressBarLarge"
+        android:layout_margin="20dp"
+        android:id="@+id/recognition_progress_view"/>
+
+</LinearLayout>

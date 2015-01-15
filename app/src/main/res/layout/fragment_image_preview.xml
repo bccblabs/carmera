@@ -17,16 +17,30 @@
         android:layout_gravity="center"
     />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/upload_btn"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        fab:fab_size="normal"
-        fab:fab_colorNormal="@color/medius_orchid"
-        fab:fab_colorPressed="@color/sinch_purple"
-        fab:fab_icon="@drawable/ic_action_upload_white"
-       />
+        android:layout_margin="20dp">
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/upload_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/dark_green"
+            android:text="Recognize" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"/>
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/discard_image_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="#1E88E5"
+            android:text="Discard" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -26,7 +26,7 @@ import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class CaptureActivity extends BaseActivity
-                                    implements ImageFragment.ImageResultListener {
+                                    implements ImageFragment.UploadListener {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -232,22 +232,36 @@ public class CaptureActivity extends BaseActivity
         rotate_deg = result;
     }
 
+    @Override
+    public void onUploadResult (String tagged_vehicle_id) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        if (tagged_vehicle_id != null) {
+            Bundle args = new Bundle();
+            args.putString("tagged_vehicle_id", tagged_vehicle_id);
+            FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = new VehicleInfoDialog();
+            vehicleInfoDialog.setArguments(args);
+            vehicleInfoDialog.show(fm, "recognitionOverlay");
+        }
+    }
+
     /* when a vehicle is recognized from the cloud server */
     public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
         /* once the image is recognized, adding the new fragments to the dialog */
 
         Bitmap orig_img = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
         Bitmap cropped_image = Bitmap.createScaledBitmap(orig_img, 100, 100, true);
-//        Bitmap cropped_image = Bitmap.createBitmap(orig_img, img_width/2 - 50, img_height/2 - 50, 100, 100);
-
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         cropped_image.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] thumbnail = stream.toByteArray();
 
-        taggedVehicle = new TaggedVehicle();
         taggedVehicle.setYear(year);
         taggedVehicle.setMake(make);
         taggedVehicle.setModel(model);
+        taggedVehicle = new TaggedVehicle();
         taggedVehicle.setTagPhoto(new ParseFile(imageData));
         taggedVehicle.setThumbnail(new ParseFile(thumbnail));
         taggedVehicle.setFavorite(true);
@@ -281,24 +295,6 @@ public class CaptureActivity extends BaseActivity
 
     @Override
     public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
-//        Bundle args = new Bundle();
-//        args.putString ("dialog_type", "vehicle_info");
-//        args.putString ("vehicle_id", trim_id);
-//        args.putString ("vehicle_year", yr);
-//        args.putString ("vehicle_make", mk);
-//        args.putString ("vehicle_model", md);
-//        args.putString ("vehicle_trim_name", trim_name);
-//        args.putByteArray("imageData", imageData);
-//
-//
-//        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-//            vehicleInfoDialog.dismiss();
-//            vehicleInfoDialog = null;
-//        }
-//        FragmentManager fm = getSupportFragmentManager();
-//        vehicleInfoDialog = new VehicleInfoDialog();
-//        vehicleInfoDialog.setArguments(args);
-//        vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
         super.onStyleSelected(imageData, trim_id, trim_name, yr, mk, md);
         taggedVehicle.setStyleId(trim_id);
         taggedVehicle.saveInBackground();
