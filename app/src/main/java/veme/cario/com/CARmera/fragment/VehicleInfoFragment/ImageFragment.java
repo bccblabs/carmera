@@ -20,6 +20,7 @@ import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 
 import java.io.ByteArrayOutputStream;
@@ -32,20 +33,18 @@ public class ImageFragment extends Fragment {
 
     /* TODO: disable the scroll on vehicle request not complete*/
 
-    UploadListener uploadCallback = null;
+    private UploadListener uploadCallback = null;
 
     public interface UploadListener {
         public abstract void onUploadResult (String tagged_vehicle_id);
     }
 
 
-    private static final String JSON_HASH_KEY = "image_preview_json";
     private ImageView preview_view;
     private ButtonRectangle upload_btn, discard_btn;
     private Bitmap bitmap = null;
     private byte[] imageData;
     private static final String TAG = "IMAGE_FRAGMENT";
-    private TaggedVehicle taggedVehicle = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,9 +81,7 @@ public class ImageFragment extends Fragment {
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taggedVehicle = new TaggedVehicle();
                 new BitmapCompressTask().execute();
-                uploadCallback.onUploadResult(taggedVehicle.getObjectId());
             }
         });
         discard_btn = (ButtonRectangle) getView().findViewById(R.id.discard_image_btn);
@@ -117,12 +114,18 @@ public class ImageFragment extends Fragment {
         }
         @Override
         protected void onPostExecute (Bitmap cropped_image) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            cropped_image.compress(Bitmap.CompressFormat.PNG, 80, stream);
-            byte[] thumbnail = stream.toByteArray();
-            taggedVehicle.setTagPhoto(new ParseFile(imageData));
-            taggedVehicle.setThumbnail(new ParseFile(thumbnail));
-            taggedVehicle.saveInBackground();
+            try {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                cropped_image.compress(Bitmap.CompressFormat.PNG, 80, stream);
+                byte[] thumbnail = stream.toByteArray();
+                TaggedVehicle taggedVehicle = new TaggedVehicle();
+                taggedVehicle.setTagPhoto(new ParseFile(imageData));
+                taggedVehicle.setThumbnail(new ParseFile(thumbnail));
+                taggedVehicle.save();
+                uploadCallback.onUploadResult(taggedVehicle.getObjectId());
+            } catch (ParseException e) {
+                Log.i (TAG, e.getMessage());
+            }
         }
     }
 }

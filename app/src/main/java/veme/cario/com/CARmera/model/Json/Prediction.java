@@ -10,7 +10,7 @@ public class Prediction {
     @JsonProperty
     private String class_name;
     @JsonProperty
-    private String prob;
+    private Double prob;
 
     public String getClass_id() {
         return class_id;
@@ -28,11 +28,11 @@ public class Prediction {
         this.class_name = class_name;
     }
 
-    public String getProb() {
+    public Double getProb() {
         return prob;
     }
 
-    public void setProb(String prob) {
+    public void setProb(Double prob) {
         this.prob = prob;
     }
 }

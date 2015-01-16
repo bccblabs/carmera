@@ -19,6 +19,7 @@ import com.parse.ParseUser;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.CameraPreview;
@@ -26,7 +27,8 @@ import veme.cario.com.CARmera.view.SimpleTaggedVehicleDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class CaptureActivity extends BaseActivity
-                                    implements ImageFragment.UploadListener {
+                                    implements ImageFragment.UploadListener,
+                                               RecognitionResultFragment.RecognitionResultCallback {
 
     private final static String TAG = "CAPTURE_ACTIVITY";
     /* Camera Object */
@@ -239,7 +241,9 @@ public class CaptureActivity extends BaseActivity
             vehicleInfoDialog = null;
         }
         if (tagged_vehicle_id != null) {
+            Log.i (TAG, "Tagged Vehicle id: " + tagged_vehicle_id );
             Bundle args = new Bundle();
+            args.putString("dialog_type", "recognition_dialog");
             args.putString("tagged_vehicle_id", tagged_vehicle_id);
             FragmentManager fm = getSupportFragmentManager();
             vehicleInfoDialog = new VehicleInfoDialog();

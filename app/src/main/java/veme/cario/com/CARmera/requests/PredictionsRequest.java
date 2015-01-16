@@ -1,31 +1,29 @@
 package veme.cario.com.CARmera.requests;
 
-import android.graphics.Bitmap;
-import android.util.Base64;
+import android.util.Log;
 
-import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
-import com.sinch.android.rtc.internal.service.pubnub.http.UriEncoder;
+import com.google.gson.Gson;
+import com.octo.android.robospice.request.okhttp.OkHttpSpiceRequest;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.MediaType;
 
-import java.net.URLEncoder;
+import java.io.IOException;
 
 import veme.cario.com.CARmera.model.APIModels.Predictions;
-import veme.cario.com.CARmera.model.APIModels.Vehicle;
 
-/**
- * Created by bski on 12/1/14.
- */
-public class PredictionsRequest extends SpringAndroidSpiceRequest<Predictions> {
+public class PredictionsRequest extends OkHttpSpiceRequest<Predictions> {
 
-    private static final String TAG = "VEHICLE_REQUEST";
+    private static final String TAG = "PREDICTION_REQUEST";
+    private final OkHttpClient client = new OkHttpClient();
+    private final Gson gson = new Gson();
+
+    public static final com.squareup.okhttp.MediaType JSON =
+            com.squareup.okhttp.MediaType.parse("application/json; charset=utf-8");
+
     private String image_url;
 
     public PredictionsRequest(String image_url_) {
@@ -35,17 +33,43 @@ public class PredictionsRequest extends SpringAndroidSpiceRequest<Predictions> {
 
     @Override
     public Predictions loadDataFromNetwork () throws Exception {
-        HttpHeaders hdrs = new HttpHeaders();
-        String api_string = URLEncoder.encode("I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj", "UTF-8");
-        String encoded_string = Base64.encodeToString(api_string.getBytes("UTF-8"), Base64.DEFAULT);
-        hdrs.add("Authorization", "Basic " + encoded_string);
-        String url = String.format ("https://www.metamind.io/vision/classify?classifier_id=869&image_url=%s",
-                image_url);
-        ResponseEntity<Predictions> entity= getRestTemplate().exchange(
-                                                            url,
-                                                            HttpMethod.POST,
-                                                            new HttpEntity<Object>(hdrs),
-                                                            Predictions.class);
-        return entity.getBody();
+
+      try {
+          String req_json = String.format ( "{\"classifier_id\": 869, \"image_url\": \"%s\"}", image_url) ;
+          Log.i (TAG, req_json);
+          RequestBody body = RequestBody.create(JSON, req_json);
+          Request request = new Request.Builder()
+                  .url("https://www.metamind.io/vision/classify")
+                  .header("Authentication", "Basic I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj")
+                  .post(body)
+                  .build();
+          Response response = client.newCall(request).execute();
+
+          if (!response.isSuccessful())
+              throw new IOException(response.message());
+          return gson.fromJson (response.body().charStream(), Predictions.class);
+
+
+      } catch (IOException ie) {
+          Log.i(TAG, ie.getMessage());
+          return null;
+      }
+
+//          try {
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add("Authentication", "Basic I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj");
+//            String url = ;
+//            RecognitionMsg recognitionMsg = new RecognitionMsg();
+//            recognitionMsg.setClassifierId(869);
+//            recognitionMsg.setImgUrl(image_url);
+//            HttpEntity<RecognitionMsg> request =
+//                    new HttpEntity<RecognitionMsg>(recognitionMsg, headers);
+//            RestTemplate restTemplate = new RestTemplate(true);
+//            ResponseEntity<Predictions> response = restTemplate.exchange(url, HttpMethod.POST, request, Predictions.class);
+//            return response.getBody();
+//        } catch (HttpClientErrorException e) {
+//            return null;
+//        }
+
     }
 }

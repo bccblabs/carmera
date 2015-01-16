@@ -4,12 +4,13 @@
     android:layout_height="match_parent">
 
     <com.parse.ParseImageView
-        android:layout_width="300"
-        android:layout_height="300"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginTop="100dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/tagged_vehicle_parse_view"
         />
     <ListView
         android:layout_width="match_parent"

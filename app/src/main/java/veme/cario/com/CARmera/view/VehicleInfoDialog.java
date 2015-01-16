@@ -18,6 +18,7 @@ import android.view.Window;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
@@ -113,6 +114,8 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new SavedSearchesAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("incentive_rebate")) {
             fragmentPagerAdapter = new IncentivesAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("recognition_dialog")) {
+            fragmentPagerAdapter = new RecognitionAdapter(getChildFragmentManager());
         } else {
             Log.d(TAG, " - no such type, default to info dialog");
             fragmentPagerAdapter = new InfoPagerAdapter(getChildFragmentManager());
@@ -381,6 +384,32 @@ public class VehicleInfoDialog extends DialogFragment {
             switch (position) {
                 case 0:
                     return "Incentives & Rebates";
+            }
+            return null;
+        }
+    }
+
+    public class RecognitionAdapter extends FragmentPagerAdapter {
+        public RecognitionAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            Fragment recognitionResultFragment = new RecognitionResultFragment();
+            Bundle args = getArguments();
+            recognitionResultFragment.setArguments(args);
+            return recognitionResultFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Recognition Result";
             }
             return null;
         }

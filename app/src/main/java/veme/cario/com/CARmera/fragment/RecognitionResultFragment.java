@@ -91,7 +91,7 @@ public class RecognitionResultFragment extends Fragment {
         recognition_res_listview = (ListView) view.findViewById(R.id.recognition_res_listview);
         no_recognitions_view = (TextView) view.findViewById(R.id.no_recognitions_view);
         recognition_progress_view = view.findViewById(R.id.recognition_progress_view);
-        tagged_car_image = (ParseImageView) view.findViewById(R.id.tagged_vehicle_image_view);
+        tagged_car_image = (ParseImageView) view.findViewById(R.id.tagged_vehicle_parse_view);
 
         recognitionResultAdapter = new RecognitionResultAdapter(inflater.getContext());
         recognition_res_listview.setAdapter(recognitionResultAdapter);
@@ -122,15 +122,15 @@ public class RecognitionResultFragment extends Fragment {
                         image_bytes = ((TaggedVehicle) taggedVehicle_).getTagPhoto().getData();
                         tagged_car_image.setParseFile(((TaggedVehicle) taggedVehicle_).getTagPhoto());
                         tagged_car_image.loadInBackground();
-                    } catch (ParseException e) {
-                        Log.i (TAG, "ParseException: " + e.getMessage());
+                        performRequest();
+                    } catch (ParseException img_e) {
+                        Log.i (TAG, "ParseException: " + img_e.getMessage());
                     }
                 } else {
                     Log.d (TAG, "problem getting shit");
                 }
             }
         });
-        performRequest();
 
         return view;
     }

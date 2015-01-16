@@ -40,7 +40,6 @@ public class IncentiveListAdapter extends ArrayAdapter<Incentive> {
             holder.name = (TextView) view.findViewById(R.id.incentive_name);
             holder.incentive_duration = (TextView) view.findViewById(R.id.incentive_duration);
             holder.incentive_details = (TextView) view.findViewById(R.id.incentive_details);
-            holder.incentive_restrictions = (TextView) view.findViewById(R.id.incentive_restrictions);
             holder.header_layout = (LinearLayout) view.findViewById(R.id.incentive_header_layout);
             holder.details_layout = (LinearLayout) view.findViewById(R.id.incentive_details_layout);
             view.setTag(holder);
