@@ -96,6 +96,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_gravity="end">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/try_recognize_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_title="Specs"
+                fab:fab_labelStyle="@style/menu_labels_style"
+                fab:fab_icon="@drawable/ic_action_yin"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_size="mini"
+                />
+
+
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/post_vehicle_details_btn"
                 android:layout_width="wrap_content"

@@ -5,6 +5,6 @@
 
     <com.parse.ParseImageView
         android:id="@+id/vehicle_image_grid_item"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 </LinearLayout>

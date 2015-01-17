@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.facebook.widget.ProfilePictureView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -20,19 +23,26 @@ import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SharedTagsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-public class ProfileActivity extends BaseActivity implements SavedListingsFragment.OnSavedListingSelectedListener {
+public class ProfileActivity extends BaseActivity
+                                implements SavedListingsFragment.OnSavedListingSelectedListener,
+                                           ImageFragment.UploadListener,
+                                           RecognitionResultFragment.RecognitionResultCallback {
 
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
     private ProfilePictureView profilePictureView;
     private TextView name_view;
     private static final String TAG = ProfileActivity.class.getSimpleName();
+    private VehicleInfoDialog vehicleInfoDialog;
 
     @Override
     public void onCreate (Bundle savedBundleInst) {
@@ -159,8 +169,56 @@ public class ProfileActivity extends BaseActivity implements SavedListingsFragme
         startActivity(i);
     }
 
-
     @Override
     public void OnSavedListingSelected (int pos) {}
 
+    @Override
+    public void onUploadResult (String tagged_vehicle_id) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        if (tagged_vehicle_id != null) {
+            Log.i (TAG, "Tagged Vehicle id: " + tagged_vehicle_id );
+            Bundle args = new Bundle();
+            args.putString("dialog_type", "recognition_dialog");
+            args.putString("tagged_vehicle_id", tagged_vehicle_id);
+            FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = new VehicleInfoDialog();
+            vehicleInfoDialog.setArguments(args);
+            vehicleInfoDialog.show(fm, "recognitionOverlay");
+        }
+    }
+
+    /* when a vehicle is recognized from the cloud server */
+    public void onRecognitionResult (String tagged_vehicle_id, final String year, final String make, final String model) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
+        Bundle args = new Bundle();
+        try {
+            TaggedVehicle taggedVehicle =  (TaggedVehicle) query.get(tagged_vehicle_id);
+            taggedVehicle.setYear(year);
+            taggedVehicle.setMake(make);
+            taggedVehicle.setModel(model);
+            taggedVehicle.saveInBackground();
+            args.putByteArray("imageData", taggedVehicle.getTagPhoto().getData());
+            args.putBoolean("is_tagged_post" , true);
+            args.putString ("tagged_vehicle_id" , tagged_vehicle_id);
+            args.putString("dialog_type", "choose_style");
+            args.putString("vehicle_year", year);
+            args.putString("vehicle_make", make);
+            args.putString("vehicle_model", model);
+        } catch (ParseException parse_err) {
+            Log.i (TAG, parse_err.getMessage());
+        }
+
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        Log.i (TAG, year + " " + make + " " + model);
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(args);
+        vehicleInfoDialog.show(fm, "styleChooserOverlay");
+    }
 }

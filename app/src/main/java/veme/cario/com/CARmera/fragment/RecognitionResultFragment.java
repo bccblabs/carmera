@@ -36,6 +36,7 @@ import veme.cario.com.CARmera.util.RecognitionResultAdapter;
  */
 public class RecognitionResultFragment extends Fragment {
 
+    private String tagged_vehicle_id;
     private ListView recognition_res_listview;
     private TextView no_recognitions_view;
     private View recognition_progress_view;
@@ -51,7 +52,7 @@ public class RecognitionResultFragment extends Fragment {
 
 
     public interface RecognitionResultCallback {
-        public abstract void onRecognitionResult (byte[] imageData, String yr, String mk, String md);
+        public abstract void onRecognitionResult (String tagged_vehicle_id, final String yr, final String mk, final String md);
     }
 
     private final class RecognitionResultListener implements RequestListener<Predictions> {
@@ -82,6 +83,7 @@ public class RecognitionResultFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        RecognitionResultFragment.this.tagged_vehicle_id = getArguments().getString("tagged_vehicle_id");
         super.onCreate(savedInstanceState);
     }
 
@@ -108,12 +110,12 @@ public class RecognitionResultFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Prediction style = recognitionResultAdapter.getItem(position);
                 String[] car_info = style.getClass_name().split("\\s+");
-                recognitionCallback.onRecognitionResult(image_bytes, car_info[0], car_info[1], car_info[2]);
+                recognitionCallback.onRecognitionResult(tagged_vehicle_id, car_info[0], car_info[1], car_info[2]);
             }
         });
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
-        query.getInBackground(getArguments().getString("tagged_vehicle_id"), new GetCallback<ParseObject>() {
+        query.getInBackground(tagged_vehicle_id, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject taggedVehicle_, ParseException e) {
                 if (e == null) {

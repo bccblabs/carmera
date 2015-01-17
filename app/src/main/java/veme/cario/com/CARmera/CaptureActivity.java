@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -253,38 +254,25 @@ public class CaptureActivity extends BaseActivity
     }
 
     /* when a vehicle is recognized from the cloud server */
-    public void onRecognitionResult (byte[] imageData, String year, String make, String model) {
-        /* once the image is recognized, adding the new fragments to the dialog */
-
-        Bitmap orig_img = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-        Bitmap cropped_image = Bitmap.createScaledBitmap(orig_img, 100, 100, true);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        cropped_image.compress(Bitmap.CompressFormat.PNG, 50, stream);
-        byte[] thumbnail = stream.toByteArray();
-
-        taggedVehicle.setYear(year);
-        taggedVehicle.setMake(make);
-        taggedVehicle.setModel(model);
-        taggedVehicle = new TaggedVehicle();
-        taggedVehicle.setTagPhoto(new ParseFile(imageData));
-        taggedVehicle.setThumbnail(new ParseFile(thumbnail));
-        taggedVehicle.setFavorite(true);
-        taggedVehicle.setPrice("51,102");
-        taggedVehicle.setSellerInfo("BMW of BimmerVille");
-        taggedVehicle.setSellerEmail("info@bmwbimmerville.com");
-        taggedVehicle.setSellerPhone("888-888-8888");
-        taggedVehicle.setListing(true);
-
-        taggedVehicle.setUser(ParseUser.getCurrentUser());
-        taggedVehicle.saveInBackground();
-
-
+    public void onRecognitionResult (String tagged_vehicle_id, final String year, final String make, final String model) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
         Bundle args = new Bundle();
-        args.putString("dialog_type", "choose_style");
-        args.putString("vehicle_year", year);
-        args.putString("vehicle_make", make);
-        args.putString("vehicle_model", model);
-        args.putByteArray("imageData", imageData);
+        try {
+            TaggedVehicle taggedVehicle =  (TaggedVehicle) query.get(tagged_vehicle_id);
+            taggedVehicle.setYear(year);
+            taggedVehicle.setMake(make);
+            taggedVehicle.setModel(model);
+            taggedVehicle.saveInBackground();
+            args.putByteArray("imageData", taggedVehicle.getTagPhoto().getData());
+            args.putBoolean("is_tagged_post" , true);
+            args.putString ("tagged_vehicle_id" , tagged_vehicle_id);
+            args.putString("dialog_type", "choose_style");
+            args.putString("vehicle_year", year);
+            args.putString("vehicle_make", make);
+            args.putString("vehicle_model", model);
+        } catch (ParseException parse_err) {
+            Log.i (TAG, parse_err.getMessage());
+        }
 
         if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
@@ -295,13 +283,6 @@ public class CaptureActivity extends BaseActivity
         vehicleInfoDialog = new VehicleInfoDialog();
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
-    }
-
-    @Override
-    public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {
-        super.onStyleSelected(imageData, trim_id, trim_name, yr, mk, md);
-        taggedVehicle.setStyleId(trim_id);
-        taggedVehicle.saveInBackground();
     }
 
     public static Bitmap rotate(Bitmap bitmap, int degree) {

@@ -95,7 +95,6 @@ public class BaseActivity extends FragmentActivity implements
         return FRIENDS_KEY;
     }
 
-
     public FacebookRequestError getFBReqErr() {
         return fb_req_err;
     }
@@ -145,8 +144,6 @@ public class BaseActivity extends FragmentActivity implements
         }
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -156,7 +153,6 @@ public class BaseActivity extends FragmentActivity implements
         }
         AppEventsLogger.activateApp(this, getString(R.string.facebook_app_id));
     }
-
 
     private void makeMeRequest() {
         RequestBatch requestBatch = new RequestBatch();
@@ -221,6 +217,7 @@ public class BaseActivity extends FragmentActivity implements
 
         requestBatch.executeAsync();
     }
+
     public void handleError(FacebookRequestError error, boolean logout) {
         Log.d(TAG, "handleError: " + error.getErrorMessage());
 
@@ -315,7 +312,6 @@ public class BaseActivity extends FragmentActivity implements
         Session.getActiveSession().closeAndClearTokenInformation();
     }
 
-
     protected void openActivity(int position) {
         drawer_layout.closeDrawer(drawer_listview);
         BaseActivity.drawer_pos = position; //Setting currently selected position in this field so that it will be available in our child activities.
@@ -350,14 +346,12 @@ public class BaseActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -391,7 +385,6 @@ public class BaseActivity extends FragmentActivity implements
             drawer_layout.openDrawer(drawer_listview);
         }
     }
-
 
     @Override
     public void onStyleSelected (byte[] imageData, String trim_id, String trim_name, String yr, String mk, String md) {

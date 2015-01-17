@@ -19,17 +19,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.ByteArrayOutputStream;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleStyles;
 import veme.cario.com.CARmera.model.Json.Style;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.requests.VehicleStylesRequest;
 import veme.cario.com.CARmera.util.VehicleStylesAdapter;
 
@@ -76,6 +81,8 @@ public class SelectStyleFragment extends Fragment {
     }
 
     private SelectResultListener selectResultCallback = null;
+    private ImageFragment.UploadListener uploadCallback = null;
+
     private ImageView preview_view;
     private static String JSON_HASH_KEY;
     private ListView styles_list_view;
@@ -88,8 +95,8 @@ public class SelectStyleFragment extends Fragment {
     private String model;
     private Bitmap bitmap;
     private TextView car_base_info;
-
     private View loadingView;
+    private FloatingActionButton see_other_recognize_btn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,8 +122,17 @@ public class SelectStyleFragment extends Fragment {
 
         vehicleStylesAdapter = new VehicleStylesAdapter(inflater.getContext());
         styles_list_view.setAdapter(vehicleStylesAdapter);
+        see_other_recognize_btn = (FloatingActionButton) view.findViewById(R.id.see_other_recognize_btn);
 
-
+        if (getArguments().getBoolean("is_tagged_post")) {
+            see_other_recognize_btn.setVisibility(View.VISIBLE);
+            see_other_recognize_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    uploadCallback.onUploadResult(getArguments().getString("tagged_vehicle_id"));
+                }
+            });
+        }
 
         loadingView = view.findViewById (R.id.style_progress_bar);
 
@@ -131,6 +147,17 @@ public class SelectStyleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Style style = vehicleStylesAdapter.getItem(position);
+                String tagged_vehicle_id = getArguments().getString("tagged_vehicle_id");
+                if ( tagged_vehicle_id != null) {
+                    try {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
+                        TaggedVehicle taggedVehicle = (TaggedVehicle) query.get(tagged_vehicle_id);
+                        taggedVehicle.setStyleId(style.getId());
+                        taggedVehicle.saveInBackground();
+                    } catch (ParseException e) {
+                        Log.i (TAG, e.getMessage());
+                    }
+                }
                 selectResultCallback.onStyleSelected(getArguments().getByteArray("imageData"),
                                                 style.getId(), style.getName(), year, make, model);
                 Log.i (TAG, "style.id: " + style.getId());
@@ -144,6 +171,7 @@ public class SelectStyleFragment extends Fragment {
         super.onAttach(activity);
         try {
             selectResultCallback = (SelectResultListener) activity;
+            uploadCallback = (ImageFragment.UploadListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + ": "
                     + " needs to implement the SelectResultListener!");
@@ -184,16 +212,19 @@ public class SelectStyleFragment extends Fragment {
             byte[] newImageBytes;
             byte[] imageData = getArguments().getByteArray("imageData");
             /* first, make a bitmap out of original */
-            Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-            /* second, compress it using a byte array */
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            /* third, create a new image out of byte array */
-            newImageBytes = bos.toByteArray();
-            bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
-            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
-//            return scaled_bitmap;
-            return raw_bitmap;
+            if (imageData != null) {
+                Bitmap raw_bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                /* second, compress it using a byte array */
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                raw_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                /* third, create a new image out of byte array */
+                newImageBytes = bos.toByteArray();
+                bitmap = BitmapFactory.decodeByteArray(newImageBytes, 0, newImageBytes.length);
+                Bitmap scaled_bitmap = Bitmap.createScaledBitmap(raw_bitmap, 640, 480, false);
+                //            return scaled_bitmap;
+                return raw_bitmap;
+            }
+            return null;
         }
 
         @Override

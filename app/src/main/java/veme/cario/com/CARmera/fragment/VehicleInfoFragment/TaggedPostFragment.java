@@ -37,9 +37,10 @@ public class TaggedPostFragment extends Fragment {
     private TextView vehicle_info_tv; /* vehicle mk, yr, model */
     private TaggedVehicle taggedVehicle;
     private DetailsSelectedListener detailSelectedCallback = null;
+    private ImageFragment.UploadListener uploadCallback = null;
     private CreateSearchListner createSearchListner = null;
 
-    private FloatingActionButton details_btn, see_listings_btn, share_facebook_btn;
+    private FloatingActionButton recognize_btn, details_btn, see_listings_btn, share_facebook_btn;
 
 
     public interface DetailsSelectedListener {
@@ -57,6 +58,7 @@ public class TaggedPostFragment extends Fragment {
         try {
             detailSelectedCallback = (DetailsSelectedListener) activity;
             createSearchListner = (CreateSearchListner) activity;
+            uploadCallback = (ImageFragment.UploadListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + ": "
                     + " needs to implement the Listeners!");
@@ -114,10 +116,17 @@ public class TaggedPostFragment extends Fragment {
                 }
             }
         });
-
+        recognize_btn = (FloatingActionButton) view.findViewById(R.id.try_recognize_btn);
         details_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_details_btn);
         see_listings_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_listings_btn);
         share_facebook_btn = (FloatingActionButton) view.findViewById(R.id.share_facebook_btn);
+
+        recognize_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadCallback.onUploadResult(taggedVehicle.getObjectId());
+            }
+        });
 
         details_btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,6 +22,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 
@@ -116,11 +117,18 @@ public class ImageFragment extends Fragment {
         protected void onPostExecute (Bitmap cropped_image) {
             try {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                cropped_image.compress(Bitmap.CompressFormat.PNG, 80, stream);
+                cropped_image.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] thumbnail = stream.toByteArray();
                 TaggedVehicle taggedVehicle = new TaggedVehicle();
                 taggedVehicle.setTagPhoto(new ParseFile(imageData));
                 taggedVehicle.setThumbnail(new ParseFile(thumbnail));
+                taggedVehicle.setUser(ParseUser.getCurrentUser());
+                taggedVehicle.setFavorite(true);
+                taggedVehicle.setPrice("51,102");
+                taggedVehicle.setSellerInfo("BMW of BimmerVille");
+                taggedVehicle.setSellerEmail("info@bmwbimmerville.com");
+                taggedVehicle.setSellerPhone("888-888-8888");
+                taggedVehicle.setListing(true);
                 taggedVehicle.save();
                 uploadCallback.onUploadResult(taggedVehicle.getObjectId());
             } catch (ParseException e) {
