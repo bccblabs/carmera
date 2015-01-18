@@ -6,30 +6,32 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:visibility="visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        fab:fab_icon="@drawable/ic_action_yinyang"
-        fab:fab_colorNormal="@color/pink"
-        fab:fab_colorPressed="@color/pink_pressed"
-        fab:fab_size="mini"
-        android:id="@+id/see_other_recognize_btn"
-        android:layout_margin="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_action_yinyang"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_size="mini"
+                android:id="@+id/see_other_recognize_btn"/>
+        </LinearLayout>
         <TextView
-            style="@style/TableEntryTitle"
+            style="@style/TableTitle"
             android:layout_margin="5dp"
             android:layout_gravity="center_vertical"
-            android:text="All Recognition Results"/>
+            android:text="2014 BMW X5"
+            android:id="@+id/car_base_info"/>
     </LinearLayout>
-    <TextView
-        style="@style/TableTitle"
-        android:layout_margin="5dp"
-        android:text="2014 BMW X5"
-        android:id="@+id/car_base_info"/>
+
     <com.parse.ParseImageView
         android:id="@+id/sel_style_preview_view"
         android:layout_width="175dp"
@@ -37,18 +39,12 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
         />
-
-    <TextView
-        style="@style/TableTitle"
-        android:layout_margin="10dp"
-        android:text="See Styles Details"/>
-
     <LinearLayout
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="150dp">
+        android:layout_height="200dp">
         <ListView
             style="@style/ListStyle"
             android:id="@+id/styles_list_view">

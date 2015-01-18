@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 fab:fab_title="Specs"
                 fab:fab_labelStyle="@style/menu_labels_style"
-                fab:fab_icon="@drawable/ic_action_yin"
+                fab:fab_icon="@drawable/ic_action_yinyang"
                 fab:fab_colorNormal="@color/pink"
                 fab:fab_colorPressed="@color/pink_pressed"
                 fab:fab_size="mini"

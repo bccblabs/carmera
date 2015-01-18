@@ -110,7 +110,24 @@ public class ImageFragment extends Fragment {
     public class BitmapCompressTask extends AsyncTask <Void, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground (Void... params) {
-            Bitmap cropped_image = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+            Bitmap cropped_image;
+            if (bitmap.getWidth() >= bitmap.getHeight()){
+                cropped_image = Bitmap.createBitmap(
+                        bitmap,
+                        bitmap.getWidth()/2 - bitmap.getHeight()/2,
+                        0,
+                        bitmap.getHeight(),
+                        bitmap.getHeight()
+                );
+            } else {
+                cropped_image = Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        bitmap.getHeight()/2 - bitmap.getWidth()/2,
+                        bitmap.getWidth(),
+                        bitmap.getWidth()
+                );
+            }
             return cropped_image;
         }
         @Override

@@ -3,6 +3,8 @@ package veme.cario.com.CARmera.model.Json;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.List;
+
 /**
  * Created by bski on 12/14/14.
  */
@@ -18,4 +20,7 @@ public class Year {
 
     @JsonProperty
     private String year;
+
+    @JsonProperty
+    private List<VINStyle> styles;
 }
