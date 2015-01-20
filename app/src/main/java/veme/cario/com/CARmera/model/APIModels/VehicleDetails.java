@@ -7,6 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.List;
 
 import veme.cario.com.CARmera.model.Json.Color;
+import veme.cario.com.CARmera.model.Json.Engine;
 import veme.cario.com.CARmera.model.Json.MPG;
 import veme.cario.com.CARmera.model.Json.Make;
 import veme.cario.com.CARmera.model.Json.Model;
@@ -22,6 +23,17 @@ public class VehicleDetails {
     private Model model;
 
     @JsonProperty
+    private Engine engine;
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    @JsonProperty
     private Transmission transmission;
 
     @JsonProperty
@@ -29,9 +41,6 @@ public class VehicleDetails {
 
     @JsonProperty
     private List<Option> options;
-
-    @JsonProperty
-    private List<Color> colors;
 
     public Make getMake() {
         return make;
@@ -71,14 +80,6 @@ public class VehicleDetails {
 
     public void setOptions(List<Option> options) {
         this.options = options;
-    }
-
-    public List<Color> getColors() {
-        return colors;
-    }
-
-    public void setColors(List<Color> colors) {
-        this.colors = colors;
     }
 
     public MPG getMPG() {

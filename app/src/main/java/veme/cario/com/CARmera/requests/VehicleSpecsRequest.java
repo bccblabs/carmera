@@ -5,21 +5,22 @@ import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceReques
 
 import veme.cario.com.CARmera.CARmeraApp;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.VehicleSpecs;
+import veme.cario.com.CARmera.model.APIModels.VehicleDetails;
 
 /**
  * Created by bski on 11/13/14.
  */
-public class VehicleSpecsRequest extends SpringAndroidSpiceRequest<VehicleSpecs> {
+public class VehicleSpecsRequest extends SpringAndroidSpiceRequest<VehicleDetails> {
     private static final String TAG = "VEHICLE_SPECS_REQUEST";
     private String trim_id;
     public VehicleSpecsRequest(String id) {
-        super(VehicleSpecs.class);
+        super(VehicleDetails.class);
         this.trim_id = id;
     }
     @Override
-    public VehicleSpecs loadDataFromNetwork () throws Exception {
+    public VehicleDetails loadDataFromNetwork () throws Exception {
         String url = String.format ("https://api.edmunds.com/api/vehicle/v2/styles/%s?view=full&fmt=json&api_key=%s",
                 this.trim_id, CARmeraApp.edmunds_app_key);
-        return getRestTemplate().getForObject(url, VehicleSpecs.class);
+        return getRestTemplate().getForObject(url, VehicleDetails.class);
     }
 }

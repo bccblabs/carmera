@@ -20,13 +20,12 @@ import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.IncentivesFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.RecallFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.PricingFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SpecsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
@@ -135,7 +134,7 @@ public class VehicleInfoDialog extends DialogFragment {
     /* Tab paging */
     public class InfoPagerAdapter extends FragmentPagerAdapter {
 
-        private final static int NUM_FRAG = 6;
+        private final static int NUM_FRAG = 5;
         public InfoPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -145,7 +144,7 @@ public class VehicleInfoDialog extends DialogFragment {
             Fragment fragment = null;
             switch (position) {
                 case 0: {
-                    fragment = new CarInfoFragment();
+                    fragment = new PricingFragment();
                     break;
                 }
                 case 1: {
@@ -164,10 +163,6 @@ public class VehicleInfoDialog extends DialogFragment {
                     fragment = new EdmundsReviewFragment();
                     break;
                 }
-                case 5: {
-                    fragment = new RecallFragment();
-                    break;
-                }
             }
             if (fragment != null)
                 fragment.setArguments(getArguments());
@@ -183,17 +178,15 @@ public class VehicleInfoDialog extends DialogFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Snap Shot";
+                    return "Pricing";
                 case 1:
-                    return "Powertrain";
+                    return "Equipment and Specs";
                 case 2:
                     return "Cost-To-Own";
                 case 3:
                     return "Drivers Review";
                 case 4:
                     return "Edmunds Review";
-                case 5:
-                    return "Recalls";
             }
             return null;
         }

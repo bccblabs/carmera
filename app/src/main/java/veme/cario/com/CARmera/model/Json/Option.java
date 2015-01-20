@@ -3,6 +3,8 @@ package veme.cario.com.CARmera.model.Json;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.List;
+
 /**
  * Created by bski on 1/17/15.
  */
@@ -10,24 +12,25 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Option {
     @JsonProperty
-    private String name;
+    private String category;
+
+    public List<EquipmentOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<EquipmentOption> options) {
+        this.options = options;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     @JsonProperty
-    private String description;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private List<EquipmentOption> options;
 }

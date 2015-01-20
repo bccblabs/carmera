@@ -4,13 +4,15 @@ package veme.cario.com.CARmera.model.Json;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.List;
+
 /**
  * Created by bski on 1/17/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TMVDetails {
     @JsonProperty
-    private PricingDetail pricingDetail;
+    private PricingDetail nationalBasePrice;
 
     @JsonProperty
     private PricingDetail totalWithOptions;
@@ -22,11 +24,11 @@ public class TMVDetails {
     private String certifiedUsedPrice;
 
     public PricingDetail getNationalBasePrice() {
-        return pricingDetail;
+        return nationalBasePrice;
     }
 
     public void setNationalBasePrice(PricingDetail pricingDetail) {
-        this.pricingDetail = pricingDetail;
+        this.nationalBasePrice = pricingDetail;
     }
 
     public PricingDetail getTotalWithOptions() {

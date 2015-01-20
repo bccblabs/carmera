@@ -16,8 +16,18 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.model.APIModels.VehicleDetails;
+import veme.cario.com.CARmera.model.Json.CustomerReview;
+import veme.cario.com.CARmera.model.Json.EquipmentOption;
+import veme.cario.com.CARmera.model.Json.Option;
 import veme.cario.com.CARmera.requests.VehicleSpecsRequest;
+import veme.cario.com.CARmera.util.AnimatedExpandableListView;
+import veme.cario.com.CARmera.util.EquipmentListAdapter;
+import veme.cario.com.CARmera.util.ReviewListAdapter;
 
 public class SpecsFragment extends Fragment {
 
@@ -38,16 +48,26 @@ public class SpecsFragment extends Fragment {
     /* drivenWheels */
     private TextView driven_wheels_textview;
 
+    /* MPG view */
+    private TextView city_mpg_tv;
+    private TextView hw_mgp_tv;
+
+    /* equipment list */
+    private AnimatedExpandableListView equipment_listview;
+    private EquipmentListAdapter equipment_list_adapter;
+    private List<EquipmentListAdapter.EquipmentItem> equipment_items = new ArrayList<EquipmentListAdapter.EquipmentItem>();
+
+
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     /* loading and table view */
-    private View engineloadingView;
+//    private View engineloadingView;
     private View enginetableLayout;
-    private View transmissionloadingView;
+//    private View transmissionloadingView;
     private View transmissiontableLayout;
 
 
-    private final class VehicleSpecsRequestListener implements RequestListener<VehicleSpecs> {
+    private final class VehicleSpecsRequestListener implements RequestListener<VehicleDetails> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
@@ -55,7 +75,7 @@ public class SpecsFragment extends Fragment {
         }
 
         @Override
-        public void onRequestSuccess (VehicleSpecs vehicleBaseInfo) {
+        public void onRequestSuccess (VehicleDetails vehicleBaseInfo) {
 
             if (SpecsFragment.this.isAdded()) {
                 engine_name_textview.setText(vehicleBaseInfo.getEngine().getCode());
@@ -73,22 +93,35 @@ public class SpecsFragment extends Fragment {
                 else
                     transmission_type = "Manual";
                 transmission_type_textview.setText(transmission_type);
-
-                Log.i(TAG, " - number of speeds: " + vehicleBaseInfo.getTransmission().getNumberOfSpeeds());
                 transmission_speed_textview.setText(vehicleBaseInfo.getTransmission().getNumberOfSpeeds() + " speed");
-
                 SpecsFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
                 enginetableLayout.setAlpha(0f);
                 transmissiontableLayout.setAlpha(0f);
                 enginetableLayout.setVisibility(View.VISIBLE);
                 transmissiontableLayout.setVisibility(View.VISIBLE);
-
-                engineloadingView.setVisibility(View.GONE);
-                transmissionloadingView.setVisibility(View.GONE);
                 enginetableLayout.animate().alpha(1f);
                 transmissiontableLayout.animate().alpha(1f);
 
+                city_mpg_tv.setText(vehicleBaseInfo.getMPG().getCity());
+                hw_mgp_tv.setText(vehicleBaseInfo.getMPG().getHighway());
 
+                for (Option option : vehicleBaseInfo.getOptions()) {
+                    EquipmentListAdapter.EquipmentItem equipmentItem = new EquipmentListAdapter.EquipmentItem();
+                    equipmentItem.package_name = option.getCategory();
+
+                    for (EquipmentOption equipment_option : option.getOptions()) {
+                        EquipmentListAdapter.EquipmentChildItem equipmentChildItem = new EquipmentListAdapter.EquipmentChildItem();
+                        equipmentChildItem.equipment_name = equipment_option.getName();
+                        equipmentChildItem.equipment_price = equipment_option.getPrice().getBaseMSRP();
+                        equipmentChildItem.equipment_desc = equipment_option.getDescription();
+                        equipmentItem.items.add(equipmentChildItem);
+                    }
+                    equipment_items.add(equipmentItem);
+                    equipmentItem.package_cnt = Integer.toString(option.getOptions().size());
+                }
+
+                equipment_list_adapter.setData(equipment_items);
+                equipment_list_adapter.notifyDataSetChanged();
             }
         }
     }
@@ -117,7 +150,7 @@ public class SpecsFragment extends Fragment {
         now.setToNow();
         JSON_HASH_KEY = getArguments().getString("vehicle_id") + now.toString() + "specs_info";
         spiceManager.start(getActivity());
-        spiceManager.addListenerIfPending(VehicleSpecs.class, JSON_HASH_KEY,
+        spiceManager.addListenerIfPending(VehicleDetails.class, JSON_HASH_KEY,
                 new VehicleSpecsRequestListener());
     }
 
@@ -132,21 +165,10 @@ public class SpecsFragment extends Fragment {
     private void initUIComponents () {
 
         enginetableLayout = getView().findViewById(R.id.engine_table);
-        engineloadingView = getView().findViewById(R.id.engine_progress_bar);
-
         transmissiontableLayout = getView().findViewById(R.id.transmission_table);
-        transmissionloadingView = getView().findViewById(R.id.transmission_progress_bar);
 
         transmissiontableLayout.setVisibility(View.GONE);
         enginetableLayout.setVisibility(View.GONE);
-
-        engineloadingView.setAlpha(0f);
-        engineloadingView.setVisibility(View.VISIBLE);
-        engineloadingView.animate().alpha(1f);
-
-        transmissionloadingView.setAlpha(0f);
-        transmissionloadingView.setVisibility(View.VISIBLE);
-        transmissionloadingView.animate().alpha(1f);
 
 
         engine_name_textview = (TextView) getView().findViewById(R.id.engine_name_textview);
@@ -156,6 +178,14 @@ public class SpecsFragment extends Fragment {
         transmission_type_textview = (TextView) getView().findViewById(R.id.transmission_type_textview);
         transmission_speed_textview = (TextView) getView().findViewById(R.id.transmission_speed_textview);
         driven_wheels_textview = (TextView) getView().findViewById(R.id.driven_wheels_textview);
+
+        city_mpg_tv = (TextView) getView().findViewById(R.id.city_mpg_textview);
+        hw_mgp_tv = (TextView) getView().findViewById(R.id.highway_mpg_textview);
+
+        equipment_listview = (AnimatedExpandableListView) getView().findViewById(R.id.equipment_listview);
+        equipment_list_adapter = new EquipmentListAdapter(getActivity());
+        equipment_list_adapter.setData(equipment_items);
+        equipment_listview.setAdapter(equipment_list_adapter);
 
 
         performRequest();
