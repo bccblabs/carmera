@@ -330,12 +330,6 @@ public class BaseActivity extends FragmentActivity implements
                 startActivity(new Intent(this, CaptureActivity.class));
                 break;
             case 4:
-                startActivity(new Intent(this, NotificationsActivity.class));
-                break;
-            case 5:
-                startActivity(new Intent(this, FriendsActivity.class));
-                break;
-            case 6:
                 logout();
                 startActivity(new Intent(this, WelcomeActivity.class));
                 break;
@@ -517,12 +511,10 @@ public class BaseActivity extends FragmentActivity implements
 
         /* Initializing drawer items */
         drawer_item_list = new ArrayList<DrawerItem>();
-        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_tags));
+        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_user));
         drawer_item_list.add(new DrawerItem("Listings", R.drawable.ic_action_list_2));
         drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
         drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
-        drawer_item_list.add(new DrawerItem("Notifications", R.drawable.ic_action_globe));
-        drawer_item_list.add(new DrawerItem("Friends", R.drawable.ic_action_emo_cool));
         drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
 
         /* set item actions */
@@ -558,7 +550,6 @@ public class BaseActivity extends FragmentActivity implements
 
         Session session = ParseFacebookUtils.getSession();
         if (session != null && session.isOpened()) {
-//            fetchUserInformation();
             makeMeRequest();
         }
 

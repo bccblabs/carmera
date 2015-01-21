@@ -88,13 +88,6 @@
         </activity>
 
         <activity
-            android:name=".NotificationsActivity"
-            android:label="@string/title_activity_notifications"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyTheme">
-        </activity>
-
-        <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:screenOrientation="portrait"
@@ -111,13 +104,6 @@
         <activity
             android:name=".ListingsActivity"
             android:label="@string/title_activity_listings"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyTheme">
-        </activity>
-
-        <activity
-            android:name=".FriendsActivity"
-            android:label="@string/title_activity_friends"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
         </activity>

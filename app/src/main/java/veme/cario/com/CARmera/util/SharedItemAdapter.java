@@ -16,7 +16,7 @@ import veme.cario.com.CARmera.model.UserModels.UserActivity;
 public class SharedItemAdapter extends ArrayAdapter<UserActivity> {
     public static class ViewHolder {
         TextView item_tv;
-        ImageView btn;
+        FloatingActionButton btn;
     }
 
     private LayoutInflater inflater;
@@ -33,16 +33,16 @@ public class SharedItemAdapter extends ArrayAdapter<UserActivity> {
             view = inflater.inflate(R.layout.list_item_shared, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.item_tv = (TextView) view.findViewById(R.id.item_desc_tv);
-            viewHolder.btn = (ImageView) view.findViewById(R.id.share_item_btn);
+//            viewHolder.btn = (ImageView) view.findViewById(R.id.share_item_btn);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
         final UserActivity userActivity = getItem(pos);
         if (userActivity.getType().equals("taggedVehicle"))
-            viewHolder.btn.setImageResource(R.drawable.ic_action_car);
+            viewHolder.btn.setIcon(R.drawable.ic_action_car_white);
         else
-            viewHolder.btn.setImageResource(R.drawable.ic_action_search_green);
+            viewHolder.btn.setIcon(R.drawable.ic_action_search);
         viewHolder.item_tv.setText(userActivity.toString());
         return view;
     }
