@@ -5,17 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.UserActivity;
 
-/**
- * Created by bski on 1/20/15.
- */
 public class SharedItemAdapter extends ArrayAdapter<UserActivity> {
     public static class ViewHolder {
-        public TextView item_tv;
+        TextView item_tv;
+        ImageView btn;
     }
 
     private LayoutInflater inflater;
@@ -32,11 +33,16 @@ public class SharedItemAdapter extends ArrayAdapter<UserActivity> {
             view = inflater.inflate(R.layout.list_item_shared, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.item_tv = (TextView) view.findViewById(R.id.item_desc_tv);
+            viewHolder.btn = (ImageView) view.findViewById(R.id.share_item_btn);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        final UserActivity userActivity = getItem (pos);
+        final UserActivity userActivity = getItem(pos);
+        if (userActivity.getType().equals("taggedVehicle"))
+            viewHolder.btn.setImageResource(R.drawable.ic_action_car);
+        else
+            viewHolder.btn.setImageResource(R.drawable.ic_action_search_green);
         viewHolder.item_tv.setText(userActivity.toString());
         return view;
     }

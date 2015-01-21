@@ -64,27 +64,41 @@ public class UserActivity extends ParseObject {
 
     public ParseObject getData () {
         try {
-            ParseQuery<ParseObject> src_query = ParseQuery.getQuery("ParseUser");
-            return (ParseUser) src_query.get(getString("data_ptr"));
+            ParseObject obj;
+            String obj_id = getString("data_ptr");
+            if (getType().equals ("taggedVehicle"))
+                obj = ParseQuery.getQuery("TaggedVehicle").get(obj_id);
+            else
+                obj = ParseQuery.getQuery("SavedSearch").get(obj_id);
+
+            Log.i (UserActivity.class.getSimpleName(), obj.getObjectId());
+            return obj;
         } catch (ParseException e) {
             Log.i (UserActivity.class.getSimpleName(), e.getMessage());
             return null;
         }
     }
 
-
+    @Override
     public String toString () {
-        String msg = " shared " + getData().toString() + " with ";
-        ParseUser user = getSrcUser();
-        if (user == ParseUser.getCurrentUser()) {
-            msg = "I have " + msg + " with " + getDestUser().getUsername() + ".";
-        } else {
-            if ((user = getDestUser()) == ParseUser.getCurrentUser())
-                msg = user.getUsername() + " has " + msg + " with you.";
+        ParseObject data = getData();
+        if (data != null) {
+            String msg = " shared " + getData().toString() + " with ";
+            ParseUser user = getSrcUser();
+//            if (user == ParseUser.getCurrentUser()) {
+//                msg = "I have " + msg + " with " + getDestUser().getUsername() + ".";
+//            } else {
+//                if ((user = getDestUser()) == ParseUser.getCurrentUser())
+//                    msg = user.getUsername() + " has " + msg + " with you.";
+//                else
+//                    msg = user.getUsername() + " has " + msg + " with " + user.getUsername() + "." ;
+//            }
+            if (getSrcName().equals("I"))
+                return getSrcName() + "'ve shared " + getData().toString() + " with " + getDestName() + ".";
             else
-                msg = user.getUsername() + " has " + msg + " with " + user.getUsername() + "." ;
-        }
-        return getSrcUser() + " has shared " + getData().toString() + " with " + getDestUser() + ".";
-//        return msg;
+                return getDestName() + " has shared " + getData().toString() + " with me.";
+    }
+        return "Null element shared";
+
     }
 }

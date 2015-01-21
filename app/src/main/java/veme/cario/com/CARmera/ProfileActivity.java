@@ -165,7 +165,7 @@ public class ProfileActivity extends BaseActivity
     public void onSearchCreated (SavedSearch savedSearch) {
         /* directs to listings activity to retrieve listings */
         Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
-        i.putExtra ("search_obj", savedSearch);
+        i.putExtra ("search_obj", savedSearch.getObjectId());
         startActivity(i);
     }
 

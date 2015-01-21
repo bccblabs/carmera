@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.UserActivity;
 
 public class TaggedPostFragment extends Fragment {
     private static final String TAG = "TAGGED_POST_FRAGMENT";
@@ -164,6 +165,12 @@ public class TaggedPostFragment extends Fragment {
                 } else {
                     // The user doesn't have the Facebook Messenger app for Android app installed.
                 }
+                UserActivity userActivity = new UserActivity();
+                userActivity.setSrcName("I");
+                userActivity.setDataId(taggedVehicle.getObjectId());
+                userActivity.setDestName("Kai");
+                userActivity.setType ("taggedVehicle");
+                userActivity.saveInBackground();
             }
         });
 

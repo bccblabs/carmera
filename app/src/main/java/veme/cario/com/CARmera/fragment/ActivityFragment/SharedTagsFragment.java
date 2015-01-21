@@ -61,6 +61,7 @@ public class SharedTagsFragment extends Fragment {
             }
         });
         sharedItemAdapter.notifyDataSetChanged();
+        shared_items_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         shared_items_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

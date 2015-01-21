@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="Share"
-            fab:fab_icon="@drawable/ic_action_share_2_white"
+            fab:fab_icon="@drawable/ic_action_facebook_white"
             fab:fab_colorNormal="@color/sky_blue"
             fab:fab_colorPressed="@color/transparent_sky_blue"
             fab:fab_size="mini"

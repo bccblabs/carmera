@@ -12,17 +12,7 @@ import java.util.List;
  * Created by bski on 1/8/15.
  */
 @ParseClassName("SavedSearch")
-public class SavedSearch extends ParseObject implements Parcelable {
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
+public class SavedSearch extends ParseObject {
 
     public SavedSearch() {}
 
@@ -129,5 +119,11 @@ public class SavedSearch extends ParseObject implements Parcelable {
     public void setFavorite (boolean val) { put("favorite", val); }
 
     public boolean getFavorite () { return getBoolean("favorite"); }
+
+    @Override
+    public String toString () {
+        return getSearchName();
+    }
+
 
 }

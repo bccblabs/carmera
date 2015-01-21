@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.widget.FacebookDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
@@ -34,6 +35,7 @@ import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.UserActivity;
 import veme.cario.com.CARmera.view.SellerInfoDialog;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
@@ -189,6 +191,27 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                         getContext().startActivity(i);
                     }
                 });
+            }
+        });
+
+        holder.share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FacebookDialog.canPresentMessageDialog(getContext())) {
+                    FacebookDialog.MessageDialogBuilder builder = new FacebookDialog.MessageDialogBuilder((Activity) getContext());
+                    builder.setLink("http://www.carmera.io")
+                            .setName(taggedVehicle.toString())
+                            .setPicture(taggedVehicle.getTagPhoto().getUrl());
+                    builder.build().present();
+                } else {
+                    // The user doesn't have the Facebook Messenger app for Android app installed.
+                }
+                UserActivity userActivity = new UserActivity();
+                userActivity.setSrcName("I");
+                userActivity.setDataId(taggedVehicle.getObjectId());
+                userActivity.setDestName("Kai");
+                userActivity.setType("taggedVehicle");
+                userActivity.saveInBackground();
             }
         });
 
