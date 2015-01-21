@@ -54,6 +54,14 @@ public class UserActivity extends ParseObject {
         put ("data_ptr", data_id);
     }
 
+
+    /* For sake of simplicity */
+
+    public String getSrcName () { return getString ("src_name"); }
+    public String getDestName () { return getString ("dest_name"); }
+    public void setSrcName (String val_) { put ("src_name", val_); }
+    public void setDestName (String val_) { put ("dest_name", val_); }
+
     public ParseObject getData () {
         try {
             ParseQuery<ParseObject> src_query = ParseQuery.getQuery("ParseUser");
@@ -76,6 +84,7 @@ public class UserActivity extends ParseObject {
             else
                 msg = user.getUsername() + " has " + msg + " with " + user.getUsername() + "." ;
         }
-        return msg;
+        return getSrcUser() + " has shared " + getData().toString() + " with " + getDestUser() + ".";
+//        return msg;
     }
 }
