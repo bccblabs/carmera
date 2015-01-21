@@ -137,19 +137,7 @@ public class PricingFragment extends Fragment {
         plot = (XYPlot) getView().findViewById(R.id.pricing_plot);
         plot.setTicksPerRangeLabel(3);
         plot.getGraphWidget().setDomainLabelOrientation(-45);
-
         performRequest();
-//        // Turn the above arrays into XYSeries':
-//        XYSeries series1 = new SimpleXYSeries(
-//                Arrays.asList(series1Numbers),          // SimpleXYSeries takes a List so turn our array into a List
-//                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
-//                "Series1");                             // Set the display title of the series
-//
-//        // same as above
-//        XYSeries series2 = new SimpleXYSeries(Arrays.asList(series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
-//        plot.addSeries(series1, new_price_format);
-//
-//        plot.addSeries(series2, used_price_format);
     }
 
     @Override

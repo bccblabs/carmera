@@ -10,6 +10,7 @@ import veme.cario.com.CARmera.model.UserModels.BusinessRequest;
 import veme.cario.com.CARmera.model.UserModels.Contact;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
+import veme.cario.com.CARmera.model.UserModels.UserActivity;
 import veme.cario.com.CARmera.model.UserModels.UserInfo;
 
 /**
@@ -35,6 +36,7 @@ public class CARmeraApp extends Application {
         ParseObject.registerSubclass(UserInfo.class);
         ParseObject.registerSubclass(Contact.class);
         ParseObject.registerSubclass(SavedSearch.class);
+        ParseObject.registerSubclass(UserActivity.class);
     }
 
 }

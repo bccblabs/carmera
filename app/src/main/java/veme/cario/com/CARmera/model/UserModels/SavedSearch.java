@@ -61,6 +61,7 @@ public class SavedSearch extends ParseObject implements Parcelable {
     public List<String> getCylinderCnts() {
         return getList ("cylinderCnts");
     }
+
     public void setMinPrice(String val) {
         put ("min_price", val);
     }

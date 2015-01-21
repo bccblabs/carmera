@@ -33,7 +33,7 @@ public class SavedSearchAdapter extends ArrayAdapter<SavedSearch> {
         ViewHolder holder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.grid_item, parent, false);
+            view = inflater.inflate(R.layout.list_item_saved_search, parent, false);
             holder = new ViewHolder();
             holder.last_update_tv = (TextView) view.findViewById(R.id.last_update_tv);
             holder.search_name_tv = (TextView) view.findViewById(R.id.saved_search_name_tv);

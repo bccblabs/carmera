@@ -5,55 +5,62 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
-        android:layout_gravity="center_vertical"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_location_2"/>
-
     <LinearLayout
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_width="0dp"
-        android:layout_weight="5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/sinch_purple"
+            android:layout_margin="5dp"
+            android:text="Manual German Coupe"
+            android:textSize="25sp"
+            android:id="@+id/saved_search_name_tv"/>
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <TextView
-                android:layout_gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/sinch_purple"
-                android:text="Manual German Coupe"
+                android:layout_margin="5dp"
+                android:text="52"
+                android:id="@+id/match_search_cnt_tv"
                 android:textSize="25sp"
-                android:id="@+id/saved_search_name_tv"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="52"
-                    android:id="@+id/match_search_cnt_tv"
-                    android:textSize="25sp"
-                    android:textColor="@color/pink_pressed"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:text=" found in 50 miles radius"
-                    android:textColor="@color/sinch_purple"
-                    android:id="@+id/search_radius_tv"/>
-                </LinearLayout>
+                android:textColor="@color/pink_pressed"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text=" found in 25 miles radius"
                 android:textColor="@color/sinch_purple"
-                android:text="Updated: Thusday 1/7/2015 19:30:13"
-                android:id="@+id/last_update_tv"/>
-        </LinearLayout>
+                android:id="@+id/search_radius_tv"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:textSize="20sp"
+                    android:text="+ 6 "
+                    android:id="@+id/last_update_num_tv"/>
+                <TextView
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sinch_purple"
+                    android:text="since Thusday 1/7/2015 19:30:13"
+                    android:id="@+id/search_last_update_date_tv"/>
+                </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
