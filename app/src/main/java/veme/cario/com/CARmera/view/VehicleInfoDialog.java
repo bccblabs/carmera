@@ -17,6 +17,7 @@ import android.view.Window;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.ListingsDetailFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
@@ -111,8 +112,8 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new SavedListingsAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("saved_search")) {
             fragmentPagerAdapter = new SavedSearchesAdapter(getChildFragmentManager());
-        } else if (dialog_type.equals("incentive_rebate")) {
-            fragmentPagerAdapter = new IncentivesAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals("listing_details")) {
+            fragmentPagerAdapter = new ListingsDetailAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("recognition_dialog")) {
             fragmentPagerAdapter = new RecognitionAdapter(getChildFragmentManager());
         } else {
@@ -270,7 +271,6 @@ public class VehicleInfoDialog extends DialogFragment {
         }
     }
 
-
     public class CreateSearchAdapter extends FragmentPagerAdapter {
         public CreateSearchAdapter(FragmentManager fm) {
             super(fm);
@@ -356,26 +356,45 @@ public class VehicleInfoDialog extends DialogFragment {
         }
     }
 
-    public class IncentivesAdapter extends FragmentPagerAdapter {
-        public IncentivesAdapter(FragmentManager fm) {
+    public class ListingsDetailAdapter extends FragmentPagerAdapter {
+        public ListingsDetailAdapter(FragmentManager fm) {
             super(fm);
         }
         @Override
         public Fragment getItem(int position) {
-            Fragment incentivesFragment = new IncentivesFragment();
-            Bundle args = getArguments();
-            incentivesFragment.setArguments(args);
-            return incentivesFragment;
+            Fragment fragment = null;
+            switch (position) {
+                case 0: {
+                    fragment = new ListingsDetailFragment();
+                    break;
+                }
+                case 1: {
+                    fragment = new PricingFragment();
+                    break;
+                }
+                case 2: {
+                    fragment = new IncentivesFragment();
+                    break;
+                }
+            }
+            if (fragment != null)
+                fragment.setArguments(getArguments());
+            return fragment;
         }
+
         @Override
         public int getCount() {
-            return 1;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
+                    return "Listing Details";
+                case 1:
+                    return "Pricing Trends";
+                case 2:
                     return "Incentives & Rebates";
             }
             return null;

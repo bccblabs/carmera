@@ -34,32 +34,26 @@ import veme.cario.com.CARmera.util.ListingsAdapter;
 import veme.cario.com.CARmera.util.VehicleListAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
-/**
- * Created by bski on 12/3/14.
- */
 public class SavedListingsFragment extends Fragment {
 
     private static final String TAG = "SAVED_LISTINGS_FRAGMENT";
+    public interface ListingSelectedListener {
+        public abstract void OnListingSelectedCallback (String vehicle_id);
+    }
 
-
-    /* do a find in background query from this guy's userinfp ? */
-    /* see the "favorites implementation */
+    private ListingSelectedListener listingSelectedCallback;
     private ListingsAdapter vehicleListAdapter;
     private ListView saved_listings_listview;
     private LinearLayout no_saved_listings_overlay;
-    private OnSavedListingSelectedListener listingCallback;
 
     private TextView header_view;
     private boolean has_header = true;
-    public interface OnSavedListingSelectedListener {
-        public abstract void OnSavedListingSelected (int pos);
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listingCallback = (OnSavedListingSelectedListener) activity;
+            listingSelectedCallback = (ListingSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " has to implement the OnListingSelectedListener interface");
@@ -103,24 +97,7 @@ public class SavedListingsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final TaggedVehicle taggedVehicle = (TaggedVehicle) saved_listings_listview.getItemAtPosition(position);
-                Bundle args = new Bundle();
-                byte[] vehicle_image = null;
-                try {
-                    vehicle_image = taggedVehicle.getTagPhoto().getData();
-
-                } catch (com.parse.ParseException e) {
-                    Log.d(TAG, " - " + e.getMessage());
-                }
-
-                args.putByteArray("imageData", vehicle_image);
-                args.putString("vehicle_year", taggedVehicle.getYear());
-                args.putString("vehicle_make", taggedVehicle.getMake());
-                args.putString("vehicle_model", taggedVehicle.getModel());
-
-                FragmentManager fm = getChildFragmentManager();
-                VehicleInfoDialog vehicleInfoDialog = new VehicleInfoDialog();
-                vehicleInfoDialog.setArguments(args);
-                vehicleInfoDialog.show(fm, "vehicleInfoOverlay");
+                listingSelectedCallback.OnListingSelectedCallback(taggedVehicle.getObjectId());
             }
         });
 

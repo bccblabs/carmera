@@ -72,6 +72,14 @@
             fab:fab_title="New/Edit Seach"
             fab:fab_icon="@drawable/ic_action_edit"
             fab:fab_colorPressed="@color/pink_pressed"/>
-
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/listing_activity_filter_srch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_size="mini"
+            fab:fab_title="Filter Seach"
+            fab:fab_icon="@drawable/ic_action_filter"
+            fab:fab_colorPressed="@color/pink_pressed"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </FrameLayout>

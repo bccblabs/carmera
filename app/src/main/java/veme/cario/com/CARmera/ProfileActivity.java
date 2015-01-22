@@ -19,23 +19,18 @@ import com.parse.ParseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SharedTagsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
-import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ProfileActivity extends BaseActivity
-                                implements SavedListingsFragment.OnSavedListingSelectedListener,
-                                           ImageFragment.UploadListener,
+                                implements ImageFragment.UploadListener,
                                            RecognitionResultFragment.RecognitionResultCallback {
 
     private FloatingActionButton my_tags_btn, saved_vehicles_btn, saved_search_btn, shared_vehicles_btn;
@@ -169,8 +164,19 @@ public class ProfileActivity extends BaseActivity
         startActivity(i);
     }
 
+
     @Override
-    public void OnSavedListingSelected (int pos) {}
+    public void onCreateSearch (String yr, String mk, String model) {
+        Bundle args = new Bundle();
+        args.putString("dialog_type", "create_search");
+        args.putString("vehicle_year", yr);
+        args.putString("vehicle_make", mk);
+        args.putString("vehicle_model", model);
+
+        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
+        i.putExtras(args);
+        startActivity(i);
+    }
 
     @Override
     public void onUploadResult (String tagged_vehicle_id) {
@@ -221,4 +227,6 @@ public class ProfileActivity extends BaseActivity
         vehicleInfoDialog.setArguments(args);
         vehicleInfoDialog.show(fm, "styleChooserOverlay");
     }
+
+
 }

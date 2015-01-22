@@ -174,23 +174,23 @@ public class CreateSearchFragment extends Fragment {
         location_spnr = (Spinner) view.findViewById(R.id.location_spinner);
         location_spnr.setAdapter(dist_adapter);
 
-        origin_spnr = (Spinner) view.findViewById(R.id.origin_spinner);
-        origin_spnr.setAdapter(origin_adapter);
+//        origin_spnr = (Spinner) view.findViewById(R.id.origin_spinner);
+//        origin_spnr.setAdapter(origin_adapter);
 
         body_style_spnr = (Spinner) view.findViewById(R.id.body_style_spinner);
         body_style_spnr.setAdapter(body_style_adapter);
 
-        color_spnr = (Spinner) view.findViewById(R.id.color_spinner);
-        color_spnr.setAdapter(color_adapter);
-
-        txn_spnr = (Spinner) view.findViewById(R.id.transmission_spinner);
-        txn_spnr.setAdapter(txn_adapter);
-
-        cylin_spnr = (Spinner) view.findViewById(R.id.cylinder_spinner);
-        cylin_spnr.setAdapter(cylin_adapter);
-
-        compress_spnr = (Spinner) view.findViewById(R.id.compressor_spinner);
-        compress_spnr.setAdapter(compressor_adapter);
+//        color_spnr = (Spinner) view.findViewById(R.id.color_spinner);
+//        color_spnr.setAdapter(color_adapter);
+//
+//        txn_spnr = (Spinner) view.findViewById(R.id.transmission_spinner);
+//        txn_spnr.setAdapter(txn_adapter);
+//
+//        cylin_spnr = (Spinner) view.findViewById(R.id.cylinder_spinner);
+//        cylin_spnr.setAdapter(cylin_adapter);
+//
+//        compress_spnr = (Spinner) view.findViewById(R.id.compressor_spinner);
+//        compress_spnr.setAdapter(compressor_adapter);
 
         savedSearch = new SavedSearch();
 

@@ -49,11 +49,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listing_price_view"
                 android:textColor="@color/sinch_purple"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:text="$43,290"/>
+                android:text="$43,290"
+                android:id="@+id/listing_price_view"/>
             <TextView
                 android:paddingTop="10dp"
                 android:layout_width="wrap_content"
@@ -123,26 +123,5 @@
             fab:fab_colorPressed="@color/transparent_sky_blue"
             fab:fab_size="mini"
             />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listings_incentives_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_title="Incentives"
-            fab:fab_icon="@drawable/ic_action_achievement_white"
-            fab:fab_colorNormal="@color/gold"
-            fab:fab_colorPressed="@color/gold_transparent"
-            fab:fab_size="mini"
-            />
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-            <!--android:id="@+id/saved_vehicle_similar_listings"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--fab:fab_title="Incentives"-->
-            <!--fab:fab_icon="@drawable/ic_action_eye_open_white"-->
-            <!--fab:fab_colorNormal="@color/dark_green"-->
-            <!--fab:fab_colorPressed="@color/light_spring_green"-->
-            <!--fab:fab_size="mini"-->
-            <!--/>-->
-
     </LinearLayout>
 </LinearLayout>

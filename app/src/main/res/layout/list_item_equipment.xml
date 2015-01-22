@@ -6,18 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/equipment_layout"
+        android:background="@color/transparent_dark_gray"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/TableRowTitle"
             android:id="@+id/equipment_name"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/equipment_price"/>
+            style="@style/TableRowTitle"
+            android:id="@+id/equipment_price"
+            android:textColor="@color/gold"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/TableRowEntry"
             android:id="@+id/equipment_description"/>
     </LinearLayout>
 

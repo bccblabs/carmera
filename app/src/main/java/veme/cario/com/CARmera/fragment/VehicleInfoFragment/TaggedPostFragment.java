@@ -109,7 +109,11 @@ public class TaggedPostFragment extends Fragment {
                     Log.d(TAG, "tagged vehicle object" + vehicle.getMake());
                     TaggedPostFragment.this.taggedVehicle = vehicle;
                     post_date_tv.setText(vehicle.getCreatedAt().toString());
-                    vehicle_info_tv.setText(vehicle.getMake() + " " + vehicle.getModel());
+                    if (vehicle.getMake() == null)
+                        vehicle_info_tv.setText("Unlabeled");
+                    else {
+                        vehicle_info_tv.setText(vehicle.getMake() + " " + vehicle.getModel());
+                    }
                     tagged_photo_view.setParseFile(vehicle.getTagPhoto());
                     tagged_photo_view.loadInBackground();
                 } else {

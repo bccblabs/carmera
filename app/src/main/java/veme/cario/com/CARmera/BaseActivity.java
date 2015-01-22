@@ -39,7 +39,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
+import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
@@ -55,7 +57,8 @@ public class BaseActivity extends FragmentActivity implements
         TaggedPostFragment.DetailsSelectedListener,
         TaggedVehicleFragment.OnVehicleSelectedListener,
         TaggedPostFragment.CreateSearchListner,
-        CreateSearchFragment.ListingSearchCreatedListener {
+        CreateSearchFragment.ListingSearchCreatedListener,
+        SavedListingsFragment.ListingSelectedListener {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     /* Navigation Drawer Variables */
@@ -75,58 +78,42 @@ public class BaseActivity extends FragmentActivity implements
 
     /* facebook utilities */
     private static final String CURRENT_FB_USER_KEY = "current_fb_user";
-
     private FacebookRequestError fb_req_err = null;
-
     private List<GraphUser> friends;
     private List<JSONObject> invitable_friends;
     private static final String FRIENDS_KEY = "friends";
-
     private boolean has_denied_friend_permission = false;
-
     private static final Uri FACEBOOK_URL = Uri.parse("http://m.facebook.com");
-
-
     public static String getCurrentFbUserKey() {
         return CURRENT_FB_USER_KEY;
     }
-
     public static String getFriendsKey() {
         return FRIENDS_KEY;
     }
-
     public FacebookRequestError getFBReqErr() {
         return fb_req_err;
     }
-
     public void setFBReqErr(FacebookRequestError fb_req_err) {
         this.fb_req_err = fb_req_err;
     }
-
     public List<GraphUser> getFriends() {
         return friends;
     }
-
     public void setFriends(List<GraphUser> friends) {
         this.friends = friends;
     }
-
     public boolean hasDeniedFriendPermission() {
         return has_denied_friend_permission;
     }
-
     public void setHasDeniedFriendPermission(boolean val) {
         this.has_denied_friend_permission = val;
     }
-
     public List<JSONObject> getInvitableFriends() {
         return invitable_friends;
     }
-
     public void setInvitableFriends(List<JSONObject> invitableFriends) {
         this.invitable_friends = invitableFriends;
     }
-
     public ArrayList<String> getFriendsAsArrayListOfStrings() {
         ArrayList<String> friendsAsArrayListOfStrings = new ArrayList<String>();
         Iterator<GraphUser> friendsIterator = friends.iterator();
@@ -135,7 +122,6 @@ public class BaseActivity extends FragmentActivity implements
         }
         return friendsAsArrayListOfStrings;
     }
-
     public GraphUser getFriend(int index) {
         if (friends != null && friends.size() > index) {
             return friends.get(index);
@@ -143,7 +129,6 @@ public class BaseActivity extends FragmentActivity implements
             return null;
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -479,20 +464,22 @@ public class BaseActivity extends FragmentActivity implements
     public void onSearchCreated (SavedSearch savedSearch) {
     }
 
-    public void onIncentivesSelected (String style_id) {
-        Bundle args = new Bundle();
-        args.putString("dialog_type", "incentive_rebate");
-        args.putString("vehicle_id", style_id);
-
+    @Override
+    public void OnListingSelectedCallback (String vehicle_id) {
         if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show (fm, "incentivesOverlay");
-
+        if (vehicle_id != null) {
+            Log.i(TAG, "Tagged Vehicle id: " + vehicle_id);
+            Bundle args = new Bundle();
+            args.putString("dialog_type", "listing_details");
+            args.putString("vehicle_id", vehicle_id);
+            FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = new VehicleInfoDialog();
+            vehicleInfoDialog.setArguments(args);
+            vehicleInfoDialog.show(fm, "listingDetailOverlay");
+        }
     }
 
     @Override
@@ -511,7 +498,7 @@ public class BaseActivity extends FragmentActivity implements
 
         /* Initializing drawer items */
         drawer_item_list = new ArrayList<DrawerItem>();
-        drawer_item_list.add(new DrawerItem("My Tags", R.drawable.ic_action_user));
+        drawer_item_list.add(new DrawerItem("Profile", R.drawable.ic_action_user));
         drawer_item_list.add(new DrawerItem("Listings", R.drawable.ic_action_list_2));
         drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
         drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));

@@ -44,12 +44,12 @@
     </style>
 
     <style name="TableEntry" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:textColor">#FFD700</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_margin">5dp</item>
     </style>
 
     <style name="TableRow">
@@ -174,6 +174,32 @@
     </style>
     <style name="logout_button" parent="@style/fb_button">
         <item name="android:background">@drawable/logout_button</item>
+    </style>
+
+    <style name="TableLayout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_marginEnd">15dp</item>
+    </style>
+    <style name="TableRowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/sky_blue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+    <style name="TableRowEntry">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/light_spring_green</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">3dp</item>
     </style>
 
 </resources>

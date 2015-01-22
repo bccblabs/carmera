@@ -2,6 +2,7 @@ package veme.cario.com.CARmera;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,14 +14,18 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import java.util.List;
+
+import veme.cario.com.CARmera.fragment.ActivityFragment.ListingsDetailFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.ListingsAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ListingsActivity extends BaseActivity
-                              implements SavedListingsFragment.OnSavedListingSelectedListener {
+                              implements SavedListingsFragment.ListingSelectedListener,
+                                         ImageFragment.UploadListener {
 
     private ListView listings_view;
     private TextView no_listings_view;
@@ -32,9 +37,23 @@ public class ListingsActivity extends BaseActivity
 
     private FloatingActionButton edit_search_btn, save_search_btn, saved_cars_btn, saved_search_btn;
 
-
     @Override
-    public void OnSavedListingSelected (int pos) {}
+    public void onUploadResult (String tagged_vehicle_id) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        if (tagged_vehicle_id != null) {
+            Log.i(TAG, "Tagged Vehicle id: " + tagged_vehicle_id);
+            Bundle args = new Bundle();
+            args.putString("dialog_type", "recognition_dialog");
+            args.putString("tagged_vehicle_id", tagged_vehicle_id);
+            FragmentManager fm = getSupportFragmentManager();
+            vehicleInfoDialog = new VehicleInfoDialog();
+            vehicleInfoDialog.setArguments(args);
+            vehicleInfoDialog.show(fm, "recognitionOverlay");
+        }
+    }
 
     @Override
     public void onSearchCreated (SavedSearch savedSearch) {
@@ -67,11 +86,10 @@ public class ListingsActivity extends BaseActivity
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putString("dialog_type", "create_search");
-//                args.putParcelable("search_obj", savedSearch);
-//                if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
-//                    vehicleInfoDialog.dismiss();
-//                    vehicleInfoDialog = null;
-//                }
+                if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+                    vehicleInfoDialog.dismiss();
+                    vehicleInfoDialog = null;
+                }
                 FragmentManager fm = getSupportFragmentManager();
                 vehicleInfoDialog = new VehicleInfoDialog();
                 vehicleInfoDialog.setArguments(args);

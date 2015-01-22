@@ -156,4 +156,12 @@ public class TaggedVehicle extends ParseObject {
     public void setThumbnail (ParseFile thumbnail) { put ("thumbnail", thumbnail); }
 
     public ParseFile getThumbnail () { return getParseFile ("thumbnail"); }
+
+    public String getMileage () { return getString ("mileage"); }
+
+    public void setMileage (String val) { put ("mileage", val); }
+
+    public String getVin () { return getString ("vin"); }
+
+    public void setVin (String val) { put ("vin", val); }
 }

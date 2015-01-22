@@ -53,7 +53,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         TextView priceInfoView;
         TextView listing_date_view;
         ParseImageView photo;
-        FloatingActionButton heart_btn, info_btn, contact_btn, share_btn, incentives_btn;
+        FloatingActionButton heart_btn, info_btn, contact_btn, share_btn;
     }
 
     public ListingsAdapter (Context context) {
@@ -80,7 +80,6 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
             holder.info_btn = (FloatingActionButton) view.findViewById(R.id.info_btn);
             holder.contact_btn = (FloatingActionButton) view.findViewById(R.id.listings_contact_btn);
             holder.share_btn = (FloatingActionButton) view.findViewById(R.id.listings_share_btn);
-            holder.incentives_btn = (FloatingActionButton) view.findViewById(R.id.listings_incentives_btn);
 
             // Tag for lookup later
             view.setTag(holder);
@@ -94,9 +93,13 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
 
         /* View item: Vehicle Year, Make, Model Information */
         TextView vehicle_info_tv = holder.vehicleInfoView;
-        vehicle_info_tv.setText(taggedVehicle.getYear() + " "
-                + taggedVehicle.getMake() + " "
-                + taggedVehicle.getModel());
+        if (taggedVehicle.getMake() == null) {
+            vehicle_info_tv.setText("Unlabeled");
+        } else {
+            vehicle_info_tv.setText(taggedVehicle.getYear() + " "
+                    + taggedVehicle.getMake() + " "
+                    + taggedVehicle.getModel());
+        }
         Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
         vehicle_info_tv.setTypeface(ar);
 
@@ -140,15 +143,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         holder.info_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    byte[] imageData = taggedVehicle.getTagPhoto().getData();
-                    ((BaseActivity) getContext()).onDetailsSelected(imageData,
-                            taggedVehicle.getYear(),
-                            taggedVehicle.getMake(),
-                            taggedVehicle.getModel());
-                } catch (ParseException e) {
-                    Log.i(TAG, " - getting parse file raw data err: " + e.getMessage());
-                }
+            ((BaseActivity) getContext()).OnListingSelectedCallback(taggedVehicle.getObjectId());
             }
         });
         holder.contact_btn.setOnClickListener(new View.OnClickListener() {
@@ -212,13 +207,6 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                 userActivity.setDestName("Kai");
                 userActivity.setType("taggedVehicle");
                 userActivity.saveInBackground();
-            }
-        });
-
-        holder.incentives_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getContext()).onIncentivesSelected(taggedVehicle.getStyleId());
             }
         });
 
