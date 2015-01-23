@@ -54,7 +54,7 @@ public class IncentivesFragment extends Fragment {
 
                 incentives_listview.setVisibility(View.VISIBLE);
 //                incentives_loading_view.setVisibility(View.GONE);
-//                incentives_listview.animate().alpha(1f);
+                incentives_listview.animate().alpha(1f);
 
                 IncentivesFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }

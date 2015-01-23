@@ -15,6 +15,7 @@ dependencies {
     compile project(':MaterialDialog')
     compile files('libs/okio-1.2.0.jar')
     compile files('libs/androidplot-core-0.6.1.jar')
+    compile project(':GraphView')
 }
 
 

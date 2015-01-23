@@ -109,6 +109,7 @@
     <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="robospice-1.4.11" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
+    <orderEntry type="module" module-name="GraphView" exported="" />
     <orderEntry type="module" module-name="MaterialDialog" exported="" />
     <orderEntry type="module" module-name="openCVLibrary2410" exported="" />
     <orderEntry type="module" module-name="materialDesign" exported="" />

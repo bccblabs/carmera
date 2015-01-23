@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" filepath="$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GraphView/GraphView.iml" filepath="$PROJECT_DIR$/GraphView/GraphView.iml" />
       <module fileurl="file://$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" filepath="$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" filepath="$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" />
