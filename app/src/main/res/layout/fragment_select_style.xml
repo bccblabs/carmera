@@ -42,10 +42,11 @@
         />
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="200dp">
         <ListView
             style="@style/ListStyle"
+            android:layout_width="match_parent"
             android:id="@+id/styles_list_view">
         </ListView>
         <com.gc.materialdesign.views.ProgressBarCircularIndetermininate

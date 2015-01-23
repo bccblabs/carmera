@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
+import android.nfc.Tag;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,10 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +31,7 @@ import java.util.List;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.VehicleCustomerReview;
 import veme.cario.com.CARmera.model.Json.CustomerReview;
+import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.requests.VehicleCustomerReviewRequest;
 import veme.cario.com.CARmera.util.AnimatedExpandableListView;
 import veme.cario.com.CARmera.util.ReviewListAdapter;
@@ -44,7 +50,7 @@ public class CustomerReviewFragment extends Fragment {
     private List<ReviewListAdapter.ReviewItem> customer_reviews_items = new ArrayList<ReviewListAdapter.ReviewItem>();
     private View customer_review_loading_view;
     private int page_num = 0;
-
+    private final String TAG = CustomerReviewFragment.class.getSimpleName();
 
     private final class CustomerReviewRequestListener implements RequestListener<VehicleCustomerReview> {
         @Override
@@ -127,7 +133,10 @@ public class CustomerReviewFragment extends Fragment {
     private void performRequest() {
         CustomerReviewFragment.this.getActivity().setProgressBarIndeterminate(true);
         VehicleCustomerReviewRequest vehicleCustomerReviewRequest =
-                new VehicleCustomerReviewRequest(getArguments().getString("vehicle_id"), Integer.toString(++page_num));
+                new VehicleCustomerReviewRequest(getArguments().getString("vehicle_year"),
+                                                 getArguments().getString("vehicle_make").toLowerCase(),
+                                                 getArguments().getString("vehicle_model").toLowerCase(),
+                                                 Integer.toString(++page_num));
         spiceManager.execute(vehicleCustomerReviewRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new CustomerReviewRequestListener());
     }

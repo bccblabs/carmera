@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
@@ -14,10 +14,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
         <TextView
             style="@style/TableEntry"
+            android:layout_width="match_parent"
             android:id="@+id/vehicle_style_name"
             android:text="Ex-L "/>
         <TextView
             style="@style/TableEntry"
+            android:layout_width="match_parent"
             android:text="Starting from $26,000"
             android:textColor="@color/medius_orchid"
             android:id="@+id/starting_price"/>
