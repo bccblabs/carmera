@@ -143,7 +143,7 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         holder.info_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            ((BaseActivity) getContext()).OnListingSelectedCallback(taggedVehicle.getObjectId());
+            ((BaseActivity) getContext()).OnListingSelectedCallback(taggedVehicle.getObjectId(), taggedVehicle.getStyleId());
             }
         });
         holder.contact_btn.setOnClickListener(new View.OnClickListener() {

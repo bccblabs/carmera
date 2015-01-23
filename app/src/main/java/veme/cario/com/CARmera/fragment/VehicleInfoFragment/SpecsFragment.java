@@ -168,7 +168,8 @@ public class SpecsFragment extends Fragment {
 
     private void performRequest() {
         SpecsFragment.this.getActivity().setProgressBarIndeterminate(true);
-        VehicleSpecsRequest vehicleSpecsRequest = new VehicleSpecsRequest(getArguments().getString("vehicle_id"));
+        VehicleSpecsRequest vehicleSpecsRequest =
+                new VehicleSpecsRequest(getArguments().getString("vehicle_id"));
         spiceManager.execute(vehicleSpecsRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new VehicleSpecsRequestListener());
     }

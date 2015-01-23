@@ -9,7 +9,13 @@
         android:background="@color/transparent_dark_gray"
         android:orientation="vertical">
         <TextView
-            style="@style/TableRowTitle"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Ivory"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textAllCaps="true"
             android:id="@+id/equipment_name"/>
         <TextView
             style="@style/TableRowTitle"

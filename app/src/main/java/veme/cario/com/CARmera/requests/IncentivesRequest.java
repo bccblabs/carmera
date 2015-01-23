@@ -19,7 +19,8 @@ public class IncentivesRequest extends SpringAndroidSpiceRequest<IncentiveRebate
     @Override
     public IncentiveRebate loadDataFromNetwork () throws Exception {
         String url = String.format ("https://api.edmunds.com/v1/api/incentive/incentiverepository/findincentivesbystyleid?styleid=%s&fmt=json&api_key=%s",
-                this.vehicle_id, CARmeraApp.edmunds_app_key);
+                this.vehicle_id,
+                CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, IncentiveRebate.class);
     }
 

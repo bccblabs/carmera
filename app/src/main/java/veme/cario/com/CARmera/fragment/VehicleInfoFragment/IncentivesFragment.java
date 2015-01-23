@@ -30,10 +30,10 @@ public class IncentivesFragment extends Fragment {
     private IncentiveListAdapter incentiveListAdapter;
     private ListView incentives_listview;
     private TextView incentives_cnt;
-    private TextView no_incentives_view;
-    private View incentives_loading_view;
+//    private TextView no_incentives_view;
+//    private View incentives_loading_view;
 
-    private final class CustomerReviewRequestListener implements RequestListener<IncentiveRebate> {
+    private final class IncentiveRequestListener implements RequestListener<IncentiveRebate> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
         }
@@ -53,8 +53,8 @@ public class IncentivesFragment extends Fragment {
                 incentiveListAdapter.notifyDataSetChanged();
 
                 incentives_listview.setVisibility(View.VISIBLE);
-                incentives_loading_view.setVisibility(View.GONE);
-                incentives_listview.animate().alpha(1f);
+//                incentives_loading_view.setVisibility(View.GONE);
+//                incentives_listview.animate().alpha(1f);
 
                 IncentivesFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
             }
@@ -85,7 +85,7 @@ public class IncentivesFragment extends Fragment {
         JSON_HASH_KEY = getArguments().getString("vehicle_id") + now.toString() + "incentives";
         spiceManager.start(getActivity());
         spiceManager.addListenerIfPending(IncentiveRebate.class, JSON_HASH_KEY,
-                new CustomerReviewRequestListener());
+                new IncentiveRequestListener());
     }
 
     @Override
@@ -101,23 +101,23 @@ public class IncentivesFragment extends Fragment {
         IncentivesRequest incentivesRequest =
                 new IncentivesRequest(getArguments().getString("vehicle_id"));
         spiceManager.execute(incentivesRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
-                new CustomerReviewRequestListener());
+                new IncentiveRequestListener());
     }
 
     private void initUIComponents () {
         incentives_listview = (ListView) getView().findViewById(R.id.incentives_listview);
         incentives_cnt = (TextView) getView().findViewById(R.id.incentives_cnt);
-        incentives_loading_view = getView().findViewById(R.id.incentives_loading_view);
+//        incentives_loading_view = getView().findViewById(R.id.incentives_loading_view);
 
         incentives_listview.setVisibility(View.GONE);
-        incentives_loading_view.setAlpha(0f);
-        incentives_loading_view.setVisibility(View.VISIBLE);
-        incentives_loading_view.animate().alpha(1f);
+//        incentives_loading_view.setAlpha(0f);
+//        incentives_loading_view.setVisibility(View.VISIBLE);
+//        incentives_loading_view.animate().alpha(1f);
 
         incentiveListAdapter = new IncentiveListAdapter(getActivity());
         incentives_listview.setAdapter(incentiveListAdapter);
-        no_incentives_view = (TextView) getView().findViewById(R.id.no_incentives_view);
-        incentives_listview.setEmptyView(no_incentives_view);
+//        no_incentives_view = (TextView) getView().findViewById(R.id.no_incentives_view);
+//        incentives_listview.setEmptyView(no_incentives_view);
         performRequest();
     }
 

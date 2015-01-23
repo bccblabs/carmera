@@ -33,7 +33,7 @@ public class SharedItemAdapter extends ArrayAdapter<UserActivity> {
             view = inflater.inflate(R.layout.list_item_shared, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.item_tv = (TextView) view.findViewById(R.id.item_desc_tv);
-//            viewHolder.btn = (ImageView) view.findViewById(R.id.share_item_btn);
+            viewHolder.btn = (FloatingActionButton) view.findViewById(R.id.share_item_btn);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();

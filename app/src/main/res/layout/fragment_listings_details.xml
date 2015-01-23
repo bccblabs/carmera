@@ -63,90 +63,90 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 style="@style/TableTitle"
-                android:layout_margin="15dp"
+                android:layout_margin="3dp"
                 android:text="PERFORMANCE"/>
             <TableLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_gravity="start"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/engine_table">
-                    <TableRow>
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_engine_info"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/engine_spec_textview"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_transmission_type"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/transmission_type_textview"/>
-                        </LinearLayout>
-                    </TableRow>
-                    <TableRow>
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_hp"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/engine_hp_textview"/>
-                        </LinearLayout>
+                <TableRow>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_engine_info"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/engine_spec_textview"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_transmission_type"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/transmission_type_textview"/>
+                    </LinearLayout>
+                </TableRow>
+                <TableRow>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_hp"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/engine_hp_textview"/>
+                    </LinearLayout>
 
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_transmission_speed"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/transmission_speed_textview"/>
-                        </LinearLayout>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_transmission_speed"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/transmission_speed_textview"/>
+                    </LinearLayout>
 
-                    </TableRow>
-                    <TableRow>
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_torque"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/engine_torque_textview"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            style="@style/TableLayout">
-                            <TextView
-                                style="@style/TableRowTitle"
-                                android:text="@string/str_drivetrain"/>
-                            <TextView
-                                style="@style/TableRowEntry"
-                                android:id="@+id/driven_wheels_textview"/>
-                        </LinearLayout>
-                    </TableRow>
+                </TableRow>
+                <TableRow>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_torque"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/engine_torque_textview"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/TableLayout">
+                        <TextView
+                            style="@style/TableRowTitle"
+                            android:text="@string/str_drivetrain"/>
+                        <TextView
+                            style="@style/TableRowEntry"
+                            android:id="@+id/driven_wheels_textview"/>
+                    </LinearLayout>
+                </TableRow>
             </TableLayout>
             <TextView
                 style="@style/TableTitle"
-                android:layout_margin="15dp"
+                android:layout_margin="3dp"
                 android:text="GAS MILEAGE"/>
             <TableLayout
                 android:layout_gravity="start"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TableRow>
@@ -170,17 +170,20 @@
                     </LinearLayout>
                 </TableRow>
             </TableLayout>
-            <TextView
-                style="@style/TableTitle"
-                android:layout_margin="15dp"
-                android:text="EQUIPMENT"/>
-            <veme.cario.com.CARmera.util.AnimatedExpandableListView
-                style="@style/ListStyle"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/equipment_listview"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
         </LinearLayout>
     </ScrollView>
-
+    <!--<TextView-->
+                <!--style="@style/TableTitle"-->
+                <!--android:layout_margin="3dp"-->
+                <!--android:text="EQUIPMENT"/>-->
+    <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<veme.cario.com.CARmera.util.AnimatedExpandableListView-->
+                    <!--android:layout_margin="3dp"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:id="@+id/equipment_listview"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="165dp" />-->
+        <!--</LinearLayout>-->
 </LinearLayout>

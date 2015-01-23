@@ -52,8 +52,8 @@ public class IncentiveListAdapter extends ArrayAdapter<Incentive> {
         holder.name.setTypeface(fa);
         holder.incentive_duration.setText("From " + incentive.getStartDate() + " to " + incentive.getEndDate());
         holder.incentive_duration.setTypeface(fa);
-        holder.incentive_restrictions.setText(incentive.getRestrictions());
-        holder.incentive_restrictions.setTypeface(fa);
+//        holder.incentive_restrictions.setText(incentive.getRestrictions());
+//        holder.incentive_restrictions.setTypeface(fa);
 
         String incentive_type = incentive.getContentType();
         if (incentive_type.equals("CUSTOMER_BONUS_CASH")) {

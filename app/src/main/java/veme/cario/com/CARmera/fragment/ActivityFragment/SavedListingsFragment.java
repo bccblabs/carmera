@@ -3,15 +3,8 @@ package veme.cario.com.CARmera.fragment.ActivityFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,17 +21,14 @@ import java.util.List;
 import veme.cario.com.CARmera.NearbyActivity;
 import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.SavedListingsList;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.util.ListingsAdapter;
-import veme.cario.com.CARmera.util.VehicleListAdapter;
-import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class SavedListingsFragment extends Fragment {
 
     private static final String TAG = "SAVED_LISTINGS_FRAGMENT";
     public interface ListingSelectedListener {
-        public abstract void OnListingSelectedCallback (String vehicle_id);
+        public abstract void OnListingSelectedCallback (String vehicle_id, String style_id);
     }
 
     private ListingSelectedListener listingSelectedCallback;
@@ -97,7 +87,7 @@ public class SavedListingsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final TaggedVehicle taggedVehicle = (TaggedVehicle) saved_listings_listview.getItemAtPosition(position);
-                listingSelectedCallback.OnListingSelectedCallback(taggedVehicle.getObjectId());
+                listingSelectedCallback.OnListingSelectedCallback(taggedVehicle.getObjectId(), taggedVehicle.getStyleId());
             }
         });
 

@@ -8,15 +8,14 @@
     <TextView
         style="@style/TableTitle"
         android:text="Edmunds Review"/>
-
+    <TextView
+        style="@style/EmptyView"
+        android:id="@+id/no_edmunds_review"
+        android:text="Sorry no Edmunds reviews found..."/>
     <LinearLayout
         android:id="@+id/edmunds_review_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/EmptyView"
-            android:id="@+id/no_edmunds_review"
-            android:text="Sorry no Edmunds reviews found..."/>
+        android:layout_height="200dp">
         <TextView
             style="@style/TableEntry"
             android:id="@+id/edmunds_review_date_textview"/>
@@ -31,6 +30,14 @@
             android:id="@+id/edmunds_ratings_list_view"
             />
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/edmunds_branding"/>
+
     <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
         style="@style/ProgressBarExtraLarge"
         android:layout_marginTop="100dp"
@@ -38,12 +45,5 @@
         android:background="#FFD700"
         android:layout_gravity="center_horizontal"
         android:id="@+id/edmunds_review_progress"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/edmunds_branding"/>
 
 </LinearLayout>

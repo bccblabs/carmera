@@ -31,6 +31,7 @@ import veme.cario.com.CARmera.model.Json.EquipmentOption;
 import veme.cario.com.CARmera.model.Json.Option;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.requests.VINRequest;
+import veme.cario.com.CARmera.requests.VehicleSpecsRequest;
 import veme.cario.com.CARmera.util.AnimatedExpandableListView;
 import veme.cario.com.CARmera.util.EquipmentListAdapter;
 
@@ -45,7 +46,6 @@ public class ListingsDetailFragment extends Fragment {
 
         @Override
         public void onRequestSuccess (VehicleDetails vehicleBaseInfo) {
-
             if (ListingsDetailFragment.this.isAdded()) {
                 engine_spec_textview.setText(vehicleBaseInfo.getEngine().getSize() + "l "
                         + vehicleBaseInfo.getEngine().getConfiguration() + " "
@@ -65,34 +65,34 @@ public class ListingsDetailFragment extends Fragment {
 
                 city_mpg_tv.setText(vehicleBaseInfo.getMPG().getCity());
                 hw_mgp_tv.setText(vehicleBaseInfo.getMPG().getHighway());
-
-                for (Option option : vehicleBaseInfo.getOptions()) {
-                    EquipmentListAdapter.EquipmentItem equipmentItem = new EquipmentListAdapter.EquipmentItem();
-                    equipmentItem.package_name = option.getCategory();
-
-                    for (EquipmentOption equipment_option : option.getOptions()) {
-                        EquipmentListAdapter.EquipmentChildItem equipmentChildItem = new EquipmentListAdapter.EquipmentChildItem();
-                        equipmentChildItem.equipment_name = equipment_option.getName();
-                        equipmentChildItem.equipment_price = "$" + equipment_option.getPrice().getBaseMSRP();
-                        equipmentChildItem.equipment_desc = equipment_option.getDescription();
-                        equipmentItem.items.add(equipmentChildItem);
-                    }
-                    equipment_items.add(equipmentItem);
-                    equipmentItem.package_cnt = Integer.toString(option.getOptions().size());
-                }
-
-                equipment_list_adapter.setData(equipment_items);
-                equipment_list_adapter.notifyDataSetChanged();
+//                Log.i (TAG,"" + vehicleBaseInfo.getOptions().size());
+//                for (Option option : vehicleBaseInfo.getOptions()) {
+//                    EquipmentListAdapter.EquipmentItem equipmentItem = new EquipmentListAdapter.EquipmentItem();
+//                    equipmentItem.package_name = option.getCategory();
+//
+//                    for (EquipmentOption equipment_option : option.getOptions()) {
+//                        EquipmentListAdapter.EquipmentChildItem equipmentChildItem = new EquipmentListAdapter.EquipmentChildItem();
+//                        equipmentChildItem.equipment_name = equipment_option.getName();
+//                        equipmentChildItem.equipment_price = "$" + equipment_option.getPrice().getBaseMSRP();
+//                        equipmentChildItem.equipment_desc = equipment_option.getDescription();
+//                        equipmentItem.items.add(equipmentChildItem);
+//                    }
+//                    equipment_items.add(equipmentItem);
+//                    equipmentItem.package_cnt = Integer.toString(option.getOptions().size());
+//                }
+//
+//                equipment_list_adapter.setData(equipment_items);
+//                equipment_list_adapter.notifyDataSetChanged();
             }
         }
     }
 
     private static final String TAG = ListingsDetailFragment.class.getSimpleName();
-    private String vin;
-    private TaggedVehicle taggedVehicle;
-    private AnimatedExpandableListView equipment_listview;
-    private EquipmentListAdapter equipment_list_adapter;
-    private List<EquipmentListAdapter.EquipmentItem> equipment_items = new ArrayList<EquipmentListAdapter.EquipmentItem>();
+    private String vin, style_id;
+//    private TaggedVehicle taggedVehicle;
+//    private AnimatedExpandableListView equipment_listview;
+//    private EquipmentListAdapter equipment_list_adapter;
+//    private List<EquipmentListAdapter.EquipmentItem> equipment_items = new ArrayList<EquipmentListAdapter.EquipmentItem>();
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private static String JSON_HASH_KEY;
 
@@ -105,6 +105,7 @@ public class ListingsDetailFragment extends Fragment {
     private TextView city_mpg_tv, hw_mgp_tv;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,21 +115,24 @@ public class ListingsDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listings_details, container, false);
 
-        final String vehicle_id = getArguments().getString("vehicle_id");
+        final String vehicle_id = getArguments().getString("vehicle_post_id");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TaggedVehicle");
         query.getInBackground(vehicle_id, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject taggedVehicle, ParseException e) {
                 if (e == null) {
                     TaggedVehicle vehicle = (TaggedVehicle) taggedVehicle;
-                    ListingsDetailFragment.this.taggedVehicle = vehicle;
-                    ListingsDetailFragment.this.vin = vehicle.getVin();
+//                    ListingsDetailFragment.this.taggedVehicle = vehicle;
+//                    ListingsDetailFragment.this.vin = vehicle.getVin();
+                    ListingsDetailFragment.this.style_id = getArguments().getString("vehicle_id");
                     post_date_tv.setText(vehicle.getCreatedAt().toString());
                     vehicle_info_tv.setText(vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel());
                     mileage_tv.setText(vehicle.getMileage());
                     pricing_tv.setText(vehicle.getPrice());
                     tagged_photo_view.setParseFile(vehicle.getTagPhoto());
                     tagged_photo_view.loadInBackground();
+//                    Log.i (TAG, vehicle.getStyleId());
+                    performRequest();
 
                 } else {
                     Log.d (TAG, "problem getting shit");
@@ -182,18 +186,18 @@ public class ListingsDetailFragment extends Fragment {
         city_mpg_tv = (TextView) getView().findViewById(R.id.city_mpg_textview);
         hw_mgp_tv = (TextView) getView().findViewById(R.id.highway_mpg_textview);
 
-        equipment_listview = (AnimatedExpandableListView) getView().findViewById(R.id.equipment_listview);
-        equipment_list_adapter = new EquipmentListAdapter(getActivity());
-        equipment_list_adapter.setData(equipment_items);
-        equipment_listview.setAdapter(equipment_list_adapter);
+//        equipment_listview = (AnimatedExpandableListView) getView().findViewById(R.id.equipment_listview);
+//        equipment_list_adapter = new EquipmentListAdapter(getActivity());
+//        equipment_list_adapter.setData(equipment_items);
+//        equipment_listview.setAdapter(equipment_list_adapter);
 
-        performRequest();
     }
 
     private void performRequest() {
         ListingsDetailFragment.this.getActivity().setProgressBarIndeterminate(true);
-        VINRequest vinRequest = new VINRequest(this.vin);
-        spiceManager.execute(vinRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
+//        VINRequest vinRequest = new VINRequest(this.vin);
+        VehicleSpecsRequest vehicleSpecsRequest = new VehicleSpecsRequest(this.style_id);
+        spiceManager.execute(vehicleSpecsRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                 new VinRequestListener());
     }
 

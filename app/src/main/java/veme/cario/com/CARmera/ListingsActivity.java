@@ -24,8 +24,7 @@ import veme.cario.com.CARmera.util.ListingsAdapter;
 import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 public class ListingsActivity extends BaseActivity
-                              implements SavedListingsFragment.ListingSelectedListener,
-                                         ImageFragment.UploadListener {
+                              implements ImageFragment.UploadListener {
 
     private ListView listings_view;
     private TextView no_listings_view;

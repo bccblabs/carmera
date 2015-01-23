@@ -465,21 +465,21 @@ public class BaseActivity extends FragmentActivity implements
     }
 
     @Override
-    public void OnListingSelectedCallback (String vehicle_id) {
+    public void OnListingSelectedCallback (String vehicle_post_id, String vehicle_style_id) {
         if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-        if (vehicle_id != null) {
-            Log.i(TAG, "Tagged Vehicle id: " + vehicle_id);
             Bundle args = new Bundle();
             args.putString("dialog_type", "listing_details");
-            args.putString("vehicle_id", vehicle_id);
+            args.putString("vehicle_post_id", vehicle_post_id);
+            args.putString("vehicle_id", vehicle_style_id);
+
+
             FragmentManager fm = getSupportFragmentManager();
             vehicleInfoDialog = new VehicleInfoDialog();
             vehicleInfoDialog.setArguments(args);
             vehicleInfoDialog.show(fm, "listingDetailOverlay");
-        }
     }
 
     @Override
