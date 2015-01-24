@@ -8,28 +8,55 @@
     <TextView
         style="@style/TableTitle"
         android:text="Edmunds Review"/>
-    <TextView
-        style="@style/EmptyView"
-        android:id="@+id/no_edmunds_review"
-        android:text="Sorry no Edmunds reviews found..."/>
     <LinearLayout
-        android:id="@+id/edmunds_review_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp">
-        <TextView
-            style="@style/TableEntry"
-            android:id="@+id/edmunds_review_date_textview"/>
-        <TextView
-            style="@style/TableEntry"
-            android:id="@+id/edmunds_review_grade_textview"/>
-        <TextView
-            style="@style/TableEntry"
-            android:id="@+id/edmunds_review_summary_textview"/>
-        <ListView
-            style="@style/ListStyle"
-            android:id="@+id/edmunds_ratings_list_view"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="3dp"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <LinearLayout
+                    style="@style/TableLayout">
+                    <TextView
+                        style="@style/TableRowTitle"
+                        android:text="Date Reviewed"/>
+                    <TextView
+                        style="@style/TableRowEntry"
+                        android:id="@+id/edmunds_review_date_textview"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/TableLayout">
+                    <TextView
+                        style="@style/TableRowTitle"
+                        android:text="Grade"/>
+                    <TextView
+                        style="@style/TableRowEntry"
+                        android:id="@+id/edmunds_review_grade_textview"/>
+                </LinearLayout>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/TableRowEntry"
+                    android:id="@+id/edmunds_review_summary_textview"/>
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
+
+    <veme.cario.com.CARmera.util.AnimatedExpandableListView
+        android:layout_margin="3dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/edmunds_review_listview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <!--<TextView-->
+        <!--style="@style/EmptyView"-->
+        <!--android:id="@+id/no_edmunds_review"-->
+        <!--android:text="Sorry no Edmunds reviews found..."/>-->
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

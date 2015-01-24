@@ -12,6 +12,7 @@
     <color name="transparent_sky_blue">#8087CEEB</color>
     <color name="transparent_dark_gray">#80636363</color>
     <color name="black_semi_transparent">#B2000000</color>
+    <color name="transparent_light_grey">#80cccccc</color>
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>

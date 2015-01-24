@@ -127,7 +127,7 @@ public class ListingsDetailFragment extends Fragment {
                     ListingsDetailFragment.this.style_id = getArguments().getString("vehicle_id");
                     post_date_tv.setText(vehicle.getCreatedAt().toString());
                     vehicle_info_tv.setText(vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel());
-                    mileage_tv.setText(vehicle.getMileage() + "miles");
+                    mileage_tv.setText(vehicle.getMileage() + " miles");
                     pricing_tv.setText("$" + vehicle.getPrice());
                     tagged_photo_view.setParseFile(vehicle.getTagPhoto());
                     tagged_photo_view.loadInBackground();

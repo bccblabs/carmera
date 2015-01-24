@@ -69,7 +69,7 @@ public class SpecsFragment extends Fragment {
         public void onRequestSuccess (VehicleDetails vehicleBaseInfo) {
 
             if (SpecsFragment.this.isAdded()) {
-                engine_spec_textview.setText(vehicleBaseInfo.getEngine().getSize() + "l "
+                engine_spec_textview.setText(vehicleBaseInfo.getEngine().getSize() + "L "
                                     + vehicleBaseInfo.getEngine().getConfiguration() + " "
                                     + vehicleBaseInfo.getEngine().getCylinder()+ " "
                                     + vehicleBaseInfo.getEngine().getTotalValves() + "v");

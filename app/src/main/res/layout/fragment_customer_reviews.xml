@@ -16,26 +16,19 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#4169E1"
-        android:id="@+id/review_info_text_view"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
-        android:textSize="30sp"/>
+        style="@style/TableRowTitle"
+        android:id="@+id/review_info_text_view"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/customer_review_swipe_layout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/customer_review_swipe_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
         <veme.cario.com.CARmera.util.AnimatedExpandableListView
             style="@style/ListStyle"
             android:id="@+id/customer_review_listview"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="320dp" />
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <ImageView
         android:layout_width="wrap_content"

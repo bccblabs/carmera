@@ -44,7 +44,7 @@ public class CustomerReviewFragment extends Fragment {
     private TextView review_info;
     private TextView no_customer_review;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+//    private SwipeRefreshLayout swipeRefreshLayout;
     private AnimatedExpandableListView customer_review_listview;
     private ReviewListAdapter review_list_adapter;
     private List<ReviewListAdapter.ReviewItem> customer_reviews_items = new ArrayList<ReviewListAdapter.ReviewItem>();
@@ -144,21 +144,21 @@ public class CustomerReviewFragment extends Fragment {
     private void initUIComponents () {
         review_info = (TextView) getView().findViewById(R.id.review_info_text_view);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.customer_review_swipe_layout);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (!swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(true);
-                }
-                performRequest();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+//        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.customer_review_swipe_layout);
+//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                if (!swipeRefreshLayout.isRefreshing()) {
+//                    swipeRefreshLayout.setRefreshing(true);
+//                }
+//                performRequest();
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
 
 
         customer_review_listview = (AnimatedExpandableListView) getView().findViewById(R.id.customer_review_listview);

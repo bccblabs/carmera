@@ -126,7 +126,7 @@ public class EquipmentListAdapter extends AnimatedExpandableListView.AnimatedExp
 
     @Override
     public boolean isChildSelectable(int arg0, int arg1) {
-        return true;
+        return false;
     }
 
 }

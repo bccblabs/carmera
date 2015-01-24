@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/transparent_dark_gray"
+    android:background="@color/transparent_light_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +18,7 @@
                 style="@style/TableLayout">
                 <TextView
                     style="@style/RowTitle"
-                    android:id="@+id/edmunds_ratings_title_textview"/>
+                    android:id="@+id/subrating_title"/>
             </LinearLayout>
             <LinearLayout
                 style="@style/TableLayout">
@@ -27,7 +27,7 @@
                     android:text="Grade"/>
                 <TextView
                     style="@style/TableRowEntry"
-                    android:id="@+id/edmunds_ratings_grade_textview"/>
+                    android:id="@+id/subrating_grade"/>
             </LinearLayout>
             <LinearLayout
                 style="@style/TableLayout">
@@ -36,7 +36,7 @@
                     android:text="Score"/>
                 <TextView
                     style="@style/TableRowEntry"
-                    android:id="@+id/edmunds_ratings_score_textview"/>
+                    android:id="@+id/subrating_score"/>
             </LinearLayout>
         </TableRow>
         <TableRow>
@@ -44,7 +44,7 @@
                 style="@style/TableLayout">
                 <TextView
                     style="@style/TableRowEntry"
-                    android:id="@+id/edmunds_ratings_summary_textview"/>
+                    android:id="@+id/subrating_summary"/>
             </LinearLayout>
         </TableRow>
     </TableLayout>

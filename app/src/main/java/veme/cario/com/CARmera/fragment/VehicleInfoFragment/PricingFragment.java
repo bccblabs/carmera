@@ -111,12 +111,12 @@ public class PricingFragment extends Fragment {
         DataPoint[] points = new DataPoint[price_map.size()];
         int i = 0;
         for (Double price : price_map.keySet() ) {
-            int label_idx = 3 * (i + 1 );
+            int label_idx = 1 * (i + 1 );
             points[i++] = new DataPoint(label_idx, price);
 
         }
         BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(points);
-        series.setSpacing(50);
+        series.setSpacing(55);
         series.setDrawValuesOnTop(false);
         series.setValuesOnTopColor(Color.RED);
         series.setOnDataPointTapListener(new OnDataPointTapListener() {

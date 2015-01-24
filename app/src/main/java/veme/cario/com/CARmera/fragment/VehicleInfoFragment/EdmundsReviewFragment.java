@@ -18,11 +18,17 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.EdmundsRating;
 import veme.cario.com.CARmera.model.APIModels.EdmundsReview;
+import veme.cario.com.CARmera.model.Json.EdmundsSubRating;
 import veme.cario.com.CARmera.requests.EdmundsReviewRequest;
+import veme.cario.com.CARmera.util.AnimatedExpandableListView;
 import veme.cario.com.CARmera.util.EdmundsRatingAdapter;
+import veme.cario.com.CARmera.util.EquipmentListAdapter;
 
 /**
  * Created by bski on 12/18/14.
@@ -33,12 +39,10 @@ public class EdmundsReviewFragment extends Fragment {
     private TextView grade_textview;
     private TextView summary_textview;
     private TextView no_edmunds_review;
+    private AnimatedExpandableListView edmundsRatingListview;
 
-    private ListView ratings_listview;
+    private List<EdmundsRatingAdapter.RatingItem> ratingitems = new ArrayList<EdmundsRatingAdapter.RatingItem>();
     private EdmundsRatingAdapter edmundsRatingAdapter;
-
-    private View edmunds_review_layout;
-    private View edmunds_loading_view;
 
     private static String JSON_HASH_KEY;
 
@@ -47,30 +51,35 @@ public class EdmundsReviewFragment extends Fragment {
     private final class EdmundsReviewRequestListener implements RequestListener<EdmundsReview> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            edmunds_review_layout.setAlpha(0f);
-            edmunds_loading_view.setVisibility(View.GONE);
-            edmunds_review_layout.setVisibility(View.VISIBLE);
-            edmunds_review_layout.animate().alpha(1f);
+            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            EdmundsReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
         }
 
         @Override
         public void onRequestSuccess (EdmundsReview edmundsReview) {
             if (EdmundsReviewFragment.this.isAdded()) {
-
-                edmunds_review_layout.setAlpha(0f);
-                edmundsRatingAdapter.clear();
-                for (EdmundsRating edmundsRating : edmundsReview.getRatings()) {
-                    edmundsRatingAdapter.add(edmundsRating);
-                }
-                edmundsRatingAdapter.notifyDataSetChanged();
                 date_textview.setText(edmundsReview.getDate());
                 grade_textview.setText(edmundsReview.getGrade());
                 summary_textview.setText(edmundsReview.getSummary());
-                EdmundsReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
 
-                edmunds_loading_view.setVisibility(View.GONE);
-                edmunds_review_layout.setVisibility(View.VISIBLE);
-                edmunds_review_layout.animate().alpha(1f);
+                for (EdmundsRating edmundsRating : edmundsReview.getRatings()) {
+                    EdmundsRatingAdapter.RatingItem ratingItem = new EdmundsRatingAdapter.RatingItem();
+                    ratingItem.grade = edmundsRating.getGrade();
+                    ratingItem.score = edmundsRating.getScore();
+                    ratingItem.summary = edmundsRating.getSummary();
+                    ratingItem.title = edmundsRating.getTitle();
+                    for (EdmundsSubRating subRating : edmundsRating.getSubRatings()) {
+                        EdmundsRatingAdapter.SubRatingItem subRatingItem = new EdmundsRatingAdapter.SubRatingItem();
+                        subRatingItem.grade = subRating.getGrade();
+                        subRatingItem.score = subRating.getScore();
+                        subRatingItem.summary = subRating.getSummary();
+                        subRatingItem.title = subRating.getTitle();
+                        ratingItem.subRatings.add (subRatingItem);
+                    }
+                    ratingitems.add (ratingItem);
+                }
+                edmundsRatingAdapter.setData(ratingitems);
+                edmundsRatingAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -83,27 +92,13 @@ public class EdmundsReviewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edmunds_review, container, false);
-        date_textview = (TextView) view.findViewById(R.id.edmunds_review_date_textview);
-        grade_textview = (TextView) view.findViewById(R.id.edmunds_review_grade_textview);
-        summary_textview = (TextView) view.findViewById(R.id.edmunds_review_summary_textview);
-        ratings_listview = (ListView) view.findViewById(R.id.edmunds_ratings_list_view);
-        no_edmunds_review = (TextView) view.findViewById(R.id.no_edmunds_review);
+        return inflater.inflate(R.layout.fragment_edmunds_review, container, false);
+    }
 
-        ratings_listview.setEmptyView(no_edmunds_review);
-        edmundsRatingAdapter = new EdmundsRatingAdapter(getActivity());
-        ratings_listview.setAdapter(edmundsRatingAdapter);
-
-        edmunds_review_layout = view.findViewById(R.id.edmunds_review_layout);
-        edmunds_loading_view = view.findViewById(R.id.edmunds_review_progress);
-
-        edmunds_review_layout.setVisibility(View.GONE);
-        edmunds_loading_view.setAlpha(0f);
-        edmunds_loading_view.setVisibility(View.VISIBLE);
-        edmunds_loading_view.animate().alpha(1f);
-
-        performRequest();
-        return view;
+    @Override
+    public void onViewCreated (View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initUIComponents();
     }
 
     @Override
@@ -123,6 +118,21 @@ public class EdmundsReviewFragment extends Fragment {
             spiceManager.shouldStop();
         }
         super.onStop();
+    }
+
+    private void initUIComponents () {
+
+        date_textview = (TextView) getView().findViewById(R.id.edmunds_review_date_textview);
+        grade_textview = (TextView) getView().findViewById(R.id.edmunds_review_grade_textview);
+        summary_textview = (TextView) getView().findViewById(R.id.edmunds_review_summary_textview);
+
+        no_edmunds_review = (TextView) getView().findViewById(R.id.transmission_type_textview);
+        edmundsRatingListview = (AnimatedExpandableListView) getView().findViewById(R.id.edmunds_review_listview);
+        edmundsRatingAdapter = new EdmundsRatingAdapter(getActivity());
+        edmundsRatingAdapter.setData(ratingitems);
+        edmundsRatingListview.setAdapter(edmundsRatingAdapter);
+        edmundsRatingListview.setEmptyView(no_edmunds_review);
+        performRequest();
     }
 
     private void performRequest() {
