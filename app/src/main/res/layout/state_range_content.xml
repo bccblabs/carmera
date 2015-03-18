@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Vehicle State"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_state_spinner"/>
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Year Range"/>
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/year_range_bar"
+        custom:tickStart="1900"
+        custom:tickEnd="2015"
+        custom:tickInterval="1"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Mileage Range"/>
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/mileage_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="100000"
+        custom:tickInterval="5000"
+    />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Search Radius Range"/>
+
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/radius_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="500"
+        custom:tickInterval="20"
+        />
+
+</LinearLayout>

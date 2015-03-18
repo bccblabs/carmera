@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pref_search_radius">
-        <item>"10"</item>
-        <item>"50"</item>
-        <item>"100"</item>
-        <item>"150"</item>
-        <item>"250"</item>
-        <item>"500"</item>
-    </string-array>
+
     <string-array name="makes_array">
         <item>Acura</item>
         <item>Aston Martin</item>
@@ -57,6 +50,7 @@
         <item>"C-Class"</item>
         <item>"Focus"</item>
     </string-array>
+
     <string-array name="years_array">
         <item>1996</item>
         <item>1997</item>
@@ -579,6 +573,11 @@
         <item>Convertible</item>
         <item>Crossover</item>
         <item>Any</item>
+    </string-array>
+
+    <string-array name="car_state_array">
+        <item>New</item>
+        <item>Used</item>
     </string-array>
 
     <string-array name="origin_array">

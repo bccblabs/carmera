@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="0-60 MPH (in seconds)"/>
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/zero_sixty_range_bar"
+        custom:tickStart="3"
+        custom:tickEnd="20"
+        custom:tickInterval="1"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Quarter Mile Time (in seconds)"/>
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/quarter_mile_spinner"
+        custom:tickStart="5"
+        custom:tickEnd="20"
+        custom:tickInterval="1"
+        />
+
+</LinearLayout>

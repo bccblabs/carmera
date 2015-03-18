@@ -61,28 +61,18 @@
                 android:textColor="@color/light_spring_green"
                 android:id="@+id/listing_seller_info_view"
                 android:text="BMW of GETTERVILLE"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_spring_green"
-                android:text="Posted 5 weeks ago"
-                android:id="@+id/listing_post_date"/>
             <LinearLayout
                 android:layout_marginTop="8dp"
                 android:layout_gravity="left"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_action_location_2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:textColor="@color/light_spring_green"
-                    android:text="15 mi"/>
+                    android:text="Posted 5 weeks ago"
+                    android:id="@+id/listing_post_date"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -66,7 +66,7 @@ public class ProfileActivity extends BaseActivity
         }
 
         drawer_listview.setItemChecked(drawer_pos, true);
-        setTitle("My Tags");
+        setTitle("Profile");
         my_tags_btn = (FloatingActionButton) findViewById(R.id.my_tags_btn);
         saved_search_btn = (FloatingActionButton) findViewById(R.id.saved_search_btn);
         shared_vehicles_btn = (FloatingActionButton) findViewById(R.id.shared_tags_btn);

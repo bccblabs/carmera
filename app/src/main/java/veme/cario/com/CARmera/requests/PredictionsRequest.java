@@ -31,16 +31,20 @@ public class PredictionsRequest extends OkHttpSpiceRequest<Predictions> {
         this.image_url = image_url_;
     }
 
+    /* keys:
+    u7ZfYqmYJ5LuwtaNEWTogeFv6mTcDDQWT5xf86mP4pigerPAJV 1040
+    I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj 869
+     */
     @Override
     public Predictions loadDataFromNetwork () throws Exception {
 
       try {
-          String req_json = String.format ( "{\"classifier_id\": 869, \"image_url\": \"%s\"}", image_url) ;
+          String req_json = String.format ( "{\"classifier_id\": 1045, \"image_url\": \"%s\"}", image_url) ;
           Log.i (TAG, req_json);
           RequestBody body = RequestBody.create(JSON, req_json);
           Request request = new Request.Builder()
                   .url("https://www.metamind.io/vision/classify")
-                  .header("Authentication", "Basic I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj")
+                  .header("Authentication", "Basic u7ZfYqmYJ5LuwtaNEWTogeFv6mTcDDQWT5xf86mP4pigerPAJV")
                   .post(body)
                   .build();
           Response response = client.newCall(request).execute();

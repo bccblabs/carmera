@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Combined MPG"/>
+
+    <com.appyvet.rangebar.RangeBar
+        style="@style/SearchRangeBarStyle"
+        android:id="@+id/combined_mpg_range_bar"
+        custom:tickStart="5"
+        custom:tickEnd="100"
+        custom:tickInterval="5"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Average Repair Cost ($/year)"/>
+
+    <com.appyvet.rangebar.RangeBar
+        android:id="@+id/repair_cost_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="5000"
+        custom:tickInterval="500"
+        style="@style/SearchRangeBarStyle"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Average Maintenance Cost ($/year)"/>
+
+    <com.appyvet.rangebar.RangeBar
+        android:id="@+id/maintenance_cost_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="5000"
+        custom:tickInterval="500"
+        style="@style/SearchRangeBarStyle"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Average Insurance Cost ($/year)"/>
+
+    <com.appyvet.rangebar.RangeBar
+        android:id="@+id/insurance_cost_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="5000"
+        custom:tickInterval="500"
+        style="@style/SearchRangeBarStyle"
+        />
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
+        android:text="Average Depreciation Cost ($/year)"/>
+
+    <com.appyvet.rangebar.RangeBar
+        android:id="@+id/depreciation_cost_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="5000"
+        custom:tickInterval="500"
+        style="@style/SearchRangeBarStyle"
+        />
+
+</LinearLayout>

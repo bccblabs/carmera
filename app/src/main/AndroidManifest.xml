@@ -82,7 +82,7 @@
 
         <activity
             android:name=".NearbyActivity"
-            android:label="@string/title_activity_nearby"
+            android:label="Discover"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
         </activity>
@@ -107,6 +107,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
         </activity>
+
+        <activity
+            android:name=".ListingsActivity_v2"
+            android:label="@string/title_activity_listings"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme">
+        </activity>
+
 
         <activity
             android:name="veme.cario.com.CARmera.WelcomeActivity"

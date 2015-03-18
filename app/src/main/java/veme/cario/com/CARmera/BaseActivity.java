@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.FacebookRequestError;
@@ -25,12 +24,10 @@ import com.facebook.Request;
 import com.facebook.RequestBatch;
 import com.facebook.Response;
 import com.facebook.Session;
-import com.facebook.model.GraphObject;
 import com.facebook.model.GraphUser;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,10 +35,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
-import veme.cario.com.CARmera.fragment.SavedSearchFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
@@ -306,7 +301,7 @@ public class BaseActivity extends FragmentActivity implements
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case 1:
-                startActivity(new Intent(this, ListingsActivity.class));
+                startActivity(new Intent(this, ListingsActivity_v2.class));
                 break;
             case 2:
                 startActivity(new Intent(this, NearbyActivity.class));
@@ -499,8 +494,8 @@ public class BaseActivity extends FragmentActivity implements
         /* Initializing drawer items */
         drawer_item_list = new ArrayList<DrawerItem>();
         drawer_item_list.add(new DrawerItem("Profile", R.drawable.ic_action_user));
-        drawer_item_list.add(new DrawerItem("Listings", R.drawable.ic_action_list_2));
-        drawer_item_list.add(new DrawerItem("Nearby", R.drawable.ic_action_location));
+        drawer_item_list.add(new DrawerItem("Dis.car.vr", R.drawable.ic_action_search_purple));
+        drawer_item_list.add(new DrawerItem("Near me", R.drawable.ic_action_location));
         drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
         drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
 

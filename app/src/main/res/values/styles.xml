@@ -1,10 +1,25 @@
-<resources>
+<resources xmlns:custom="http://schemas.android.com/apk/res/com.appyvet.rangebar">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="SearchRangeBarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="pinRadius">5dp</item>
+        <item name="pinPadding">2dp</item>
+        <item name="barWeight">2dp</item>
+        <item name="connectingLineWeight">2dp</item>
+        <item name="barColor">#CCCCCC</item>
+        <item name="connectingLineColor">#3F51B5</item>
+        <item name="pinColor">#3F51B5</item>
+        <item name="tickColor">#000000</item>
+        <item name="selectorColor">#3F51B5</item>
+    </style>
     <style name="TitleCenter">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -224,5 +239,32 @@
         <item name="android:layout_margin">5dp</item>
     </style>
 
+    <style name="SearchCategorySubtitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
+    <style name="SearchCategoryHdr">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="SearchHdrStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/sky_blue</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

@@ -1,9 +1,40 @@
 apply plugin: 'com.android.application'
-
-
 dependencies {
-    compile 'com.android.support:support-v4:19.1.0'
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    /* wizard */
+    compile 'org.codepond:wizardroid:1.3.0'
+    //    /* draggable panel */
+    //    compile 'com.github.pedrovgs:draggablepanel:1.8'
+    /* upload buttons */
+    // circular progress button
+    //    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+    /* better graph librarie */
+    // EazeGraph
+    //    compile 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    //    // MPAndroid Chart
+    //    compile 'com.nineoldandroids:library:2.4.0'
+    //    compile 'com.github.PhilJay:MPAndroidChart:v2.0.8'
+    /* sidemenu, click, show stuff, coolest menu seen */
+    // side menu
+    //    compile 'com.yalantis:sidemenu:1.0'
+    //    compile 'com.github.ozodrukh:CircularReveal:1.0.4@aar'
+    //    // context menu
+    //    compile 'com.yalantis:contextmenu:1.0.2'
+    /* slidr, slide to dismiss */
+    //    compile 'com.r0adkll:slidableactivity:2.0.2'
+    /* click on image, then show action buttons */
+    // android view hover
+    //    compile 'com.nineoldandroids:library:2.4.0'
+    //    compile 'com.daimajia.easing:library:1.0.0@aar'
+    //    compile 'com.daimajia.androidanimations:library:1.1.2@aar'
+    //    compile 'com.daimajia.androidviewhover:library:1.0.3@aar'
+    /* expandable layout */
+    compile 'com.github.traex.expandablelayout:library:1.2.2'
+    /* range bar */
+    compile 'com.appyvet:materialrangebar:1.0'
+    /* elastic search box */
+//    compile 'io.searchbox:jest:0.1.5'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/Parse-1.6.0.jar')
     compile project(':app:libs:openCVLibrary2410')
@@ -17,9 +48,6 @@ dependencies {
     compile files('libs/androidplot-core-0.6.1.jar')
     compile project(':GraphView')
 }
-
-
-
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -39,7 +67,6 @@ android {
     productFlavors {
     }
 }
-
 
 android {
     packagingOptions {

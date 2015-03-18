@@ -104,15 +104,15 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
         vehicle_info_tv.setTypeface(ar);
 
         TextView price_info_tv = holder.priceInfoView;
-//        price_info_tv.setText(taggedVehicle.getPrice());
+        price_info_tv.setText("$" + taggedVehicle.getPrice());
         price_info_tv.setTypeface(ar);
 
         final TextView seller_info_tv = holder.sellerInfoView;
-//        seller_info_tv.setText(taggedVehicle.getSellerInfo());
+        seller_info_tv.setText(taggedVehicle.getSellerInfo());
         seller_info_tv.setTypeface(ar);
 
         TextView listing_date_view = holder.listing_date_view;
-//        listing_date_view.setText(taggedVehicle.getCreatedAt().toString());
+        listing_date_view.setText(taggedVehicle.getCreatedAt().toString());
         listing_date_view.setTypeface(ar);
 
         /* View item: Vehicle Image */

@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.fragment.ActivityFragment.CreateSearchFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.ListingsDetailFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.RecognitionResultFragment;

@@ -39,7 +39,7 @@ public class NearbyActivity extends BaseActivity
 
         getLayoutInflater().inflate(R.layout.activity_nearby, frame_layout);
         drawer_listview.setItemChecked(drawer_pos, true);
-        setTitle("Nearby");
+        setTitle("Near Me");
 
         nearby_vehicles_gridview = (GridView) findViewById(R.id.nearby_vehicle_grid_view);
 

@@ -1,12 +1,15 @@
 package veme.cario.com.CARmera.util;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.Json.Prediction;
@@ -44,7 +47,13 @@ public class RecognitionResultAdapter extends ArrayAdapter<Prediction> {
         final Prediction prediction = getItem(pos);
         viewHolder.recognition_overlay.setBackgroundColor(0x4169E1);
         viewHolder.vehicle_name.setText(prediction.getClass_name());
-        viewHolder.f_score.setText( String.format ("%.2f ", prediction.getProb()) + "Confident");
+        Double prob = prediction.getProb() * 100;
+        DecimalFormat newFormat = new DecimalFormat("#.##");
+        Double twoDecimal =  Double.valueOf(newFormat.format(prob));
+        viewHolder.f_score.setText( twoDecimal.toString() + "%");
+        Typeface fa = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
+        viewHolder.vehicle_name.setTypeface(fa);
+        viewHolder.f_score.setTypeface(fa);
         return view;
     }
 

@@ -64,7 +64,7 @@ public class ListingsActivity extends BaseActivity
         super.onCreate(savedBundleInst);
         getLayoutInflater().inflate(R.layout.activity_listings, frame_layout);
         drawer_listview.setItemChecked(drawer_pos, true);
-        setTitle("Listings");
+        setTitle("Dis.car.vr");
 
         /* sets adapter and loads data */
         listings_view = (ListView) findViewById(R.id.listings_view);
@@ -157,6 +157,7 @@ public class ListingsActivity extends BaseActivity
         });
 
         /* load data from parse query */
+
         ParseQuery<TaggedVehicle> query = ParseQuery.getQuery("TaggedVehicle");
         query.findInBackground(new FindCallback<TaggedVehicle>() {
             @Override

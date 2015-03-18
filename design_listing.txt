@@ -1,0 +1,8 @@
+
+    - persist variables
+        - list<listings>
+        - jestquery, set one, two modifies it
+        - meaning no field values are saved in context, all parsed out in the query structure
+
+    - have activity that asks "find listings" send out a serialized query structure
+

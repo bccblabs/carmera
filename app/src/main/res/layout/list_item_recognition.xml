@@ -16,14 +16,16 @@
         android:id="@+id/recognition_overlay"
         android:layout_weight="0.12">
         <TextView
-            style="@style/TableEntry"
+            style="@style/TableRowEntry"
             android:id="@+id/vehicle_name_view"
+            android:textSize="25sp"
+            android:textColor="@color/Ivory"
             android:text="2014 BMW X3"/>
         <TextView
-            style="@style/TableEntry"
-            android:text="79%"
-            android:textColor="@color/medius_orchid"
-            android:id="@+id/f_score_view"/>
+            style="@style/TableRowEntry"
+            android:id="@+id/f_score_view"
+            android:textSize="25sp"/>
+
     </LinearLayout>
 
 </LinearLayout>

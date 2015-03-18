@@ -15,9 +15,6 @@ import java.util.List;
 
 import veme.cario.com.CARmera.R;
 
-/**
- * Created by bski on 12/30/14.
- */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
 
