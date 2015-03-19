@@ -57,7 +57,7 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Engine Compressor Type"/>
-    <Spinner
+    <veme.cario.com.CARmera.util.MultiSelectSpinner
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

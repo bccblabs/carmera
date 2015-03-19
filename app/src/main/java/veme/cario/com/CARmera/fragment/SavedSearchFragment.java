@@ -1,10 +1,7 @@
 package veme.cario.com.CARmera.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.ListingsActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.util.SavedSearchAdapter;
@@ -52,9 +48,9 @@ public class SavedSearchFragment extends Fragment {
                 final SavedSearch savedSearch = (SavedSearch) saved_search_listview.getItemAtPosition(position);
                 Bundle args = new Bundle();
                 args.putString("saved_search_id", savedSearch.getObjectId());
-                Intent listings_intent = new Intent(getActivity(), ListingsActivity.class);
-                listings_intent.putExtras(args);
-                startActivity(listings_intent);
+//                Intent listings_intent = new Intent(getActivity(), ListingsActivity.class);
+//                listings_intent.putExtras(args);
+//                startActivity(listings_intent);
             }
         });
 

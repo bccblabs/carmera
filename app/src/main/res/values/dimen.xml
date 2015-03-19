@@ -1,3 +1,4 @@
+
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -11,4 +12,11 @@
     <dimen name="range_tick_label_font_size">15dp</dimen>
     <dimen name="domain_tick_label_font_size">15dp</dimen>
     <dimen name="legend_text_font_size">20dp</dimen>
+
+
+    <item name="x_scale_factor" format="float" type="dimen">2.3</item>
+    <item name="y_scale_factor" format="float" type="dimen">2.3</item>
+    <dimen name="top_fragment_margin">10dip</dimen>
+    <dimen name="tv_show_fan_art_height">150dip</dimen>
+
 </resources>

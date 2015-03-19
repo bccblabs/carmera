@@ -1,9 +1,5 @@
 apply plugin: 'com.android.application'
 dependencies {
-    /* wizard */
-    compile 'org.codepond:wizardroid:1.3.0'
-    //    /* draggable panel */
-    //    compile 'com.github.pedrovgs:draggablepanel:1.8'
     /* upload buttons */
     // circular progress button
     //    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
@@ -28,42 +24,47 @@ dependencies {
     //    compile 'com.daimajia.androidanimations:library:1.1.2@aar'
     //    compile 'com.daimajia.androidviewhover:library:1.0.3@aar'
     /* expandable layout */
+
+    compile ('com.github.pedrovgs:draggablepanel:1.8') {
+        exclude group: 'com.nineoldandroids', module: 'library'
+    }
+    compile 'org.codepond:wizardroid:1.3.0'
+    compile ('io.searchbox:jest-droid:0.1.5')
     compile 'com.github.traex.expandablelayout:library:1.2.2'
-    /* range bar */
     compile 'com.appyvet:materialrangebar:1.0'
-    /* elastic search box */
-//    compile 'io.searchbox:jest:0.1.5'
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile ('org.elasticsearch:elasticsearch:1.0.0')
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/Parse-1.6.0.jar')
-    compile project(':app:libs:openCVLibrary2410')
     compile project(':facebook')
     compile project(':ParallaxScroll')
-    compile files('sinch/sinch-android-rtc-3.4.2.jar')
     compile project(':materialDesign')
     compile project(':library')
     compile project(':MaterialDialog')
     compile files('libs/okio-1.2.0.jar')
-    compile files('libs/androidplot-core-0.6.1.jar')
     compile project(':GraphView')
+    compile 'com.android.support:multidex:1.0.0'
 }
+
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.0"
     defaultConfig {
         applicationId 'veme.cario.com.CARmera'
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     productFlavors {
     }
 }
@@ -71,6 +72,7 @@ android {
 android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/NOTICE'
@@ -81,5 +83,14 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/services/org.apache.lucene.codecs.Codec'
+        exclude 'META-INF/services/org.apache.lucene.codecs.PostingsFormat'
+        exclude 'META-INF/services/org.apache.lucene.codecs.DocValuesFormat'
+        exclude 'META-INF/services/com.fasterxml.jackson.core.JsonFactory'
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
 }

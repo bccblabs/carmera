@@ -156,13 +156,6 @@ public class ProfileActivity extends BaseActivity
 
     }
 
-    @Override
-    public void onSearchCreated (SavedSearch savedSearch) {
-        /* directs to listings activity to retrieve listings */
-        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
-        i.putExtra ("search_obj", savedSearch.getObjectId());
-        startActivity(i);
-    }
 
 
     @Override
@@ -173,9 +166,9 @@ public class ProfileActivity extends BaseActivity
         args.putString("vehicle_make", mk);
         args.putString("vehicle_model", model);
 
-        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
-        i.putExtras(args);
-        startActivity(i);
+//        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
+//        i.putExtras(args);
+//        startActivity(i);
     }
 
     @Override

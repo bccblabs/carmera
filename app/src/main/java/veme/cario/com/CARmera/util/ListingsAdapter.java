@@ -5,39 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.widget.FacebookDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseException;
 import com.parse.ParseImageView;
-import com.parse.ParseUser;
 
 import veme.cario.com.CARmera.BaseActivity;
 import veme.cario.com.CARmera.CARmeraApp;
-import veme.cario.com.CARmera.ListingsActivity;
-import veme.cario.com.CARmera.NearbyActivity;
-import veme.cario.com.CARmera.ProfileActivity;
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.UserModels.UserActivity;
-import veme.cario.com.CARmera.view.SellerInfoDialog;
-import veme.cario.com.CARmera.view.VehicleInfoDialog;
 
 /**
  * Created by bski on 1/1/15.

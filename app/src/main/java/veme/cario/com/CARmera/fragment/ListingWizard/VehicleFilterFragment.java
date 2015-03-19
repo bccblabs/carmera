@@ -12,10 +12,11 @@ import java.util.List;
 
 import veme.cario.com.CARmera.R;
 
-/**
- * Created by bski on 3/17/15.
- */
 public class VehicleFilterFragment extends WizardStep {
+
+    /* populate the vehicles from query */
+    /* map vehicles as aggregation results */
+    /* selectable listview */
 
     public VehicleFilterFragment() {
     }
@@ -24,7 +25,18 @@ public class VehicleFilterFragment extends WizardStep {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.layout_vehicle_filter, container, false);
-
         return v;
     }
+
+    @Override
+    public void onExit(int exitCode) {
+        switch (exitCode) {
+            case WizardStep.EXIT_NEXT:
+                break;
+            case WizardStep.EXIT_PREVIOUS:
+                break;
+        }
+    }
+
+
 }

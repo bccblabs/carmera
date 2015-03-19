@@ -52,7 +52,6 @@ public class BaseActivity extends FragmentActivity implements
         TaggedPostFragment.DetailsSelectedListener,
         TaggedVehicleFragment.OnVehicleSelectedListener,
         TaggedPostFragment.CreateSearchListner,
-        CreateSearchFragment.ListingSearchCreatedListener,
         SavedListingsFragment.ListingSelectedListener {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -455,9 +454,6 @@ public class BaseActivity extends FragmentActivity implements
         vehicleInfoDialog.show(fm, "createSearchOverlay");
     }
 
-    @Override
-    public void onSearchCreated (SavedSearch savedSearch) {
-    }
 
     @Override
     public void OnListingSelectedCallback (String vehicle_post_id, String vehicle_style_id) {

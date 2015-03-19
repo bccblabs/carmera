@@ -628,4 +628,10 @@
         <item>Turbo</item>
         <item>Supercharged</item>
     </string-array>
+
+    <string-array name="drivetrain_array">
+        <item>All Wheel Drive</item>
+        <item>Front Wheel Drive</item>
+        <item>Rear Wheel Drive</item>
+    </string-array>
 </resources>

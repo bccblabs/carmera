@@ -1,6 +1,8 @@
 package veme.cario.com.CARmera;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
@@ -23,6 +25,13 @@ public class CARmeraApp extends Application {
     public static final String edmunds_app_secret = "tVsB2tChr7wXqk47ZZMQneKq";
 
     public static String userName;
+
+    @Override
+    public void attachBaseContext (Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

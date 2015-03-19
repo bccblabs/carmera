@@ -10,7 +10,7 @@
         <item name="android:layout_height">65dp</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="pinRadius">5dp</item>
+        <item name="pinRadius">8dp</item>
         <item name="pinPadding">2dp</item>
         <item name="barWeight">2dp</item>
         <item name="connectingLineWeight">2dp</item>
@@ -265,6 +265,11 @@
         <item name="android:background">@color/sky_blue</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+
+    <style name="image_view">
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 </resources>

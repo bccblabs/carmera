@@ -1,7 +1,6 @@
 package veme.cario.com.CARmera.fragment.ActivityFragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,9 +17,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-import veme.cario.com.CARmera.ListingsActivity;
 import veme.cario.com.CARmera.R;
-import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.model.UserModels.TaggedVehicle;
 import veme.cario.com.CARmera.model.UserModels.UserActivity;
 import veme.cario.com.CARmera.util.SharedItemAdapter;
@@ -74,9 +71,9 @@ public class SharedTagsFragment extends Fragment {
                 } else {
                     Bundle args = new Bundle();
                     args.putString("saved_search_id", data.getObjectId());
-                    Intent listings_intent = new Intent(getActivity(), ListingsActivity.class);
-                    listings_intent.putExtras(args);
-                    startActivity(listings_intent);
+//                    Intent listings_intent = new Intent(getActivity(), ListingsActivity.class);
+//                    listings_intent.putExtras(args);
+//                    startActivity(listings_intent);
                 }
             }
         });
