@@ -6,73 +6,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RecyclerView
-        android:id="@+id/consolidated_vehicle_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!--<RecyclerView-->
+        <!--android:id="@+id/consolidated_vehicle_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
-    <com.github.pedrovgs.DraggableView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:draggable_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/draggable_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        draggable_view:top_view_id="@+id/vehicle_image_view"
-        draggable_view:bottom_view_id="@+id/vehicle_figures_view"
-        draggable_view:top_view_x_scale_factor="@dimen/x_scale_factor"
-        draggable_view:top_view_y_scale_factor="@dimen/y_scale_factor"
-        draggable_view:top_view_margin_right="@dimen/top_fragment_margin"
-        draggable_view:top_view_margin_bottom="@dimen/top_fragment_margin"
-        android:background="@color/black_semi_transparent">
+    <!--<com.github.pedrovgs.DraggableView-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:draggable_view="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/draggable_view"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height飞ilter="fill_parent"-->
+        <!--draggable_view:top_view_id="@+id/vehicle_image_view"-->
+        <!--draggable_view:bottom_view_id="@+id/vehicle_figures_view"-->
+        <!--draggable_view:top_view_x_scale_factor="@dimen/x_scale_factor"-->
+        <!--draggable_view:top_view_y_scale_factor="@dimen/y_scale_factor"-->
+        <!--draggable_view:top_view_margin_right="@dimen/top_fragment_margin"-->
+        <!--draggable_view:top_view_margin_bottom="@dimen/top_fragment_margin"-->
+        <!--android:background="@color/black_semi_transparent">-->
 
-        <ImageView
-            android:id="@+id/iv_fan_art"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/tv_show_fan_art_height"
-            android:layout_alignParentTop="true"
-            style="@style/image_view"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_fan_art"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="@dimen/tv_show_fan_art_height"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--style="@style/image_view"/>-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/vehicle_figures_view">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.andexert.expandablelayout.library.ExpandableLayout
-                    android:id="@+id/general_info_layout"
-                    style="@style/SearchHdrStyle"
-                    expandable:headerLayout="@layout/mk_md_hdr"
-                    expandable:contentLayout="@layout/mk_md_content"
-                    />
-
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/vehicle_figures_view">-->
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
                 <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                    <!--android:id="@+id/performance_figures_layout"-->
+                    <!--android:id="@+id/general_info_layout"-->
                     <!--style="@style/SearchHdrStyle"-->
-                    <!--expandable:headerLayout="@layout/performance_figures_hdr"-->
-                    <!--expandable:contentLayout="@layout/performance_figures_content"-->
+                    <!--expandable:headerLayout="@layout/mk_md_hdr"-->
+                    <!--expandable:contentLayout="@layout/mk_md_content"-->
                     <!--/>-->
 
-                <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                    <!--android:id="@+id/economy_cost_layout"-->
-                    <!--style="@style/SearchHdrStyle"-->
-                    <!--expandable:headerLayout="@layout/economy_figure_hdr"-->
-                    <!--expandable:contentLayout="@layout/economy_figure_content"/>-->
+                <!--&lt;!&ndash;<com.andexert.expandablelayout.library.ExpandableLayout&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/performance_figures_layout"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="@style/SearchHdrStyle"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:headerLayout="@layout/performance_figures_hdr"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:contentLayout="@layout/performance_figures_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;/>&ndash;&gt;-->
 
-                <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                    <!--android:id="@+id/edmunds_user_rating_layout"-->
-                    <!--style="@style/SearchHdrStyle"-->
-                    <!--expandable:headerLayout="@layout/safety_figure_hdr"-->
-                    <!--expandable:contentLayout="@layout/safety_figure_content"/>-->
+                <!--&lt;!&ndash;<com.andexert.expandablelayout.library.ExpandableLayout&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/economy_cost_layout"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="@style/SearchHdrStyle"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:headerLayout="@layout/economy_figure_hdr"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:contentLayout="@layout/economy_figure_content"/>&ndash;&gt;-->
 
-                <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                    <!--android:id="@+id/performance"-->
-                    <!--style="@style/SearchHdrStyle"-->
-                    <!--expandable:headerLayout="@layout/edmunds_user_rating_hdr"-->
-                    <!--expandable:contentLayout="@layout/edmunds_user_rating_content"/>-->
-            </LinearLayout>
-        </ScrollView>
+                <!--&lt;!&ndash;<com.andexert.expandablelayout.library.ExpandableLayout&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/edmunds_user_rating_layout"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="@style/SearchHdrStyle"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:headerLayout="@layout/safety_figure_hdr"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:contentLayout="@layout/safety_figure_content"/>&ndash;&gt;-->
 
-    </com.github.pedrovgs.DraggableView>
+                <!--&lt;!&ndash;<com.andexert.expandablelayout.library.ExpandableLayout&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/performance"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="@style/SearchHdrStyle"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:headerLayout="@layout/edmunds_user_rating_hdr"&ndash;&gt;-->
+                    <!--&lt;!&ndash;expandable:contentLayout="@layout/edmunds_user_rating_content"/>&ndash;&gt;-->
+            <!--</LinearLayout>-->
+        <!--</ScrollView>-->
+
+    <!--</com.github.pedrovgs.DraggableView>-->
 </RelativeLayout>

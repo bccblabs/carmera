@@ -20,6 +20,19 @@
 
     <TextView
         style="@style/SearchCategorySubtitle"
+        android:text="Average Fuel Cost ($/year)"/>
+
+    <com.appyvet.rangebar.RangeBar
+        android:id="@+id/fuel_cost_range_bar"
+        custom:tickStart="0"
+        custom:tickEnd="5000"
+        custom:tickInterval="500"
+        style="@style/SearchRangeBarStyle"
+        />
+
+
+    <TextView
+        style="@style/SearchCategorySubtitle"
         android:text="Average Repair Cost ($/year)"/>
 
     <com.appyvet.rangebar.RangeBar

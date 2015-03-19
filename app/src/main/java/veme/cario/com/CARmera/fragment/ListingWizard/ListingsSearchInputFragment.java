@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.fragment.ListingWizard;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,21 @@ import android.widget.Spinner;
 import com.appyvet.rangebar.RangeBar;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
-import com.searchly.jestdroid.JestDroidClient;
 
+import org.apache.lucene.queryparser.xml.FilterBuilder;
+import org.apache.lucene.queryparser.xml.builders.RangeFilterBuilder;
 import org.codepond.wizardroid.WizardStep;
 import org.codepond.wizardroid.persistence.ContextVariable;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+
+import org.elasticsearch.action.support.QuerySourceBuilder;
+import org.elasticsearch.index.query.BoolFilterBuilder;
+import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.FilterBuilders.*;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+
 //import org.elasticsearch.search.aggregations.AggregationBuilders;
 //import org.elasticsearch.search.aggregations.metrics.MetricsAggregation;
 //import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -25,7 +37,12 @@ import java.util.List;
 import java.util.Map;
 
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
+import io.searchbox.indices.CreateIndex;
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.model.Json.ListingV2;
 import veme.cario.com.CARmera.util.MultiSelectSpinner;
 
 /**
@@ -33,16 +50,30 @@ import veme.cario.com.CARmera.util.MultiSelectSpinner;
  */
 public class ListingsSearchInputFragment extends WizardStep {
 
-    @ContextVariable
-    private JestClient jestClient;
 
 //    private MetricsAggregation aggregation;
 //    private SearchSourceBuilder searchSourceBuilder;
 //    private AggregationBuilders aggregationBuilders;
 //    private FilterBuilders filterBuilders;
 
+//    @ContextVariable
+
+//    @ContextVariable
+    private SearchResponse searchResponse;
+
+//    @ContextVariable
+    private JestClient jestClient;
+
+    private BoolFilterBuilder boolFilterBuilder= FilterBuilders.boolFilter();
+
     @ContextVariable
-    private Map<String, String> rangeBarMap;
+    private String filter_qsl;
+
+    //    @ContextVariable
+    private List<FilterBuilder> filterBuilders_list;
+
+//    @ContextVariable
+//    private Map<String, String> // rangeBarMap;
 
     private Spinner vehicle_state_spnr;
     private MultiSelectSpinner make_spnr, model_spnr, transmission_spnr, drivetrain_spnr, ext_spnr,
@@ -50,13 +81,15 @@ public class ListingsSearchInputFragment extends WizardStep {
 
     private RangeBar hp_rb, torque_rb, combined_mpg_range_bar, transmission_speed_range_bar,
             year_range_bar, mileage_range_bar, radius_range_bar, repair_cost_range_bar,
-            maintenance_cost_range_bar, insurance_cost_range_bar,depreciation_cost_range_bar;
+            maintenance_cost_range_bar, insurance_cost_range_bar,depreciation_cost_range_bar, fuel_cost_range_bar;
 
     public ListingsSearchInputFragment () {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View v = inflater.inflate (R.layout.layout_create_search, container, false);
 
         ArrayAdapter<CharSequence> state_adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -120,9 +153,8 @@ public class ListingsSearchInputFragment extends WizardStep {
             }
             String[] model_names_arr = new String[model_names_list.size()];
             model_names_arr = model_names_list.toArray(model_names_arr);
-            Log.i("ListingSearchInputFragment", makes_selected.toString());
+
             for (String model : model_names_arr) {
-                Log.i("ListingSearchInputFragment", model);
             }
             if (model_names_arr.length >0)
                 model_spnr.setItems(model_names_arr);
@@ -136,24 +168,23 @@ public class ListingsSearchInputFragment extends WizardStep {
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
 //                rangeBarMap.put("hp_l", s);
 //                rangeBarMap.put("hp_h", s2);
+                Log.i (ListingsSearchInputFragment.class.getSimpleName(), boolFilterBuilder.toString());
             }
         });
-
         torque_rb = (RangeBar) v.findViewById(R.id.torque_bar);
         torque_rb.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("tq_l", s);
-                rangeBarMap.put("tq_h", s2);
+//                rangeBarMap.put("tq_l", s);
+//                rangeBarMap.put("tq_h", s2);
             }
         });
-
         combined_mpg_range_bar = (RangeBar) v.findViewById(R.id.combined_mpg_range_bar);
         combined_mpg_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("mpg_l", s);
-                rangeBarMap.put("mpg_h", s2);
+//                rangeBarMap.put("mpg_l", s);
+//                rangeBarMap.put("mpg_h", s2);
 
             }
         });
@@ -162,8 +193,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         transmission_speed_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("txn_l", s);
-                rangeBarMap.put("txn_h", s2);
+//                rangeBarMap.put("txn_l", s);
+//                rangeBarMap.put("txn_h", s2);
             }
         });
 
@@ -171,8 +202,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         year_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("yr_l", s);
-                rangeBarMap.put("yr_h", s2);
+//                rangeBarMap.put("yr_l", s);
+//                rangeBarMap.put("yr_h", s2);
             }
         });
 
@@ -180,8 +211,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         mileage_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("mileage_l", s);
-                rangeBarMap.put("mileage_h", s2);
+//                rangeBarMap.put("mileage_l", s);
+//                rangeBarMap.put("mileage_h", s2);
             }
         });
 
@@ -189,8 +220,9 @@ public class ListingsSearchInputFragment extends WizardStep {
         radius_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("radius_l", s);
-                rangeBarMap.put("radius_h", s2);
+//                rangeBarMap.put("radius_l", s);
+//                rangeBarMap.put("radius_h", s2);
+//                boolFilterBuilder.must(FilterBuilders.rangeFilter("numberOfSpeeds").from(s).to(s2));
             }
         });
 
@@ -198,8 +230,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         repair_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("repair_l", s);
-                rangeBarMap.put("repair_h", s2);
+//                rangeBarMap.put("repair_l", s);
+//                rangeBarMap.put("repair_h", s2);
             }
         });
 
@@ -207,8 +239,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         maintenance_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("maintenance_l", s);
-                rangeBarMap.put("maintenance_h", s2);
+//                rangeBarMap.put("maintenance_l", s);
+//                rangeBarMap.put("maintenance_h", s2);
             }
         });
 
@@ -216,8 +248,8 @@ public class ListingsSearchInputFragment extends WizardStep {
         insurance_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
-                rangeBarMap.put("insurance_l", s);
-                rangeBarMap.put("insurance_h", s2);
+//                rangeBarMap.put("insurance_l", s);
+//                rangeBarMap.put("insurance_h", s2);
             }
         });
 
@@ -225,7 +257,13 @@ public class ListingsSearchInputFragment extends WizardStep {
         depreciation_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+            }
+        });
 
+        fuel_cost_range_bar = (RangeBar) v.findViewById(R.id.fuel_cost_range_bar);
+        fuel_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
             }
         });
 
@@ -233,10 +271,21 @@ public class ListingsSearchInputFragment extends WizardStep {
         return v;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        /* initialize elastic search client */
+    private void addModelsToArray (List<String> models_array, int res_id) {
+    }
 
+    @Override
+    public void onExit(int exitCode) {
+        switch (exitCode) {
+            case WizardStep.EXIT_NEXT:
+                exec_query();
+            break;
+            case WizardStep.EXIT_PREVIOUS:
+            break;
+        }
+    }
+
+    private void exec_query () {
         DroidClientConfig clientConfig = new DroidClientConfig
                 .Builder("http://429cab6e1c887ea7d28923ebd5a56704-us-east-1.foundcluster.com:9200")
                 .build();
@@ -244,28 +293,104 @@ public class ListingsSearchInputFragment extends WizardStep {
         JestClientFactory factory = new JestClientFactory();
         factory.setDroidClientConfig(clientConfig);
         jestClient = factory.getObject();
+        boolFilterBuilder
+                .must(FilterBuilders.rangeFilter("avg_fuel_cost")
+                                .from(fuel_cost_range_bar.getLeftIndex() * fuel_cost_range_bar.getTickInterval() + fuel_cost_range_bar.getTickStart())
+                                .to(fuel_cost_range_bar.getRightIndex() * fuel_cost_range_bar.getTickInterval() + fuel_cost_range_bar.getTickStart())
+                )
+                .must(FilterBuilders.rangeFilter("horsepower")
+                                .from(hp_rb.getLeftIndex()  * hp_rb.getTickInterval() + hp_rb.getTickStart())
+                                .to(hp_rb.getRightIndex() * hp_rb.getTickInterval() + hp_rb.getTickStart())
+                );
+//                .must(FilterBuilders.rangeFilter("torque")
+//                                .from(torque_rb.getLeftIndex() * torque_rb.getTickInterval() + torque_rb.getTickStart())
+//                                .to(torque_rb.getRightIndex() * torque_rb.getTickInterval() + torque_rb.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("combinedMpg")
+//                                .from(combined_mpg_range_bar.getLeftIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
+//                                .to(combined_mpg_range_bar.getRightIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("numberOfSpeeds")
+//                                .from(transmission_speed_range_bar.getLeftIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
+//                                .to(transmission_speed_range_bar.getRightIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("year")
+//                                .from(year_range_bar.getLeftIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
+//                                .to(year_range_bar.getRightIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("mileage")
+//                                .from(mileage_range_bar.getLeftIndex() * mileage_range_bar.getTickInterval() + mileage_range_bar.getTickStart())
+//                                .to(mileage_range_bar.getRightIndex() * mileage_range_bar.getTickInterval() + mileage_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("avg_repairs_cost")
+//                                .from(repair_cost_range_bar.getLeftIndex() * repair_cost_range_bar.getTickInterval() + repair_cost_range_bar.getTickStart())
+//                                .to(repair_cost_range_bar.getRightIndex() * repair_cost_range_bar.getTickInterval() + repair_cost_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("avg_maintenance_cost")
+//                                .from(maintenance_cost_range_bar.getLeftIndex() * maintenance_cost_range_bar.getTickInterval() + maintenance_cost_range_bar.getTickStart())
+//                                .to(maintenance_cost_range_bar.getRightIndex() * maintenance_cost_range_bar.getTickInterval() + maintenance_cost_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("avg_insurance_cost")
+//                                .from(insurance_cost_range_bar.getLeftIndex() * insurance_cost_range_bar.getTickInterval() + insurance_cost_range_bar.getTickStart())
+//                                .to(insurance_cost_range_bar.getRightIndex() * insurance_cost_range_bar.getTickInterval() + insurance_cost_range_bar.getTickStart())
+//                )
+//                .must(FilterBuilders.rangeFilter("avg_depreciation")
+//                                .from(depreciation_cost_range_bar.getLeftIndex() * depreciation_cost_range_bar.getTickInterval() + depreciation_cost_range_bar.getTickStart())
+//                                .to(depreciation_cost_range_bar.getRightIndex() * depreciation_cost_range_bar.getTickInterval() + depreciation_cost_range_bar.getTickStart())
+//                )
+//                .cache(true);
 
+        String boolFilterString =   "{\n" +
+                                    "    \"query\": {\n" +
+                                    "        \"filtered\" : {\n" +
+                                    "           \"filter\":" + boolFilterBuilder.toString() +
+                                    "        }\n" +
+                                    "    }\n" +
+                                    "}";
+        Log.i (ListingsSearchInputFragment.class.getSimpleName(), boolFilterString);
+
+        filter_qsl = boolFilterString;
+
+        new CreateIndexTask().execute(boolFilterString);
+
+//        Search search = new Search.Builder(boolFilterString).addIndex("listings").build();
+//
+//        try {
+//            SearchResult result = jestClient.execute(search);
+//            Log.i (ListingsSearchInputFragment.class.getSimpleName(), result.getJsonString());
+////            List<ListingV2> listings = result.getSourceAsObjectList(ListingV2.class);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
-    private void addModelsToArray (List<String> models_array, int res_id) {
-        String [] models = getResources().getStringArray(res_id);
-        for (String model : models) {
-            models_array.add(model);
+    class CreateIndexTask extends AsyncTask<String, Void, JestResult> {
+
+        private Exception exception;
+        private JestResult result;
+        private Search search;
+
+        protected JestResult doInBackground(String... indexName) {
+            try {
+                search = new Search.Builder(indexName[0]).addIndex("listings").build();
+                result = jestClient.execute(search);
+                return result;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
         }
-    }
-    @Override
-    public void onExit(int exitCode) {
-        switch (exitCode) {
-            case WizardStep.EXIT_NEXT:
-                populate_query_obj();
-            break;
-            case WizardStep.EXIT_PREVIOUS:
-            break;
+
+        protected void onPostExecute(JestResult feed) {
+            if (exception == null) {
+                if (result.isSucceeded()) {
+                    Log.i ("Queries", result.getJsonString());
+                } else {
+                    Log.i("Queries no good", result.getJsonString());
+                }
+            } else {
+                Log.i("Exception occurred", exception.getMessage());
+            }
         }
-    }
-
-    private void populate_query_obj () {
-
-    }
-}
+    }}
