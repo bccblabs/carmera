@@ -14,7 +14,7 @@ dependencies {
     //    compile 'com.yalantis:sidemenu:1.0'
     //    compile 'com.github.ozodrukh:CircularReveal:1.0.4@aar'
     //    // context menu
-    //    compile 'com.yalantis:contextmenu:1.0.2'
+//        compile 'com.yalantis:contextmenu:1.0.2'
     /* slidr, slide to dismiss */
     //    compile 'com.r0adkll:slidableactivity:2.0.2'
     /* click on image, then show action buttons */
@@ -25,6 +25,9 @@ dependencies {
     //    compile 'com.daimajia.androidviewhover:library:1.0.3@aar'
     /* expandable layout */
 
+    compile 'com.daimajia.easing:library:1.0.0@aar'
+    compile 'com.daimajia.androidanimations:library:1.1.2@aar'
+    compile 'com.daimajia.androidviewhover:library:1.0.3@aar'
     compile ('com.github.pedrovgs:draggablepanel:1.8') {
         exclude group: 'com.nineoldandroids', module: 'library'
     }
@@ -60,6 +63,8 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {

@@ -141,32 +141,14 @@ public class ListingsAdapter extends ArrayAdapter <TaggedVehicle>{
                 contact_seller_dialog.show();
                 View seller_info_view = contact_seller_dialog.getCustomView();
                 FloatingActionButton phone_btn = (FloatingActionButton) seller_info_view.findViewById(R.id.contact_seller_phone_btn);
-                FloatingActionButton email_btn = (FloatingActionButton) seller_info_view.findViewById(R.id.contact_seller_email_btn);
                 LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
-                LinearLayout email_layout = (LinearLayout) seller_info_view.findViewById(R.id.email_overlay);
                 TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
-                TextView email_tv = (TextView) seller_info_view.findViewById(R.id.seller_email_textview);
                 phone_tv.setText(taggedVehicle.getSellerPhone());
-                email_tv.setText(taggedVehicle.getSellerEmail());
                 phone_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String phone_num = taggedVehicle.getSellerPhone().replaceAll("[^0-9|\\+]", "");
                         Intent i = new Intent (Intent.ACTION_DIAL, Uri.fromParts("tel", phone_num, null));
-                        getContext().startActivity(i);
-                    }
-                });
-                email_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String email_uri = "mailto:" + Uri.encode(taggedVehicle.getSellerEmail()) +
-                                           "?subject=" + Uri.encode(taggedVehicle.toString()) +
-                                           "&body=" + Uri.encode("Hello \n\nI am interested in your " + taggedVehicle.toString() +
-                                                                "\nPlease let me know more, thanks! \n\n" + " -" + CARmeraApp.userName +
-                                                                "\n\nReferred from Carmera.io");
-                        Uri uri = Uri.parse(email_uri);
-                        Intent i = new Intent(Intent.ACTION_SENDTO);
-                        i.setData(uri);
                         getContext().startActivity(i);
                     }
                 });

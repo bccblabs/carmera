@@ -1,19 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:expandable="http://schemas.android.com/tools"
-    android:id="@+id/consolidated_vehicle_list_container"
-    android:orientation="vertical"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/listings_view_v2"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/consolidated_vehicle_list_container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent">
+        <ListView
+            style="@style/ListStyle"
+            android:id="@+id/listings_view_v2"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
         android:text="No Listings Found Matching Your Criteria..."
         android:id="@+id/no_listings_found"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/sort_options_menu"
+        android:layout_gravity="top|end|clip_vertical|clip_horizontal"
+        android:layout_marginEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_addButtonColorNormal="@color/medius_orchid"
+        fab:fab_addButtonColorPressed="@color/sky_blue"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_expandDirection="down"
+        fab:fab_labelStyle="@style/menu_labels_style">
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/zero_sixty_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort By Zero to Sixty Time"
+                fab:fab_icon="@drawable/ic_action_search"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/hp_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Horsepower"
+                fab:fab_icon="@drawable/ic_action_car_white"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/torque_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Torque"
+                fab:fab_icon="@drawable/ic_action_save"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/price_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Price"
+                fab:fab_icon="@drawable/ic_action_edit"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mileage_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Mileage"
+                fab:fab_icon="@drawable/ic_action_filter"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mpg_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Combined MPG"
+                fab:fab_icon="@drawable/ic_action_filter"
+                fab:fab_colorPressed="@color/pink_pressed"/>
+            <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                <!--android:id="@+id/safety_sort"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--fab:fab_colorNormal="@color/pink"-->
+                <!--fab:fab_size="mini"-->
+                <!--fab:fab_title="Sort by Weakest Safety Category Rating"-->
+                <!--fab:fab_icon="@drawable/ic_action_filter"-->
+                <!--fab:fab_colorPressed="@color/pink_pressed"/>-->
+            <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                <!--android:id="@+id/build_quality_sort"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--fab:fab_colorNormal="@color/pink"-->
+                <!--fab:fab_size="mini"-->
+                <!--fab:fab_title="Sort by Build Quality Review"-->
+                <!--fab:fab_icon="@drawable/ic_action_filter"-->
+                <!--fab:fab_colorPressed="@color/pink_pressed"/>-->
+            <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                <!--android:id="@+id/reliability_sort"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--fab:fab_colorNormal="@color/pink"-->
+                <!--fab:fab_size="mini"-->
+                <!--fab:fab_title="Sort by Reliability Review"-->
+                <!--fab:fab_icon="@drawable/ic_action_filter"-->
+                <!--fab:fab_colorPressed="@color/pink_pressed"/>-->
+            <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                <!--android:id="@+id/fun_to_drive_sort"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--fab:fab_colorNormal="@color/pink"-->
+                <!--fab:fab_size="mini"-->
+                <!--fab:fab_title="Sort by Fun-To-Drive Review"-->
+                <!--fab:fab_icon="@drawable/ic_action_filter"-->
+                <!--fab:fab_colorPressed="@color/pink_pressed"/>-->
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</FrameLayout>

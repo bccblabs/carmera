@@ -366,6 +366,34 @@ public class ListingV2 {
     private String exteriorGenericColor;
     private String interiorGenericColor;
 
+    private String overall;
+
+    public String getOverall() {
+        return overall;
+    }
+
+    public void setOverall(String overall) {
+        this.overall = overall;
+    }
+
+    private String dealerSaleRating;
+    private String dealerServiceRating;
+
+    public String getDealerServiceRating() {
+        return dealerServiceRating;
+    }
+
+    public void setDealerServiceRating(String dealerServiceRating) {
+        this.dealerServiceRating = dealerServiceRating;
+    }
+
+    public String getDealerSaleRating() {
+        return dealerSaleRating;
+    }
+
+    public void setDealerSaleRating(String dealerSaleRating) {
+        this.dealerSaleRating = dealerSaleRating;
+    }
 
     private float zerosixty;
     private float quartermile;

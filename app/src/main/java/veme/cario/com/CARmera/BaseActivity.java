@@ -37,6 +37,7 @@ import java.util.List;
 
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
+import veme.cario.com.CARmera.fragment.ListingWizard.VehicleFilterFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ListingAggDetailsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
@@ -54,7 +55,7 @@ public class BaseActivity extends FragmentActivity implements
         TaggedVehicleFragment.OnVehicleSelectedListener,
         TaggedPostFragment.CreateSearchListner,
         SavedListingsFragment.ListingSelectedListener,
-        ListingAggDetailsFragment.OnListngV2Selected {
+        VehicleFilterFragment.OnListngV2SelectedListener {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     /* Navigation Drawer Variables */
@@ -319,11 +320,11 @@ public class BaseActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -333,13 +334,13 @@ public class BaseActivity extends FragmentActivity implements
             return true;
         }
 
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-
-            default:
+//        switch (item.getItemId()) {
+//            case R.id.action_settings:
+//                return true;
+//
+//            default:
                 return super.onOptionsItemSelected(item);
-        }
+//        }
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
@@ -347,7 +348,7 @@ public class BaseActivity extends FragmentActivity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = drawer_layout.isDrawerOpen(drawer_listview);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+//        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 

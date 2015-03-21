@@ -35,7 +35,7 @@
             fab:fab_colorNormal="@color/light_grey"
             fab:fab_colorPressed="@color/white_pressed"
             fab:fab_size="mini"/>
-        <com.parse.ParseImageView
+        <ImageView
             android:layout_marginStart="10dp"
             android:layout_width="100dp"
             android:layout_height="100dp"

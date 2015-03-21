@@ -19,12 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidviewhover.BlurLayout;
 import com.facebook.widget.FacebookDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseImageView;
+
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import veme.cario.com.CARmera.BaseActivity;
 import veme.cario.com.CARmera.R;
@@ -39,11 +43,9 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
     private static String TAG = "ListingsAdapter";
 
     private static class ViewHolder {
-        TextView vehicleInfoView;
-        TextView sellerInfoView;
-        TextView priceInfoView;
+        TextView vehicleInfoView, priceInfoView,mileageInfoView, dealer_sales_review, dealer_service_review, dealer_name_view, mpg_view, hp_view, safety_view;
         ImageView photo;
-        FloatingActionButton heart_btn, info_btn, contact_btn, share_btn;
+        FloatingActionButton info_btn, contact_btn, share_btn;
     }
 
     public ListingsAdapterV2 (Context context) {
@@ -57,17 +59,37 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
         final ViewHolder holder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.list_item_listing, parent, false);
+
+            view = inflater.inflate(R.layout.list_item_listing_v2, parent, false);
             holder = new ViewHolder();
-            holder.sellerInfoView = (TextView) view.findViewById(R.id.listing_seller_info_view);
-            holder.priceInfoView = (TextView) view.findViewById(R.id.listing_price_view);
-            holder.vehicleInfoView = (TextView) view.findViewById(R.id.listing_yr_mk_md_view);
-            holder.photo = (ParseImageView) view
-                    .findViewById(R.id.listing_photo_view);
-            holder.heart_btn = (FloatingActionButton) view.findViewById(R.id.heart_btn);
-            holder.info_btn = (FloatingActionButton) view.findViewById(R.id.info_btn);
-            holder.contact_btn = (FloatingActionButton) view.findViewById(R.id.listings_contact_btn);
-            holder.share_btn = (FloatingActionButton) view.findViewById(R.id.listings_share_btn);
+
+            BlurLayout.setGlobalDefaultDuration(450);
+            BlurLayout sampleLayout = (BlurLayout) view.findViewById(R.id.blurred_image_layout);
+            View hover = LayoutInflater.from(getContext()).inflate(R.layout.hover, null);
+            sampleLayout.setHoverView(hover);
+            sampleLayout.addChildAppearAnimator(hover, R.id.text_overlay, Techniques.FadeIn, 550, 0);
+            sampleLayout.addChildDisappearAnimator(hover, R.id.text_overlay, Techniques.FadeIn, 550, 500);
+
+
+            holder.vehicleInfoView = (TextView) hover.findViewById(R.id.listing_yr_mk_md_view);
+            holder.priceInfoView = (TextView) hover.findViewById(R.id.listing_price_view);
+            holder.mileageInfoView = (TextView) hover.findViewById(R.id.listing_mileage_view);
+
+            holder.dealer_name_view = (TextView) hover.findViewById(R.id.listing_dealer_name);
+            holder.dealer_service_review = (TextView) hover.findViewById(R.id.listing_dealer_service_rating);
+            holder.dealer_sales_review = (TextView) hover.findViewById(R.id.listing_dealer_sales_rating);
+
+            holder.hp_view = (TextView) hover.findViewById(R.id.listing_horsepower_view);
+            holder.safety_view = (TextView) hover.findViewById(R.id.listing_safety_overall);
+            holder.mpg_view = (TextView) hover.findViewById(R.id.listing_mpg_view);
+
+
+            holder.info_btn = (FloatingActionButton) hover.findViewById(R.id.info_btn);
+            holder.contact_btn = (FloatingActionButton) hover.findViewById(R.id.listings_contact_btn);
+            holder.share_btn = (FloatingActionButton) hover.findViewById(R.id.listings_share_btn);
+
+            holder.photo = (ImageView) view
+                    .findViewById(R.id.listing_photo_v2);
             view.setTag(holder);
 
         } else {
@@ -78,29 +100,71 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
         final ListingV2 listing = getItem(position);
 
         /* View item: Vehicle Year, Make, Model Information */
-        TextView vehicle_info_tv = holder.vehicleInfoView;
         if (listing.getMake() == null) {
-            vehicle_info_tv.setText("Unlabeled");
+            holder.vehicleInfoView.setText("UNKNOWN");
         } else {
-            vehicle_info_tv.setText(listing.getYear() + " "
+            holder.vehicleInfoView.setText(listing.getYear() + " "
                     + listing.getMake() + " "
                     + listing.getModel());
         }
         Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
-        vehicle_info_tv.setTypeface(ar);
+        holder.vehicleInfoView.setTypeface(ar);
 
-        TextView price_info_tv = holder.priceInfoView;
-        price_info_tv.setText("$" + listing.getDealerOfferPrice());
-        price_info_tv.setTypeface(ar);
+        holder.priceInfoView.setText("PRICE:\t$" + listing.getDealerOfferPrice());
+        holder.priceInfoView.setTypeface(ar);
 
-        final TextView seller_info_tv = holder.sellerInfoView;
-        seller_info_tv.setText(listing.getDealerName());
-        seller_info_tv.setTypeface(ar);
+        holder.mileageInfoView.setText("MILEAGE:\t" + listing.getMileage() + "\tMILES");
+        holder.mileageInfoView.setTypeface(ar);
+
+
+
+
+        holder.hp_view.setText("HORSEPOWER:\t" + listing.getHorsepower() + " HP");
+        holder.hp_view.setTypeface(ar);
+
+        holder.mpg_view.setText("COMBINED MPG:\t" + listing.getCombinedMpg());
+        holder.mpg_view.setTypeface(ar);
+
+        if (listing.getOverall() == null)
+            holder.safety_view.setText("OVERALL SAFETY RATING:\tN/A");
+        else
+            holder.safety_view.setText("OVERALL SAFETY RATING:\t" + listing.getOverall());
+        holder.safety_view.setTypeface(ar);
+
+
+
+
+        holder.dealer_sales_review.setText("SALES RATING:\t" + listing.getDealerSaleRating());
+        holder.dealer_sales_review.setTypeface(ar);
+
+        holder.dealer_name_view.setText(listing.getDealerName());
+        holder.dealer_name_view.setTypeface(ar);
+
+        holder.dealer_service_review.setText("SERVICE RATING:\t" + listing.getDealerServiceRating());
+        holder.dealer_service_review.setTypeface(ar);
+
 
         /* View item: Vehicle Image */
         final ImageView photo = holder.photo;
-        new DownloadImageTask(photo).execute (listing.getF34PhotoUrlE());
+        List<String> image_urls = new ArrayList<>();
+        image_urls.add (listing.getF34PhotoUrlE());
+        image_urls.add (listing.getF34PhotoUrlST());
+        image_urls.add (listing.getF34PhotoUrlT());
+        image_urls.addAll(listing.getLargePhotoUrls());
+        boolean found = false;
+        for (String url : image_urls) {
+            Log.i (TAG, "url is: " + url);
+            if (url != null && url.contains("http")) {
+                new DownloadImageTask(photo).execute(url);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            photo.setImageResource(R.drawable.edmunds_logo);
+        }
 
+        image_urls.clear();
         /* details btn */
         holder.info_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +219,13 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
                         .neutralText("Got it!")
                         .build();
                 contact_seller_dialog.show();
+
                 View seller_info_view = contact_seller_dialog.getCustomView();
                 LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
                 TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
+                TextView dealer_name_tv = (TextView) seller_info_view.findViewById(R.id.seller_info_textview);
+
+                dealer_name_tv.setText(listing.getDealerName());
                 phone_tv.setText(listing.getDealerPhone());
                 phone_layout.setOnClickListener(new View.OnClickListener() {
                     @Override

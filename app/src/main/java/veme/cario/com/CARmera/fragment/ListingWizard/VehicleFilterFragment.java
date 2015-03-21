@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -25,19 +27,38 @@ import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.APIModels.Hit;
 import veme.cario.com.CARmera.util.ListingsAdapterV2;
 
-public class VehicleFilterFragment extends WizardStep {
+public class VehicleFilterFragment extends WizardStep
+        implements FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
 
     private static String TAG = VehicleFilterFragment.class.getCanonicalName();
     private JestClient jestClient;
 
     private ListingsAdapterV2 listingsAdapter;
     private ListView listings_lv;
+    private FloatingActionsMenu floatingActionsMenu;
+
     @ContextVariable
     private String filter_qsl;
+
     private OnListngV2SelectedListener onlistingselectedcallback;
 
     public VehicleFilterFragment() {
     }
+
+    @Override
+    public void onMenuExpanded() {
+        WindowManager.LayoutParams lparams = getActivity().getWindow().getAttributes();
+        lparams.dimAmount=0.3f;
+        getActivity().getWindow().setAttributes(lparams);
+    }
+
+    @Override
+    public void onMenuCollapsed() {
+        WindowManager.LayoutParams lparams = getActivity().getWindow().getAttributes();
+        lparams.dimAmount=0.0f;
+        getActivity().getWindow().setAttributes(lparams);
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,6 +86,7 @@ public class VehicleFilterFragment extends WizardStep {
         listingsAdapter = new ListingsAdapterV2(inflater.getContext());
         listings_lv.setAdapter(listingsAdapter);
         listings_lv.setEmptyView(v.findViewById(R.id.no_listings_found));
+        floatingActionsMenu = (FloatingActionsMenu) v.findViewById(R.id.sort_options_menu);
         return v;
     }
 

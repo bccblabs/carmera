@@ -10,4 +10,6 @@ public class ListingsActivity_v2 extends BaseActivity {
         super.onCreate (savedBundleInst);
         setContentView (R.layout.activity_listings_v2);
     }
+
 }
+

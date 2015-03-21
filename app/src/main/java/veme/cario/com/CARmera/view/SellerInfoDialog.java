@@ -20,9 +20,7 @@ import veme.cario.com.CARmera.R;
 public class SellerInfoDialog extends DialogFragment {
 
     private TextView seller_phone_tv;
-    private TextView seller_email_tv;
     private TextView seller_info_tv;
-    private ImageView seller_image_view;
 
     @Override
     public Dialog onCreateDialog (Bundle savedBundleInst) {
@@ -49,29 +47,6 @@ public class SellerInfoDialog extends DialogFragment {
         seller_info_tv.setText(seller_info);
 
         byte [] seller_img_arr = args.getByteArray("seller_thumbnail");
-        if (seller_img_arr != null) {
-            seller_image_view = (ImageView) getView().findViewById(R.id.seller_image_view);
-            Bitmap seller_image_thunbnail = BitmapFactory.decodeByteArray(seller_img_arr, 0,
-                    seller_img_arr.length);
-            seller_image_view.setImageBitmap(seller_image_thunbnail);
-        } else {
-            seller_image_view.setVisibility(View.GONE);
-        }
-
-        String email = args.getString("seller_email");
-        if (email != null) {
-            seller_email_tv = (TextView) getView().findViewById(R.id.seller_email_textview);
-            seller_email_tv.setText(email);
-            seller_email_tv.setClickable(true);
-            seller_email_tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /* send email intent */
-                }
-            });
-        } else {
-            seller_email_tv.setVisibility(View.GONE);
-        }
 
         String phone = args.getString("seller_phone");
         if (phone != null) {
