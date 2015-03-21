@@ -24,6 +24,7 @@ import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragmen
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.IncentivesFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ListingAggDetailsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.OwnershipCostFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.PricingFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
@@ -111,6 +112,8 @@ public class VehicleInfoDialog extends DialogFragment {
             fragmentPagerAdapter = new SavedSearchesAdapter(getChildFragmentManager());
         } else if (dialog_type.equals("listing_details")) {
             fragmentPagerAdapter = new ListingsDetailAdapter(getChildFragmentManager());
+        } else if (dialog_type.equals ("listingV2DetailOverlay")) {
+            fragmentPagerAdapter = new ListingAggAdapter (getChildFragmentManager());
         } else if (dialog_type.equals("recognition_dialog")) {
             fragmentPagerAdapter = new RecognitionAdapter(getChildFragmentManager());
         } else {
@@ -397,5 +400,33 @@ public class VehicleInfoDialog extends DialogFragment {
             }
             return null;
         }
+    }
+
+    public class ListingAggAdapter extends FragmentPagerAdapter {
+        public ListingAggAdapter (FragmentManager fm ) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem (int position) {
+            Fragment listingAggDetailsFragment = new ListingAggDetailsFragment();
+            Bundle args = getArguments();
+            listingAggDetailsFragment.setArguments(args);
+            return listingAggDetailsFragment;
+        }
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Car Details";
+            }
+            return null;
+        }
+
     }
 }

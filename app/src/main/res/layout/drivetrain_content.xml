@@ -19,7 +19,7 @@
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/transmission_speed_range_bar"
-        custom:tickStart="3"
+        custom:tickStart="1"
         custom:tickEnd="10"
         custom:tickInterval="1"
         />

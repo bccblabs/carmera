@@ -25,7 +25,7 @@
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/fuel_cost_range_bar"
         custom:tickStart="0"
-        custom:tickEnd="5000"
+        custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -38,7 +38,7 @@
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/repair_cost_range_bar"
         custom:tickStart="0"
-        custom:tickEnd="5000"
+        custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -50,7 +50,7 @@
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/maintenance_cost_range_bar"
         custom:tickStart="0"
-        custom:tickEnd="5000"
+        custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -62,7 +62,7 @@
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/insurance_cost_range_bar"
         custom:tickStart="0"
-        custom:tickEnd="5000"
+        custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -74,7 +74,7 @@
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/depreciation_cost_range_bar"
         custom:tickStart="0"
-        custom:tickEnd="5000"
+        custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />

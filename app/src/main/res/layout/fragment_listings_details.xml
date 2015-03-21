@@ -172,18 +172,4 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
-    <!--<TextView-->
-                <!--style="@style/TableTitle"-->
-                <!--android:layout_margin="3dp"-->
-                <!--android:text="EQUIPMENT"/>-->
-    <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-                <!--<veme.cario.com.CARmera.util.AnimatedExpandableListView-->
-                    <!--android:layout_margin="3dp"-->
-                    <!--android:layout_gravity="center_horizontal"-->
-                    <!--android:id="@+id/equipment_listview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="165dp" />-->
-        <!--</LinearLayout>-->
 </LinearLayout>

@@ -1,3 +1,1 @@
-include ':app', ':FriendPickerSample', ':PlacePickerSample', ':HelloFacebookSample', ':facebook', ':RPSSample', ':SwitchUserSample', ':Scrumptious', ':ParallaxScrollExample', ':ParallaxScroll', 'materialDesign', ':library', ':sample', ':MaterialDialog', ':GraphView'
-include ':app:libs:openCVLibrary2410'
-include ':effectiveNavigation'
+include ':app', ':facebook', ':ParallaxScroll', 'materialDesign', ':library', ':sample', ':MaterialDialog', ':GraphView'

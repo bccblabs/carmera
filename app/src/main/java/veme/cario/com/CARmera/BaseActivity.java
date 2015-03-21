@@ -38,6 +38,7 @@ import java.util.List;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.TaggedVehicleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ListingAggDetailsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
@@ -52,7 +53,8 @@ public class BaseActivity extends FragmentActivity implements
         TaggedPostFragment.DetailsSelectedListener,
         TaggedVehicleFragment.OnVehicleSelectedListener,
         TaggedPostFragment.CreateSearchListner,
-        SavedListingsFragment.ListingSelectedListener {
+        SavedListingsFragment.ListingSelectedListener,
+        ListingAggDetailsFragment.OnListngV2Selected {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     /* Navigation Drawer Variables */
@@ -454,6 +456,17 @@ public class BaseActivity extends FragmentActivity implements
         vehicleInfoDialog.show(fm, "createSearchOverlay");
     }
 
+    @Override
+    public void OnListingV2SelectedCallback (Bundle vehicle_agg_info) {
+        if (vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
+            vehicleInfoDialog.dismiss();
+            vehicleInfoDialog = null;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        vehicleInfoDialog = new VehicleInfoDialog();
+        vehicleInfoDialog.setArguments(vehicle_agg_info);
+        vehicleInfoDialog.show(fm, "listingV2DetailOverlay");
+    }
 
     @Override
     public void OnListingSelectedCallback (String vehicle_post_id, String vehicle_style_id) {

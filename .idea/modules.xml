@@ -2,23 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" filepath="$PROJECT_DIR$/FriendPickerSample/FriendPickerSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/GraphView/GraphView.iml" filepath="$PROJECT_DIR$/GraphView/GraphView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" filepath="$PROJECT_DIR$/HelloFacebookSample/HelloFacebookSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" filepath="$PROJECT_DIR$/MaterialDialog/MaterialDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ParallaxScrollExample/ParallaxScrollExample.iml" filepath="$PROJECT_DIR$/ParallaxScrollExample/ParallaxScrollExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" filepath="$PROJECT_DIR$/PlacePickerSample/PlacePickerSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RPSSample/RPSSample.iml" filepath="$PROJECT_DIR$/RPSSample/RPSSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Scrumptious/Scrumptious.iml" filepath="$PROJECT_DIR$/Scrumptious/Scrumptious.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" filepath="$PROJECT_DIR$/SwitchUserSample/SwitchUserSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/carmera.iml" filepath="$PROJECT_DIR$/carmera.iml" />
-      <module fileurl="file://$PROJECT_DIR$/effectiveNavigation/effectiveNavigation.iml" filepath="$PROJECT_DIR$/effectiveNavigation/effectiveNavigation.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/materialDesign/materialDesign.iml" filepath="$PROJECT_DIR$/materialDesign/materialDesign.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" filepath="$PROJECT_DIR$/app/libs/openCVLibrary2410/openCVLibrary2410.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>
