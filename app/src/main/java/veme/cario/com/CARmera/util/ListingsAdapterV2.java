@@ -43,9 +43,14 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
     private static String TAG = "ListingsAdapter";
 
     private static class ViewHolder {
-        TextView vehicleInfoView, priceInfoView,mileageInfoView, dealer_sales_review, dealer_service_review, dealer_name_view, mpg_view, hp_view, safety_view;
+        TextView vehicleInfoView, priceInfoView,mileageInfoView;
+        TextView dealer_name_view, safety_view;
+        TextView lising_rating_reliability, listing_rating_build_quality,listing_rating_comfort;
+        TextView listing_performance_info, listing_output_info,listing_engine_info;
+        TextView listing_avg_fuel, listing_avg_insurance, listing_avg_depreciation;
+
         ImageView photo;
-        FloatingActionButton info_btn, contact_btn, share_btn;
+        FloatingActionButton info_btn, /* contact_btn, */share_btn;
     }
 
     public ListingsAdapterV2 (Context context) {
@@ -67,29 +72,31 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
             BlurLayout sampleLayout = (BlurLayout) view.findViewById(R.id.blurred_image_layout);
             View hover = LayoutInflater.from(getContext()).inflate(R.layout.hover, null);
             sampleLayout.setHoverView(hover);
-            sampleLayout.addChildAppearAnimator(hover, R.id.text_overlay, Techniques.FadeIn, 550, 0);
-            sampleLayout.addChildDisappearAnimator(hover, R.id.text_overlay, Techniques.FadeIn, 550, 500);
+            sampleLayout.addChildAppearAnimator(hover, R.id.text_overlay, Techniques.FadeIn, 200, 0);
 
 
-            holder.vehicleInfoView = (TextView) hover.findViewById(R.id.listing_yr_mk_md_view);
-            holder.priceInfoView = (TextView) hover.findViewById(R.id.listing_price_view);
-            holder.mileageInfoView = (TextView) hover.findViewById(R.id.listing_mileage_view);
-
-            holder.dealer_name_view = (TextView) hover.findViewById(R.id.listing_dealer_name);
-            holder.dealer_service_review = (TextView) hover.findViewById(R.id.listing_dealer_service_rating);
-            holder.dealer_sales_review = (TextView) hover.findViewById(R.id.listing_dealer_sales_rating);
-
-            holder.hp_view = (TextView) hover.findViewById(R.id.listing_horsepower_view);
-            holder.safety_view = (TextView) hover.findViewById(R.id.listing_safety_overall);
-            holder.mpg_view = (TextView) hover.findViewById(R.id.listing_mpg_view);
+            holder.vehicleInfoView = (TextView) view.findViewById(R.id.listing_yr_mk_md_view);
+            holder.priceInfoView = (TextView) view.findViewById(R.id.listing_price_view);
+            holder.mileageInfoView = (TextView) view.findViewById(R.id.listing_mileage_view);
 
 
-            holder.info_btn = (FloatingActionButton) hover.findViewById(R.id.info_btn);
-            holder.contact_btn = (FloatingActionButton) hover.findViewById(R.id.listings_contact_btn);
-            holder.share_btn = (FloatingActionButton) hover.findViewById(R.id.listings_share_btn);
-
+            holder.info_btn = (FloatingActionButton) view.findViewById(R.id.info_btn);
             holder.photo = (ImageView) view
                     .findViewById(R.id.listing_photo_v2);
+            holder.lising_rating_reliability = (TextView) hover.findViewById(R.id.listing_rating_reliability);
+            holder.listing_rating_build_quality = (TextView) hover.findViewById(R.id.listing_rating_build_quality);
+            holder.listing_rating_comfort = (TextView) hover.findViewById(R.id.listing_rating_comfort);
+            holder.listing_performance_info = (TextView) hover.findViewById(R.id.listing_performance_info);
+            holder.listing_output_info = (TextView) hover.findViewById(R.id.listing_output_info);
+            holder.listing_engine_info = (TextView) hover.findViewById(R.id.listing_engine_info);
+
+            holder.listing_avg_fuel = (TextView) hover.findViewById(R.id.listing_avg_fuel);
+            holder.listing_avg_insurance = (TextView) hover.findViewById(R.id.listing_avg_insurance);
+            holder.listing_avg_depreciation = (TextView) hover.findViewById(R.id.listing_avg_depreciation);
+//            holder.listing_hwy_mpg = (TextView) hover.findViewById(R.id.listing_hover_hwy_mpg);
+//            holder.listing_city_mpg = (TextView) hover.findViewById(R.id.listing_hover_city_mpg);
+//            holder.listing_combined_mpg = (TextView) hover.findViewById(R.id.listing_hover_combined_mpg);
+
             view.setTag(holder);
 
         } else {
@@ -107,43 +114,51 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
                     + listing.getMake() + " "
                     + listing.getModel());
         }
-        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
+
         holder.vehicleInfoView.setTypeface(ar);
-
-        holder.priceInfoView.setText("PRICE:\t$" + listing.getDealerOfferPrice());
+        holder.priceInfoView.setText("$\t" + listing.getDealerOfferPrice());
         holder.priceInfoView.setTypeface(ar);
-
-        holder.mileageInfoView.setText("MILEAGE:\t" + listing.getMileage() + "\tMILES");
+        holder.mileageInfoView.setText(listing.getMileage() + "\t\tMILES");
         holder.mileageInfoView.setTypeface(ar);
 
+        holder.listing_output_info.setText(listing.getHorsepower() + " HP / " + listing.getTorque() + " LB/FT");
 
+        String performance_txt = "0-60 MPH TIME:\n" + listing.getZerosixty() + " s\n";
+        if (listing.getQuartermile() != 0 ) {
+                    performance_txt = performance_txt + "\nQUARTER MILE:\n" + listing.getQuartermile() +  " s";
+        }
+        holder.listing_performance_info.setText(performance_txt);
 
+        String engine_txt;
+        if (!listing.getCompressorType().toLowerCase().contains("na")) {
+            engine_txt = listing.getCompressorType() + " ";
+            holder.listing_engine_info.setText(engine_txt + listing.getCylinder() + " cylinders engine");
+        } else {
+            holder.listing_engine_info.setText(listing.getCylinder() + " cylinders engine");
+        }
 
-        holder.hp_view.setText("HORSEPOWER:\t" + listing.getHorsepower() + " HP");
-        holder.hp_view.setTypeface(ar);
+        holder.listing_rating_comfort.setText("COMFORT:\n" + String.format("%.2f / 5", listing.getRating_comfort()));
+        holder.listing_rating_build_quality.setText("BUILD QUALITY:\n" + String.format("%.2f / 5", listing.getRating_build_quality()));
+        holder.lising_rating_reliability.setText("RELIABILITY:\n" + String.format("%.2f / 5", listing.getRating_reliability()));
 
-        holder.mpg_view.setText("COMBINED MPG:\t" + listing.getCombinedMpg());
-        holder.mpg_view.setTypeface(ar);
+        String avg_fuel_str = "N/A";
+        if (listing.getAvg_fuel_cost() > 0 ) {
+            avg_fuel_str = String.format ("%.2f $", listing.getAvg_fuel_cost()/52);
+        }
+        holder.listing_avg_fuel.setText("Weekly fuel cost:\n" + avg_fuel_str);
 
-        if (listing.getOverall() == null)
-            holder.safety_view.setText("OVERALL SAFETY RATING:\tN/A");
-        else
-            holder.safety_view.setText("OVERALL SAFETY RATING:\t" + listing.getOverall());
-        holder.safety_view.setTypeface(ar);
+        String avg_insurance_str = "N/A";
+        if (listing.getAvg_insurance_cost() > 0 ) {
+            avg_insurance_str = String.format ("%.2f $", listing.getAvg_insurance_cost()/12);
+        }
+        holder.listing_avg_insurance.setText("Monthly insurance cost:\n" + avg_insurance_str);
 
-
-
-
-        holder.dealer_sales_review.setText("SALES RATING:\t" + listing.getDealerSaleRating());
-        holder.dealer_sales_review.setTypeface(ar);
-
-        holder.dealer_name_view.setText(listing.getDealerName());
-        holder.dealer_name_view.setTypeface(ar);
-
-        holder.dealer_service_review.setText("SERVICE RATING:\t" + listing.getDealerServiceRating());
-        holder.dealer_service_review.setTypeface(ar);
-
-
+        String avg_dep_str = "N/A";
+        if (listing.getAvg_depreciation() > 0 ) {
+            avg_dep_str = String.format ("%.2f $", listing.getAvg_depreciation());
+        }
+        holder.listing_avg_depreciation.setText("Yearly Depreciation cost:\n" + avg_dep_str);
         /* View item: Vehicle Image */
         final ImageView photo = holder.photo;
         List<String> image_urls = new ArrayList<>();
@@ -210,33 +225,33 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
                 ((BaseActivity) getContext()).OnListingV2SelectedCallback(vehicle_agg_info);
             }
         });
-        holder.contact_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MaterialDialog contact_seller_dialog = new MaterialDialog.Builder(getContext())
-                        .title("Contact Seller")
-                        .customView(R.layout.seller_info_dialog)
-                        .neutralText("Got it!")
-                        .build();
-                contact_seller_dialog.show();
-
-                View seller_info_view = contact_seller_dialog.getCustomView();
-                LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
-                TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
-                TextView dealer_name_tv = (TextView) seller_info_view.findViewById(R.id.seller_info_textview);
-
-                dealer_name_tv.setText(listing.getDealerName());
-                phone_tv.setText(listing.getDealerPhone());
-                phone_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String phone_num = listing.getDealerPhone().replaceAll("[^0-9|\\+]", "");
-                        Intent i = new Intent (Intent.ACTION_DIAL, Uri.fromParts("tel", phone_num, null));
-                        getContext().startActivity(i);
-                    }
-                });
-            }
-        });
+//        holder.contact_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MaterialDialog contact_seller_dialog = new MaterialDialog.Builder(getContext())
+//                        .title("Contact Seller")
+//                        .customView(R.layout.seller_info_dialog)
+//                        .neutralText("Got it!")
+//                        .build();
+//                contact_seller_dialog.show();
+//
+//                View seller_info_view = contact_seller_dialog.getCustomView();
+//                LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
+//                TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
+//                TextView dealer_name_tv = (TextView) seller_info_view.findViewById(R.id.seller_info_textview);
+//
+//                dealer_name_tv.setText(listing.getDealerName());
+//                phone_tv.setText(listing.getDealerPhone());
+//                phone_layout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        String phone_num = listing.getDealerPhone().replaceAll("[^0-9|\\+]", "");
+//                        Intent i = new Intent (Intent.ACTION_DIAL, Uri.fromParts("tel", phone_num, null));
+//                        getContext().startActivity(i);
+//                    }
+//                });
+//            }
+//        });
 
         return view;
     }

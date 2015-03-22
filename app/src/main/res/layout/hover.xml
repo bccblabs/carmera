@@ -2,6 +2,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="75dp"
     android:layout_gravity="center"
     android:layout_centerInParent="true"
     android:orientation="vertical"
@@ -10,17 +11,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        style="@style/info_panel_layout"
-        android:layout_width="match_parent">
-        <TextView
-            style="@style/SearchCategorySubtitle"
-            android:id="@+id/listing_yr_mk_md_view"/>
-        <TextView
-            style="@style/SearchCategorySubtitle"
-            android:id="@+id/listing_dealer_name"/>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,69 +25,68 @@
             style="@style/info_panel_layout">
             <TextView
                 style="@style/info_panel_text_style"
-                android:id="@+id/listing_price_view"/>
+                android:id="@+id/listing_performance_info"/>
             <TextView
                 style="@style/info_panel_text_style"
-                android:id="@+id/listing_mileage_view"/>
+                android:id="@+id/listing_output_info"/>
+            <TextView
+                style="@style/info_panel_text_style"
+                android:id="@+id/listing_engine_info"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/info_panel_layout">
+            <TextView
+                style="@style/info_panel_text_style"
+                android:id="@+id/listing_rating_comfort"/>
+            <TextView
+                style="@style/info_panel_text_style"
+                android:id="@+id/listing_rating_build_quality"/>
+            <TextView
+                style="@style/info_panel_text_style"
+                android:id="@+id/listing_rating_reliability"/>
         </LinearLayout>
         <LinearLayout
             style="@style/info_panel_layout">
             <TextView
                 style="@style/info_panel_text_style"
-                android:id="@+id/listing_mpg_view"/>
+                android:id="@+id/listing_avg_fuel"/>
             <TextView
                 style="@style/info_panel_text_style"
-                android:id="@+id/listing_horsepower_view"/>
+                android:id="@+id/listing_avg_insurance"/>
             <TextView
                 style="@style/info_panel_text_style"
-                android:id="@+id/listing_safety_overall"/>
+                android:id="@+id/listing_avg_depreciation"/>
         </LinearLayout>
-        <LinearLayout
-            style="@style/info_panel_layout">
-            <TextView
-                style="@style/info_panel_text_style"
-                android:id="@+id/listing_dealer_sales_rating"/>
-            <TextView
-                style="@style/info_panel_text_style"
-                android:id="@+id/listing_dealer_service_rating"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:id="@+id/multiple_actions_left"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/info_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_title="Specs"
-                fab:fab_labelStyle="@style/menu_labels_style"
-                fab:fab_icon="@drawable/ic_action_info_white"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_colorPressed="@color/pink_pressed"
-                fab:fab_size="mini"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listings_contact_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_title="Listings"
-            fab:fab_icon="@drawable/ic_action_send_white"
-            fab:fab_colorNormal="@color/blue_semi_transparent"
-            fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
-            fab:fab_size="mini"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listings_share_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_title="Share"
-            fab:fab_icon="@drawable/ic_action_facebook_white"
-            fab:fab_colorNormal="@color/sky_blue"
-            fab:fab_colorPressed="@color/transparent_sky_blue"
-            fab:fab_size="mini"/>
     </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_marginTop="0dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:id="@+id/multiple_actions_left"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal">-->
+
+        <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/listings_contact_btn"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_title="Listings"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_icon="@drawable/ic_action_send_white"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_colorNormal="@color/blue_semi_transparent"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_colorPressed="@color/blue_semi_transparent_pressed"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_size="mini"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/listings_share_btn"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_title="Share"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_icon="@drawable/ic_action_facebook_white"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_colorNormal="@color/sky_blue"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_colorPressed="@color/transparent_sky_blue"&ndash;&gt;-->
+            <!--&lt;!&ndash;fab:fab_size="mini"/>&ndash;&gt;-->
+    <!--</LinearLayout>-->
 </LinearLayout>

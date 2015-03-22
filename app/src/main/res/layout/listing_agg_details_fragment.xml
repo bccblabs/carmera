@@ -30,7 +30,6 @@
                 android:textColor="@color/Ivory"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="2014 Audi TT"
                 android:id="@+id/vehicle_name_agg"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +37,6 @@
                 android:textColor="@color/Ivory"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="33,000 miles"
                 android:id="@+id/vehicle_mileage_agg"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -46,7 +44,6 @@
                 android:textColor="@color/Ivory"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="$43,290"
                 android:id="@+id/vehicle_price_agg"/>
             <ImageView
                 android:layout_width="wrap_content"
@@ -67,36 +64,36 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                <!--android:id="@+id/make_model"-->
-                <!--style="@style/SearchHdrStyle"-->
-                <!--expandable:headerLayout="@layout/performance_agg_hdr"-->
-                <!--expandable:contentLayout="@layout/performance_agg_content"-->
-                <!--/>-->
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/make_model"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/performance_agg_hdr"
+                expandable:contentLayout="@layout/performance_agg_content"
+                />
 
-            <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                <!--android:id="@+id/state_range"-->
-                <!--style="@style/SearchHdrStyle"-->
-                <!--expandable:headerLayout="@layout/safety_agg_hdr"-->
-                <!--expandable:contentLayout="@layout/safety_agg_content"/>-->
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/state_range"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/safety_agg_hdr"
+                expandable:contentLayout="@layout/safety_agg_content"/>
 
-            <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                <!--android:id="@+id/economy_tco"-->
-                <!--style="@style/SearchHdrStyle"-->
-                <!--expandable:headerLayout="@layout/economy_agg_hdr"-->
-                <!--expandable:contentLayout="@layout/economy_agg_content"/>-->
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/economy_tco"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/economy_agg_hdr"
+                expandable:contentLayout="@layout/economy_agg_content"/>
 
-            <!--<com.andexert.expandablelayout.library.ExpandableLayout-->
-                <!--android:id="@+id/performance"-->
-                <!--style="@style/SearchHdrStyle"-->
-                <!--expandable:headerLayout="@layout/edmund_agg_hdr"-->
-                <!--expandable:contentLayout="@layout/edmund_agg_content"/>-->
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/performance"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/edmund_agg_hdr"
+                expandable:contentLayout="@layout/edmund_agg_content"/>
 
-        <!--</LinearLayout>-->
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

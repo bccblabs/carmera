@@ -504,7 +504,7 @@ public class BaseActivity extends FragmentActivity implements
         /* Initializing drawer items */
         drawer_item_list = new ArrayList<DrawerItem>();
         drawer_item_list.add(new DrawerItem("Profile", R.drawable.ic_action_user));
-        drawer_item_list.add(new DrawerItem("Dis.car.vr", R.drawable.ic_action_search_purple));
+        drawer_item_list.add(new DrawerItem("Discarvr", R.drawable.ic_action_search_purple));
         drawer_item_list.add(new DrawerItem("Near me", R.drawable.ic_action_location));
         drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
         drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));

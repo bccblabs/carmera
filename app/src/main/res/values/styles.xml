@@ -73,7 +73,7 @@
     </style>
 
     <style name="ListStyle">
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">2dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:divider">@android:color/transparent</item>
@@ -247,15 +247,24 @@
         <item name="android:layout_gravity">start</item>
         <item name="android:layout_margin">4dp</item>
     </style>
+    <style name="ListingGeneralInfo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/sky_blue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
 
     <style name="SearchCategoryHdr">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/Ivory</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left</item>
     </style>
 
 
@@ -273,7 +282,7 @@
     </style>
 
     <style name="info_panel_layout">
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>

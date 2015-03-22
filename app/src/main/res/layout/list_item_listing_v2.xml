@@ -6,16 +6,63 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.daimajia.androidviewhover.BlurLayout
-        android:id="@+id/blurred_image_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:scaleType="fitXY"
-            android:layout_height="250dp"
-            android:layout_width="match_parent"
-            android:id="@+id/listing_photo_v2"/>
-    </com.daimajia.androidviewhover.BlurLayout>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <com.daimajia.androidviewhover.BlurLayout
+            android:id="@+id/blurred_image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:layout_height="250dp"
+                android:layout_width="match_parent"
+                android:id="@+id/listing_photo_v2"/>
+        </com.daimajia.androidviewhover.BlurLayout>
+        <LinearLayout
+            style="@style/info_panel_layout"
+            android:layout_width="match_parent">
+            <TextView
+                style="@style/ListingGeneralInfo"
+                android:id="@+id/listing_yr_mk_md_view"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/ListingGeneralInfo"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="16sp"
+                    android:id="@+id/listing_price_view"/>
+                <TextView
+                    style="@style/ListingGeneralInfo"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="3 miles"
+                    android:textSize="16sp"
+                    android:id="@+id/listing_mileage_view"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/info_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            fab:fab_title="Specs"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:fab_icon="@drawable/ic_action_info_white"
+            fab:fab_colorNormal="@color/sky_blue"
+            fab:fab_colorPressed="@color/sky_blue"
+            fab:fab_size="mini"/>
+
+    </RelativeLayout>
 </LinearLayout>

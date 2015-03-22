@@ -1,20 +1,28 @@
 package veme.cario.com.CARmera.fragment.ListingWizard;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.appyvet.rangebar.RangeBar;
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.searchly.jestdroid.DroidClientConfig;
+import com.searchly.jestdroid.JestClientFactory;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codepond.wizardroid.WizardStep;
-import org.codepond.wizardroid.persistence.ContextVariable;
 import org.elasticsearch.index.query.BoolFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilders;
 
@@ -22,17 +30,27 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
+import io.searchbox.core.Search;
 import veme.cario.com.CARmera.R;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
+import veme.cario.com.CARmera.model.APIModels.Hit;
+import veme.cario.com.CARmera.util.ListingsAdapterV2;
 import veme.cario.com.CARmera.util.MultiSelectSpinner;
 
 
-public class ListingsSearchInputFragment extends WizardStep {
+public class ListingsSearchInputFragment extends Fragment {
+    private static String TAG = ListingsSearchInputFragment.class.getCanonicalName();
 
-    @ContextVariable
+    private String hits_node_str;
+
+    private String aggs_node_str;
+
     private String filter_qsl;
 
-    private BoolFilterBuilder boolFilterBuilder = FilterBuilders.boolFilter();
-
+    private String query_string;
 
     private Spinner vehicle_state_spnr;
 
@@ -43,7 +61,28 @@ public class ListingsSearchInputFragment extends WizardStep {
             year_range_bar, mileage_range_bar, radius_range_bar, repair_cost_range_bar,
             maintenance_cost_range_bar, insurance_cost_range_bar,depreciation_cost_range_bar, fuel_cost_range_bar;
 
+
+    private ButtonRectangle start_search_lising_req_btn;
+    private JestClient jestClient;
+
     public ListingsSearchInputFragment () {}
+
+    public OnSearchBtnClickedListener onSearchBtnClickedListener;
+
+    public interface OnSearchBtnClickedListener {
+        public abstract void OnSearchButtonClicked (String responseString, String queryString);
+    }
+
+    @Override
+    public void onAttach (Activity activity) {
+        super.onAttach(activity);
+        try {
+            onSearchBtnClickedListener = (OnSearchBtnClickedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + ": "
+                    + " needs to implement the Listeners!");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +118,13 @@ public class ListingsSearchInputFragment extends WizardStep {
         int_spnr = (MultiSelectSpinner) v.findViewById(R.id.int_color_spinner);
         int_spnr.setItems(getResources().getStringArray(R.array.color_array));
 
+        start_search_lising_req_btn = (ButtonRectangle) v.findViewById(R.id.start_search_lising_req_btn);
+        start_search_lising_req_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save_query();
+            }
+        });
         vehicle_state_spnr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -102,24 +148,6 @@ public class ListingsSearchInputFragment extends WizardStep {
 
             }
         });
-////        if (make_spnr.getSelectedStrings().size() > 0) {
-////            List<String> makes_selected = make_spnr.getSelectedStrings(), model_names_list = new ArrayList<String>();
-////            for (String make : makes_selected) {
-////                if (make.equals("Acura")) {
-////                    addModelsToArray (model_names_list, R.array.acura_md);
-////                } else if (make.equals("Aston Martin")) {
-////                    addModelsToArray (model_names_list, R.array.astonmartin_md);
-////                }
-////            }
-//            String[] model_names_arr = new String[model_names_list.size()];
-//            model_names_arr = model_names_list.toArray(model_names_arr);
-//
-//            for (String model : model_names_arr) {
-//            }
-//            if (model_names_arr.length >0)
-//                model_spnr.setItems(model_names_arr);
-//
-//        }
 
         /* range bars */
         hp_rb = (RangeBar) v.findViewById(R.id.horsepower_bar);
@@ -134,22 +162,14 @@ public class ListingsSearchInputFragment extends WizardStep {
         insurance_cost_range_bar = (RangeBar) v.findViewById(R.id.insurance_cost_range_bar);
         depreciation_cost_range_bar = (RangeBar) v.findViewById(R.id.depreciation_cost_range_bar);
         fuel_cost_range_bar = (RangeBar) v.findViewById(R.id.fuel_cost_range_bar);
-
+        Bundle args = getArguments();
+        if (args != null)
+            query_string = getArguments().getString("query_string");
         return v;
     }
 
-    @Override
-    public void onExit(int exitCode) {
-        switch (exitCode) {
-            case WizardStep.EXIT_NEXT:
-                save_query ();
-            break;
-            case WizardStep.EXIT_PREVIOUS:
-            break;
-        }
-    }
-
     private void save_query () {
+        BoolFilterBuilder boolFilterBuilder = FilterBuilders.boolFilter();
         boolFilterBuilder
                 .must(FilterBuilders.rangeFilter("avg_fuel_cost")
                                 .from(fuel_cost_range_bar.getLeftIndex() * fuel_cost_range_bar.getTickInterval() + fuel_cost_range_bar.getTickStart())
@@ -167,10 +187,10 @@ public class ListingsSearchInputFragment extends WizardStep {
                                 .from(combined_mpg_range_bar.getLeftIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
                                 .to(combined_mpg_range_bar.getRightIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
                 )
-                .must(FilterBuilders.rangeFilter("numberOfSpeeds")
-                                .from(transmission_speed_range_bar.getLeftIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
-                                .to(transmission_speed_range_bar.getRightIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
-                )
+//                .must(FilterBuilders.rangeFilter("numberOfSpeeds")
+//                                .from(transmission_speed_range_bar.getLeftIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
+//                                .to(transmission_speed_range_bar.getRightIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
+//                )
                 .must(FilterBuilders.rangeFilter("year")
                                 .from(year_range_bar.getLeftIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
                                 .to(year_range_bar.getRightIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
@@ -203,7 +223,6 @@ public class ListingsSearchInputFragment extends WizardStep {
             String agg_query = loadJsonFromAsset();
             JsonNode agg_json = mapper.readTree (agg_query);
             JsonNode aggs = agg_json.path("aggs");
-//            Log.i (ListingsSearchInputFragment.class.getSimpleName(),"Aggs string: " + aggs.toString());
             if (agg_query == null) {
                 throw new Exception("agg_query loading err");
             }
@@ -216,13 +235,19 @@ public class ListingsSearchInputFragment extends WizardStep {
                     "    },\n" +
                     "   \"aggs\":"  + aggs.toString() +
                     "}";
+            DroidClientConfig clientConfig = new DroidClientConfig
+                    .Builder("http://429cab6e1c887ea7d28923ebd5a56704-us-east-1.foundcluster.com:9200")
+                    .build();
+
+            JestClientFactory factory = new JestClientFactory();
+            factory.setDroidClientConfig(clientConfig);
+            jestClient = factory.getObject();
+            new FilterTask().execute(filter_qsl);
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        Log.i (ListingsSearchInputFragment.class.getSimpleName(), "Query string : " + filter_qsl);
-
     }
 
     private String loadJsonFromAsset () {
@@ -240,4 +265,54 @@ public class ListingsSearchInputFragment extends WizardStep {
         }
         return json;
     }
+
+    class FilterTask extends AsyncTask<String, Void, JestResult> {
+
+        private Exception exception;
+        private JestResult result;
+        private Search search;
+        private String query_callback_string;
+
+        protected JestResult doInBackground(String... indexName) {
+            try {
+                query_callback_string = indexName[0];
+                search = new Search.Builder(indexName[0]).addIndex("listings").build();
+                result = jestClient.execute(search);
+                return result;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        protected void onPostExecute(JestResult feed) {
+            if (exception == null) {
+                if (result.isSucceeded()) {
+                    try {
+                        JsonObject res_node = result.getJsonObject();
+                        hits_node_str = res_node.getAsJsonObject("hits").getAsJsonArray("hits").toString();
+                        aggs_node_str = res_node.getAsJsonObject("aggregations").toString();
+                        if (hits_node_str != null)
+                            Log.i (TAG, "hits: " + "hits: " + hits_node_str);
+                        if (aggs_node_str != null)
+                            Log.i (TAG, "hits: " + "aggs: " + aggs_node_str);
+                        Log.i (TAG, "query_cb_str: " + query_callback_string);
+                        onSearchBtnClickedListener.OnSearchButtonClicked(res_node.toString(), query_callback_string);
+
+                        WindowManager.LayoutParams lparams = getActivity().getWindow().getAttributes();
+                        lparams.dimAmount=0.0f;
+                        getActivity().getWindow().setAttributes(lparams);
+                    } catch (Exception e) {
+                        Log.e (VehicleFilterFragment.class.getSimpleName(), ": err parsing json");
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.i("Queries no good", result.getJsonString());
+                }
+            } else {
+                Log.i("Exception occurred", exception.getMessage());
+            }
+        }
+    }
+
 }

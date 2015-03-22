@@ -32,6 +32,16 @@
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_expandDirection="down"
         fab:fab_labelStyle="@style/menu_labels_style">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/filter_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_size="mini"
+                fab:fab_title="Filter Search"
+                fab:fab_icon="@drawable/ic_action_search"
+                fab:fab_colorPressed="@color/pink_pressed"/>
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/zero_sixty_sort"
                 android:layout_width="wrap_content"

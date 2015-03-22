@@ -67,7 +67,18 @@
                 style="@style/SearchHdrStyle"
                 expandable:headerLayout="@layout/equipments_hdr"
                 expandable:contentLayout="@layout/equipments_content"/>
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/start_search_lising_req_btn"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1E88E5"
+                android:text="Search Listings" />
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
