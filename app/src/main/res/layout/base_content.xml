@@ -15,7 +15,7 @@
         style="@style/SearchRangeBarStyle"
         android:id="@+id/price_bar"
         custom:tickStart="5000"
-        custom:tickEnd="100000"
+        custom:tickEnd="200000"
         custom:tickInterval="5000"
         />
     <TextView

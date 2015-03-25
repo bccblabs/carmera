@@ -27,8 +27,8 @@
         android:layout_marginEnd="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_addButtonColorNormal="@color/medius_orchid"
-        fab:fab_addButtonColorPressed="@color/sky_blue"
+        fab:fab_addButtonColorNormal="@color/sky_blue"
+        fab:fab_addButtonColorPressed="@color/medius_orchid"
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_expandDirection="down"
         fab:fab_labelStyle="@style/menu_labels_style">

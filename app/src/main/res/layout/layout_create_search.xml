@@ -80,7 +80,7 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1E88E5"
+                android:background="@color/sky_blue"
                 android:text="Search Listings" />
 
         </LinearLayout>

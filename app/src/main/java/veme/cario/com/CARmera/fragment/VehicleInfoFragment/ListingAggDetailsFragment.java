@@ -111,7 +111,7 @@ public class ListingAggDetailsFragment extends Fragment {
     }
 
     private void initUIComponents () {
-        Typeface ar = Typeface.createFromAsset(getActivity().getAssets(), "Pacifico.ttf");
+        Typeface ar = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
         /* pct */
         Bundle vehicle_agg_info = getArguments();
 //        String style_name = vehicle_agg_info.getString("year") + vehicle_agg_info.getString("make") +  "% " + vehicle_agg_info.getString( "model");
@@ -213,7 +213,7 @@ public class ListingAggDetailsFragment extends Fragment {
         hp_agg.setText(vehicle_agg_info.getInt("horsepower") + " hp");
         hp_agg.setTypeface(ar);
 
-        torque_agg.setText(vehicle_agg_info.getInt("torque") + " hp");
+        torque_agg.setText(vehicle_agg_info.getInt("torque") + " lb/ft");
         torque_agg.setTypeface(ar);
 
 

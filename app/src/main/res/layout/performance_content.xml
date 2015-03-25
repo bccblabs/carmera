@@ -15,7 +15,7 @@
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/zero_sixty_range_bar"
-        custom:tickStart="3"
+        custom:tickStart="0"
         custom:tickEnd="20"
         custom:tickInterval="1"
         />
@@ -29,7 +29,7 @@
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/quarter_mile_range_bar"
-        custom:tickStart="5"
+        custom:tickStart="0"
         custom:tickEnd="20"
         custom:tickInterval="1"
         />

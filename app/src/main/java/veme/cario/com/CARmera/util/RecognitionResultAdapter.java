@@ -53,7 +53,7 @@ public class RecognitionResultAdapter extends ArrayAdapter<Prediction> {
         DecimalFormat newFormat = new DecimalFormat("#.##");
         Double twoDecimal =  Double.valueOf(newFormat.format(prob));
         viewHolder.f_score.setText( twoDecimal.toString() + "%");
-        Typeface fa = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
+        Typeface fa = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
         viewHolder.vehicle_name.setTypeface(fa);
         viewHolder.f_score.setTypeface(fa);
         return view;

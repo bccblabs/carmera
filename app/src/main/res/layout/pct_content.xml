@@ -78,7 +78,7 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Overall Torque Percentile"/>
+            android:text="Overall Torque Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
                 android:id="@+id/torque_pct_view"/>

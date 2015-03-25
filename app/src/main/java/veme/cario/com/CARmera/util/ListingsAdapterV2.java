@@ -115,7 +115,7 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingAgg>{
                     + listing.getMake() + " "
                     + listing.getModel());
         }
-        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
 
         holder.vehicleInfoView.setTypeface(ar);
         holder.priceInfoView.setText("$\t" + listing.getDealerOfferPrice());

@@ -47,7 +47,7 @@ public class VehicleStylesAdapter extends ArrayAdapter<Style> {
         final Style style = getItem(pos);
         final LinearLayout style_overlay = viewHolder.style_item_layout;
         style_overlay.setBackgroundColor(0x4169E1);
-        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
         viewHolder.style_name_tv.setText(style.getName());
         viewHolder.style_name_tv.setTypeface(ar);
         viewHolder.style_price_tv.setText("New MSRP from $" + style.getPrice().getBaseMSRP());

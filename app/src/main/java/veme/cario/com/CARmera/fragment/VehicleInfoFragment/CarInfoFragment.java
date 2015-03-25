@@ -66,7 +66,7 @@ public class CarInfoFragment extends Fragment {
             if (CarInfoFragment.this.isAdded()) {
                 tableLayout.setAlpha(0f);
 
-                Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "Pacifico.ttf");
+                Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
                 car_base_info.setText(vehicleBaseInfo.getYear().getYear() + " " + vehicleBaseInfo.getMake().getName()
                         + " " + vehicleBaseInfo.getModel().getName() + vehicleBaseInfo.getTrim());
 
