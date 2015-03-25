@@ -109,7 +109,7 @@ public class RecognitionResultFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Prediction style = recognitionResultAdapter.getItem(position);
-                String[] car_info = style.getClass_name().split("\\s+");
+                String[] car_info = style.getClass_name().split("_");
                 recognitionCallback.onRecognitionResult(tagged_vehicle_id, car_info[0], car_info[1], car_info[2]);
             }
         });

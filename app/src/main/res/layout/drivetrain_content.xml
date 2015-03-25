@@ -15,17 +15,6 @@
 
     <TextView
         style="@style/SearchCategorySubtitle"
-        android:text="Transmission Speeds"/>
-    <com.appyvet.rangebar.RangeBar
-        style="@style/SearchRangeBarStyle"
-        android:id="@+id/transmission_speed_range_bar"
-        custom:tickStart="1"
-        custom:tickEnd="10"
-        custom:tickInterval="1"
-        />
-
-    <TextView
-        style="@style/SearchCategorySubtitle"
         android:text="Drivetrain Type"/>
     <veme.cario.com.CARmera.util.MultiSelectSpinner
         android:layout_width="match_parent"

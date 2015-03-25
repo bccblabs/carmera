@@ -5,61 +5,39 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="3dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.marvinlabs.widget.slideshow.SlideShowView
-            android:id="@+id/listing_photo_slideshow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:enableAutoAdvance="true"
-            app:playlist="sequential"
-            app:slideDuration="5000"
-            app:transition="slideAndZoom"
-            app:transitionDuration="750"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/Ivory"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/vehicle_name_agg"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/Ivory"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/vehicle_mileage_agg"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/Ivory"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/vehicle_price_agg"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/edmunds_branding"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/rankings_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:id="@+id/engine_table">
+        <TableRow>
+            <LinearLayout
+                style="@style/TableLayout">
+                <TextView
+                    style="@style/TableRowEntry"
+                    android:id="@+id/dealer_name"/>
+            </LinearLayout>
+        </TableRow>
+        <TableRow>
+            <LinearLayout
+                style="@style/TableLayout">
+                <TextView
+                    style="@style/TableRowEntry"
+                    android:id="@+id/dealer_addr"/>
+            </LinearLayout>
+        </TableRow>
+        <TableRow>
+            <LinearLayout
+                style="@style/TableLayout">
+                <TextView
+                    style="@style/TableRowEntry"
+                    android:id="@+id/dealer_phone"/>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,17 +48,18 @@
             android:layout_height="wrap_content">
 
             <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/percentile"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/pct_hdr"
+                expandable:contentLayout="@layout/pct_content"
+                />
+
+            <com.andexert.expandablelayout.library.ExpandableLayout
                 android:id="@+id/make_model"
                 style="@style/SearchHdrStyle"
                 expandable:headerLayout="@layout/performance_agg_hdr"
                 expandable:contentLayout="@layout/performance_agg_content"
                 />
-
-            <com.andexert.expandablelayout.library.ExpandableLayout
-                android:id="@+id/state_range"
-                style="@style/SearchHdrStyle"
-                expandable:headerLayout="@layout/safety_agg_hdr"
-                expandable:contentLayout="@layout/safety_agg_content"/>
 
             <com.andexert.expandablelayout.library.ExpandableLayout
                 android:id="@+id/economy_tco"

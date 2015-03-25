@@ -33,11 +33,12 @@ import java.util.List;
 import veme.cario.com.CARmera.BaseActivity;
 import veme.cario.com.CARmera.R;
 import veme.cario.com.CARmera.model.Json.ListingV2;
+import veme.cario.com.CARmera.model.ListingAgg;
 
 /**
  * Created by bski on 1/1/15.
  */
-public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
+public class ListingsAdapterV2 extends ArrayAdapter <ListingAgg>{
 
     private LayoutInflater inflater;
     private static String TAG = "ListingsAdapter";
@@ -104,7 +105,7 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
         }
 
         /* vehicle: object for the entire getView function */
-        final ListingV2 listing = getItem(position);
+        final ListingAgg listing = getItem(position);
 
         /* View item: Vehicle Year, Make, Model Information */
         if (listing.getMake() == null) {
@@ -186,6 +187,8 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
             public void onClick(View v) {
                 Bundle vehicle_agg_info = new Bundle ();
                 vehicle_agg_info.putString ("styleName", listing.getStyleName());
+                vehicle_agg_info.putString("make", listing.getMake());
+                vehicle_agg_info.putString("model", listing.getModel());
                 vehicle_agg_info.putInt ("mileage", listing.getMileage());
                 vehicle_agg_info.putString ("automaticType", listing.getAutomaticType());
                 vehicle_agg_info.putString ("driveTrain", listing.getDriveTrain());
@@ -197,12 +200,11 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
                 vehicle_agg_info.putInt("cylinder" , listing.getCylinder());
                 vehicle_agg_info.putString("engineType" , listing.getEngineType());
                 vehicle_agg_info.putString("compressorType" , listing.getCompressorType());
-                vehicle_agg_info.putString("exteriorGenericColor" , listing.getExteriorGenericColor());
-                vehicle_agg_info.putString("interiorGenericColor" , listing.getInteriorGenericColor());
                 vehicle_agg_info.putFloat("zerosixty" , listing.getZerosixty());
                 vehicle_agg_info.putFloat("quartermile" , listing.getQuartermile());
                 vehicle_agg_info.putFloat("avg_insurance_cost" , listing.getAvg_insurance_cost());
                 vehicle_agg_info.putFloat("avg_repairs_cost" , listing.getAvg_repairs_cost());
+                vehicle_agg_info.putFloat("avg_fuel_cost" , listing.getAvg_fuel_cost());
                 vehicle_agg_info.putFloat("avg_depreciation" , listing.getAvg_depreciation());
                 vehicle_agg_info.putFloat("avg_maintenance_cost" , listing.getAvg_maintenance_cost());
                 vehicle_agg_info.putFloat("rating_comfort" , listing.getRating_comfort());
@@ -216,43 +218,28 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingV2>{
                 vehicle_agg_info.putString("dealerName" , listing.getDealerName());
                 vehicle_agg_info.putString("dealerAddress" , listing.getDealerAddress());
                 vehicle_agg_info.putString ("dealerPhone", listing.getDealerPhone());
-                vehicle_agg_info.putStringArrayList("carfaxes", (ArrayList)listing.getCarfaxes());
                 vehicle_agg_info.putStringArrayList("features", (ArrayList)listing.getFeatures());
                 vehicle_agg_info.putStringArrayList("smallPhotoUrls", (ArrayList)listing.getSmallPhotoUrls());
                 vehicle_agg_info.putStringArrayList("largePhotoUrls", (ArrayList)listing.getLargePhotoUrls());
                 vehicle_agg_info.putString ("dialog_type", "listingV2DetailOverlay");
+                vehicle_agg_info.putInt ("year", listing.getYear());
+
+                vehicle_agg_info.putFloat ("md_price_pct", listing.getModel_price_pct());
+                vehicle_agg_info.putFloat ("overall_price_pct", listing.getOverall_price());
+                vehicle_agg_info.putFloat ("md_mileage_pct", listing.getModel_mileage_pct());
+                vehicle_agg_info.putFloat ("overall_mileage_pct", listing.getOverall_mileage());
+                vehicle_agg_info.putFloat ("hp_pct", listing.getOverall_horsepower());
+                vehicle_agg_info.putFloat ("torque_pct", listing.getOverall_torque());
+                vehicle_agg_info.putFloat ("mpg_pct", listing.getOverall_combined_mpg());
+                vehicle_agg_info.putFloat ("zero_sixty_pct", listing.getOverall_zerosixty());
+
+                vehicle_agg_info.putFloat ("depr_pct", listing.getOverall_depr());
+                vehicle_agg_info.putFloat ("repair_pct", listing.getOverall_repair());
+                vehicle_agg_info.putFloat ("insurance_pct", listing.getOverall_insurance());
 
                 ((BaseActivity) getContext()).OnListingV2SelectedCallback(vehicle_agg_info);
             }
         });
-//        holder.contact_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MaterialDialog contact_seller_dialog = new MaterialDialog.Builder(getContext())
-//                        .title("Contact Seller")
-//                        .customView(R.layout.seller_info_dialog)
-//                        .neutralText("Got it!")
-//                        .build();
-//                contact_seller_dialog.show();
-//
-//                View seller_info_view = contact_seller_dialog.getCustomView();
-//                LinearLayout phone_layout = (LinearLayout) seller_info_view.findViewById(R.id.phone_overlay);
-//                TextView phone_tv = (TextView) seller_info_view.findViewById(R.id.seller_phone_textview);
-//                TextView dealer_name_tv = (TextView) seller_info_view.findViewById(R.id.seller_info_textview);
-//
-//                dealer_name_tv.setText(listing.getDealerName());
-//                phone_tv.setText(listing.getDealerPhone());
-//                phone_layout.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        String phone_num = listing.getDealerPhone().replaceAll("[^0-9|\\+]", "");
-//                        Intent i = new Intent (Intent.ACTION_DIAL, Uri.fromParts("tel", phone_num, null));
-//                        getContext().startActivity(i);
-//                    }
-//                });
-//            }
-//        });
-
         return view;
     }
 

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -6,15 +7,37 @@
     android:layout_margin="3dp"
     android:layout_height="wrap_content"
     android:id="@+id/engine_table">
+    <!--<TableRow>-->
+        <!--<LinearLayout-->
+            <!--style="@style/TableLayout">-->
+            <!--<TextView-->
+                <!--style="@style/AggRowTitle"-->
+                <!--android:text="Model Price Percentile"/>-->
+            <!--<TextView-->
+                <!--style="@style/TableRowEntry"-->
+                <!--android:id="@+id/price_pct_model_tv"/>-->
+        <!--</LinearLayout>-->
+    <!--</TableRow>-->
+    <!--<TableRow>-->
+        <!--<LinearLayout-->
+            <!--style="@style/TableLayout">-->
+            <!--<TextView-->
+                <!--style="@style/AggRowTitle"-->
+                <!--android:text="Model Mileage Percentile"/>-->
+            <!--<TextView-->
+                <!--style="@style/TableRowEntry"-->
+                <!--android:id="@+id/mileage_pct_model_tv"/>-->
+        <!--</LinearLayout>-->
+    <!--</TableRow>-->
     <TableRow>
         <LinearLayout
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Combined MPG"/>
+                android:text="Overall Price Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/combined_mpg_agg"/>
+                android:id="@+id/price_pct_overall_tv"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -22,10 +45,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="City MPG"/>
+                android:text="Overall Mileage Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/city_mpg_agg"/>
+                android:id="@+id/mileage_pct_overall_tv"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -33,10 +56,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Highway MPG"/>
+                android:text="Overall Combined MPG Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/hwy_mpg_agg"/>
+                android:id="@+id/combined_mpg_pct_tv"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -44,10 +67,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Weekly fuel cost"/>
+                android:text="Overall Horsepower Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/fuel_cost_agg"/>
+                android:id="@+id/hp_pct_view"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -55,10 +78,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Yearly Depreciation cost"/>
+                android:text="Overall Torque Percentile"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/depr_cost_agg"/>
+                android:id="@+id/torque_pct_view"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -66,10 +89,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Monthly insurance cost"/>
+                android:text="Overall 0-60 MPH Time"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/insurance_cost_agg"/>
+                android:id="@+id/zero_sixty_pct_view"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -77,10 +100,10 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Yearly Repair cost"/>
+                android:text="Overall Insurance Cost"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/repair_cost_agg"/>
+                android:id="@+id/insurance_pct_view"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -88,10 +111,22 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Yearly Maintenance cost"/>
+                android:text="Overall Depreciation Cost"/>
             <TextView
                 style="@style/TableRowEntry"
-                android:id="@+id/maintenance_cost_agg"/>
+                android:id="@+id/depr_cost_pct_view"/>
         </LinearLayout>
     </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Overall Repair Cost"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/repair_cost_pct_view"/>
+        </LinearLayout>
+    </TableRow>
+
 </TableLayout>

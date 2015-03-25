@@ -50,6 +50,7 @@ public class CarInfoFragment extends Fragment {
     private View tableLayout;
 
     private OnReselectClickListener onReselectClickCallback = null;
+
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
     private final class VehicleInfoRequestListener implements RequestListener<VehicleBaseInfo> {
@@ -65,10 +66,9 @@ public class CarInfoFragment extends Fragment {
             if (CarInfoFragment.this.isAdded()) {
                 tableLayout.setAlpha(0f);
 
-                Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
+                Typeface fa = Typeface.createFromAsset(getActivity().getAssets(), "Pacifico.ttf");
                 car_base_info.setText(vehicleBaseInfo.getYear().getYear() + " " + vehicleBaseInfo.getMake().getName()
-                        + " " + vehicleBaseInfo.getModel().getName());
-                car_style_info.setText(vehicleBaseInfo.getTrim());
+                        + " " + vehicleBaseInfo.getModel().getName() + vehicleBaseInfo.getTrim());
 
                 String tmv_price = vehicleBaseInfo.getPrice().getUsedTmvRetail();
                 String msrp_price = vehicleBaseInfo.getPrice().getBaseMSRP();
@@ -170,8 +170,8 @@ public class CarInfoFragment extends Fragment {
             }
         });
 
+
         car_base_info = (TextView) getView().findViewById(R.id.car_base_info);
-        car_style_info = (TextView) getView().findViewById(R.id.car_style_info);
         used_tmv_textview = (TextView) getView().findViewById(R.id.used_tmv_textview);
         msrp_textview = (TextView) getView().findViewById(R.id.msrp_textview);
         city_mpg_textview = (TextView) getView().findViewById(R.id.city_mpg_textview);

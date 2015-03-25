@@ -20,11 +20,10 @@
             android:layout_height="wrap_content">
 
             <com.andexert.expandablelayout.library.ExpandableLayout
-                android:id="@+id/make_model"
+                android:id="@+id/base_search_content"
                 style="@style/SearchHdrStyle"
-                expandable:headerLayout="@layout/mk_md_hdr"
-                expandable:contentLayout="@layout/mk_md_content"
-                />
+                expandable:headerLayout="@layout/base_hdr"
+                expandable:contentLayout="@layout/base_content"/>
 
             <com.andexert.expandablelayout.library.ExpandableLayout
                 android:id="@+id/state_range"
@@ -67,6 +66,13 @@
                 style="@style/SearchHdrStyle"
                 expandable:headerLayout="@layout/equipments_hdr"
                 expandable:contentLayout="@layout/equipments_content"/>
+
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/make_model"
+                style="@style/SearchHdrStyle"
+                expandable:headerLayout="@layout/mk_md_hdr"
+                expandable:contentLayout="@layout/mk_md_content"
+                />
 
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/start_search_lising_req_btn"

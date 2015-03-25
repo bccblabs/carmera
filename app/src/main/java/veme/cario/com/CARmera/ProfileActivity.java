@@ -158,18 +158,6 @@ public class ProfileActivity extends BaseActivity
 
 
 
-    @Override
-    public void onCreateSearch (String yr, String mk, String model) {
-        Bundle args = new Bundle();
-        args.putString("dialog_type", "create_search");
-        args.putString("vehicle_year", yr);
-        args.putString("vehicle_make", mk);
-        args.putString("vehicle_model", model);
-
-//        Intent i = new Intent(ProfileActivity.this, ListingsActivity.class);
-//        i.putExtras(args);
-//        startActivity(i);
-    }
 
     @Override
     public void onUploadResult (String tagged_vehicle_id) {

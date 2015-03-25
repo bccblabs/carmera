@@ -17,7 +17,7 @@ public class VehicleBaseInfoRequest extends SpringAndroidSpiceRequest<VehicleBas
     }
     @Override
     public VehicleBaseInfo loadDataFromNetwork () throws Exception {
-        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/styles/%s?view=full&fmt=json&api_key=%s",
+        String url = String.format ("https://api.edmunds.com/api/vehicle/v2/styles/%s?view=basic&fmt=json&api_key=%s",
                 this.trim_id, CARmeraApp.edmunds_app_key);
         return getRestTemplate().getForObject(url, VehicleBaseInfo.class);
     }

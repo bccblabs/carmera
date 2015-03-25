@@ -8,17 +8,17 @@
     <style name="SearchRangeBarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">65dp</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">15dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="pinRadius">8dp</item>
-        <item name="pinPadding">2dp</item>
+        <item name="pinRadius">3dp</item>
+        <item name="pinPadding">0dp</item>
         <item name="barWeight">2dp</item>
-        <item name="connectingLineWeight">2dp</item>
-        <item name="barColor">#CCCCCC</item>
-        <item name="connectingLineColor">#3F51B5</item>
-        <item name="pinColor">#3F51B5</item>
+        <item name="connectingLineWeight">3dp</item>
+        <item name="barColor">@color/light_spring_green</item>
+        <item name="connectingLineColor">@color/sky_blue</item>
+        <item name="pinColor">@color/gold_transparent</item>
         <item name="tickColor">#000000</item>
-        <item name="selectorColor">#3F51B5</item>
+        <item name="selectorColor">@color/Ivory</item>
     </style>
     <style name="TitleCenter">
         <item name="android:layout_width">wrap_content</item>
@@ -119,10 +119,9 @@
     <style name="SpinnerStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
-        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
         <item name="android:spinnerMode">dialog</item>
-        <item name="android:background">@color/Ivory</item>
     </style>
     <style name="SpinnerTitle">
         <item name="android:layout_width">wrap_content</item>
@@ -141,15 +140,17 @@
     </style>
 
     <style name="ProgressBarLarge">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:background">#1E88E5</item>
     </style>
 
     <style name="ProgressBarExtraLarge">
-        <item name="android:layout_width">200dp</item>
-        <item name="android:layout_height">200dp</item>
-        <item name="android:background">#FFD700</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">#1E88E5</item>
     </style>
 
 
@@ -209,14 +210,33 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">3dp</item>
     </style>
+    <style name="AggRowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/sky_blue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
     <style name="TableRowEntry">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">start</item>
-        <item name="android:textColor">@color/light_spring_green</item>
+        <item name="android:textColor">@color/Ivory</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">3dp</item>
+    </style>
+
+    <style name="AggInfoEntry">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">5dp</item>
     </style>
 
     <style name="RowTitle">
@@ -244,9 +264,19 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/Ivory</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">start</item>
         <item name="android:layout_margin">4dp</item>
     </style>
+    <style name="RangeBarValue">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Ivory</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
     <style name="ListingGeneralInfo">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -271,7 +301,7 @@
     <style name="SearchHdrStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/sky_blue</item>
+        <item name="android:background">@color/background_floating_material_dark</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:textSize">18sp</item>
     </style>

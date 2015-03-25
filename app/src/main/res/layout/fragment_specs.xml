@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/TableTitle"
+                    android:layout_margin="3dp"
+                    android:text="See Listings"/>
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/see_listing_v2_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_size="mini"
+                    fab:fab_title="See Listings"
+                    fab:fab_icon="@drawable/ic_action_list_2_white"
+                    fab:fab_colorNormal="@color/sky_blue"
+                    fab:fab_colorPressed="@color/sky_blue"/>
+            </LinearLayout>
             <TextView
                 style="@style/TableTitle"
                 android:layout_margin="3dp"

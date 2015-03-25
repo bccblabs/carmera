@@ -1,6 +1,7 @@
 package veme.cario.com.CARmera.util;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -46,8 +47,11 @@ public class VehicleStylesAdapter extends ArrayAdapter<Style> {
         final Style style = getItem(pos);
         final LinearLayout style_overlay = viewHolder.style_item_layout;
         style_overlay.setBackgroundColor(0x4169E1);
+        Typeface ar = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
         viewHolder.style_name_tv.setText(style.getName());
+        viewHolder.style_name_tv.setTypeface(ar);
         viewHolder.style_price_tv.setText("New MSRP from $" + style.getPrice().getBaseMSRP());
+        viewHolder.style_price_tv.setTypeface(ar);
         return view;
     }
 }

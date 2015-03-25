@@ -20,6 +20,7 @@ import veme.cario.com.CARmera.fragment.ActivityFragment.ListingsDetailFragment;
 import veme.cario.com.CARmera.fragment.ActivityFragment.SavedListingsFragment;
 import veme.cario.com.CARmera.fragment.RecognitionResultFragment;
 import veme.cario.com.CARmera.fragment.SavedSearchFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CustomerReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.EdmundsReviewFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ImageFragment;
@@ -135,7 +136,7 @@ public class VehicleInfoDialog extends DialogFragment {
     /* Tab paging */
     public class InfoPagerAdapter extends FragmentPagerAdapter {
 
-        private final static int NUM_FRAG = 5;
+        private final static int NUM_FRAG = 4;
         public InfoPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -144,12 +145,16 @@ public class VehicleInfoDialog extends DialogFragment {
         public Fragment getItem(int position) {
             Fragment fragment = null;
             switch (position) {
+//                case 0: {
+//                    fragment = new CarInfoFragment();
+//                    break;
+//                }
                 case 0: {
-                    fragment = new PricingFragment();
+                    fragment = new SpecsFragment();
                     break;
                 }
                 case 1: {
-                    fragment = new SpecsFragment();
+                    fragment = new PricingFragment();
                     break;
                 }
                 case 2: {
@@ -158,10 +163,6 @@ public class VehicleInfoDialog extends DialogFragment {
                 }
                 case 3: {
                     fragment = new CustomerReviewFragment();
-                    break;
-                }
-                case 4: {
-                    fragment = new EdmundsReviewFragment();
                     break;
                 }
             }
@@ -178,16 +179,16 @@ public class VehicleInfoDialog extends DialogFragment {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
+//                case 0:
+//                    return "Car Info";
                 case 0:
-                    return "Pricing";
-                case 1:
                     return "Equipment and Specs";
+                case 1:
+                    return "Pricing";
                 case 2:
                     return "Cost-To-Own";
                 case 3:
                     return "Drivers Review";
-                case 4:
-                    return "Edmunds Review";
             }
             return null;
         }
@@ -270,7 +271,6 @@ public class VehicleInfoDialog extends DialogFragment {
             return null;
         }
     }
-
 
     public class SavedListingsAdapter extends FragmentPagerAdapter {
         public SavedListingsAdapter(FragmentManager fm) {

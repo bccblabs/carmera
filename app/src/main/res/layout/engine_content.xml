@@ -8,20 +8,10 @@
 
     <TextView
         style="@style/SearchCategorySubtitle"
-        android:text="Engine Displacement (cc)"/>
-
-    <com.appyvet.rangebar.RangeBar
-        style="@style/SearchRangeBarStyle"
-        android:id="@+id/displacement_bar"
-        custom:tickStart="500"
-        custom:tickEnd="10000"
-        custom:tickInterval="500"
-        />
-
-    <TextView
-        style="@style/SearchCategorySubtitle"
         android:text="Engine Horsepower (hp)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/horsepower_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/horsepower_bar"
@@ -33,7 +23,9 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Engine Torque (lb/ft)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/torque_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/torque_bar"
@@ -45,13 +37,15 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Engine Cylinder Count"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/cylinder_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/cylinder_bar"
         custom:tickStart="1"
         custom:tickEnd="18"
-        custom:tickInterval="1"
+        custom:tickInterval="3"
         />
 
     <TextView

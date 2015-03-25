@@ -9,6 +9,9 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="0-60 MPH (in seconds)"/>
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/zero_sixty_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/zero_sixty_range_bar"
@@ -20,9 +23,12 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Quarter Mile Time (in seconds)"/>
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/quarter_mile_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
-        android:id="@+id/quarter_mile_spinner"
+        android:id="@+id/quarter_mile_range_bar"
         custom:tickStart="5"
         custom:tickEnd="20"
         custom:tickInterval="1"

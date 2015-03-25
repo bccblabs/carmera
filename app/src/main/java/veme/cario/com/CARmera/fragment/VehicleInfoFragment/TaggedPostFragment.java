@@ -39,17 +39,12 @@ public class TaggedPostFragment extends Fragment {
     private TaggedVehicle taggedVehicle;
     private DetailsSelectedListener detailSelectedCallback = null;
     private ImageFragment.UploadListener uploadCallback = null;
-    private CreateSearchListner createSearchListner = null;
-
-    private FloatingActionButton recognize_btn, details_btn, see_listings_btn, share_facebook_btn;
+    private SpecsFragment.OnSeeListingsClickListener onSeeListingsClickListener = null;
+    private FloatingActionButton recognize_btn, details_btn, see_listings_btn;
 
 
     public interface DetailsSelectedListener {
         public abstract void onDetailsSelected (byte[] image, String yr, String mk, String model);
-    }
-
-    public interface CreateSearchListner {
-        public abstract void onCreateSearch (String yr, String mk, String model);
     }
 
 
@@ -58,7 +53,7 @@ public class TaggedPostFragment extends Fragment {
         super.onAttach(activity);
         try {
             detailSelectedCallback = (DetailsSelectedListener) activity;
-            createSearchListner = (CreateSearchListner) activity;
+            onSeeListingsClickListener = (SpecsFragment.OnSeeListingsClickListener) activity;
             uploadCallback = (ImageFragment.UploadListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + ": "
@@ -124,7 +119,6 @@ public class TaggedPostFragment extends Fragment {
         recognize_btn = (FloatingActionButton) view.findViewById(R.id.try_recognize_btn);
         details_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_details_btn);
         see_listings_btn = (FloatingActionButton) view.findViewById(R.id.post_vehicle_listings_btn);
-        share_facebook_btn = (FloatingActionButton) view.findViewById(R.id.share_facebook_btn);
 
         recognize_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,33 +144,12 @@ public class TaggedPostFragment extends Fragment {
         see_listings_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createSearchListner.onCreateSearch(taggedVehicle.getYear(),
+                onSeeListingsClickListener.OnSeeListingsClick(taggedVehicle.getYear(),
                                                     taggedVehicle.getMake(),
                                                     taggedVehicle.getModel());
             }
         });
 
-        share_facebook_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (FacebookDialog.canPresentMessageDialog(getActivity())) {
-                    FacebookDialog.MessageDialogBuilder builder = new FacebookDialog.MessageDialogBuilder(getActivity());
-                    builder.setLink("http://www.carmera.io")
-                            .setName(taggedVehicle.toString())
-                            .setPicture (taggedVehicle.getTagPhoto().getUrl())
-                            .setFragment(TaggedPostFragment.this);
-                    builder.build().present();
-                } else {
-                    // The user doesn't have the Facebook Messenger app for Android app installed.
-                }
-                UserActivity userActivity = new UserActivity();
-                userActivity.setSrcName("I");
-                userActivity.setDataId(taggedVehicle.getObjectId());
-                userActivity.setDestName("Kai");
-                userActivity.setType ("taggedVehicle");
-                userActivity.saveInBackground();
-            }
-        });
 
         return view;
     }

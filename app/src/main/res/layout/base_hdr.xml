@@ -4,6 +4,6 @@
     android:layout_height="match_parent">
     <TextView
         style="@style/SearchCategoryHdr"
-        android:text="Vehicle Condition"
+        android:text="Price, Body Type, Search Radius"
         />
 </RelativeLayout>

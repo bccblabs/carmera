@@ -9,23 +9,27 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Combined MPG"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/combined_mpg_tv"/>
     <com.appyvet.rangebar.RangeBar
         style="@style/SearchRangeBarStyle"
         android:id="@+id/combined_mpg_range_bar"
         custom:tickStart="5"
-        custom:tickEnd="100"
+        custom:tickEnd="40"
         custom:tickInterval="5"
         />
 
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Average Fuel Cost ($/year)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/fuel_cost_tv"/>
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/fuel_cost_range_bar"
-        custom:tickStart="0"
-        custom:tickEnd="20000"
+        custom:tickStart="500"
+        custom:tickEnd="10000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -34,11 +38,13 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Average Repair Cost ($/year)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/repair_cost_tv"/>
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/repair_cost_range_bar"
-        custom:tickStart="0"
-        custom:tickEnd="20000"
+        custom:tickStart="500"
+        custom:tickEnd="10000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -46,11 +52,13 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Average Maintenance Cost ($/year)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/maintenance_cost_tv"/>
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/maintenance_cost_range_bar"
-        custom:tickStart="0"
-        custom:tickEnd="20000"
+        custom:tickStart="500"
+        custom:tickEnd="10000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -58,11 +66,13 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Average Insurance Cost ($/year)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/insurance_cost_tv"/>
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/insurance_cost_range_bar"
-        custom:tickStart="0"
-        custom:tickEnd="20000"
+        custom:tickStart="500"
+        custom:tickEnd="10000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"
         />
@@ -70,10 +80,12 @@
     <TextView
         style="@style/SearchCategorySubtitle"
         android:text="Average Depreciation Cost ($/year)"/>
-
+    <TextView
+        style="@style/RangeBarValue"
+        android:id="@+id/depr_cost_tv"/>
     <com.appyvet.rangebar.RangeBar
         android:id="@+id/depreciation_cost_range_bar"
-        custom:tickStart="0"
+        custom:tickStart="500"
         custom:tickEnd="20000"
         custom:tickInterval="500"
         style="@style/SearchRangeBarStyle"

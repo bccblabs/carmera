@@ -47,6 +47,7 @@ public class PricingFragment extends Fragment {
     private static String JSON_HASH_KEY_USED;
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private Map<Double, String> price_map = new HashMap<Double, String>();
+
     private final class NewPricingRequestListener implements RequestListener<TMV> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {

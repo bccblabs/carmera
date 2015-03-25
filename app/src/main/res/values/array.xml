@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="makes_array">
+        <item>Any</item>
         <item>Acura</item>
         <item>Aston Martin</item>
         <item>Audi</item>
@@ -42,61 +43,8 @@
         <item>Volkswagen</item>
         <item>Volvo</item>
     </string-array>
-    <string-array name="model_array">
-        <item>"x3"</item>
-        <item>"TTs"</item>
-        <item>"Mustang"</item>
-        <item>"Malibu"</item>
-        <item>"C-Class"</item>
-        <item>"Focus"</item>
-    </string-array>
-
-    <string-array name="years_array">
-        <item>1996</item>
-        <item>1997</item>
-        <item>1998</item>
-        <item>1999</item>
-        <item>2000</item>
-        <item>2001</item>
-        <item>2002</item>
-        <item>2003</item>
-        <item>2004</item>
-        <item>2005</item>
-        <item>2006</item>
-        <item>2007</item>
-        <item>2008</item>
-        <item>2009</item>
-        <item>2010</item>
-        <item>2011</item>
-        <item>2012</item>
-        <item>2013</item>
-        <item>2014</item>
-        <item>2015</item>
-    </string-array>
-    <string-array name="price_array">
-        <item>0</item>
-        <item>5,000</item>
-        <item>10,000</item>
-        <item>15,000</item>
-        <item>20,000</item>
-        <item>25,000</item>
-        <item>30,000</item>
-        <item>35,000</item>
-        <item>40,000</item>
-        <item>45,000</item>
-        <item>50,000</item>
-        <item>55,000</item>
-        <item>60,000</item>
-        <item>65,000</item>
-        <item>70,000</item>
-        <item>75,000</item>
-        <item>80,000</item>
-        <item>85,000</item>
-        <item>90,000</item>
-        <item>95,000</item>
-        <item>100,000</item>
-    </string-array>
     <string-array name="acura_md">
+        <item>Any</item>
         <item>TLX</item>
         <item>MDX</item>
         <item>TL</item>
@@ -116,6 +64,7 @@
         <item>NSX-T</item>
     </string-array>
     <string-array name="toyota_md">
+        <item>Any</item>
         <item>4Runner</item>
         <item>Avalon</item>
         <item>Avalon Hybrid</item>
@@ -141,6 +90,7 @@
         <item>Yaris</item>
     </string-array>
     <string-array name="honda_md">
+        <item>Any</item>
         <item>Accord</item>
         <item>Civic</item>
         <item>CR-V</item>
@@ -153,6 +103,7 @@
         <item>Ridgeline</item>
     </string-array>
     <string-array name="nissan_md">
+        <item>Any</item>
         <item>370Z</item>
         <item>Altima</item>
         <item>Armada</item>
@@ -175,6 +126,7 @@
         <item>Xterra</item>
     </string-array>
     <string-array name="audi_md">
+        <item>Any</item>
         <item>A3</item>
         <item>A4</item>
         <item>A5</item>
@@ -195,6 +147,7 @@
         <item>SQ5</item>
     </string-array>
     <string-array name="bmw_md">
+        <item>Any</item>
         <item>228i</item>
         <item>235i</item>
         <item>320i</item>
@@ -216,11 +169,13 @@
         <item>X6</item>
     </string-array>
     <string-array name="astonmartin_md">
+        <item>Any</item>
         <item>Vanquish</item>
         <item>DB9</item>
         <item>Vantage</item>
     </string-array>
     <string-array name="bentley_md">
+        <item>Any</item>
         <item>Continental GT</item>
         <item>Continental GTC</item>
         <item>Continental Supersports</item>
@@ -229,6 +184,7 @@
         <item>Arnage</item>
     </string-array>
     <string-array name="buick_md">
+        <item>Any</item>
         <item>Regal</item>
         <item>LaCrosse</item>
         <item>Enclave</item>
@@ -236,6 +192,7 @@
         <item>Encore</item>
     </string-array>
     <string-array name="cadillac_md">
+        <item>Any</item>
         <item>ELR</item>
         <item>CTS</item>
         <item>CTS-V</item>
@@ -246,6 +203,7 @@
         <item>Escalae ESV</item>
     </string-array>
     <string-array name="chevrolet_md">
+        <item>Any</item>
         <item>Spark</item>
         <item>Sonic</item>
         <item>Cruze</item>
@@ -254,11 +212,13 @@
         <item>Impala</item>
     </string-array>
     <string-array name="chrysler_md">
+        <item>Any</item>
         <item>200</item>
         <item>300</item>
         <item>Town and Country</item>
     </string-array>
     <string-array name="dodge_md">
+        <item>Any</item>
         <item>Challenger</item>
         <item>Charger</item>
         <item>Dart</item>
@@ -267,12 +227,14 @@
         <item>Grand Caravan</item>
     </string-array>
     <string-array name="ferrari_md">
+        <item>Any</item>
         <item>F12 Berlinetta</item>
         <item>458 Italia</item>
         <item>FF</item>
         <item>California</item>
     </string-array>
     <string-array name="fiat_md">
+        <item>Any</item>
         <item>500</item>
         <item>500 Abarth</item>
         <item>500c</item>
@@ -281,9 +243,11 @@
         <item>500X</item>
     </string-array>
     <string-array name="fisker_md">
+        <item>Any</item>
         <item>Karma</item>
     </string-array>
     <string-array name="ford_md">
+        <item>Any</item>
         <item>Fiesta</item>
         <item>Focus</item>
         <item>Fusion</item>
@@ -300,6 +264,7 @@
         <item>Super Duty</item>
     </string-array>
     <string-array name="gmc_md">
+        <item>Any</item>
         <item>Terrain</item>
         <item>Terrain Denali</item>
         <item>Acadia</item>
@@ -317,6 +282,7 @@
         <item>Savana Cargo</item>
     </string-array>
     <string-array name="hyundai_md">
+        <item>Any</item>
         <item>Elantra</item>
         <item>Accent</item>
         <item>Santa Fe</item>
@@ -332,6 +298,7 @@
         <item>Elantra Touring</item>
     </string-array>
     <string-array name="infiniti_md">
+        <item>Any</item>
         <item>Q40</item>
         <item>Q50</item>
         <item>Q50 Hybrid</item>
@@ -346,6 +313,7 @@
         <item>QX80</item>
     </string-array>
     <string-array name="jaguar_md">
+        <item>Any</item>
         <item>XE</item>
         <item>XF</item>
         <item>XJ</item>
@@ -354,6 +322,7 @@
         <item>F-Pace</item>
     </string-array>
     <string-array name="jeep_md">
+        <item>Any</item>
         <item>Patriot</item>
         <item>Wrangler</item>
         <item>Grand Cherokee</item>
@@ -362,6 +331,7 @@
         <item>Compass</item>
     </string-array>
     <string-array name="kia_md">
+        <item>Any</item>
         <item>Optima</item>
         <item>Cadenza</item>
         <item>K900</item>
@@ -376,6 +346,7 @@
         <item>Forte5</item>
     </string-array>
     <string-array name="lamboghini_md">
+        <item>Any</item>
         <item>LP 610-4</item>
         <item>LP 620-2</item>
         <item>LP 700-4</item>
@@ -386,6 +357,7 @@
         <item>Asterion LPI 910-4</item>
     </string-array>
     <string-array name="lr_md">
+        <item>Any</item>
         <item>Range Rover</item>
         <item>Range Rover Sport</item>
         <item>Range Rover Evoque</item>
@@ -394,6 +366,7 @@
         <item>LR2</item>
     </string-array>
     <string-array name="lexux_md">
+        <item>Any</item>
         <item>IS</item>
         <item>ES</item>
         <item>GS</item>
@@ -414,6 +387,7 @@
         <item>LFA</item>
     </string-array>
     <string-array name="lincoln_md">
+        <item>Any</item>
         <item>MKC</item>
         <item>MKZ</item>
         <item>MKS</item>
@@ -423,11 +397,13 @@
         <item>Black Label</item>
     </string-array>
     <string-array name="lotus_md">
+        <item>Any</item>
         <item>Elise</item>
         <item>Exige</item>
         <item>Evora</item>
     </string-array>
     <string-array name="mazda_md">
+        <item>Any</item>
         <item>Mazda6</item>
         <item>Mazda3</item>
         <item>CX-5</item>
@@ -437,6 +413,7 @@
         <item>Mazda2</item>
     </string-array>
     <string-array name="mercedes_md">
+        <item>Any</item>
         <item>B-Class</item>
         <item>C250</item>
         <item>C350</item>
@@ -482,6 +459,7 @@
         <item>CLS63 S 4MATIC</item>
     </string-array>
     <string-array name="mini_md">
+        <item>Any</item>
         <item>Hardtop 2dr</item>
         <item>Hardtop 4dr</item>
         <item>Countryman</item>
@@ -492,6 +470,7 @@
         <item>JCW</item>
     </string-array>
     <string-array name="mistubishi_md">
+        <item>Any</item>
         <item>I-MIEV</item>
         <item>Lancer</item>
         <item>Lancer Evolution</item>
@@ -500,6 +479,7 @@
         <item>Outlander Sport</item>
     </string-array>
     <string-array name="porsche_md">
+        <item>Any</item>
         <item>Macan</item>
         <item>Cayenne</item>
         <item>911</item>
@@ -508,6 +488,7 @@
         <item>Panamera</item>
     </string-array>
     <string-array name="scion_md">
+        <item>Any</item>
         <item>FR-S</item>
         <item>iQ</item>
         <item>tC</item>
@@ -515,11 +496,13 @@
         <item>xD</item>
     </string-array>
     <string-array name="smart_md">
+        <item>Any</item>
         <item>fortwo Convertible</item>
         <item>fortwo Electric</item>
         <item>fortwo Hatchback</item>
     </string-array>
     <string-array name="subaru_md">
+        <item>Any</item>
         <item>Impreza Hatchback</item>
         <item>Impreza Sedan</item>
         <item>Legacy Sedan</item>
@@ -534,11 +517,13 @@
         <item>Tribeca</item>
     </string-array>
     <string-array name="suzuki_md">
+        <item>Any</item>
         <item>Equator</item>
         <item>Grand Vitara</item>
         <item>SX4</item>
     </string-array>
     <string-array name="volkswagen_md">
+        <item>Any</item>
         <item>Jetta</item>
         <item>CC</item>
         <item>Passat</item>
@@ -554,6 +539,7 @@
         <item>Eos</item>
     </string-array>
     <string-array name="volvo_md">
+        <item>Any</item>
         <item>XC90</item>
         <item>S80</item>
         <item>XC70</item>
@@ -564,6 +550,7 @@
     </string-array>
 
     <string-array name="body_style_array">
+        <item>Any</item>
         <item>Coupe</item>
         <item>Sedan</item>
         <item>Truck</item>
@@ -572,22 +559,23 @@
         <item>Wagon</item>
         <item>Convertible</item>
         <item>Crossover</item>
-        <item>Any</item>
     </string-array>
 
     <string-array name="car_state_array">
+        <item>Any</item>
         <item>New</item>
         <item>Used</item>
     </string-array>
 
     <string-array name="origin_array">
+        <item>Any</item>
         <item>European</item>
         <item>Domestic</item>
         <item>Japanese</item>
-        <item>Other</item>
     </string-array>
 
     <string-array name="color_array">
+        <item>Any</item>
         <item>Red</item>
         <item>Yellow</item>
         <item>Black</item>
@@ -596,22 +584,22 @@
         <item>Silver</item>
         <item>Green</item>
         <item>Orange</item>
-        <item>Any</item>
     </string-array>
     <string-array name="equipment_array">
+        <item>Any</item>
         <item>Sport Package</item>
         <item>Moon roof</item>
         <item>Sun roof</item>
         <item>Navigation</item>
-        <item>Any</item>
     </string-array>
     <string-array name="txn_array">
+        <item>Any</item>
         <item>Manual</item>
         <item>Automanual</item>
         <item>Automatic</item>
-        <item>Any</item>
     </string-array>
     <string-array name="cylinder_array">
+        <item>Any</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -620,7 +608,6 @@
         <item>10</item>
         <item>12</item>
         <item>12+</item>
-        <item>Any</item>
     </string-array>
     <string-array name="compressor_array">
         <item>Any</item>
@@ -630,6 +617,7 @@
     </string-array>
 
     <string-array name="drivetrain_array">
+        <item>Any</item>
         <item>All Wheel Drive</item>
         <item>Front Wheel Drive</item>
         <item>Rear Wheel Drive</item>

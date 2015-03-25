@@ -2,6 +2,7 @@ package veme.cario.com.CARmera.util;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,13 @@ public class RecognitionResultAdapter extends ArrayAdapter<Prediction> {
         }
         final Prediction prediction = getItem(pos);
         viewHolder.recognition_overlay.setBackgroundColor(0x4169E1);
-        viewHolder.vehicle_name.setText(prediction.getClass_name());
+        String name = prediction.getClass_name().replace("_", " ").toUpperCase();
+        viewHolder.vehicle_name.setText(name);
         Double prob = prediction.getProb() * 100;
         DecimalFormat newFormat = new DecimalFormat("#.##");
         Double twoDecimal =  Double.valueOf(newFormat.format(prob));
         viewHolder.f_score.setText( twoDecimal.toString() + "%");
-        Typeface fa = Typeface.createFromAsset(getContext().getAssets(), "fontawesome-webfont.ttf");
+        Typeface fa = Typeface.createFromAsset(getContext().getAssets(), "Pacifico.ttf");
         viewHolder.vehicle_name.setTypeface(fa);
         viewHolder.f_score.setTypeface(fa);
         return view;

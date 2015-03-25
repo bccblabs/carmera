@@ -96,7 +96,6 @@ public class SelectStyleFragment extends Fragment {
     private Bitmap bitmap;
     private TextView car_base_info;
     private View loadingView;
-    private FloatingActionButton see_other_recognize_btn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,18 +121,6 @@ public class SelectStyleFragment extends Fragment {
 
         vehicleStylesAdapter = new VehicleStylesAdapter(inflater.getContext());
         styles_list_view.setAdapter(vehicleStylesAdapter);
-        see_other_recognize_btn = (FloatingActionButton) view.findViewById(R.id.see_other_recognize_btn);
-
-        if (getArguments().getBoolean("is_tagged_post")) {
-            see_other_recognize_btn.setVisibility(View.VISIBLE);
-            see_other_recognize_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    uploadCallback.onUploadResult(getArguments().getString("tagged_vehicle_id"));
-                }
-            });
-        }
-
         loadingView = view.findViewById (R.id.style_progress_bar);
 
         styles_list_view.setVisibility(View.GONE);

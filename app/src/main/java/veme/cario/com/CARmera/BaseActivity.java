@@ -41,6 +41,7 @@ import veme.cario.com.CARmera.fragment.ListingWizard.VehicleFilterFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.CarInfoFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.ListingAggDetailsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SelectStyleFragment;
+import veme.cario.com.CARmera.fragment.VehicleInfoFragment.SpecsFragment;
 import veme.cario.com.CARmera.fragment.VehicleInfoFragment.TaggedPostFragment;
 import veme.cario.com.CARmera.model.UserModels.SavedSearch;
 import veme.cario.com.CARmera.nav_drawer.DrawerAdapter;
@@ -51,9 +52,9 @@ import veme.cario.com.CARmera.view.VehicleInfoDialog;
 public class BaseActivity extends FragmentActivity implements
         SelectStyleFragment.SelectResultListener,
         CarInfoFragment.OnReselectClickListener,
+        SpecsFragment.OnSeeListingsClickListener,
         TaggedPostFragment.DetailsSelectedListener,
         TaggedVehicleFragment.OnVehicleSelectedListener,
-        TaggedPostFragment.CreateSearchListner,
         SavedListingsFragment.ListingSelectedListener,
         VehicleFilterFragment.OnListngV2SelectedListener {
 
@@ -150,7 +151,7 @@ public class BaseActivity extends FragmentActivity implements
                             try {
                                 // Populate the JSON object
                                 userProfile.put("facebookId", user.getId());
-                                Log.i (TAG, "facebook id : " + user.getId());
+//                                Log.i (TAG, "facebook id : " + user.getId());
                                 userProfile.put("name", user.getName());
                                 if (user.getProperty("gender") != null) {
                                     userProfile.put("gender", user.getProperty("gender"));
@@ -300,16 +301,16 @@ public class BaseActivity extends FragmentActivity implements
 
         switch (position) {
             case 0:
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(this, CaptureActivity.class));
                 break;
             case 1:
                 startActivity(new Intent(this, ListingsActivity_v2.class));
                 break;
             case 2:
-                startActivity(new Intent(this, NearbyActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case 3:
-                startActivity(new Intent(this, CaptureActivity.class));
+                startActivity(new Intent(this, NearbyActivity.class));
                 break;
             case 4:
                 logout();
@@ -320,12 +321,6 @@ public class BaseActivity extends FragmentActivity implements
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
@@ -333,22 +328,12 @@ public class BaseActivity extends FragmentActivity implements
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-//        switch (item.getItemId()) {
-//            case R.id.action_settings:
-//                return true;
-//
-//            default:
-                return super.onOptionsItemSelected(item);
-//        }
+        return super.onOptionsItemSelected(item);
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = drawer_layout.isDrawerOpen(drawer_listview);
-//        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -440,21 +425,18 @@ public class BaseActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onCreateSearch (String yr, String mk, String model) {
+    public void OnSeeListingsClick (String year, String make, String model) {
         Bundle args = new Bundle();
-        args.putString("dialog_type", "create_search");
-        args.putString("vehicle_year", yr);
-        args.putString("vehicle_make", mk);
-        args.putString("vehicle_model", model);
-
+        args.putString ("vehicle_year", year);
+        args.putString ("vehicle_model", model.toLowerCase());
+        args.putString ("vehicle_make", make.toLowerCase());
         if ( vehicleInfoDialog != null && vehicleInfoDialog.isVisible()) {
             vehicleInfoDialog.dismiss();
             vehicleInfoDialog = null;
         }
-        FragmentManager fm = getSupportFragmentManager();
-        vehicleInfoDialog = new VehicleInfoDialog();
-        vehicleInfoDialog.setArguments(args);
-        vehicleInfoDialog.show(fm, "createSearchOverlay");
+        Intent listings_intent = new Intent(BaseActivity.this, ListingsActivity_v2.class);
+        listings_intent.putExtras(args);
+        startActivity(listings_intent);
     }
 
     @Override
@@ -503,10 +485,10 @@ public class BaseActivity extends FragmentActivity implements
 
         /* Initializing drawer items */
         drawer_item_list = new ArrayList<DrawerItem>();
-        drawer_item_list.add(new DrawerItem("Profile", R.drawable.ic_action_user));
+        drawer_item_list.add(new DrawerItem("Vision", R.drawable.ic_action_camera_blue));
         drawer_item_list.add(new DrawerItem("Discarvr", R.drawable.ic_action_search_purple));
+        drawer_item_list.add(new DrawerItem("Profile", R.drawable.ic_action_user));
         drawer_item_list.add(new DrawerItem("Near me", R.drawable.ic_action_location));
-        drawer_item_list.add(new DrawerItem("Capture", R.drawable.ic_action_camera_blue));
         drawer_item_list.add(new DrawerItem("Logout", R.drawable.ic_action_exit));
 
         /* set item actions */
@@ -537,7 +519,7 @@ public class BaseActivity extends FragmentActivity implements
         drawer_layout.setDrawerListener(actionBarDrawerToggle);
         if (is_launch) {
             is_launch = false;
-            openActivity(0);
+            openActivity(2);
         }
 
         Session session = ParseFacebookUtils.getSession();

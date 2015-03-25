@@ -1,5 +1,6 @@
 package veme.cario.com.CARmera.fragment.VehicleInfoFragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -34,6 +36,7 @@ public class SpecsFragment extends Fragment {
     private static final String TAG = "SPEC_FRAGMENT";
     private static String JSON_HASH_KEY;
 
+    private FloatingActionButton see_listings_btn;
     /* "engine" */
     private TextView engine_spec_textview;
 
@@ -57,6 +60,23 @@ public class SpecsFragment extends Fragment {
     private List<EquipmentListAdapter.EquipmentItem> equipment_items = new ArrayList<EquipmentListAdapter.EquipmentItem>();
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
+    private OnSeeListingsClickListener onSeeListingsCallback = null;
+
+
+    public interface OnSeeListingsClickListener {
+        public abstract void OnSeeListingsClick (String year, String make, String model);
+    }
+
+    @Override
+    public void onAttach (Activity activity) {
+        super.onAttach(activity);
+        try {
+            onSeeListingsCallback = (OnSeeListingsClickListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + ": "
+                    + " needs to implement the OnReselectClickListener!");
+        }
+    }
 
     private final class VehicleSpecsRequestListener implements RequestListener<VehicleDetails> {
         @Override
@@ -161,6 +181,18 @@ public class SpecsFragment extends Fragment {
         equipment_list_adapter = new EquipmentListAdapter(getActivity());
         equipment_list_adapter.setData(equipment_items);
         equipment_listview.setAdapter(equipment_list_adapter);
+
+        see_listings_btn = (FloatingActionButton) getView().findViewById(R.id.see_listing_v2_btn);
+        see_listings_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSeeListingsCallback.OnSeeListingsClick(
+                        getArguments().getString("vehicle_year"),
+                        getArguments().getString("vehicle_make"),
+                        getArguments().getString("vehicle_model"));
+            }
+        });
+
 
 
         performRequest();

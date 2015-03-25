@@ -332,11 +332,6 @@ public class ListingV2 {
         this.dealerPhone = dealerPhone;
     }
 
-    private int styleId;
-    private int year;
-    private String model;
-    private String make;
-
     public String getMake() {
         return make;
     }
@@ -344,6 +339,12 @@ public class ListingV2 {
     public void setMake(String make) {
         this.make = make;
     }
+
+    private int styleId;
+    private int year;
+    private String model;
+    private String make;
+
 
     private String styleName;
     private int mileage;
@@ -365,36 +366,10 @@ public class ListingV2 {
     private String compressorType;
     private String exteriorGenericColor;
     private String interiorGenericColor;
-
-    private String overall;
-
-    public String getOverall() {
-        return overall;
-    }
-
-    public void setOverall(String overall) {
-        this.overall = overall;
-    }
-
     private String dealerSaleRating;
     private String dealerServiceRating;
 
-    public String getDealerServiceRating() {
-        return dealerServiceRating;
-    }
-
-    public void setDealerServiceRating(String dealerServiceRating) {
-        this.dealerServiceRating = dealerServiceRating;
-    }
-
-    public String getDealerSaleRating() {
-        return dealerSaleRating;
-    }
-
-    public void setDealerSaleRating(String dealerSaleRating) {
-        this.dealerSaleRating = dealerSaleRating;
-    }
-
+    private String overall;
     private float zerosixty;
     private float quartermile;
     private float avg_fuel_cost;
@@ -423,6 +398,42 @@ public class ListingV2 {
     private String dealerName;
     private String dealerAddress;
     private String dealerPhone;
+
+
+    private int model_price_pct;
+    private int overall_price;
+    private int model_mileage_pct;
+    private int overall_mileage;
+    private int overall_horsepower;
+    private int overall_torque;
+    private int overall_safety;
+    private int overall_zerosixty;
+    private int overall_city_mileage;
+    public String getOverall() {
+        return overall;
+    }
+
+    public void setOverall(String overall) {
+        this.overall = overall;
+    }
+
+
+    public String getDealerServiceRating() {
+        return dealerServiceRating;
+    }
+
+    public void setDealerServiceRating(String dealerServiceRating) {
+        this.dealerServiceRating = dealerServiceRating;
+    }
+
+    public String getDealerSaleRating() {
+        return dealerSaleRating;
+    }
+
+    public void setDealerSaleRating(String dealerSaleRating) {
+        this.dealerSaleRating = dealerSaleRating;
+    }
+
 
 
 

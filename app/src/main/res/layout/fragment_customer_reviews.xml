@@ -38,12 +38,4 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/edmunds_branding"/>
 
-    <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
-        style="@style/ProgressBarExtraLarge"
-        android:layout_marginTop="100dp"
-        android:paddingTop="100dp"
-        android:background="#FFD700"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/customer_review_progress"/>
-
 </LinearLayout>

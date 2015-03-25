@@ -48,7 +48,6 @@ public class CustomerReviewFragment extends Fragment {
     private AnimatedExpandableListView customer_review_listview;
     private ReviewListAdapter review_list_adapter;
     private List<ReviewListAdapter.ReviewItem> customer_reviews_items = new ArrayList<ReviewListAdapter.ReviewItem>();
-    private View customer_review_loading_view;
     private int page_num = 0;
     private final String TAG = CustomerReviewFragment.class.getSimpleName();
 
@@ -85,7 +84,6 @@ public class CustomerReviewFragment extends Fragment {
                 review_list_adapter.notifyDataSetChanged();
 
                 customer_review_listview.setVisibility(View.VISIBLE);
-                customer_review_loading_view.setVisibility(View.GONE);
                 customer_review_listview.animate().alpha(1f);
 
                 CustomerReviewFragment.this.getActivity().setProgressBarIndeterminateVisibility(false);
@@ -163,12 +161,6 @@ public class CustomerReviewFragment extends Fragment {
 
         customer_review_listview = (AnimatedExpandableListView) getView().findViewById(R.id.customer_review_listview);
         customer_review_listview.setVisibility(View.GONE);
-        customer_review_loading_view = getView().findViewById(R.id.customer_review_progress);
-
-        customer_review_loading_view.setAlpha(0f);
-        customer_review_loading_view.setVisibility(View.VISIBLE);
-        customer_review_loading_view.animate().alpha(1f);
-
 
         review_list_adapter = new ReviewListAdapter(getActivity());
         review_list_adapter.setData(customer_reviews_items);

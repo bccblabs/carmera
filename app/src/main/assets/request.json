@@ -1,94 +1,397 @@
-{    "aggs": {
-        "years": {
-            "terms": {
-                "field": "year"
-            },
-            "aggs": {
-                "makes": {
-                    "terms": {
-                        "field": "make"
-                    },
-                    "aggs": {
-                        "models": {
-                            "terms": {
-                                "field": "model"
-                            },
-                            "aggs": {
-                                "avg_mileage": {
-                                    "avg": {
-                                        "field": "mileage"
-                                    }
+{
+        "aggs": {
+            "years": {
+                "terms": {
+                    "field": "year"
+                },
+                "aggs": {
+                    "makes": {
+                        "terms": {
+                            "field": "make"
+                        },
+                        "aggs": {
+                            "models": {
+                                "terms": {
+                                    "field": "model"
                                 },
-                                "avg_offerPrice": {
-                                    "avg": {
-                                        "field": "dealerOfferPrice"
-                                    }
-                                },
-                                "model_mileage_percentile": {
-                                    "percentiles": {
-                                        "field": "mileage",
-                                        "percents": [
-                                            1,
-                                            6,
-                                            11,
-                                            16,
-                                            21,
-                                            26,
-                                            31,
-                                            36,
-                                            41,
-                                            46,
-                                            51,
-                                            56,
-                                            61,
-                                            66,
-                                            71,
-                                            76,
-                                            81,
-                                            86,
-                                            91,
-                                            96,
-                                            97,
-                                            98,
-                                            99
-                                        ]
-                                    }
-                                },
-                                "model_price_percentile": {
-                                    "percentiles": {
-                                        "field": "dealerOfferPrice",
-                                        "percents": [
-                                            1,
-                                            6,
-                                            11,
-                                            16,
-                                            21,
-                                            26,
-                                            31,
-                                            36,
-                                            41,
-                                            46,
-                                            51,
-                                            56,
-                                            61,
-                                            66,
-                                            71,
-                                            76,
-                                            81,
-                                            86,
-                                            91,
-                                            96,
-                                            97,
-                                            98,
-                                            99
-                                        ]
+                                "aggs": {
+                                    "avg_mileage": {
+                                        "avg": {
+                                            "field": "mileage"
+                                        }
+                                    },
+                                    "avg_offerPrice": {
+                                        "avg": {
+                                            "field": "dealerOfferPrice"
+                                        }
+                                    },
+                                    "model_mileage_percentile": {
+                                        "percentiles": {
+                                            "field": "mileage",
+                                            "percents": [
+                                                1,
+                                                6,
+                                                11,
+                                                16,
+                                                21,
+                                                26,
+                                                31,
+                                                36,
+                                                41,
+                                                46,
+                                                51,
+                                                56,
+                                                61,
+                                                66,
+                                                71,
+                                                76,
+                                                81,
+                                                86,
+                                                91,
+                                                96,
+                                                97,
+                                                98,
+                                                99
+                                            ]
+                                        }
+                                    },
+                                    "model_price_percentile": {
+                                        "percentiles": {
+                                            "field": "dealerOfferPrice",
+                                            "percents": [
+                                                1,
+                                                6,
+                                                11,
+                                                16,
+                                                21,
+                                                26,
+                                                31,
+                                                36,
+                                                41,
+                                                46,
+                                                51,
+                                                56,
+                                                61,
+                                                66,
+                                                71,
+                                                76,
+                                                81,
+                                                86,
+                                                91,
+                                                96,
+                                                97,
+                                                98,
+                                                99
+                                            ]
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            },
+            "pct_mileage": {
+                "percentiles": {
+                    "field": "mileage",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+
+        "pct_hp": {
+            "percentiles": {
+                "field": "horsepower",
+                "percents": [
+                    1,
+                    6,
+                    11,
+                    16,
+                    21,
+                    26,
+                    31,
+                    36,
+                    41,
+                    46,
+                    51,
+                    56,
+                    61,
+                    66,
+                    71,
+                    76,
+                    81,
+                    86,
+                    91,
+                    96,
+                    97,
+                    98,
+                    99
+                ]
             }
+        },
+                    "pct_price": {
+                "percentiles": {
+                    "field": "dealerOfferPrice",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "pct_torque": {
+                "percentiles": {
+                    "field": "torque",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "pct_zerosixty": {
+                "percentiles": {
+                    "field": "zerosixty",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "pct_overall": {
+                "percentiles": {
+                    "field": "overall",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "pct_combinedMpg": {
+                "percentiles": {
+                    "field": "combinedMpg",
+                    "percents": [
+                        1,
+                        6,
+                        11,
+                        16,
+                        21,
+                        26,
+                        31,
+                        36,
+                        41,
+                        46,
+                        51,
+                        56,
+                        61,
+                        66,
+                        71,
+                        76,
+                        81,
+                        86,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+             "pct_depr_cost": {
+                 "percentiles": {
+                     "field": "avg_depreciation",
+                     "percents": [
+                         1,
+                         6,
+                         11,
+                         16,
+                         21,
+                         26,
+                         31,
+                         36,
+                         41,
+                         46,
+                         51,
+                         56,
+                         61,
+                         66,
+                         71,
+                         76,
+                         81,
+                         86,
+                         91,
+                         96,
+                         97,
+                         98,
+                         99
+                     ]
+                 }
+             },
+             "pct_repair_cost": {
+                 "percentiles": {
+                     "field": "avg_repairs_cost",
+                     "percents": [
+                         1,
+                         6,
+                         11,
+                         16,
+                         21,
+                         26,
+                         31,
+                         36,
+                         41,
+                         46,
+                         51,
+                         56,
+                         61,
+                         66,
+                         71,
+                         76,
+                         81,
+                         86,
+                         91,
+                         96,
+                         97,
+                         98,
+                         99
+                     ]
+                 }
+             },
+             "pct_insurance_cost": {
+                 "percentiles": {
+                     "field": "avg_insurance_cost",
+                     "percents": [
+                         1,
+                         6,
+                         11,
+                         16,
+                         21,
+                         26,
+                         31,
+                         36,
+                         41,
+                         46,
+                         51,
+                         56,
+                         61,
+                         66,
+                         71,
+                         76,
+                         81,
+                         86,
+                         91,
+                         96,
+                         97,
+                         98,
+                         99
+                     ]
+                 }
+             }
         }
-    }
+
 }

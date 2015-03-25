@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.appyvet.rangebar.RangeBar;
 import com.gc.materialdesign.views.ButtonRectangle;
@@ -55,14 +56,18 @@ public class ListingsSearchInputFragment extends Fragment {
     private Spinner vehicle_state_spnr;
 
     private MultiSelectSpinner make_spnr, model_spnr, transmission_spnr, drivetrain_spnr, ext_spnr,
-            int_spnr, compressor_spnr;
+            int_spnr, compressor_spnr, vehicle_type_spnr;
 
-    private RangeBar hp_rb, torque_rb, combined_mpg_range_bar, transmission_speed_range_bar,
-            year_range_bar, mileage_range_bar, radius_range_bar, repair_cost_range_bar,
-            maintenance_cost_range_bar, insurance_cost_range_bar,depreciation_cost_range_bar, fuel_cost_range_bar;
-
+    private RangeBar hp_rb, torque_rb, combined_mpg_range_bar,
+            year_range_bar, mileage_range_bar, radius_range_bar, repair_cost_range_bar, zero_sixty_bar, quartermile_bar, cylinder_bar,
+            maintenance_cost_range_bar, insurance_cost_range_bar,depreciation_cost_range_bar, fuel_cost_range_bar, price_range_bar;
 
     private ButtonRectangle start_search_lising_req_btn;
+
+    private TextView price_range_tv, radius_range_tv, year_range_tv, mileage_range_tv, combined_mpg_tv, fuel_cost_tv,
+            repair_cost_tv, maintenance_cost_tv, insurance_cost_tv, depr_cost_tv, horsepower_tv, torque_tv, cylinder_tv, zero_sixty_tv,
+            quarter_mile_tv;
+
     private JestClient jestClient;
 
     public ListingsSearchInputFragment () {}
@@ -95,6 +100,23 @@ public class ListingsSearchInputFragment extends Fragment {
                 R.array.car_state_array,
                 R.layout.spinner_item);
         state_adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+        price_range_tv = (TextView) v.findViewById(R.id.price_range_tv);
+        radius_range_tv = (TextView) v.findViewById(R.id.radius_range_tv);
+        year_range_tv = (TextView) v.findViewById(R.id.year_range_tv);
+        mileage_range_tv = (TextView) v.findViewById(R.id.mileage_range_tv);
+        combined_mpg_tv = (TextView) v.findViewById(R.id.combined_mpg_tv);
+        fuel_cost_tv = (TextView) v.findViewById(R.id.fuel_cost_tv);
+        repair_cost_tv = (TextView) v.findViewById(R.id.repair_cost_tv);
+        maintenance_cost_tv = (TextView) v.findViewById(R.id.maintenance_cost_tv);
+        insurance_cost_tv = (TextView) v.findViewById(R.id.insurance_cost_tv);
+        depr_cost_tv = (TextView) v.findViewById(R.id.depr_cost_tv);
+        horsepower_tv = (TextView) v.findViewById(R.id.horsepower_tv);
+        torque_tv = (TextView) v.findViewById(R.id.torque_tv);
+        cylinder_tv = (TextView) v.findViewById(R.id.cylinder_tv);
+        zero_sixty_tv = (TextView) v.findViewById(R.id.zero_sixty_tv);
+
+
         vehicle_state_spnr = (Spinner) v.findViewById(R.id.car_state_spinner);
         vehicle_state_spnr.setAdapter(state_adapter);
 
@@ -117,6 +139,9 @@ public class ListingsSearchInputFragment extends Fragment {
 
         int_spnr = (MultiSelectSpinner) v.findViewById(R.id.int_color_spinner);
         int_spnr.setItems(getResources().getStringArray(R.array.color_array));
+
+        vehicle_type_spnr = (MultiSelectSpinner) v.findViewById(R.id.body_type_spnr);
+        vehicle_type_spnr.setItems(getResources().getStringArray(R.array.body_style_array));
 
         start_search_lising_req_btn = (ButtonRectangle) v.findViewById(R.id.start_search_lising_req_btn);
         start_search_lising_req_btn.setOnClickListener(new View.OnClickListener() {
@@ -151,17 +176,123 @@ public class ListingsSearchInputFragment extends Fragment {
 
         /* range bars */
         hp_rb = (RangeBar) v.findViewById(R.id.horsepower_bar);
+        hp_rb.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                horsepower_tv.setText("From " + s + " to " + s2 + " hp");
+            }
+        });
         torque_rb = (RangeBar) v.findViewById(R.id.torque_bar);
+        torque_rb.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                torque_tv.setText("From " + s + " to " + s2 + " lb/ft");
+            }
+        });
         combined_mpg_range_bar = (RangeBar) v.findViewById(R.id.combined_mpg_range_bar);
-        transmission_speed_range_bar = (RangeBar) v.findViewById(R.id.transmission_speed_range_bar);
+        combined_mpg_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                combined_mpg_tv.setText("From " + s + " to " + s2 + " MPG");
+            }
+        });
+
         year_range_bar = (RangeBar) v.findViewById(R.id.year_range_bar);
+        year_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                year_range_tv.setText("From " + s + " to " + s2);
+            }
+        });
+
         mileage_range_bar = (RangeBar) v.findViewById(R.id.mileage_range_bar);
+        mileage_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                mileage_range_tv.setText("From " + s + " to " + s2 + " miles");
+            }
+        });
+
         radius_range_bar = (RangeBar) v.findViewById(R.id.radius_range_bar);
+        radius_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                radius_range_tv.setText("From " + s + " to " + s2 + " miles");
+            }
+        });
+
         repair_cost_range_bar = (RangeBar) v.findViewById(R.id.repair_cost_range_bar);
+        repair_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                repair_cost_tv.setText("From $" + s + " to $" + s2 + " per year");
+            }
+        });
+
         maintenance_cost_range_bar = (RangeBar) v.findViewById(R.id.maintenance_cost_range_bar);
+        maintenance_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                maintenance_cost_tv.setText("From $" + s + " to $" + s2 + " per year");
+            }
+        });
+
         insurance_cost_range_bar = (RangeBar) v.findViewById(R.id.insurance_cost_range_bar);
+        insurance_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                insurance_cost_tv.setText("From $" + s + " to $" + s2 + " per year");
+            }
+        });
+
         depreciation_cost_range_bar = (RangeBar) v.findViewById(R.id.depreciation_cost_range_bar);
+        depreciation_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                depr_cost_tv.setText("From $" + s + " to $" + s2 + " per year");
+            }
+        });
+
         fuel_cost_range_bar = (RangeBar) v.findViewById(R.id.fuel_cost_range_bar);
+        fuel_cost_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                fuel_cost_tv.setText("From $" + s + " to $" + s2 + " per year");
+            }
+        });
+
+        price_range_bar = (RangeBar) v.findViewById(R.id.price_bar);
+        price_range_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                price_range_tv.setText("From $" + s + " to $" + s2);
+            }
+        });
+
+        zero_sixty_bar = (RangeBar) v.findViewById(R.id.zero_sixty_range_bar);
+        zero_sixty_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                zero_sixty_tv.setText("From " + s + " to " + s2 + "s");
+            }
+        });
+
+        quartermile_bar = (RangeBar) v.findViewById(R.id.quarter_mile_range_bar);
+        quartermile_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                quarter_mile_tv.setText("From " + s + " to " + s2 + "s");
+            }
+        });
+
+        cylinder_bar = (RangeBar) v.findViewById(R.id.cylinder_bar);
+        cylinder_bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int i, int i2, String s, String s2) {
+                cylinder_tv.setText("From " + s + " to " + s2 + " cylinders");
+            }
+        });
+
         Bundle args = getArguments();
         if (args != null)
             query_string = getArguments().getString("query_string");
@@ -171,6 +302,10 @@ public class ListingsSearchInputFragment extends Fragment {
     private void save_query () {
         BoolFilterBuilder boolFilterBuilder = FilterBuilders.boolFilter();
         boolFilterBuilder
+                .must(FilterBuilders.rangeFilter("dealerOfferPrice")
+                                .from(price_range_bar.getLeftIndex() * price_range_bar.getTickInterval() + price_range_bar.getTickStart())
+                                .to(price_range_bar.getRightIndex() * price_range_bar.getTickInterval() + price_range_bar.getTickStart())
+                )
                 .must(FilterBuilders.rangeFilter("avg_fuel_cost")
                                 .from(fuel_cost_range_bar.getLeftIndex() * fuel_cost_range_bar.getTickInterval() + fuel_cost_range_bar.getTickStart())
                                 .to(fuel_cost_range_bar.getRightIndex() * fuel_cost_range_bar.getTickInterval() + fuel_cost_range_bar.getTickStart())
@@ -187,10 +322,6 @@ public class ListingsSearchInputFragment extends Fragment {
                                 .from(combined_mpg_range_bar.getLeftIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
                                 .to(combined_mpg_range_bar.getRightIndex() * combined_mpg_range_bar.getTickInterval() + combined_mpg_range_bar.getTickStart())
                 )
-//                .must(FilterBuilders.rangeFilter("numberOfSpeeds")
-//                                .from(transmission_speed_range_bar.getLeftIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
-//                                .to(transmission_speed_range_bar.getRightIndex() * transmission_speed_range_bar.getTickInterval() + transmission_speed_range_bar.getTickStart())
-//                )
                 .must(FilterBuilders.rangeFilter("year")
                                 .from(year_range_bar.getLeftIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
                                 .to(year_range_bar.getRightIndex() * year_range_bar.getTickInterval() + year_range_bar.getTickStart())
@@ -214,8 +345,10 @@ public class ListingsSearchInputFragment extends Fragment {
                 .must(FilterBuilders.rangeFilter("avg_depreciation")
                                 .from(depreciation_cost_range_bar.getLeftIndex() * depreciation_cost_range_bar.getTickInterval() + depreciation_cost_range_bar.getTickStart())
                                 .to(depreciation_cost_range_bar.getRightIndex() * depreciation_cost_range_bar.getTickInterval() + depreciation_cost_range_bar.getTickStart())
-                )
-                .cache(true);
+//                ).should(FilterBuilders.termsFilter("make", make_spnr.getSelectedStrings())
+//                ).should(FilterBuilders.termsFilter("bodyType", vehicle_type_spnr.getSelectedStrings())
+//                ).should(FilterBuilders.termsFilter("exteriorGenericColor", ext_spnr.getSelectedStrings()))
+                ).cache(true);
 
 
         try {

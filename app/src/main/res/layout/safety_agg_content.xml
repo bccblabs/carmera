@@ -1,6 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_gravity="start"
+    android:layout_margin="3dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/engine_table">
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Engine Horsepower"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/engine_horsepower"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Engine Torque"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/engine_torque"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="0-60 MPH Time"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/zero_sixty"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Quarter Mile Time"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/quarter_mile"/>
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

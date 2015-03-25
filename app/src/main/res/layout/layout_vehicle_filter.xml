@@ -37,50 +37,60 @@
                 android:id="@+id/filter_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorNormal="@color/light_spring_green"
                 fab:fab_size="mini"
                 fab:fab_title="Filter Search"
-                fab:fab_icon="@drawable/ic_action_search"
-                fab:fab_colorPressed="@color/pink_pressed"/>
+                fab:fab_icon="@drawable/ic_action_filter"
+                fab:fab_colorPressed="@color/light_spring_green"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/filter_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/dark_gray"
+                fab:fab_size="mini"
+                fab:fab_title="Filter By Model"
+                fab:fab_icon="@drawable/ic_action_filter"
+                fab:fab_colorPressed="@color/dark_gray"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mpg_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/dark_green"
+                fab:fab_size="mini"
+                fab:fab_title="Sort by Combined MPG"
+                fab:fab_icon="@drawable/ic_action_sort_1"
+                fab:fab_colorPressed="@color/dark_green"/>
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/zero_sixty_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorNormal="@color/gold"
                 fab:fab_size="mini"
                 fab:fab_title="Sort By Zero to Sixty Time"
-                fab:fab_icon="@drawable/ic_action_search"
-                fab:fab_colorPressed="@color/pink_pressed"/>
+                fab:fab_icon="@drawable/ic_action_sort_1"
+                fab:fab_colorPressed="@color/gold"/>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/hp_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorNormal="@color/blue_semi_transparent"
                 fab:fab_size="mini"
                 fab:fab_title="Sort by Horsepower"
-                fab:fab_icon="@drawable/ic_action_car_white"
-                fab:fab_colorPressed="@color/pink_pressed"/>
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/torque_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_size="mini"
-                fab:fab_title="Sort by Torque"
-                fab:fab_icon="@drawable/ic_action_save"
-                fab:fab_colorPressed="@color/pink_pressed"/>
+                fab:fab_icon="@drawable/ic_action_sort_1"
+                fab:fab_colorPressed="@color/blue_semi_transparent"/>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/price_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorNormal="@color/white"
                 fab:fab_size="mini"
                 fab:fab_title="Sort by Price"
-                fab:fab_icon="@drawable/ic_action_edit"
-                fab:fab_colorPressed="@color/pink_pressed"/>
+                fab:fab_icon="@drawable/ic_action_sort_1"
+                fab:fab_colorPressed="@color/white"/>
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/mileage_sort"
                 android:layout_width="wrap_content"
@@ -88,17 +98,9 @@
                 fab:fab_colorNormal="@color/pink"
                 fab:fab_size="mini"
                 fab:fab_title="Sort by Mileage"
-                fab:fab_icon="@drawable/ic_action_filter"
+                fab:fab_icon="@drawable/ic_action_sort_1"
                 fab:fab_colorPressed="@color/pink_pressed"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/mpg_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_size="mini"
-                fab:fab_title="Sort by Combined MPG"
-                fab:fab_icon="@drawable/ic_action_filter"
-                fab:fab_colorPressed="@color/pink_pressed"/>
+
             <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
                 <!--android:id="@+id/safety_sort"-->
                 <!--android:layout_width="wrap_content"-->

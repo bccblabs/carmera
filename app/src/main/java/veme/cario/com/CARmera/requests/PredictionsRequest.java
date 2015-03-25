@@ -8,11 +8,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-
-import org.springframework.http.MediaType;
-
 import java.io.IOException;
-
 import veme.cario.com.CARmera.model.APIModels.Predictions;
 
 public class PredictionsRequest extends OkHttpSpiceRequest<Predictions> {
@@ -39,12 +35,12 @@ public class PredictionsRequest extends OkHttpSpiceRequest<Predictions> {
     public Predictions loadDataFromNetwork () throws Exception {
 
       try {
-          String req_json = String.format ( "{\"classifier_id\": 1045, \"image_url\": \"%s\"}", image_url) ;
+          String req_json = String.format ( "{\"classifier_id\": 17332, \"image_url\": \"%s\"}", image_url) ;
           Log.i (TAG, req_json);
           RequestBody body = RequestBody.create(JSON, req_json);
           Request request = new Request.Builder()
                   .url("https://www.metamind.io/vision/classify")
-                  .header("Authentication", "Basic u7ZfYqmYJ5LuwtaNEWTogeFv6mTcDDQWT5xf86mP4pigerPAJV")
+                  .header("Authentication", "Basic XWeYJ4qJEzLVMAPcnPoS0JDh4jJemKSJMtYalryzngfrl5Lpeb")
                   .post(body)
                   .build();
           Response response = client.newCall(request).execute();

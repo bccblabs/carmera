@@ -1,6 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_gravity="start"
+    android:layout_margin="3dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/engine_table">
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Average Comfort Rating"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/comfort_rating_agg"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Average Fun-to-Drive Rating"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/fun_to_drive_agg"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Average Build Quality Rating"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/build_quality_agg"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Average Reliability Rating"/>
+            <TextView
+                style="@style/TableRowEntry"
+                android:id="@+id/reliability_agg"/>
+        </LinearLayout>
+    </TableRow>
+</TableLayout>
