@@ -94,9 +94,6 @@ public class ListingsAdapterV2 extends ArrayAdapter <ListingAgg>{
             holder.listing_avg_fuel = (TextView) hover.findViewById(R.id.listing_avg_fuel);
             holder.listing_avg_insurance = (TextView) hover.findViewById(R.id.listing_avg_insurance);
             holder.listing_avg_depreciation = (TextView) hover.findViewById(R.id.listing_avg_depreciation);
-//            holder.listing_hwy_mpg = (TextView) hover.findViewById(R.id.listing_hover_hwy_mpg);
-//            holder.listing_city_mpg = (TextView) hover.findViewById(R.id.listing_hover_city_mpg);
-//            holder.listing_combined_mpg = (TextView) hover.findViewById(R.id.listing_hover_combined_mpg);
 
             view.setTag(holder);
 

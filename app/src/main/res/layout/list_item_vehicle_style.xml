@@ -16,12 +16,14 @@
             style="@style/TableEntry"
             android:layout_width="match_parent"
             android:id="@+id/vehicle_style_name"
+            android:textStyle="bold"
+            android:textColor="@color/Ivory"
             android:text="Ex-L "/>
         <TextView
             style="@style/TableEntry"
             android:layout_width="match_parent"
             android:text="Starting from $26,000"
-            android:textColor="@color/medius_orchid"
+            android:textColor="@color/sky_blue"
             android:id="@+id/starting_price"/>
     </LinearLayout>
 </LinearLayout>

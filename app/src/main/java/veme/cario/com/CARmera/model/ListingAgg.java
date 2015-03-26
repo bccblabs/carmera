@@ -90,13 +90,13 @@ public class ListingAgg {
     private int combinedMpg;
     private int cityMpg;
     private int hwyMpg;
+
     private int horsepower;
     private int torque;
     private int cylinder;
 
     private String engineType;
     private String compressorType;
-
 
     private String overall;
     public List<String> getFeatures() {

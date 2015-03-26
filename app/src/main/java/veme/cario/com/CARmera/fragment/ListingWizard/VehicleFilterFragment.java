@@ -490,8 +490,8 @@ public class VehicleFilterFragment extends Fragment
         List <Float> mpg_pcts, horsepower_pcts, torque_pcts,
                 mileage_pcts, safety_pcts, price_pcts, zerosixty_pcts, insurance_pcts, repair_pcts, depr_pcts;
 
-        final Map<String, List<Float>> model_price_map = new HashMap<String, List<Float>>();
-        final Map<String, List<Float>> model_mileage_map = new HashMap<String, List<Float>>();
+        private Map<Integer, List<Float>> model_price_map = new HashMap<Integer, List<Float>>();
+        private Map<Integer, List<Float>> model_mileage_map = new HashMap<Integer, List<Float>>();
         private float getPct (List<Float> pct_list, float value) {
             float[] arr = {1,6,11,16,21,26,31,36,41,46,51,56,61,66,71,76,81,86,91,96,97,98,99};
             for (int i = 0; i < pct_list.size(); i++) {
@@ -509,7 +509,7 @@ public class VehicleFilterFragment extends Fragment
                 JsonObject res_node = new JsonParser().parse(indexName[0]).getAsJsonObject();
                 JsonArray hits = res_node.getAsJsonObject("hits").getAsJsonArray("hits");
                 JsonObject aggs = res_node.getAsJsonObject("aggregations");
-                JsonArray mk_yr_md_agg = aggs.getAsJsonObject("years").getAsJsonArray("buckets");
+                JsonArray style_id_agg = aggs.getAsJsonObject("styleIds").getAsJsonArray("buckets");
 
 
 
@@ -581,51 +581,29 @@ public class VehicleFilterFragment extends Fragment
                     insurance_pcts.add(entry.getValue());
                 }
 
-//
-//                for (JsonElement year_agg : mk_yr_md_agg) {
-//                    final JsonObject year_elem = year_agg.getAsJsonObject();
-//                    final String year_key = year_elem.get("key").getAsString();  /* 2015 */
-//                    final JsonArray makes = year_elem.getAsJsonObject("makes").getAsJsonArray("buckets");     /* makes */
-//
-//
-//
-//                    for (JsonElement make_agg : makes) {
-//                        final JsonObject make_elem = make_agg.getAsJsonObject();
-//                        final String make_key = make_elem.get("key").getAsString();
-//                        final JsonArray models = make_elem.getAsJsonObject("models").getAsJsonArray("buckets");
-//                        for (JsonElement model_agg : models) {
-//                            final JsonObject model_elem = model_agg.getAsJsonObject();
-//
-//                            final String model_key = model_elem.get("key").getAsString();
-//                            final String avg_mileage = model_elem.getAsJsonObject("avg_mileage").get("value").toString();
-//                            final String avg_offerPrice = model_elem.getAsJsonObject ("avg_offerPrice").get("value").toString();
-//                            final List<Float> mileage_value = new ArrayList<Float>(),
-//                                              price_value = new ArrayList<Float>();
-//
-////                            Log.i (TAG, "year: "  + year_key + " make: " + make_key + " model: " + model_key + " mile: " + avg_mileage + " offer: "  + avg_offerPrice);
-//
-//                            final JsonObject model_price_percentile_values = model_elem.getAsJsonObject("model_price_percentile").getAsJsonObject("values");
-//                            final JsonObject model_mileage_percentile = model_elem.getAsJsonObject("model_mileage_percentile").getAsJsonObject("values");
-//                            Map<String, Float> price_percentile_map = new Gson().fromJson(model_price_percentile_values, typeOfHashMap);
-//                            for (Map.Entry<String, Float> entry : price_percentile_map.entrySet()) {
-//                                price_value.add(entry.getValue());
-//                            }
-//
-//                            Map<String, Float> mileage_percentile_map = new Gson().fromJson(model_mileage_percentile, typeOfHashMap);
-//                            for (Map.Entry<String, Float> entry : mileage_percentile_map.entrySet()) {
-//                                mileage_value.add (entry.getValue());
-//                            }
-//                            model_price_map.put (year_key+model_key, price_value);
-//                            model_mileage_map.put (year_key+model_key, mileage_value);
-//                        }
-//                    }
-//
-//                }
 
-//                Log.i (TAG, "mpg pcts => " + mpg_pcts.toString());
+                for (JsonElement style_id_elem : style_id_agg) {
+                    final JsonObject style_id_obj = style_id_elem.getAsJsonObject();
+                    int style_id = style_id_obj.get("key").getAsInt();  /* 20151231 */
+                    List<Float> mileage_value = new ArrayList<Float>(),
+                                      price_value = new ArrayList<Float>();
+                    final JsonObject model_price_percentile_values = style_id_obj.getAsJsonObject("model_price_percentile").getAsJsonObject("values");
+                    final JsonObject model_mileage_percentile = style_id_obj.getAsJsonObject("model_mileage_percentile").getAsJsonObject("values");
+
+                    Map<String, Float> price_percentile_map = new Gson().fromJson(model_price_percentile_values, typeOfHashMap);
+                    for (Map.Entry<String, Float> entry : price_percentile_map.entrySet()) {
+                        price_value.add(entry.getValue());
+                    }
+
+                    Map<String, Float> mileage_percentile_map = new Gson().fromJson(model_mileage_percentile, typeOfHashMap);
+                    for (Map.Entry<String, Float> entry : mileage_percentile_map.entrySet()) {
+                        mileage_value.add (entry.getValue());
+                    }
+                    model_price_map.put (style_id, price_value);
+                    model_mileage_map.put (style_id, mileage_value);
+                }
                 Gson gson = new Gson();
                 final Hit[] hit_list = gson.fromJson (hits, Hit[].class);
-//                Log.i (TAG, "Size of listings: " + hit_list.length);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -693,15 +671,18 @@ public class VehicleFilterFragment extends Fragment
                             listingAgg.setQuartermile(listingV2.getQuartermile());
 
 
-//                            listingAgg.setModel_price_pct(getPct(model_price_map.get(listingV2.getYear()+listingV2.getModel()), listingV2.getDealerOfferPrice()));
                             listingAgg.setOverall_price(getPct (price_pcts, listingV2.getDealerOfferPrice()));
-//                            listingAgg.setModel_mileage_pct(getPct(model_mileage_map.get(listingV2.getYear()+listingV2.getModel()), listingV2.getMileage()));
                             listingAgg.setOverall_mileage(getPct(mileage_pcts, listingV2.getDealerOfferPrice()));
                             listingAgg.setOverall_horsepower(getPct(horsepower_pcts, (float) listingV2.getHorsepower()));
                             listingAgg.setOverall_torque(getPct(torque_pcts, (float) listingV2.getTorque()));
                             listingAgg.setOverall_combined_mpg(getPct(mpg_pcts, (float) listingV2.getCombinedMpg()));
 
-                            listingAgg.setOverall_depr(getPct(depr_pcts, (float) listingV2.getAvg_depreciation()));
+                            if (model_price_map.containsKey(listingV2.getStyleId()))
+                                listingAgg.setModel_price_pct(getPct(model_price_map.get(listingV2.getStyleId()), listingV2.getDealerOfferPrice()));
+                            if (model_mileage_map.containsKey(listingV2.getStyleId()))
+                                listingAgg.setModel_mileage_pct(getPct(model_mileage_map.get(listingV2.getStyleId()), listingV2.getMileage()));
+
+                            listingAgg.setOverall_depr(getPct(depr_pcts, listingV2.getAvg_depreciation()));
                             listingAgg.setOverall_repair(getPct(repair_pcts, (float) listingV2.getAvg_repairs_cost()));
                             listingAgg.setOverall_insurance(getPct(insurance_pcts, (float) listingV2.getAvg_insurance_cost()));
 

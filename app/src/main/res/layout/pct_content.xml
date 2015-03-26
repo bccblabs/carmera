@@ -2,7 +2,7 @@
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_gravity="start"
     android:layout_margin="3dp"
     android:layout_height="wrap_content"
@@ -34,10 +34,47 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Overall Price Percentile"/>
+                android:text="Price Percentile For"/>
             <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/price_pct_overall_tv"/>
+                style="@style/AggRowTitle"
+                android:id="@+id/style_price"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/price_pct_md"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Mileage Percentile For"/>
+            <TextView
+                style="@style/AggRowTitle"
+                android:id="@+id/style_mileage"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/mileage_pct_md"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
+        </LinearLayout>
+    </TableRow>
+    <TableRow>
+        <LinearLayout
+            style="@style/TableLayout">
+            <TextView
+                style="@style/AggRowTitle"
+                android:text="Overall Price Percentile"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/price_pct_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -46,9 +83,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Mileage Percentile"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/mileage_pct_overall_tv"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/mileage_pct_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -57,9 +97,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Combined MPG Percentile"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/combined_mpg_pct_tv"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/combined_mpg_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -68,9 +111,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Horsepower Percentile"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/hp_pct_view"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/hp_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -79,9 +125,12 @@
             <TextView
                 style="@style/AggRowTitle"
             android:text="Overall Torque Percentile"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/torque_pct_view"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/torque_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -89,10 +138,13 @@
             style="@style/TableLayout">
             <TextView
                 style="@style/AggRowTitle"
-                android:text="Overall 0-60 MPH Time"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/zero_sixty_pct_view"/>
+                android:text="Overall Fastest 0-60 MPH Time"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/zero_sixty_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -101,9 +153,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Insurance Cost"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/insurance_pct_view"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/insurance_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -112,9 +167,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Depreciation Cost"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/depr_cost_pct_view"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/depr_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow>
@@ -123,9 +181,12 @@
             <TextView
                 style="@style/AggRowTitle"
                 android:text="Overall Repair Cost"/>
-            <TextView
-                style="@style/TableRowEntry"
-                android:id="@+id/repair_cost_pct_view"/>
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/repair_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </TableRow>
 

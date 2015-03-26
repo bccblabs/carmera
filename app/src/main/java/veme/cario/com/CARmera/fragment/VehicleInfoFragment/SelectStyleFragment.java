@@ -189,7 +189,6 @@ public class SelectStyleFragment extends Fragment {
         VehicleStylesRequest vehicleStylesRequest = new VehicleStylesRequest(year, make, model);
         spiceManager.execute(vehicleStylesRequest, JSON_HASH_KEY, DurationInMillis.ALWAYS_RETURNED,
                                 new StyleListRequestListener());
-
     }
 
     public class BitmapLoaderTask extends AsyncTask<Void, Void, Bitmap> {
