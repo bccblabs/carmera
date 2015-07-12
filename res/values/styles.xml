@@ -1,0 +1,29 @@
+<resources>
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#8bc34a</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
+    <style name="ViewPagerLogoStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/materialviewpager_logoHeight</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="ViewPagerStyle">
+        <!--So that the banner "history" stays there: -->
+            <!--hideToolbarAndTitle=false-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="viewpager_pagerTitleStrip">@layout/material_view_pager_pagertitlestrip_newstand</item>
+        <item name="viewpager_logoMarginTop">100dp</item>
+        <item name="viewpager_color">@android:color/black</item>
+        <item name="viewpager_headerHeight">200dp</item>
+        <item name="viewpager_headerAlpha">1.0</item>
+        <item name="viewpager_hideLogoWithFade">false</item>
+        <item name="viewpager_hideToolbarAndTitle">false</item>
+        <item name="viewpager_enableToolbarElevation">true</item>
+        <item name="viewpager_parallaxHeaderFactor">1.0</item>
+        <item name="viewpager_headerAdditionalHeight">20dp</item>
+    </style>
+</resources>

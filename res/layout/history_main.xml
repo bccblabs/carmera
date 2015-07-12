@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.github.florent37.materialviewpager.MaterialViewPager
+        style="@style/ViewPagerStyle"
+        android:id="@+id/hist_vp"
+        app:viewpager_logo="@layout/hist_logo"/>
+</LinearLayout>
