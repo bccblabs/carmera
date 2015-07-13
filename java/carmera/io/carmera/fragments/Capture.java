@@ -177,6 +177,12 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     void takeSimplePicture () {
         PictureTransaction xact = new PictureTransaction(getHost());
         takePicture(xact);
@@ -196,5 +202,6 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {}
+
 
 }

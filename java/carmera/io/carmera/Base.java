@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carmera.io.carmera.fragments.Capture;
-import carmera.io.carmera.fragments.VehiclesDisplay;
+import carmera.io.carmera.fragments.RecognitionResultsDisplay;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import yalantis.com.sidemenu.interfaces.Resourceble;
@@ -36,7 +36,7 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     private List<SlideMenuItem> list = new ArrayList<>();
     private ContentFragment contentFragment;
     private Capture captureFragment;
-    private VehiclesDisplay recognitionResultsFragment;
+    private RecognitionResultsDisplay recognitionResultsFragment;
     private ViewAnimator viewAnimator;
     private int res = R.drawable.content_music;
     private LinearLayout linearLayout;
@@ -47,7 +47,7 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     public void OnCameraResult (byte[] image_data) {
         Bundle args = new Bundle();
         args.putByteArray("image_data", image_data);
-        recognitionResultsFragment = new VehiclesDisplay();
+        recognitionResultsFragment = new RecognitionResultsDisplay();
         recognitionResultsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
                                                                 recognitionResultsFragment).commit();

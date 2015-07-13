@@ -88,4 +88,10 @@ public class PhotoUploadFragment extends SupportBlurDialogFragment {
                 .into(photo);
         return builder.create();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

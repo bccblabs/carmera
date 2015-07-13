@@ -25,7 +25,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import carmera.io.carmera.fragments.VehiclesDisplay;
+import carmera.io.carmera.fragments.RecognitionResultsDisplay;
 
 /**
  * Created by bski on 7/7/15.
@@ -43,7 +43,7 @@ public class VehiclesDisplayContainer extends ActionBarActivity implements OnMen
         fragmentManager = getSupportFragmentManager();
         initToolbar();
         initMenuFragment();
-        addFragment(new VehiclesDisplay(), true, R.id.container);
+        addFragment( new RecognitionResultsDisplay(), true, R.id.fragment_container);
     }
 
 
