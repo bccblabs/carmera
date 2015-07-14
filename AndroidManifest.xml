@@ -56,10 +56,14 @@
             android:label="@string/app_name">
         </activity>
 
+        <activity android:name=".TrimViewer"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name">
+        </activity>
+
 
         <service
             android:name=".utils.InMemorySpiceService"
             android:exported="false"/>
     </application>
-
 </manifest>
