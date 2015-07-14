@@ -15,6 +15,6 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"
-            />
+        />
     </LinearLayout>
 </LinearLayout>

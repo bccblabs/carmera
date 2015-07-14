@@ -255,6 +255,7 @@ public class TrimData {
         this.reviews = reviews;
     }
 
+
     @JsonProperty
     public List<DataEntry> interior_dim;
     @JsonProperty
@@ -279,10 +280,31 @@ public class TrimData {
     public int min_tq;
     @JsonProperty
     public int max_tq;
+
+    public String getMin_hwy_mpg() {
+        return min_hwy_mpg;
+    }
+
+    public void setMin_hwy_mpg(String min_hwy_mpg) {
+        this.min_hwy_mpg = min_hwy_mpg;
+    }
+
+    public String getMax_hwy_mpg() {
+        return max_hwy_mpg;
+    }
+
+    public void setMax_hwy_mpg(String max_hwy_mpg) {
+        this.max_hwy_mpg = max_hwy_mpg;
+    }
+
     @JsonProperty
     public String min_city_mpg;
     @JsonProperty
     public String max_city_mpg;
+    @JsonProperty
+    public String min_hwy_mpg;
+    @JsonProperty
+    public String max_hwy_mpg;
     @JsonProperty
     public int min_msrp;
     @JsonProperty
