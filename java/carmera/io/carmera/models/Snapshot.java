@@ -2,6 +2,7 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
@@ -9,43 +10,50 @@ import java.util.List;
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Snapshot {
     @JsonProperty
-    private String make;
+    public String make;
     @JsonProperty
-    private String model;
+    public String model;
     @JsonProperty
-    private String gen_name;
+    public String gen_name;
     @JsonProperty
-    private List<String> drivenWheelsList;
+    public List<String> drivenWheelsList;
     @JsonProperty
-    private int hp_min;
+    public int hp_min;
     @JsonProperty
-    private int hp_max;
+    public int hp_max;
     @JsonProperty
-    private int tq_min;
+    public int tq_min;
     @JsonProperty
-    private int tq_max;
+    public int tq_max;
     @JsonProperty
-    private String city_mpg_min;
+    public String city_mpg_min;
     @JsonProperty
-    private String city_mpg_max;
+    public String city_mpg_max;
     @JsonProperty
-    private String hwy_mpg_min;
+    public String hwy_mpg_min;
     @JsonProperty
-    private String hwy_mpg_max;
+    public String hwy_mpg_max;
     @JsonProperty
-    private int msrp_min;
+    public int msrp_min;
     @JsonProperty
-    private int msrp_max;
+    public int msrp_max;
     @JsonProperty
-    private int used_tmv_min;
+    public int used_tmv_min;
     @JsonProperty
-    private int used_tmv_max;
+    public int used_tmv_max;
     @JsonProperty
-    private String image_holder;
-    @JsonProperty
-    private int count;
+    public String image_holder;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public String getMake() {
         return make;
@@ -127,20 +135,20 @@ public class Snapshot {
         this.city_mpg_max = city_mpg_max;
     }
 
-    public String getHwy_mpg_max() {
-        return hwy_mpg_max;
-    }
-
-    public void setHwy_mpg_max(String hwy_mpg_max) {
-        this.hwy_mpg_max = hwy_mpg_max;
-    }
-
     public String getHwy_mpg_min() {
         return hwy_mpg_min;
     }
 
     public void setHwy_mpg_min(String hwy_mpg_min) {
         this.hwy_mpg_min = hwy_mpg_min;
+    }
+
+    public String getHwy_mpg_max() {
+        return hwy_mpg_max;
+    }
+
+    public void setHwy_mpg_max(String hwy_mpg_max) {
+        this.hwy_mpg_max = hwy_mpg_max;
     }
 
     public int getMsrp_min() {
@@ -183,11 +191,9 @@ public class Snapshot {
         this.image_holder = image_holder;
     }
 
-    public int getCount() {
-        return count;
-    }
+    @JsonProperty
+    public int count;
 
-    public void setCount(int count) {
-        this.count = count;
+    public Snapshot() {
     }
 }

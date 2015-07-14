@@ -5,69 +5,23 @@ package carmera.io.carmera.models;
  */
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class TrimData {
     @JsonProperty
-    private List<String> years;
+    public List<String> years;
     @JsonProperty
-    private List<DataEntry> cargo_dim;
+    public List<DataEntry> cargo_dim;
     @JsonProperty
-    private List<DataEntry> airbags;
+    public List<DataEntry> airbags;
     @JsonProperty
-    private String turning_diameter;
+    public String turning_diameter;
     @JsonProperty
-    private String fuel_capacity;
-    @JsonProperty
-    private List<DataEntry> interior_dim;
-    @JsonProperty
-    private List<Engine> enginesList;
-    @JsonProperty
-    private List<Transmission> transmissionsList;
-    @JsonProperty
-    private List<String> drivenWheelsList;
-    @JsonProperty
-    private List<Mpg> mpg;
-    @JsonProperty
-    private String make;
-    @JsonProperty
-    private String model;
-    @JsonProperty
-    private String gen_name;
-    @JsonProperty
-    private int min_hp;
-    @JsonProperty
-    private int max_hp;
-    @JsonProperty
-    private int min_tq;
-    @JsonProperty
-    private int max_tq;
-    @JsonProperty
-    private String min_city_mpg;
-    @JsonProperty
-    private String max_city_mpg;
-    @JsonProperty
-    private int min_msrp;
-    @JsonProperty
-    private int max_msrp;
-    @JsonProperty
-    private int min_used_tmv;
-    @JsonProperty
-    private int max_used_tmv;
-    @JsonProperty
-    private String trim;
-    @JsonProperty
-    private AverageTco avgTco;
-    @JsonProperty
-    private AveragePrice avgPrice;
-    @JsonProperty
-    private AverageRating avgRating;
-    @JsonProperty
-    private ImageUrls images;
-    @JsonProperty
-    private Reviews reviews;
+    public String fuel_capacity;
 
     public List<String> getYears() {
         return years;
@@ -299,5 +253,57 @@ public class TrimData {
 
     public void setReviews(Reviews reviews) {
         this.reviews = reviews;
+    }
+
+    @JsonProperty
+    public List<DataEntry> interior_dim;
+    @JsonProperty
+    public List<Engine> enginesList;
+    @JsonProperty
+    public List<Transmission> transmissionsList;
+    @JsonProperty
+    public List<String> drivenWheelsList;
+    @JsonProperty
+    public List<Mpg> mpg;
+    @JsonProperty
+    public String make;
+    @JsonProperty
+    public String model;
+    @JsonProperty
+    public String gen_name;
+    @JsonProperty
+    public int min_hp;
+    @JsonProperty
+    public int max_hp;
+    @JsonProperty
+    public int min_tq;
+    @JsonProperty
+    public int max_tq;
+    @JsonProperty
+    public String min_city_mpg;
+    @JsonProperty
+    public String max_city_mpg;
+    @JsonProperty
+    public int min_msrp;
+    @JsonProperty
+    public int max_msrp;
+    @JsonProperty
+    public int min_used_tmv;
+    @JsonProperty
+    public int max_used_tmv;
+    @JsonProperty
+    public String trim;
+    @JsonProperty
+    public AverageTco avgTco;
+    @JsonProperty
+    public AveragePrice avgPrice;
+    @JsonProperty
+    public AverageRating avgRating;
+    @JsonProperty
+    public ImageUrls images;
+    @JsonProperty
+    public Reviews reviews;
+
+    public TrimData() {
     }
 }

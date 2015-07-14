@@ -2,6 +2,7 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
@@ -9,13 +10,20 @@ import java.util.List;
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class ImageUrls {
     @JsonProperty
-    private List<String> exterior;
+    public List<String> exterior;
     @JsonProperty
-    private List<String> interior;
-    @JsonProperty
-    private List<String> engine;
+    public List<String> interior;
+
+    public List<String> getEngine() {
+        return engine;
+    }
+
+    public void setEngine(List<String> engine) {
+        this.engine = engine;
+    }
 
     public List<String> getExterior() {
         return exterior;
@@ -33,11 +41,10 @@ public class ImageUrls {
         this.interior = interior;
     }
 
-    public List<String> getEngine() {
-        return engine;
-    }
+    @JsonProperty
 
-    public void setEngine(List<String> engine) {
-        this.engine = engine;
+    public List<String> engine;
+
+    public ImageUrls() {
     }
 }

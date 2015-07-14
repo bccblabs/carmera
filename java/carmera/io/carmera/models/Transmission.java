@@ -2,20 +2,22 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 /**
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Transmission {
     @JsonProperty
-    private String transmissionType;
+    public String transmissionType;
 
     @JsonProperty
-    private String numberOfSpeeds;
+    public String numberOfSpeeds;
 
     @JsonProperty
-    private String automaticType;
+    public String automaticType;
 
     public String getTransmissionType() {
         return transmissionType;
@@ -39,5 +41,8 @@ public class Transmission {
 
     public void setAutomaticType(String automaticType) {
         this.automaticType = automaticType;
+    }
+
+    public Transmission() {
     }
 }

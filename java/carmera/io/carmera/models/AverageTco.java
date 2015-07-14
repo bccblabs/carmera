@@ -2,23 +2,14 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 /**
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class AverageTco {
-    @JsonProperty
-    private float avgFuel;
-    @JsonProperty
-    private float avgInsurance;
-    @JsonProperty
-    private float avgMaintenance;
-    @JsonProperty
-    private float avgRepairs;
-    @JsonProperty
-    private float avgDepreciation;
-
     public float getAvgFuel() {
         return avgFuel;
     }
@@ -58,4 +49,18 @@ public class AverageTco {
     public void setAvgDepreciation(float avgDepreciation) {
         this.avgDepreciation = avgDepreciation;
     }
+
+    public AverageTco() {}
+
+    @JsonProperty
+
+    public float avgFuel;
+    @JsonProperty
+    public float avgInsurance;
+    @JsonProperty
+    public float avgMaintenance;
+    @JsonProperty
+    public float avgRepairs;
+    @JsonProperty
+    public float avgDepreciation;
 }

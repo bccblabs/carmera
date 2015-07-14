@@ -2,6 +2,7 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
@@ -9,11 +10,12 @@ import java.util.List;
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Reviews {
     @JsonProperty
-    private List<String> fav_features;
+    public List<String> fav_features;
     @JsonProperty
-    private List<String> improvements;
+    public List<String> improvements;
 
     public List<String> getFav_features() {
         return fav_features;
@@ -29,5 +31,8 @@ public class Reviews {
 
     public void setImprovements(List<String> improvements) {
         this.improvements = improvements;
+    }
+
+    public Reviews() {
     }
 }

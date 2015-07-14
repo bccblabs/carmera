@@ -2,15 +2,17 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Prediction {
     @JsonProperty
-    private String class_id;
+    public String class_id;
     @JsonProperty
-    private String class_name;
+    public String class_name;
     @JsonProperty
-    private Double prob;
+    public Double prob;
 
     public String getClass_id() {
         return class_id;
@@ -34,5 +36,8 @@ public class Prediction {
 
     public void setProb(Double prob) {
         this.prob = prob;
+    }
+
+    public Prediction() {
     }
 }

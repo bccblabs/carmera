@@ -2,26 +2,32 @@ package carmera.io.carmera.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 /**
  * Created by bski on 7/12/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
+
 public class AverageRating {
     @JsonProperty
-    private float performance;
+    public float performance;
     @JsonProperty
-    private float comfort;
+    public float comfort;
     @JsonProperty
-    private float fun_to_drive;
+    public float fun_to_drive;
     @JsonProperty
-    private float interior;
+    public float interior;
     @JsonProperty
-    private float exterior;
+    public float exterior;
     @JsonProperty
-    private float build_quality;
+    public float build_quality;
     @JsonProperty
-    private float reliability;
+    public float reliability;
+
+    public AverageRating() {
+    }
 
     public float getPerformance() {
         return performance;

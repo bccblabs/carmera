@@ -6,24 +6,14 @@ package carmera.io.carmera.models;
  */
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class GenerationData {
-    @JsonProperty
-    private List<TrimData> trims;
-
-    @JsonProperty
-    private Snapshot snapshot;
-
-    public Snapshot getSnapshot() {
-        return snapshot;
-    }
-
-    public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = snapshot;
-    }
+    public GenerationData() {}
 
     public List<TrimData> getTrims() {
         return trims;
@@ -33,5 +23,17 @@ public class GenerationData {
         this.trims = trims;
     }
 
+    public Snapshot getSnapshot() {
+        return snapshot;
+    }
 
+    public void setSnapshot(Snapshot snapshot) {
+        this.snapshot = snapshot;
+    }
+
+    @JsonProperty
+    public List<TrimData> trims;
+
+    @JsonProperty
+    public Snapshot snapshot;
 }

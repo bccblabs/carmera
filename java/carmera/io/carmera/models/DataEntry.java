@@ -5,14 +5,16 @@ package carmera.io.carmera.models;
  */
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class DataEntry {
     @JsonProperty
-    private String name;
+    public String name;
 
-    @JsonProperty
-    private String value;
+    public DataEntry() {
+    }
 
     public String getName() {
         return name;
@@ -29,4 +31,8 @@ public class DataEntry {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @JsonProperty
+
+    public String value;
 }

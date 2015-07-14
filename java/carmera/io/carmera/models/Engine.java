@@ -1,32 +1,21 @@
 package carmera.io.carmera.models;
 
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Engine {
     @JsonProperty
-    private String code;
+    public String code;
 
     @JsonProperty
-    private String compressionRatio;
+    public String compressionRatio;
 
     @JsonProperty
-    private String compressorType;
-
-    @JsonProperty
-    private String configuration;
-
-    @JsonProperty
-    private int cylinder;
-
-    @JsonProperty
-    private String fuelType;
-
-    @JsonProperty
-    private int horsepower;
-
-    @JsonProperty
-    private String name;
+    public String compressorType;
 
     public String getCode() {
         return code;
@@ -125,14 +114,32 @@ public class Engine {
     }
 
     @JsonProperty
-    private float size;
+    public String configuration;
+
+    public Engine() {
+    }
 
     @JsonProperty
-    private int torque;
+    public int cylinder;
 
     @JsonProperty
-    private int totalValves;
+    public String fuelType;
 
     @JsonProperty
-    private String type;
+    public int horsepower;
+
+    @JsonProperty
+    public String name;
+
+    @JsonProperty
+    public float size;
+
+    @JsonProperty
+    public int torque;
+
+    @JsonProperty
+    public int totalValves;
+
+    @JsonProperty
+    public String type;
 }

@@ -5,19 +5,21 @@ package carmera.io.carmera.models;
  */
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class AveragePrice {
     @JsonProperty
-    private float avgBaseMSRP;
+    public float avgBaseMSRP;
     @JsonProperty
-    private float avgBaseInvoice;
+    public float avgBaseInvoice;
     @JsonProperty
-    private float avgUsedTmvRetail;
+    public float avgUsedTmvRetail;
     @JsonProperty
-    private float avgUsedPrivateParty;
+    public float avgUsedpublicParty;
     @JsonProperty
-    private float avgTradeIn;
+    public float avgTradeIn;
 
     public float getAvgBaseMSRP() {
         return avgBaseMSRP;
@@ -43,12 +45,12 @@ public class AveragePrice {
         this.avgUsedTmvRetail = avgUsedTmvRetail;
     }
 
-    public float getAvgUsedPrivateParty() {
-        return avgUsedPrivateParty;
+    public float getAvgUsedpublicParty() {
+        return avgUsedpublicParty;
     }
 
-    public void setAvgUsedPrivateParty(float avgUsedPrivateParty) {
-        this.avgUsedPrivateParty = avgUsedPrivateParty;
+    public void setAvgUsedpublicParty(float avgUsedpublicParty) {
+        this.avgUsedpublicParty = avgUsedpublicParty;
     }
 
     public float getAvgTradeIn() {
@@ -57,5 +59,8 @@ public class AveragePrice {
 
     public void setAvgTradeIn(float avgTradeIn) {
         this.avgTradeIn = avgTradeIn;
+    }
+
+    public AveragePrice() {
     }
 }

@@ -5,11 +5,13 @@ package carmera.io.carmera.models;
  */
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 /**
  * Created by bski on 11/15/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Parcel
 public class Mpg {
 
     @JsonProperty
@@ -32,5 +34,9 @@ public class Mpg {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Mpg() {
+
     }
 }
