@@ -49,19 +49,20 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
         args.putByteArray("image_data", image_data);
         recognitionResultsFragment = new RecognitionResultsDisplay();
         recognitionResultsFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
-                                                                recognitionResultsFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.content_frame, recognitionResultsFragment)
+                                   .addToBackStack("RECOGNITION_RESULTS")
+                                   .commit();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base);
-//        contentFragment = ContentFragment.newInstance(R.drawable.content_music);
-
         captureFragment = Capture.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, captureFragment)
+                .addToBackStack("CAPTURE")
                 .commit();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);

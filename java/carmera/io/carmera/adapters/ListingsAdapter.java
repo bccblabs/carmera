@@ -13,7 +13,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.models.Media;
 import carmera.io.carmera.models.Photo;
+import carmera.io.carmera.models.Photos;
 import carmera.io.carmera.widgets.SquareImageView;
 
 /**
@@ -43,19 +45,26 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         viewHolder.mileage.setText(String.format("Mileage: %d", listing.getMileage()));
         viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getListedSince()));
         viewHolder.dealer_name.setText(String.format("%s", listing.getDealer().getName()));
-        viewHolder.dealer_address.setText(String.format("%s", listing.getDealer().getAddress()));
+        viewHolder.dealer_address.setText(String.format("%s, %s, %s", listing.getDealer().getAddress().getStreet(),
+                                                                      listing.getDealer().getAddress().getCity(),
+                                                                      listing.getDealer().getAddress().getStateName()));
 
-        String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
-        Photo thumbnails = listing.getMedia().getPhotos().getThumbnails();
-        if (thumbnails.getCount() > 0) {
-            Picasso.with(cxt)
-                    .load(base_url + thumbnails.getLinks().get(0))
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.error)
-                    .fit()
-                    .into(viewHolder.photo);
-        } else {
-            viewHolder.photo.setImageResource(R.drawable.carmera);
+        Media media = listing.getMedia();
+        if (media != null) {
+            Photos photos = media.getPhotos();
+            if (photos != null) {
+                Photo thumbnails = photos.getThumbnails();
+                if (thumbnails.getCount() > 0) {
+                    Picasso.with(cxt)
+                            .load(thumbnails.getLinks().get(0).getHref())
+                            .placeholder(R.drawable.placeholder)
+                            .error(R.drawable.error)
+                            .fit()
+                            .into(viewHolder.photo);
+                } else {
+                    viewHolder.photo.setImageResource(R.drawable.carmera);
+                }
+            }
         }
     }
 

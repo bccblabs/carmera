@@ -8,12 +8,14 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -27,7 +29,9 @@ import javax.xml.datatype.Duration;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
+import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
+import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.Predictions;
 import carmera.io.carmera.models.VehicleQueries;
@@ -46,7 +50,7 @@ public class ListingsFragment extends Fragment {
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
 
     @Bind(R.id.listings_recylcer)
-    SuperRecyclerView listings_recycler;
+    RecyclerView listings_recycler;
 
     final Context context = getActivity();
     private ListingsAdapter listingsAdapter;
@@ -83,26 +87,27 @@ public class ListingsFragment extends Fragment {
         listingsAdapter = new ListingsAdapter();
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setLayoutManager(new LinearLayoutManager(context));
-        listings_recycler.addOnItemTouchListener(new RecyclerUtils.RecyclerItemClickListener(getActivity(), new RecyclerUtils.RecyclerItemClickListener.OnItemClickListener() {
+        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
             @Override
-            public void onItemClick(View view, int position) {
-                Intent i = new Intent (getActivity(), ListingDetailsViewer.class);
+            public void onItemClick(View v, Listing item, int position) {
+                Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
                 Bundle args = new Bundle();
-                Parcelable listing_data = Parcels.wrap(listingsAdapter.getItem(position));
+                Parcelable listing_data = Parcels.wrap(item);
                 args.putParcelable(EXTRA_LISTING_DATA, listing_data);
                 i.putExtras(args);
                 startActivity(i);
             }
-        }));
+        });
         return v;
     }
 
     @Override
     public void onViewCreated (View v, Bundle savedInstanceState) {
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
         for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
             vehicleQuery.setPagenum(1);
             vehicleQuery.setPagesize(5);
-            vehicleQuery.setRadius(50);
+            vehicleQuery.setRadius(500);
             vehicleQuery.setZipcode(92612);
             Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
             ListingsDataRequest listingsDataRequest = new ListingsDataRequest(vehicleQuery);

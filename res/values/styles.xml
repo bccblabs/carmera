@@ -17,7 +17,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="viewpager_pagerTitleStrip">@layout/material_view_pager_pagertitlestrip_newstand</item>
         <item name="viewpager_logoMarginTop">100dp</item>
-        <item name="viewpager_color">@android:color/black</item>
+        <item name="viewpager_color">@android:color/background_light</item>
         <item name="viewpager_headerHeight">200dp</item>
         <item name="viewpager_headerAlpha">1.0</item>
         <item name="viewpager_hideLogoWithFade">false</item>

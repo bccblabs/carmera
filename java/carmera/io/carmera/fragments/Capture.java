@@ -31,7 +31,7 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
     private SeekBar zoom = null;
     private ButtonFloat capture_btn = null;
     String flashMode = null;
-    private String TAG = getClass().getCanonicalName();
+    public final String TAG = getClass().getCanonicalName();
 
     private Bitmap bitmap;
     private View containerView;
