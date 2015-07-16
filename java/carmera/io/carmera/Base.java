@@ -56,7 +56,7 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.base);
 //        contentFragment = ContentFragment.newInstance(R.drawable.content_music);
 
         captureFragment = Capture.newInstance();

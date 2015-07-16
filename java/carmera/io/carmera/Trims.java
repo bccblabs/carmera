@@ -58,10 +58,10 @@ public class Trims extends ActionBarActivity {
         trimsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<TrimData>() {
             @Override
             public void onItemClick(View v, TrimData item, int position) {
-                Intent i = new Intent (getApplicationContext(), TrimViewer.class);
+                Intent i = new Intent (getApplicationContext(), TrimDetailsViewer.class);
                 Bundle args = new Bundle();
                 Parcelable trim_data = Parcels.wrap(item);
-                args.putParcelable(TrimViewer.EXTRA_TRIM_DATA, trim_data);
+                args.putParcelable(TrimDetailsViewer.EXTRA_TRIM_DATA, trim_data);
                 i.putExtras(args);
                 startActivity(i);
 

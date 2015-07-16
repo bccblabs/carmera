@@ -33,7 +33,7 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         TrimData trimData = getItem(i);
-        viewHolder.gen_info.setText(String.format ("%s %s %s", trimData.getMake(), trimData.getModel(), trimData.getGen_name()));
+        viewHolder.gen_info.setText(String.format ("%s %s %s", trimData.getMake(), trimData.getModel(), trimData.getTrim()));
         viewHolder.hp.setText(String.format("Horsepower: %d - %d hp", trimData.getMin_hp(), trimData.getMax_hp()));
         viewHolder.tq.setText(String.format("Torque: %d - %d lb/ft", trimData.getMin_tq(), trimData.getMax_tq()));
         viewHolder.city_mpg.setText(String.format("City MPG: %s - %s", trimData.getMin_city_mpg(), trimData.getMax_city_mpg()));

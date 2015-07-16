@@ -39,7 +39,7 @@ public class VehiclesDisplayContainer extends ActionBarActivity implements OnMen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewer);
+        setContentView(R.layout.vehicles_display_container);
         fragmentManager = getSupportFragmentManager();
         initToolbar();
         initMenuFragment();

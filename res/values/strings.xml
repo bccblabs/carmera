@@ -13,4 +13,5 @@
     <string name="context_menu">Select</string>
     <string name="cancel_upload">Cancel Upload</string>
     <string name="edmunds_baseurl">http://media.ed.edmunds-media.com</string>
+    <string name="aws_server">http://52.27.126.141:3000</string>
 </resources>

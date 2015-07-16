@@ -28,10 +28,6 @@ public class PredictionsRequest extends OkHttpSpiceRequest<Predictions> {
         this.image_url = image_url_;
     }
 
-    /* keys:
-    u7ZfYqmYJ5LuwtaNEWTogeFv6mTcDDQWT5xf86mP4pigerPAJV 1040
-    I4MGGdRNHSV17xvWXOveGBRCVsqSZV0vEeeq9UMpTw91KK1hkj 869
-     */
     @Override
     public Predictions loadDataFromNetwork () throws Exception {
 

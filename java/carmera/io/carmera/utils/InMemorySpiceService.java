@@ -19,7 +19,9 @@ import com.octo.android.robospice.persistence.springandroid.json.jackson.Jackson
 import java.util.ArrayList;
 import java.util.List;
 
+import carmera.io.carmera.fragments.ListingsFragment;
 import carmera.io.carmera.models.GenerationData;
+import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.Predictions;
 
 
@@ -30,9 +32,12 @@ public class InMemorySpiceService extends SpiceService {
         CacheManager manager = new CacheManager();
         try {
             JacksonObjectPersister genDataPersister = new JacksonObjectPersister(application, GenerationData.class);
+            JacksonObjectPersister listingDataPersister = new JacksonObjectPersister(application, Listings.class);
             GsonObjectPersister predictionPersister = new GsonObjectPersister(application, Predictions.class);
+
             manager.addPersister(genDataPersister);
             manager.addPersister(predictionPersister);
+            manager.addPersister(listingDataPersister);
         } catch (CacheCreationException e) {
             Log.i("Create cache manager: ", e.getMessage());
         }

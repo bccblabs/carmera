@@ -11,18 +11,18 @@ import org.parceler.Parcel;
 @Parcel
 public class Photos {
     @JsonProperty
-    public Photo photo;
+    public Photo thumbnails;
     @JsonProperty
     public Photo small;
     @JsonProperty
     public Photo large;
 
-    public Photo getPhoto() {
-        return photo;
+    public Photo getThumbnails() {
+        return thumbnails;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setThumbnails(Photo thumbnails) {
+        this.thumbnails = thumbnails;
     }
 
     public Photo getSmall() {

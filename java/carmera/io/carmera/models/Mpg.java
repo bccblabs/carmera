@@ -15,10 +15,10 @@ import org.parceler.Parcel;
 public class Mpg {
 
     @JsonProperty
-    private String highway;
+    public String highway;
 
     @JsonProperty
-    private String city;
+    public String city;
 
     public String getHighway() {
         return highway;

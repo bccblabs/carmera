@@ -59,6 +59,7 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
     private SpiceManager genSpiceManager = new SpiceManager (InMemorySpiceService.class);
+
     private CapturedVehicle capturedVehicle;
     private PhotoUploadFragment photoUploadFragment;
     private SaveCallback parseImageSaveCallback = new SaveCallback() {
@@ -163,7 +164,6 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
                 startActivity(i);
             }
         });
-
         return v;
     }
 

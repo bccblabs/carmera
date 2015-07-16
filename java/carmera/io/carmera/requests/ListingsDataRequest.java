@@ -1,5 +1,6 @@
 package carmera.io.carmera.requests;
 
+import android.nfc.Tag;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -9,28 +10,29 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-
-import carmera.io.carmera.models.GenerationData;
+import carmera.io.carmera.models.Listings;
+import carmera.io.carmera.models.VehicleQuery;
 
 /**
- * Created by bski on 7/12/15.
+ * Created by bski on 7/15/15.
  */
-public class GenerationDataRequest extends OkHttpSpiceRequest<GenerationData> {
-    private static final String TAG = "GENERATION_DATA_REQUEST";
+public class ListingsDataRequest extends OkHttpSpiceRequest<Listings>{
+
+    private static final String TAG = "LISTING_DATA_REQUEST";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
-    private String label;
+    private VehicleQuery vehicleQuery;
 
-    public GenerationDataRequest(String label_) {
-        super(GenerationData.class);
-        this.label = label_;
+    public ListingsDataRequest(VehicleQuery query) {
+        super(Listings.class);
+        this.vehicleQuery = query;
     }
 
     @Override
-    public GenerationData loadDataFromNetwork () throws Exception {
-
+    public Listings loadDataFromNetwork () throws Exception {
         try {
-            String url_string = String.format("http://52.27.126.141:3000/generations/trims/details?label=%s", this.label);
+            String url_string = String.format("http://52.27.126.141:3000/listings%s", this.vehicleQuery.get_query_params());
+            Log.i (TAG, "Request string: " + url_string);
             Request request = new Request.Builder()
                     .url(url_string)
                     .get()
@@ -39,10 +41,10 @@ public class GenerationDataRequest extends OkHttpSpiceRequest<GenerationData> {
 
             if (!response.isSuccessful())
                 throw new IOException(response.message());
-            return gson.fromJson (response.body().charStream(), GenerationData.class);
+            return gson.fromJson (response.body().charStream(), Listings.class);
 
         } catch (IOException ie) {
-            Log.i(TAG, ie.getMessage());
+            Log.i (TAG, ie.getMessage());
             return null;
         }
     }

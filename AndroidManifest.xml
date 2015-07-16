@@ -56,7 +56,12 @@
             android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".TrimViewer"
+        <activity android:name=".TrimDetailsViewer"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".ListingDetailsViewer"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
         </activity>
