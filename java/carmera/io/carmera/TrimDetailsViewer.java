@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -40,6 +42,14 @@ public class TrimDetailsViewer extends ActionBarActivity {
         ButterKnife.bind(this);
         this.trimDataParcelable = getIntent().getExtras().getParcelable(EXTRA_TRIM_DATA);
         this.trimData = Parcels.unwrap(this.trimDataParcelable);
+        Toolbar toolbar = trims_view_pager.getToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            final ActionBar actionBar = getSupportActionBar();
+            actionBar.hide();
+        }
+
+
         trims_view_pager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             int init_position = -1;
@@ -77,7 +87,6 @@ public class TrimDetailsViewer extends ActionBarActivity {
                 if (position == init_position)
                     return;
                 init_position = position;
-                int color = 0;
                 String imageUrl = "";
                 switch (position) {
                     case 0:
@@ -90,7 +99,7 @@ public class TrimDetailsViewer extends ActionBarActivity {
                         imageUrl = getResources().getString (R.string.edmunds_baseurl) + trimData.getImages().getExterior().get(2);
                         break;
                 }
-                final int fadeDuration = 100;
+                final int fadeDuration = 50;
                 trims_view_pager.setImageUrl(imageUrl, fadeDuration);
             }
 

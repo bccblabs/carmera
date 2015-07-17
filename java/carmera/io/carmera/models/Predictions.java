@@ -14,6 +14,9 @@ public class Predictions {
     @JsonProperty
     public List<Prediction> predictions;
 
+    public Predictions() {
+    }
+
     public List<Prediction> getPredictions() {
         return predictions;
     }
@@ -22,6 +25,4 @@ public class Predictions {
         this.predictions = predictions;
     }
 
-    public Predictions() {
-    }
 }

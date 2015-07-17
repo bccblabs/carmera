@@ -84,9 +84,23 @@ public class ListingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.listings, container, false);
         ButterKnife.bind(this, v);
+        return v;
+    }
+
+    @Override
+    public void onViewCreated (View v, Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
+        for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
+            vehicleQuery.setPagenum(1);
+            vehicleQuery.setPagesize(5);
+            vehicleQuery.setRadius(500);
+            vehicleQuery.setZipcode(92612);
+            Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
+            ListingsDataRequest listingsDataRequest = new ListingsDataRequest(vehicleQuery);
+            spiceManager.execute (listingsDataRequest, vehicleQuery.getTrim(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
+        }
+        listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         listingsAdapter = new ListingsAdapter();
-        listings_recycler.setAdapter(listingsAdapter);
-        listings_recycler.setLayoutManager(new LinearLayoutManager(context));
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
             @Override
             public void onItemClick(View v, Listing item, int position) {
@@ -98,21 +112,9 @@ public class ListingsFragment extends Fragment {
                 startActivity(i);
             }
         });
-        return v;
-    }
-
-    @Override
-    public void onViewCreated (View v, Bundle savedInstanceState) {
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
-        for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
-            vehicleQuery.setPagenum(1);
-            vehicleQuery.setPagesize(5);
-            vehicleQuery.setRadius(500);
-            vehicleQuery.setZipcode(92612);
-            Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
-            ListingsDataRequest listingsDataRequest = new ListingsDataRequest(vehicleQuery);
-            spiceManager.execute (listingsDataRequest, vehicleQuery.getTrim(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
-        }
+        listings_recycler.setAdapter(listingsAdapter);
+        listings_recycler.setHasFixedSize(false);
+//        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
     }
     @Override
     public void onAttach (Activity activity) {

@@ -17,6 +17,9 @@ public class Photos {
     @JsonProperty
     public Photo large;
 
+    public Photos() {
+    }
+
     public Photo getThumbnails() {
         return thumbnails;
     }
@@ -31,9 +34,6 @@ public class Photos {
 
     public void setSmall(Photo small) {
         this.small = small;
-    }
-
-    public Photos() {
     }
 
     public Photo getLarge() {

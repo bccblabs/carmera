@@ -85,6 +85,7 @@ public class PhotoUploadFragment extends SupportBlurDialogFragment {
                 .placeholder(R.drawable.placeholder) //
                 .error(R.drawable.error) //
                 .fit() //
+                .centerCrop()
                 .into(photo);
         return builder.create();
     }

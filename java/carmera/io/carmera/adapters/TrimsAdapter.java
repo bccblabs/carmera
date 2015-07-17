@@ -12,8 +12,9 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
+import carmera.io.carmera.models.Engine;
+import carmera.io.carmera.models.Mpg;
 import carmera.io.carmera.models.TrimData;
-import carmera.io.carmera.utils.Util;
 import carmera.io.carmera.widgets.SquareImageView;
 
 /**
@@ -33,14 +34,16 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         TrimData trimData = getItem(i);
-        viewHolder.gen_info.setText(String.format ("%s %s %s", trimData.getMake(), trimData.getModel(), trimData.getTrim()));
-        viewHolder.hp.setText(String.format("Horsepower: %d - %d hp", trimData.getMin_hp(), trimData.getMax_hp()));
-        viewHolder.tq.setText(String.format("Torque: %d - %d lb/ft", trimData.getMin_tq(), trimData.getMax_tq()));
-        viewHolder.city_mpg.setText(String.format("City MPG: %s - %s", trimData.getMin_city_mpg(), trimData.getMax_city_mpg()));
-        viewHolder.hwy_mpg.setText(String.format("Highway MPG: %s - %s", trimData.getMin_hwy_mpg(), trimData.getMax_hwy_mpg()));
-        viewHolder.msrp.setText(String.format("MSRP: $%d - %d", trimData.getMin_msrp(), trimData.getMax_msrp()));
-        viewHolder.tmv.setText(String.format("Used: $%d - %d", trimData.getMin_used_tmv(), trimData.getMax_used_tmv()));
-        viewHolder.drivetrain.setText(String.format("Available in %s", Util.joinStrings(trimData.getDrivenWheelsList(), ",") ) );
+        Engine engine = trimData.getEngine();
+        Mpg mpg = trimData.getMpg();
+        viewHolder.gen_info.setText(String.format ("%s %s %s", trimData.make, trimData.model, trimData.trim));
+        viewHolder.hp.setText(String.format("Horsepower: %d hp", engine.horsepower));
+        viewHolder.tq.setText(String.format("Torque: %d lb/ft", engine.torque));
+        viewHolder.city_mpg.setText(String.format("City MPG: %d ", mpg.city));
+        viewHolder.hwy_mpg.setText(String.format("Highway MPG: %d ", mpg.highway));
+        viewHolder.msrp.setText(String.format("MSRP: $%d - %d", trimData.min_msrp, trimData.max_msrp));
+        viewHolder.tmv.setText(String.format("Used: $%d - %d", trimData.min_used_tmv, trimData.max_used_tmv));
+        viewHolder.drivetrain.setText(String.format("Available as %s", trimData.drivenWheels));
 
         String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
         if (trimData.getImages().getExterior().size() > 0) {
@@ -48,6 +51,7 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
                     .load(base_url + trimData.getImages().getExterior().get(0))
                     .placeholder(R.drawable.placeholder) //
                     .error(R.drawable.error) //
+                    .centerCrop()
                     .fit()
                     .into(viewHolder.photo);
         } else {

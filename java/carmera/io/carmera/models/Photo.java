@@ -12,13 +12,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Photo {
-    public Photo() {
-    }
-
     @JsonProperty
     public long count;
     @JsonProperty
     public List<Link> links;
+
+    public Photo() {
+    }
 
     public long getCount() {
         return count;

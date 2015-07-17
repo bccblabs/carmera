@@ -10,17 +10,17 @@ import org.parceler.Parcel;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Year {
+    @JsonProperty
+    public Integer year;
+
     public Year() {
     }
 
-    @JsonProperty
-    public int year;
-
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 }

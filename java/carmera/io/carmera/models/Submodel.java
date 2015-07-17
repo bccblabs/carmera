@@ -10,11 +10,11 @@ import org.parceler.Parcel;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Submodel {
-    public Submodel() {
-    }
-
     @JsonProperty
     public String modelName;
+
+    public Submodel() {
+    }
 
     public String getModelName() {
         return modelName;

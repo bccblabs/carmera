@@ -16,6 +16,11 @@ public class ImageUrls {
     public List<String> exterior;
     @JsonProperty
     public List<String> interior;
+    @JsonProperty
+    public List<String> engine;
+
+    public ImageUrls() {
+    }
 
     public List<String> getEngine() {
         return engine;
@@ -41,10 +46,5 @@ public class ImageUrls {
         this.interior = interior;
     }
 
-    @JsonProperty
 
-    public List<String> engine;
-
-    public ImageUrls() {
-    }
 }

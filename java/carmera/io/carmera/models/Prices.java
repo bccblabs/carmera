@@ -10,8 +10,6 @@ import org.parceler.Parcel;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Prices {
-    public Prices() {
-    }
 
     @JsonProperty
     public double msrp;
@@ -23,6 +21,9 @@ public class Prices {
     public double invoice;
     @JsonProperty
     public double monthlyPayment;
+
+    public Prices() {
+    }
 
     public double getMsrp() {
         return msrp;

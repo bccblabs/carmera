@@ -59,6 +59,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
                             .load(thumbnails.getLinks().get(0).getHref())
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.error)
+                            .centerCrop()
                             .fit()
                             .into(viewHolder.photo);
                 } else {

@@ -15,28 +15,27 @@ import org.parceler.Parcel;
 public class Mpg {
 
     @JsonProperty
-    public String highway;
+    public Integer highway;
 
     @JsonProperty
-    public String city;
+    public Integer city;
 
-    public String getHighway() {
+    public Mpg() {
+    }
+
+    public Integer getHighway() {
         return highway;
     }
 
-    public void setHighway(String highway) {
+    public void setHighway(Integer highway) {
         this.highway = highway;
     }
 
-    public String getCity() {
+    public Integer getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(Integer city) {
         this.city = city;
-    }
-
-    public Mpg() {
-
     }
 }

@@ -9,20 +9,27 @@ import org.parceler.Parcel;
 @Parcel
 public class Engine {
     @JsonProperty
-    public String code;
-
-    @JsonProperty
     public String compressionRatio;
-
     @JsonProperty
     public String compressorType;
+    @JsonProperty
+    public Integer cylinder;
+    @JsonProperty
+    public String fuelType;
+    @JsonProperty
+    public Integer horsepower;
+    @JsonProperty
+    public Float displacement;
+    @JsonProperty
+    public Integer torque;
+    @JsonProperty
+    public Integer totalValves;
+    @JsonProperty
+    public String type;
+    @JsonProperty
+    public String configuration;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public Engine() {
     }
 
     public String getCompressionRatio() {
@@ -41,19 +48,11 @@ public class Engine {
         this.compressorType = compressorType;
     }
 
-    public String getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(String configuration) {
-        this.configuration = configuration;
-    }
-
-    public int getCylinder() {
+    public Integer getCylinder() {
         return cylinder;
     }
 
-    public void setCylinder(int cylinder) {
+    public void setCylinder(Integer cylinder) {
         this.cylinder = cylinder;
     }
 
@@ -65,43 +64,35 @@ public class Engine {
         this.fuelType = fuelType;
     }
 
-    public int getHorsepower() {
+    public Integer getHorsepower() {
         return horsepower;
     }
 
-    public void setHorsepower(int horsepower) {
+    public void setHorsepower(Integer horsepower) {
         this.horsepower = horsepower;
     }
 
-    public String getName() {
-        return name;
+    public Float getDisplacement() {
+        return displacement;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDisplacement(Float displacement) {
+        this.displacement = displacement;
     }
 
-    public float getSize() {
-        return size;
-    }
-
-    public void setSize(float size) {
-        this.size = size;
-    }
-
-    public int getTorque() {
+    public Integer getTorque() {
         return torque;
     }
 
-    public void setTorque(int torque) {
+    public void setTorque(Integer torque) {
         this.torque = torque;
     }
 
-    public int getTotalValves() {
+    public Integer getTotalValves() {
         return totalValves;
     }
 
-    public void setTotalValves(int totalValves) {
+    public void setTotalValves(Integer totalValves) {
         this.totalValves = totalValves;
     }
 
@@ -113,33 +104,11 @@ public class Engine {
         this.type = type;
     }
 
-    @JsonProperty
-    public String configuration;
-
-    public Engine() {
+    public String getConfiguration() {
+        return configuration;
     }
 
-    @JsonProperty
-    public int cylinder;
-
-    @JsonProperty
-    public String fuelType;
-
-    @JsonProperty
-    public int horsepower;
-
-    @JsonProperty
-    public String name;
-
-    @JsonProperty
-    public float size;
-
-    @JsonProperty
-    public int torque;
-
-    @JsonProperty
-    public int totalValves;
-
-    @JsonProperty
-    public String type;
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
+    }
 }

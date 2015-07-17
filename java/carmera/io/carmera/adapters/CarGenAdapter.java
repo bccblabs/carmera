@@ -47,6 +47,7 @@ public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenA
                 .load(base_url + snapshot.image_holder)
                 .placeholder(R.drawable.placeholder) //
                 .error(R.drawable.error) //
+                .centerCrop()
                 .fit()
                 .into(viewHolder.photo);
     }
