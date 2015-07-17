@@ -26,15 +26,15 @@ public class TrimData {
     @JsonProperty
     public List<Integer> years;
     @JsonProperty
-    public List<DataEntry> dimensions;
+    public List<DataEntryFloat> dimensions;
     @JsonProperty
     public List<DataEntry> airbags;
     @JsonProperty
-    public List<DataEntry> avgTco;
+    public List<DataEntryFloat> avgTco;
     @JsonProperty
-    public List<DataEntry> avgPrice;
+    public List<DataEntryFloat> avgPrice;
     @JsonProperty
-    public List<DataEntry> avgRating;
+    public List<DataEntryFloat> avgRating;
 
     @JsonProperty
     public Engine engine;
@@ -107,14 +107,6 @@ public class TrimData {
         this.years = years;
     }
 
-    public List<DataEntry> getDimensions() {
-        return dimensions;
-    }
-
-    public void setDimensions(List<DataEntry> dimensions) {
-        this.dimensions = dimensions;
-    }
-
     public List<DataEntry> getAirbags() {
         return airbags;
     }
@@ -123,27 +115,31 @@ public class TrimData {
         this.airbags = airbags;
     }
 
-    public List<DataEntry> getAvgTco() {
+    public void setDimensions(List<DataEntryFloat> dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public List<DataEntryFloat> getAvgTco() {
         return avgTco;
     }
 
-    public void setAvgTco(List<DataEntry> avgTco) {
+    public void setAvgTco(List<DataEntryFloat> avgTco) {
         this.avgTco = avgTco;
     }
 
-    public List<DataEntry> getAvgPrice() {
+    public List<DataEntryFloat> getAvgPrice() {
         return avgPrice;
     }
 
-    public void setAvgPrice(List<DataEntry> avgPrice) {
+    public void setAvgPrice(List<DataEntryFloat> avgPrice) {
         this.avgPrice = avgPrice;
     }
 
-    public List<DataEntry> getAvgRating() {
+    public List<DataEntryFloat> getAvgRating() {
         return avgRating;
     }
 
-    public void setAvgRating(List<DataEntry> avgRating) {
+    public void setAvgRating(List<DataEntryFloat> avgRating) {
         this.avgRating = avgRating;
     }
 

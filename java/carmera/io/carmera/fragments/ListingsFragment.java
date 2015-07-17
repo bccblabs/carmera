@@ -12,20 +12,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.parceler.Parcels;
-
-import javax.xml.datatype.Duration;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
@@ -33,12 +29,10 @@ import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.Predictions;
 import carmera.io.carmera.models.VehicleQueries;
 import carmera.io.carmera.models.VehicleQuery;
 import carmera.io.carmera.requests.ListingsDataRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
-import carmera.io.carmera.utils.RecyclerUtils;
 import carmera.io.carmera.ListingDetailsViewer;
 
 /**
@@ -74,6 +68,8 @@ public class ListingsFragment extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
         this.vehicleQueries = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
         Toast.makeText(getActivity(), "Queries to go: " + this.vehicleQueries.getQueries().size(), Toast.LENGTH_SHORT).show();
@@ -114,7 +110,7 @@ public class ListingsFragment extends Fragment {
         });
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setHasFixedSize(false);
-//        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
     }
     @Override
     public void onAttach (Activity activity) {

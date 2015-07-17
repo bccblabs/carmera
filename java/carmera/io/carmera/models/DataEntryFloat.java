@@ -9,13 +9,13 @@ import org.parceler.Parcel;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
-public class DataEntry {
+public class DataEntryFloat {
     @JsonProperty
     public String name;
     @JsonProperty
-    public String value;
+    public Float value;
 
-    public DataEntry() {
+    public DataEntryFloat() {
     }
 
     public String getName() {
@@ -26,11 +26,11 @@ public class DataEntry {
         this.name = name;
     }
 
-    public String getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 

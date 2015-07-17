@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/listings_recylcer"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/material_view_pager_placeholder"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listings_recylcer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-</LinearLayout>
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
