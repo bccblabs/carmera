@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="makes_array">
+        <item>Any</item>
+        <item>Acura</item>
+        <item>Aston Martin</item>
+        <item>Audi</item>
+        <item>Bentley</item>
+        <item>BMW</item>
+        <item>Buick</item>
+        <item>Cadillac</item>
+        <item>Chevrolet</item>
+        <item>Chrysler</item>
+        <item>Dodge</item>
+        <item>Ferrari</item>
+        <item>Fiat</item>
+        <item>Fisker</item>
+        <item>Ford</item>
+        <item>GMC</item>
+        <item>Honda</item>
+        <item>Hyundai</item>
+        <item>Infiniti</item>
+        <item>Jaguar</item>
+        <item>Jeep</item>
+        <item>Kia</item>
+        <item>Lamborghini</item>
+        <item>Land Rover</item>
+        <item>Lexus</item>
+        <item>Lincoln</item>
+        <item>Lotus</item>
+        <item>Mazda</item>
+        <item>Mercedes-Benz</item>
+        <item>Mini</item>
+        <item>Mitsubishi</item>
+        <item>Nissan</item>
+        <item>Porsche</item>
+        <item>Scion</item>
+        <item>Smart</item>
+        <item>Subaru</item>
+        <item>Suzuki</item>
+        <item>Toyota</item>
+        <item>Volkswagen</item>
+        <item>Volvo</item>
+    </string-array>
+
+    <string-array name="car_state_array">
+        <item>Any</item>
+        <item>New</item>
+        <item>Used</item>
+    </string-array>
+
+
+    <string-array name="body_style_array">
+        <item>Any</item>
+        <item>Coupe</item>
+        <item>Sedan</item>
+        <item>Truck</item>
+        <item>SUV</item>
+        <item>Van</item>
+        <item>Wagon</item>
+        <item>Convertible</item>
+        <item>Crossover</item>
+    </string-array>
+    <string-array name="range_array">
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>2000</item>
+    </string-array>
+    <string-array name="acura">
+        <item>Any</item>
+        <item>TLX</item>
+        <item>MDX</item>
+        <item>TL</item>
+        <item>RDX</item>
+        <item>TSX</item>
+        <item>ILX</item>
+        <item>ILX Hybrid</item>
+        <item>RLX</item>
+        <item>NSX</item>
+        <item>ZDX</item>
+        <item>Integra</item>
+        <item>RL</item>
+        <item>Legend</item>
+        <item>CL</item>
+        <item>Vigor</item>
+        <item>SLX</item>
+        <item>NSX-T</item>
+    </string-array>
+    <string-array name="toyota">
+        <item>Any</item>
+        <item>4Runner</item>
+        <item>Avalon</item>
+        <item>Avalon Hybrid</item>
+        <item>Camry</item>
+        <item>Camry Hybrid</item>
+        <item>Corolla</item>
+        <item>FJ Cruiser</item>
+        <item>Highlander</item>
+        <item>Highlander Hybrid</item>
+        <item>Land Cruiser</item>
+        <item>Matrix</item>
+        <item>Mirai</item>
+        <item>Prius Hatchback</item>
+        <item>Prius C</item>
+        <item>Prius Plug-in Hatchback</item>
+        <item>Prius v Wagon</item>
+        <item>RAV4</item>
+        <item>Sequoia</item>
+        <item>Sienna</item>
+        <item>Tacoma</item>
+        <item>Tundra</item>
+        <item>Venza</item>
+        <item>Yaris</item>
+    </string-array>
+    <string-array name="honda">
+        <item>Any</item>
+        <item>Accord</item>
+        <item>Civic</item>
+        <item>CR-V</item>
+        <item>CR-Z</item>
+        <item>Fit</item>
+        <item>HR-V</item>
+        <item>Insight</item>
+        <item>Odyssey</item>
+        <item>Pilot</item>
+        <item>Ridgeline</item>
+    </string-array>
+    <string-array name="nissan">
+        <item>Any</item>
+        <item>370Z</item>
+        <item>Altima</item>
+        <item>Armada</item>
+        <item>Cube</item>
+        <item>Frontier</item>
+        <item>GT-R</item>
+        <item>Juke</item>
+        <item>Leaf</item>
+        <item>Maxima</item>
+        <item>Murano</item>
+        <item>Murano CrossCabriolet</item>
+        <item>NV</item>
+        <item>NV200</item>
+        <item>Pathfinder</item>
+        <item>Quest</item>
+        <item>Rogue</item>
+        <item>Sentra</item>
+        <item>Titan</item>
+        <item>Versa</item>
+        <item>Xterra</item>
+    </string-array>
+    <string-array name="audi">
+        <item>Any</item>
+        <item>A3</item>
+        <item>A4</item>
+        <item>A5</item>
+        <item>A6</item>
+        <item>A7</item>
+        <item>A8</item>
+        <item>R8</item>
+        <item>S3</item>
+        <item>S4</item>
+        <item>S5</item>
+        <item>S6</item>
+        <item>S7</item>
+        <item>S8</item>
+        <item>RS4</item>
+        <item>RS5</item>
+        <item>RS6</item>
+        <item>RS7</item>
+        <item>SQ5</item>
+    </string-array>
+    <string-array name="bmw">
+        <item>Any</item>
+        <item>228i</item>
+        <item>235i</item>
+        <item>320i</item>
+        <item>328i</item>
+        <item>335i</item>
+        <item>428i</item>
+        <item>435i</item>
+        <item>528i</item>
+        <item>535i</item>
+        <item>550i</item>
+        <item>640i</item>
+        <item>650i</item>
+        <item>750i</item>
+        <item>760i</item>
+        <item>X1</item>
+        <item>X3</item>
+        <item>X4</item>
+        <item>X5</item>
+        <item>X6</item>
+    </string-array>
+    <string-array name="astonmartin">
+        <item>Any</item>
+        <item>Vanquish</item>
+        <item>DB9</item>
+        <item>Vantage</item>
+    </string-array>
+    <string-array name="bentley">
+        <item>Any</item>
+        <item>Continental GT</item>
+        <item>Continental GTC</item>
+        <item>Continental Supersports</item>
+        <item>Mulsanne</item>
+        <item>Azure</item>
+        <item>Arnage</item>
+    </string-array>
+    <string-array name="buick">
+        <item>Any</item>
+        <item>Regal</item>
+        <item>LaCrosse</item>
+        <item>Enclave</item>
+        <item>Verano</item>
+        <item>Encore</item>
+    </string-array>
+    <string-array name="cadillac">
+        <item>Any</item>
+        <item>ELR</item>
+        <item>CTS</item>
+        <item>CTS-V</item>
+        <item>ATS</item>
+        <item>XTS</item>
+        <item>SRX</item>
+        <item>Escalade</item>
+        <item>Escalae ESV</item>
+    </string-array>
+    <string-array name="chevrolet">
+        <item>Any</item>
+        <item>Spark</item>
+        <item>Sonic</item>
+        <item>Cruze</item>
+        <item>Volt</item>
+        <item>Malibu</item>
+        <item>Impala</item>
+    </string-array>
+    <string-array name="chrysler">
+        <item>Any</item>
+        <item>200</item>
+        <item>300</item>
+        <item>Town and Country</item>
+    </string-array>
+    <string-array name="dodge">
+        <item>Any</item>
+        <item>Challenger</item>
+        <item>Charger</item>
+        <item>Dart</item>
+        <item>Durango</item>
+        <item>Journey</item>
+        <item>Grand Caravan</item>
+    </string-array>
+    <string-array name="ferrari">
+        <item>Any</item>
+        <item>F12 Berlinetta</item>
+        <item>458 Italia</item>
+        <item>FF</item>
+        <item>California</item>
+    </string-array>
+    <string-array name="fiat">
+        <item>Any</item>
+        <item>500</item>
+        <item>500 Abarth</item>
+        <item>500c</item>
+        <item>500e</item>
+        <item>500L</item>
+        <item>500X</item>
+    </string-array>
+    <string-array name="fisker">
+        <item>Any</item>
+        <item>Karma</item>
+    </string-array>
+    <string-array name="ford">
+        <item>Any</item>
+        <item>Fiesta</item>
+        <item>Focus</item>
+        <item>Fusion</item>
+        <item>Mustang</item>
+        <item>C-Max</item>
+        <item>Taurus</item>
+        <item>Escape</item>
+        <item>Transit Connect</item>
+        <item>Edge</item>
+        <item>Flex</item>
+        <item>Explorer</item>
+        <item>Expedition</item>
+        <item>F-150</item>
+        <item>Super Duty</item>
+    </string-array>
+    <string-array name="gmc">
+        <item>Any</item>
+        <item>Terrain</item>
+        <item>Terrain Denali</item>
+        <item>Acadia</item>
+        <item>Acadia Denali</item>
+        <item>Canyon</item>
+        <item>Sierra 1500</item>
+        <item>Sierra 1500 Denali</item>
+        <item>Sierra 2500HD</item>
+        <item>Sierra 2500 Denali HD</item>
+        <item>Sierra 3500HD</item>
+        <item>Yukon</item>
+        <item>Yukon XL</item>
+        <item>Yukon XL Denali</item>
+        <item>Savana Passenger</item>
+        <item>Savana Cargo</item>
+    </string-array>
+    <string-array name="hyundai">
+        <item>Any</item>
+        <item>Elantra</item>
+        <item>Accent</item>
+        <item>Santa Fe</item>
+        <item>Tucson</item>
+        <item>Sonata</item>
+        <item>Genesis</item>
+        <item>Veloster</item>
+        <item>Azera</item>
+        <item>Equus</item>
+        <item>Sonata Hybrid</item>
+        <item>Santa Fe Sport</item>
+        <item>Elantra GT</item>
+        <item>Elantra Touring</item>
+    </string-array>
+    <string-array name="infiniti">
+        <item>Any</item>
+        <item>Q40</item>
+        <item>Q50</item>
+        <item>Q50 Hybrid</item>
+        <item>Q60</item>
+        <item>Q70</item>
+        <item>Q70 L</item>
+        <item>Q70 Hybrid</item>
+        <item>QX50</item>
+        <item>QX60</item>
+        <item>QX60 Hybrid</item>
+        <item>QX70</item>
+        <item>QX80</item>
+    </string-array>
+    <string-array name="jaguar">
+        <item>Any</item>
+        <item>XE</item>
+        <item>XF</item>
+        <item>XJ</item>
+        <item>XK</item>
+        <item>F-Type</item>
+        <item>F-Pace</item>
+    </string-array>
+    <string-array name="jeep">
+        <item>Any</item>
+        <item>Patriot</item>
+        <item>Wrangler</item>
+        <item>Grand Cherokee</item>
+        <item>Cherokee</item>
+        <item>Wrangler Unlimited</item>
+        <item>Compass</item>
+    </string-array>
+    <string-array name="kia">
+        <item>Any</item>
+        <item>Optima</item>
+        <item>Cadenza</item>
+        <item>K900</item>
+        <item>Sorento</item>
+        <item>Sedona</item>
+        <item>Soul</item>
+        <item>Sportage</item>
+        <item>Rio</item>
+        <item>Rio 5-dr</item>
+        <item>Forte</item>
+        <item>Forte Koup</item>
+        <item>Forte5</item>
+    </string-array>
+    <string-array name="lamboghini">
+        <item>Any</item>
+        <item>LP 610-4</item>
+        <item>LP 620-2</item>
+        <item>LP 700-4</item>
+        <item>LP 700-4 Roadster</item>
+        <item>LP 570-4 Squadra Corse</item>
+        <item>LP 720-4</item>
+        <item>Veneno</item>
+        <item>Asterion LPI 910-4</item>
+    </string-array>
+    <string-array name="lr">
+        <item>Any</item>
+        <item>Range Rover</item>
+        <item>Range Rover Sport</item>
+        <item>Range Rover Evoque</item>
+        <item>LR4</item>
+        <item>Discovery Sport</item>
+        <item>LR2</item>
+    </string-array>
+    <string-array name="lexux">
+        <item>Any</item>
+        <item>IS</item>
+        <item>ES</item>
+        <item>GS</item>
+        <item>LS</item>
+        <item>RC</item>
+        <item>IS C</item>
+        <item>NX</item>
+        <item>RX</item>
+        <item>GX</item>
+        <item>LX</item>
+        <item>CT Hybrid</item>
+        <item>NX Hybrid</item>
+        <item>RX Hybrid</item>
+        <item>ES Hybrid</item>
+        <item>GS Hybrid</item>
+        <item>LS Hybrid</item>
+        <item>RC F</item>
+        <item>LFA</item>
+    </string-array>
+    <string-array name="lincoln">
+        <item>Any</item>
+        <item>MKC</item>
+        <item>MKZ</item>
+        <item>MKS</item>
+        <item>MKX</item>
+        <item>MKT</item>
+        <item>Navigator</item>
+        <item>Black Label</item>
+    </string-array>
+    <string-array name="lotus">
+        <item>Any</item>
+        <item>Elise</item>
+        <item>Exige</item>
+        <item>Evora</item>
+    </string-array>
+    <string-array name="mazda">
+        <item>Any</item>
+        <item>Mazda6</item>
+        <item>Mazda3</item>
+        <item>CX-5</item>
+        <item>CX-9</item>
+        <item>MX-5 Miata</item>
+        <item>Mazda5</item>
+        <item>Mazda2</item>
+    </string-array>
+    <string-array name="mercedes">
+        <item>Any</item>
+        <item>B-Class</item>
+        <item>C250</item>
+        <item>C350</item>
+        <item>C63</item>
+        <item>C300 4MATIC</item>
+        <item>C400 4MATIC</item>
+        <item>E250 BlueTEC</item>
+        <item>E400</item>
+        <item>E400 HYBRID</item>
+        <item>E550</item>
+        <item>E63 4MATIC</item>
+        <item>E63 SMATIC</item>
+        <item>GLA250</item>
+        <item>GLA45</item>
+        <item>GLK250 BlueTEC</item>
+        <item>GLK350</item>
+        <item>ML250 BlueTEC</item>
+        <item>ML350</item>
+        <item>ML400</item>
+        <item>ML63</item>
+        <item>G550</item>
+        <item>G63</item>
+        <item>GL350 BlueTEC</item>
+        <item>GL450 4MATIC</item>
+        <item>GL550 4MATIC</item>
+        <item>GL63</item>
+        <item>S550</item>
+        <item>S550 4MATIC</item>
+        <item>S600</item>
+        <item>S63 4MATIC</item>
+        <item>S65</item>
+        <item>SL400</item>
+        <item>SL550</item>
+        <item>SL63</item>
+        <item>SL65</item>
+        <item>SLK250</item>
+        <item>SLK350</item>
+        <item>SLK55</item>
+        <item>CLA250</item>
+        <item>CLA45</item>
+        <item>CLS400</item>
+        <item>CLS550</item>
+        <item>CLS63 S 4MATIC</item>
+    </string-array>
+    <string-array name="mini">
+        <item>Any</item>
+        <item>Hardtop 2dr</item>
+        <item>Hardtop 4dr</item>
+        <item>Countryman</item>
+        <item>Paceman</item>
+        <item>Convertible</item>
+        <item>Coupe</item>
+        <item>Roadster</item>
+        <item>JCW</item>
+    </string-array>
+    <string-array name="mistubishi">
+        <item>Any</item>
+        <item>I-MIEV</item>
+        <item>Lancer</item>
+        <item>Lancer Evolution</item>
+        <item>Mirage</item>
+        <item>Outlander</item>
+        <item>Outlander Sport</item>
+    </string-array>
+    <string-array name="porsche">
+        <item>Any</item>
+        <item>Macan</item>
+        <item>Cayenne</item>
+        <item>911</item>
+        <item>Cayman</item>
+        <item>Boxter</item>
+        <item>Panamera</item>
+    </string-array>
+    <string-array name="scion">
+        <item>Any</item>
+        <item>FR-S</item>
+        <item>iQ</item>
+        <item>tC</item>
+        <item>xB</item>
+        <item>xD</item>
+    </string-array>
+    <string-array name="smart">
+        <item>Any</item>
+        <item>fortwo Convertible</item>
+        <item>fortwo Electric</item>
+        <item>fortwo Hatchback</item>
+    </string-array>
+    <string-array name="subaru">
+        <item>Any</item>
+        <item>Impreza Hatchback</item>
+        <item>Impreza Sedan</item>
+        <item>Legacy Sedan</item>
+        <item>Outback Wagon</item>
+        <item>WRX</item>
+        <item>WRX STI</item>
+        <item>Forester</item>
+        <item>Legacy</item>
+        <item>BRZ</item>
+        <item>XV Crosstek</item>
+        <item>XV Crosstek Hybrid</item>
+        <item>Tribeca</item>
+    </string-array>
+    <string-array name="suzuki">
+        <item>Any</item>
+        <item>Equator</item>
+        <item>Grand Vitara</item>
+        <item>SX4</item>
+    </string-array>
+    <string-array name="volkswagen">
+        <item>Any</item>
+        <item>Jetta</item>
+        <item>CC</item>
+        <item>Passat</item>
+        <item>Beetle</item>
+        <item>Golf</item>
+        <item>Golf GTI</item>
+        <item>Golf R</item>
+        <item>e-Golf</item>
+        <item>Tiguan</item>
+        <item>Touareg</item>
+        <item>Jetta SportWagen</item>
+        <item>Beetle Convertible</item>
+        <item>Eos</item>
+    </string-array>
+    <string-array name="volvo">
+        <item>Any</item>
+        <item>XC90</item>
+        <item>S80</item>
+        <item>XC70</item>
+        <item>S60</item>
+        <item>V60</item>
+        <item>XC60</item>
+        <item>V60 Cross Country</item>
+    </string-array>
+
+</resources>

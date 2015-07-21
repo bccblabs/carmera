@@ -4,11 +4,13 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import carmera.io.carmera.fragments.BasicSearchFragment;
 import carmera.io.carmera.fragments.Capture;
 import carmera.io.carmera.fragments.RecognitionResultsDisplay;
 import io.codetail.animation.SupportAnimator;
@@ -31,18 +34,32 @@ import yalantis.com.sidemenu.util.ViewAnimator;
  * Created by bski on 6/3/15.
  */
 public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimatorListener,
-                                                       Capture.OnCameraResultListener {
+                                                       Capture.OnCameraResultListener,
+                                                       BasicSearchFragment.OnSearchVehiclesListener,
+                                                       BasicSearchFragment.OnBuildQueryDetailsListener {
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
     private ContentFragment contentFragment;
     private Capture captureFragment;
+    private BasicSearchFragment searchFragment;
     private RecognitionResultsDisplay recognitionResultsFragment;
     private ViewAnimator viewAnimator;
     private int res = R.drawable.content_music;
     private LinearLayout linearLayout;
 
     private String TAG = this.getClass().getCanonicalName();
+
+    @Override
+    public void OnSearchListings (Parcelable query) {
+
+    }
+
+    @Override
+    public void OnBuildQueryDetails (Parcelable query) {
+
+    }
 
     @Override
     public void OnCameraResult (byte[] image_data) {
@@ -86,10 +103,10 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
         list.add(close);
         SlideMenuItem menuItem0 = new SlideMenuItem("Capture", R.drawable.ic_action_camera_white_small);
         list.add(menuItem0);
-        SlideMenuItem menuItem1 = new SlideMenuItem("Favorites", R.drawable.ic_favorite_border_white_24dp);
-        list.add(menuItem1);
         SlideMenuItem menuItem2 = new SlideMenuItem("Search", R.drawable.ic_search_white_24dp);
         list.add(menuItem2);
+        SlideMenuItem menuItem1 = new SlideMenuItem("Favorites", R.drawable.ic_favorite_border_white_24dp);
+        list.add(menuItem1);
         SlideMenuItem menuItem3 = new SlideMenuItem("History", R.drawable.ic_stars_white_24dp);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem("Nearby", R.drawable.ic_location_on_white_24dp);
@@ -194,12 +211,28 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
         animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
         findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
-
+        Log.i(TAG, "Position: " + topPosition);
         captureFragment = Capture.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, captureFragment).commit();
         return captureFragment;
+    }
+
+    private ScreenShotable replaceSearch (ScreenShotable screenShotable, int topPosition) {
+        this.res = this.res == R.drawable.content_music ? R.drawable.content_films : R.drawable.content_music;
+        View view = findViewById(R.id.content_frame);
+        int finalRadius = Math.max(view.getWidth(), view.getHeight());
+        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
+        animator.setInterpolator(new AccelerateInterpolator());
+        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
+
+        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
+        animator.start();
+        searchFragment = BasicSearchFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
+        return searchFragment;
 
     }
+
 
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
@@ -209,8 +242,11 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
             case "Capture": {
                 return replaceCapture(screenShotable, position);
             }
+            case "Search": {
+                return replaceSearch(screenShotable, position);
+            }
             default:
-                return replaceFragment(screenShotable, position);
+                return replaceSearch(screenShotable, position);
         }
     }
 

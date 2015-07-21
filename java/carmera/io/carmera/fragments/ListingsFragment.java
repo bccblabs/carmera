@@ -112,6 +112,7 @@ public class ListingsFragment extends Fragment {
         listings_recycler.setHasFixedSize(false);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
     }
+
     @Override
     public void onAttach (Activity activity) {
         super.onAttach(activity);

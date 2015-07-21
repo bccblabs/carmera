@@ -1,6 +1,5 @@
 package carmera.io.carmera.requests;
 
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.google.gson.Gson;
