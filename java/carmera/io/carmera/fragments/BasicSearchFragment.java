@@ -14,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import com.gc.materialdesign.views.ButtonFloat;
+import com.gc.materialdesign.views.ButtonRectangle;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.utils.KeyPairBoolData;
 import carmera.io.carmera.utils.MultiSpinnerSearch;
+import carmera.io.carmera.utils.Util;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
@@ -36,6 +38,8 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  */
 public class BasicSearchFragment extends Fragment implements ScreenShotable {
     public static final String EXTRA_SEARCH_CRIT = "extra_search_crit";
+
+    private GenQuery query = new GenQuery();
 
     @Bind(R.id.make_spinner)
     MultiSpinnerSearch make_spinner;
@@ -53,13 +57,14 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     MultiSpinnerSearch radius_spinner;
 
     @Bind(R.id.search_listings_base)
-    ButtonFloat search_listings;
+    ButtonRectangle search_listings;
 
     @Bind(R.id.build_details)
-    ButtonFloat build_details;
+    ButtonRectangle build_details;
 
     @Bind(R.id.search_zipcode)
     EditText zipcode;
+
 
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
@@ -78,7 +83,6 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
 
     private HashMap<String, Integer> make_resid_map = new HashMap<>();
 
-    private GenQuery query = new GenQuery();
 
     private OnSearchVehiclesListener search_callback = null;
 
@@ -94,19 +98,6 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
 
     @Override
     public void takeScreenShot () {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                BitmapFactory.Options opts = new BitmapFactory.Options();
-                opts.inMutable = true;
-                Bitmap bitmap = BitmapFactory.decodeResource(cxt.getResources(), R.drawable.carmera, opts);
-                Canvas canvas = new Canvas(bitmap);
-                containerView.draw(canvas);
-                BasicSearchFragment.this.bitmap = bitmap;
-            }
-        };
-
-        thread.start();
     }
 
     @Override
@@ -165,7 +156,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
         List<String> all_makes = new ArrayList<>();
         all_makes.addAll(make_resid_map.keySet());
 
-        final List<KeyPairBoolData> makes = getSpinnerValues(all_makes);
+        final List<KeyPairBoolData> makes = Util.getSpinnerValues(all_makes);
 
         make_spinner.setItems(makes, "Make(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
@@ -208,7 +199,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             }
         });
 
-        final List<KeyPairBoolData> body_types = getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array)));
+        final List<KeyPairBoolData> body_types = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array)));
         bodytype_spinner.setItems(body_types, "Body Type(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -222,7 +213,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             }
         });
 
-        final List<KeyPairBoolData> conditions = getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array)));
+        final List<KeyPairBoolData> conditions = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array)));
         condition_spinner.setItems(conditions, "Conditions(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -236,14 +227,14 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             }
         });
 
-        final List<KeyPairBoolData> radius = getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.range_array)));
+        final List<KeyPairBoolData> radius = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.range_array)));
         radius_spinner.setItems(radius, "Max Distance (miles)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
                         Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                        query.max_dist = items.get(i).getName();
+                        query.max_dist = Integer.parseInt(items.get(i).getName());
                     }
                 }
             }
@@ -277,22 +268,10 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
         }
     }
 
-    private List<KeyPairBoolData> getSpinnerValues (List<String> values) {
-        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
-        for(int i=0; i<values.size(); i++) {
-            KeyPairBoolData h = new KeyPairBoolData();
-            h.setId(i+1);
-            h.setName(values.get(i));
-            h.setSelected(false);
-            kv_list.add(h);
-        }
-        return kv_list;
-    }
-
     private List<KeyPairBoolData> getModels (List<String> makes) {
         final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
         for(int i=0; i<makes.size(); i++) {
-            kv_list.addAll(getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(make_resid_map.get(makes.get(i))))));
+            kv_list.addAll(Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(make_resid_map.get(makes.get(i))))));
         }
         return kv_list;
     }

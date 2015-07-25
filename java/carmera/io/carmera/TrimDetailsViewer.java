@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.ListingsFragment;
 import carmera.io.carmera.fragments.RentalFragment;
 import carmera.io.carmera.fragments.TrimDetails;
+import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.TrimData;
 import carmera.io.carmera.models.VehicleQueries;
 import carmera.io.carmera.models.VehicleQuery;
@@ -27,6 +29,7 @@ import carmera.io.carmera.models.VehicleQuery;
  */
 public class TrimDetailsViewer extends ActionBarActivity {
 
+    public final String TAG = getClass().getCanonicalName();
     public static final String EXTRA_TRIM_DATA = "extra_trim_data";
 
     @Bind(R.id.trim_view_pager)
@@ -65,11 +68,9 @@ public class TrimDetailsViewer extends ActionBarActivity {
                         return fragment;
                     case 1:
                         fragment = ListingsFragment.newInstance();
-                        VehicleQueries queries = new VehicleQueries();
-                        VehicleQuery query = new VehicleQuery();
-                        query.setTrim(TrimDetailsViewer.this.trimData.getTrim());
-                        queries.addQueries(query);
-                        args.putParcelable(ListingsFragment.EXTRA_LISTING_QUERY, Parcels.wrap(queries));
+                        GenQuery query = new GenQuery();
+                        query.setStyleIds(TrimDetailsViewer.this.trimData.getStyleIds());
+                        args.putParcelable(ListingsFragment.EXTRA_LISTING_QUERY, Parcels.wrap(query));
                         fragment.setArguments(args);
                         return fragment;
 

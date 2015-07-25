@@ -12,17 +12,40 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Listings {
-    @JsonProperty
-    public List<Listing> listings;
 
-    public List<Listing> getListings() {
+    @JsonProperty
+    public Integer count;
+
+    @JsonProperty
+    public List<ListingV2> listings;
+
+    @JsonProperty
+    public List<DataEntryFloat> stats;
+
+    public Listings() {
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public List<ListingV2> getListings() {
         return listings;
     }
 
-    public void setListings(List<Listing> listings) {
+    public void setListings(List<ListingV2> listings) {
         this.listings = listings;
     }
 
-    public Listings() {
+    public List<DataEntryFloat> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<DataEntryFloat> stats) {
+        this.stats = stats;
     }
 }

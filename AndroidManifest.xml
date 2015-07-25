@@ -42,7 +42,6 @@
             android:value="@string/parse_client_key" />
 
         <activity android:name=".Base"
-            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,17 +49,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".Trims"
-            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
         </activity>
 
         <activity android:name=".TrimDetailsViewer"
-            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
         </activity>
 
         <activity android:name=".ListingDetailsViewer"
-            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
         </activity>
 

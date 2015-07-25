@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/basic_search_container">
         <carmera.io.carmera.utils.MultiSpinnerSearch
@@ -38,33 +38,31 @@
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_zipcode"
-            />
-
-        <LinearLayout
+    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_zipcode"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/search_listings_base"
             android:layout_width="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
-            <com.gc.materialdesign.views.ButtonFloat
-                android:id="@+id/search_listings_base"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="28dp"
-                android:background="#1E88E5"
-                materialdesign:animate="true"
-                materialdesign:iconDrawable="@drawable/ic_search_white_24dp" />
-            <com.gc.materialdesign.views.ButtonFloat
-                android:id="@+id/build_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="28dp"
-                android:background="#1E88E5"
-                materialdesign:animate="true"
-                materialdesign:iconDrawable="@drawable/ic_navigate_next_white_24dp" />
+            android:layout_height="wrap_content"
+            android:layout_margin="28dp"
+            android:text="Search"
+            android:background="@android:color/holo_blue_light">
+        </com.gc.materialdesign.views.ButtonRectangle>
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/build_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="28dp"
+            android:text="Edit Details"
+            android:background="@android:color/holo_green_light">
+        </com.gc.materialdesign.views.ButtonRectangle>
     </LinearLayout>
 </LinearLayout>

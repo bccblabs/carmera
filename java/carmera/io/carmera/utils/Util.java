@@ -25,6 +25,7 @@ import android.util.Patterns;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -355,6 +356,25 @@ public class Util {
             result += x + delimiter;
         }
         return result.substring(0, result.length()-1);
+    }
+
+    public static List<KeyPairBoolData> getSpinnerValues (List<String> values) {
+        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
+        for(int i=0; i<values.size(); i++) {
+            KeyPairBoolData h = new KeyPairBoolData();
+            h.setId(i+1);
+            h.setName(values.get(i));
+            h.setSelected(false);
+            kv_list.add(h);
+        }
+        return kv_list;
+    }
+
+    public static List<Double> getCoordinatesFromZip (Integer zipcode) {
+        List <Double> coordinates = new ArrayList<>();
+        coordinates.add (31.301675);
+        coordinates.add ( -94.641408);
+        return coordinates;
     }
 
 }

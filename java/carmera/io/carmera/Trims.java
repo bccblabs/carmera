@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
@@ -49,15 +50,19 @@ public class Trims extends ActionBarActivity {
         Slidr.attach(this, config);
         this.generationDataParcelable = getIntent().getExtras().getParcelable(EXTRA_GEN_DATA);
         generationData = Parcels.unwrap(this.generationDataParcelable);
+
         trimsAdapter = new TrimsAdapter();
         trims_recycler.setAdapter(trimsAdapter);
         trims_recycler.setLayoutManager(new LinearLayoutManager(this));
         trims_recycler.setHasFixedSize(true);
+
         trimsAdapter.addAll(generationData.getTrims());
         trimsAdapter.notifyDataSetChanged();
         trimsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<TrimData>() {
             @Override
             public void onItemClick(View v, TrimData item, int position) {
+                Toast.makeText(Trims.this, item.getStyleIds().toString(), Toast.LENGTH_SHORT).show();
+
                 Intent i = new Intent (getApplicationContext(), TrimDetailsViewer.class);
                 Bundle args = new Bundle();
                 Parcelable trim_data = Parcels.wrap(item);

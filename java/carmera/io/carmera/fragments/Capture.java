@@ -8,10 +8,11 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
-
 import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
@@ -25,12 +26,19 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 /**
  * Created by bski on 6/2/15.
  */
-public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarChangeListener,ScreenShotable{
+public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
+                                                              ScreenShotable,
+                                                              View.OnTouchListener {
 
     private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
     private SeekBar zoom = null;
     private ButtonFloat capture_btn = null;
+
+    private ButtonFloat flash_btn = null;
     String flashMode = null;
+    boolean isFlashMode = false;
+
+    private FrameLayout camera_preview;
     public final String TAG = getClass().getCanonicalName();
 
     private Bitmap bitmap;
@@ -61,18 +69,18 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
 
     @Override
     public void takeScreenShot () {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-                        containerView.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap);
-                containerView.draw(canvas);
-                Capture.this.bitmap = bitmap;
-            }
-        };
-
-        thread.start();
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+//                        containerView.getHeight(), Bitmap.Config.ARGB_8888);
+//                Canvas canvas = new Canvas(bitmap);
+//                containerView.draw(canvas);
+//                Capture.this.bitmap = bitmap;
+//            }
+//        };
+//
+//        thread.start();
     }
 
     @Override
@@ -103,9 +111,13 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View cameraView = super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.capture, container, false);
+        camera_preview = (FrameLayout) v.findViewById(R.id.camera_preview);
+
         ((ViewGroup)v.findViewById(R.id.camera_preview)).addView(cameraView);
         zoom = (SeekBar) v.findViewById(R.id.zoombar);
         capture_btn = (ButtonFloat) v.findViewById(R.id.capture_btn);
+        flash_btn = (ButtonFloat) v.findViewById(R.id.flash_btn);
+
         zoom.setKeepScreenOn(true);
         capture_btn.setKeepScreenOn(true);
         capture_btn.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +126,30 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
                 takeSimplePicture ();
             }
         });
+
+        flash_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                isFlashMode = !(isFlashMode);
+                if (isFlashMode)
+                    flash_btn.setBackgroundColor(getActivity().getResources().getColor(R.color.material_blue_grey_800));
+                else
+                    flash_btn.setBackgroundColor(0x1E88E5);
+
+            }
+        });
+
         ButterKnife.bind(this, v);
+        camera_preview.setOnTouchListener(this);
         return v;
     }
 
+
+    @Override
+    public boolean onTouch (View v, MotionEvent e) {
+        autoFocus();
+        return true;
+    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress,
@@ -172,10 +204,10 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
             else {
                 zoom.setEnabled(false);
             }
-
             return(super.adjustPreviewParameters(parameters));
         }
     }
+
 
     @Override
     public void onDestroyView() {
@@ -185,6 +217,9 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
 
     void takeSimplePicture () {
         PictureTransaction xact = new PictureTransaction(getHost());
+        if (isFlashMode) {
+            xact.flashMode(flashMode);
+        }
         takePicture(xact);
     }
 

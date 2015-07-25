@@ -575,5 +575,73 @@
         <item>XC60</item>
         <item>V60 Cross Country</item>
     </string-array>
+    <string-array name="txn_array">
+        <item>Any</item>
+        <item>Manual</item>
+        <item>Automanual</item>
+        <item>Automatic</item>
+    </string-array>
+    <string-array name="cylinder_array">
+        <item>Any</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>12+</item>
+    </string-array>
+    <string-array name="compressor_array">
+        <item>Any</item>
+        <item>None</item>
+        <item>Turbo</item>
+        <item>Supercharged</item>
+    </string-array>
+
+    <string-array name="drivetrain_array">
+        <item>Any</item>
+        <item>All Wheel Drive</item>
+        <item>Front Wheel Drive</item>
+        <item>Rear Wheel Drive</item>
+    </string-array>
+    <string-array name="output_array">
+        <item>Any</item>
+        <item>100+</item>
+        <item>200+</item>
+        <item>300+</item>
+        <item>400+</item>
+        <item>500+</item>
+        <item>600+</item>
+    </string-array>
+    <string-array name="mpg_array">
+        <item>Any</item>
+        <item>10+</item>
+        <item>20+</item>
+        <item>30+</item>
+        <item>40+</item>
+    </string-array>
+    <string-array name="color_array">
+        <item>Any</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Gray</item>
+        <item>Silver</item>
+        <item>Green</item>
+        <item>Orange</item>
+    </string-array>
+    <string-array name="equipment_array">
+        <item>Any</item>
+        <item>Sport Package</item>
+        <item>Moon roof</item>
+        <item>Sun roof</item>
+        <item>Navigation</item>
+        <item>Heated Seats</item>
+        <item>Curtain Airbags</item>
+        <item>Cruise Control</item>
+        <item>Leather Seats</item>
+    </string-array>
 
 </resources>

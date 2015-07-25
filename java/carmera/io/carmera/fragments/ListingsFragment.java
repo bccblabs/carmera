@@ -22,22 +22,22 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.parceler.Parcels;
+
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
-import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.models.GenQuery;
+import carmera.io.carmera.models.ListingV2;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.VehicleQueries;
-import carmera.io.carmera.models.VehicleQuery;
-import carmera.io.carmera.requests.ListingsDataRequest;
+import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
 import carmera.io.carmera.ListingDetailsViewer;
+import carmera.io.carmera.utils.Util;
 
-/**
- * Created by bski on 7/13/15.
- */
 public class ListingsFragment extends Fragment {
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
@@ -50,7 +50,7 @@ public class ListingsFragment extends Fragment {
     private ListingsAdapter listingsAdapter;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
-    private VehicleQueries vehicleQueries;
+    private GenQuery listingsQuery;
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
@@ -71,8 +71,7 @@ public class ListingsFragment extends Fragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
-        this.vehicleQueries = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
-        Toast.makeText(getActivity(), "Queries to go: " + this.vehicleQueries.getQueries().size(), Toast.LENGTH_SHORT).show();
+        this.listingsQuery = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
         setRetainInstance(true);
     }
 
@@ -86,20 +85,17 @@ public class ListingsFragment extends Fragment {
     @Override
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
-            vehicleQuery.setPagenum(1);
-            vehicleQuery.setPagesize(5);
-            vehicleQuery.setRadius(500);
-            vehicleQuery.setZipcode(92612);
-            Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
-            ListingsDataRequest listingsDataRequest = new ListingsDataRequest(vehicleQuery);
-            spiceManager.execute (listingsDataRequest, vehicleQuery.getTrim(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
-        }
+        listingsQuery.setPagenum(1);
+        listingsQuery.setPagesize(5);
+        listingsQuery.setMax_dist(500);
+        listingsQuery.setCoordinates(Util.getCoordinatesFromZip(92612));
+        ListingsRequest listingsDataRequest = new ListingsRequest(listingsQuery);
+        spiceManager.execute (listingsDataRequest, new Date().toString(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
         listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         listingsAdapter = new ListingsAdapter();
-        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
+        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<ListingV2>() {
             @Override
-            public void onItemClick(View v, Listing item, int position) {
+            public void onItemClick(View v, ListingV2 item, int position) {
                 Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
                 Bundle args = new Bundle();
                 Parcelable listing_data = Parcels.wrap(item);

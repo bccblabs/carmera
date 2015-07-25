@@ -35,6 +35,8 @@ public class TrimData {
     public List<DataEntryFloat> avgPrice;
     @JsonProperty
     public List<DataEntryFloat> avgRating;
+    @JsonProperty
+    public List<Integer> styleIds;
 
     @JsonProperty
     public Engine engine;
@@ -57,6 +59,18 @@ public class TrimData {
     public Integer max_used_tmv;
 
     public TrimData() {
+    }
+
+    public List<DataEntryFloat> getDimensions() {
+        return dimensions;
+    }
+
+    public List<Integer> getStyleIds() {
+        return styleIds;
+    }
+
+    public void setStyleIds(List<Integer> styleIds) {
+        this.styleIds = styleIds;
     }
 
     public String getMake() {

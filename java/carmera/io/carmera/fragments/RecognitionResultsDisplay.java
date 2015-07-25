@@ -11,12 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -27,6 +29,9 @@ import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.PhotoUploadFragment;
@@ -35,10 +40,11 @@ import carmera.io.carmera.Trims;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.CarGenAdapter;
 import carmera.io.carmera.models.CapturedVehicle;
+import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.GenerationData;
 import carmera.io.carmera.models.Prediction;
 import carmera.io.carmera.models.Predictions;
-import carmera.io.carmera.requests.GenerationDataRequest;
+import carmera.io.carmera.requests.GenDataRequest;
 import carmera.io.carmera.requests.PredictionsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
@@ -83,7 +89,8 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
 
         @Override
         public void onRequestSuccess (GenerationData result) {
-            Toast.makeText(getActivity(), "Data Received: " + result.snapshot.count, Toast.LENGTH_SHORT).show();
+            Gson gson = new Gson();
+            Log.i (TAG, gson.toJson(result));
             carGenAdapter.add(result);
             Toast.makeText(getActivity(), "Adapter length: " + carGenAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
             carGenAdapter.notifyDataSetChanged();
@@ -102,10 +109,15 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
             if (result!=null) {
                 Toast.makeText(getActivity(), "Predictions Received: " + result.predictions.size(), Toast.LENGTH_SHORT).show();
                 for (Prediction prediction : result.predictions) {
+                    GenQuery genQuery = new GenQuery();
                     genSpiceManager.addListenerIfPending(GenerationData.class, prediction.class_name, new GenerationDataRequestListener());
                     Toast.makeText(getActivity(), prediction.class_name, Toast.LENGTH_SHORT).show();
-                    GenerationDataRequest generationDataRequest = new GenerationDataRequest(prediction.class_name);
-                    genSpiceManager.execute(generationDataRequest, prediction.class_name, DurationInMillis.ALWAYS_RETURNED, new GenerationDataRequestListener());
+                    List<String> labels = new ArrayList<>();
+                    labels.add(prediction.class_name);
+                    Log.i (TAG, labels.toString());
+                    genQuery.setLabels(labels);
+                    GenDataRequest generationDataRequest = new GenDataRequest(genQuery);
+                    genSpiceManager.execute(generationDataRequest, prediction.class_id, DurationInMillis.ALWAYS_RETURNED, new GenerationDataRequestListener());
                 }
             }
         }

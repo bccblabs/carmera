@@ -46,11 +46,21 @@ public class Snapshot {
     public Integer used_tmv_max;
     @JsonProperty
     public String image_holder;
+    @JsonProperty
+    public String trim;
 
     @JsonProperty
     public Integer count;
 
     public Snapshot() {
+    }
+
+    public String getTrim() {
+        return trim;
+    }
+
+    public void setTrim(String trim) {
+        this.trim = trim;
     }
 
     public Integer getCount() {
