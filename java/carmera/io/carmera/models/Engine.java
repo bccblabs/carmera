@@ -28,8 +28,18 @@ public class Engine {
     public String type;
     @JsonProperty
     public String configuration;
+    @JsonProperty
+    public Float size;
 
     public Engine() {
+    }
+
+    public Float getSize() {
+        return size;
+    }
+
+    public void setSize(Float size) {
+        this.size = size;
     }
 
     public String getCompressionRatio() {

@@ -48,18 +48,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Trims"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity android:name=".TrimDetailsViewer"
-            android:label="@string/app_name">
-        </activity>
 
         <activity android:name=".ListingDetailsViewer"
             android:label="@string/app_name">
         </activity>
 
+        <activity android:name=".TrimsListingsActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".TrimsViewerContainer"
+            android:label="@string/app_name">
+        </activity>
 
         <service
             android:name=".utils.InMemorySpiceService"

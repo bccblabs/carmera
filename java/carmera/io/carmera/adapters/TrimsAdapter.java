@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -15,6 +16,7 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.models.Engine;
 import carmera.io.carmera.models.Mpg;
 import carmera.io.carmera.models.TrimData;
+import carmera.io.carmera.utils.Util;
 import carmera.io.carmera.widgets.SquareImageView;
 
 /**
@@ -25,7 +27,7 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
     private Context cxt;
     @Override
     public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.car_gen_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gen_item, parent, false);
         this.cxt = parent.getContext();
         return new ViewHolder(view);
     }
@@ -36,14 +38,14 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
         TrimData trimData = getItem(i);
         Engine engine = trimData.getEngine();
         Mpg mpg = trimData.getMpg();
-        viewHolder.gen_info.setText(String.format ("%s %s %s", trimData.make, trimData.model, trimData.trim));
-        viewHolder.hp.setText(String.format("Horsepower: %d hp", engine.horsepower));
-        viewHolder.tq.setText(String.format("Torque: %d lb/ft", engine.torque));
-        viewHolder.city_mpg.setText(String.format("City MPG: %d ", mpg.city));
-        viewHolder.hwy_mpg.setText(String.format("Highway MPG: %d ", mpg.highway));
-        viewHolder.msrp.setText(String.format("MSRP: $%d - %d", trimData.min_msrp, trimData.max_msrp));
-        viewHolder.tmv.setText(String.format("Used: $%d - %d", trimData.min_used_tmv, trimData.max_used_tmv));
-        viewHolder.drivetrain.setText(String.format("Available as %s", trimData.drivenWheels));
+        viewHolder.gen_info.setText(String.format ("%s", trimData.trim));
+        viewHolder.hp.setText(String.format("%d HP", engine.horsepower));
+        viewHolder.tq.setText( String.format("%d LB/FT", engine.torque));
+        viewHolder.city_mpg.setText(String.format("%d MPG", mpg.city));
+        viewHolder.hwy_mpg.setText(String.format("%d MPG", mpg.highway));
+        viewHolder.msrp.setText(Util.getRangeText(trimData.min_msrp, trimData.max_msrp));
+        viewHolder.tmv.setText(Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv));
+        viewHolder.drivetrain.setText(String.format(trimData.drivenWheels.toUpperCase()));
 
         String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
         if (trimData.getImages().getExterior().size() > 0) {
@@ -63,7 +65,7 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
         @Bind(R.id.gen_info)
         public TextView gen_info;
         @Bind(R.id.photo)
-        public SquareImageView photo;
+        public ImageView photo;
         @Bind(R.id.hp)
         public TextView hp;
         @Bind(R.id.tq)

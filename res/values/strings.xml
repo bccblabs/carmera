@@ -22,5 +22,16 @@
     <string name="radius_title">Distance</string>
     <string name="bodyType_title">Body Type</string>
     <string name="type_to_search">Type to Search</string>
-
+    <string name="back_to_camera">Back to Camera</string>
+    <string name="powertrain_desc">Powertrain</string>
+    <string name="hp_desc">Horsepower</string>
+    <string name="tq_desc">Torque</string>
+    <string name="fuel_consumption_desc">Fuel Consumption</string>
+    <string name="city_desc">City MPG</string>
+    <string name="hwy_desc">Highway MPG</string>
+    <string name="zero_sixty_desc">Zero-Sixty</string>
+    <string name="transmission_desc">Transmission</string>
+    <string name="drivetrain_desc">Drivetrain</string>
+    <string name="tmv_desc">Used Market Value</string>
+    <string name="msrp_desc">New MSRP</string>
 </resources>

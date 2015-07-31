@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -26,6 +27,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -34,9 +36,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import carmera.io.carmera.PhotoUploadFragment;
+import butterknife.OnClick;
 import carmera.io.carmera.R;
-import carmera.io.carmera.Trims;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.CarGenAdapter;
 import carmera.io.carmera.models.CapturedVehicle;
@@ -47,19 +48,40 @@ import carmera.io.carmera.models.Predictions;
 import carmera.io.carmera.requests.GenDataRequest;
 import carmera.io.carmera.requests.PredictionsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
+import carmera.io.carmera.TrimsListingsActivity;
+import carmera.io.carmera.widgets.SquareImageView;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 public class RecognitionResultsDisplay extends Fragment implements ScreenShotable {
 
+    public static final String EXTRA_GEN_DATA = "extra_gen_data";
 
     @Bind(R.id.car_gen_recycler)
     RecyclerView car_gen_recycler;
 
     @Bind (R.id.content_container)
-    LinearLayout containerView;
+    View containerView;
+
+    @Bind(R.id.preview_container)
+    View preview_container;
+
+    @OnClick(R.id.retake_photo_btn)
+    public void backToCamera () {
+        spiceManager.cancelAllRequests();
+        retakePhotoListener.retakePhoto();
+    }
+
+    @Bind (R.id.photo_holder)
+    SquareImageView photo;
+
+    @Bind (R.id.upload_progress_bar)
+    ProgressBarCircularIndeterminate progress_bar;
+
+    @Bind(R.id.retake_photo_btn)
+    View retake_btn;
 
     private CarGenAdapter carGenAdapter;
-    final Context context = getActivity();
+    private Context context;
 
     private Bitmap bitmap;
     private String TAG = getClass().getCanonicalName();
@@ -67,19 +89,26 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
     private SpiceManager genSpiceManager = new SpiceManager (InMemorySpiceService.class);
 
     private CapturedVehicle capturedVehicle;
-    private PhotoUploadFragment photoUploadFragment;
+    private RetakePhotoListener retakePhotoListener;
     private SaveCallback parseImageSaveCallback = new SaveCallback() {
         @Override
         public void done(ParseException e) {
-            Bundle args = new Bundle();
-            photoUploadFragment = PhotoUploadFragment.newInstance();
-            args.putString("image_url", capturedVehicle.getTagPhoto().getUrl());
-            photoUploadFragment.setArguments(args);
-            photoUploadFragment.show (getChildFragmentManager(), "upload_progress");
-            PredictionsRequest predictionsRequest = new PredictionsRequest(capturedVehicle.getTagPhoto().getUrl());
+            String photo_url = capturedVehicle.getTagPhoto().getUrl();
+            Picasso.with(context) //
+                    .load(photo_url) //
+                    .placeholder(R.drawable.placeholder) //
+                    .error(R.drawable.error) //
+                    .fit() //
+                    .centerCrop()
+                    .into(photo);
+            PredictionsRequest predictionsRequest = new PredictionsRequest(photo_url);
             spiceManager.execute(predictionsRequest, capturedVehicle.getObjectId(), DurationInMillis.ALWAYS_RETURNED, new PredictionsRequestListener());
         }
     };
+
+    public interface RetakePhotoListener {
+        public void retakePhoto();
+    }
 
     private final class GenerationDataRequestListener implements RequestListener<GenerationData> {
         @Override
@@ -90,13 +119,13 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
         @Override
         public void onRequestSuccess (GenerationData result) {
             Gson gson = new Gson();
-            Log.i (TAG, gson.toJson(result));
+            Log.i(TAG, gson.toJson(result));
             carGenAdapter.add(result);
-            Toast.makeText(getActivity(), "Adapter length: " + carGenAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
             carGenAdapter.notifyDataSetChanged();
-            photoUploadFragment.dismiss();
+            Toast.makeText(getActivity(), "Adapter length: " + carGenAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private final class PredictionsRequestListener implements RequestListener<Predictions> {
         @Override
@@ -119,6 +148,9 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
                     GenDataRequest generationDataRequest = new GenDataRequest(genQuery);
                     genSpiceManager.execute(generationDataRequest, prediction.class_id, DurationInMillis.ALWAYS_RETURNED, new GenerationDataRequestListener());
                 }
+                preview_container.setVisibility(View.GONE);
+                retake_btn.setVisibility(View.GONE);
+                car_gen_recycler.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -168,10 +200,10 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
         carGenAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<GenerationData>() {
             @Override
             public void onItemClick(View v, GenerationData item, int position) {
-                Intent i = new Intent (getActivity(), Trims.class);
+                Intent i = new Intent (getActivity(), TrimsListingsActivity.class);
                 Bundle args = new Bundle();
                 Parcelable gen_data = Parcels.wrap(item);
-                args.putParcelable(Trims.EXTRA_GEN_DATA, gen_data);
+                args.putParcelable(EXTRA_GEN_DATA, gen_data);
                 i.putExtras(args);
                 startActivity(i);
             }
@@ -182,6 +214,12 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
     @Override
     public void onAttach (Activity activity) {
         super.onAttach(activity);
+        context = activity;
+        try {
+            retakePhotoListener = (RetakePhotoListener) context;
+        } catch (ClassCastException e) {
+            Log.e (TAG, e.getMessage());
+        }
     }
 
 

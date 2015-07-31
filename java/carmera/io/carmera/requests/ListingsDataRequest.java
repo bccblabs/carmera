@@ -30,7 +30,7 @@ public class ListingsDataRequest extends OkHttpSpiceRequest<Listings>{
     @Override
     public Listings loadDataFromNetwork () throws Exception {
         try {
-            String url_string = String.format("http://52.27.126.141:3000/listings%s", this.vehicleQuery.get_query_params());
+            String url_string = String.format("http://52.27.114.36:3000/listings%s", this.vehicleQuery.get_query_params());
             Log.i (TAG, "Request string: " + url_string);
             Request request = new Request.Builder()
                     .url(url_string)

@@ -6,12 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.speech.RecognitionListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carmera.io.carmera.fragments.BasicSearchFragment;
-import carmera.io.carmera.fragments.Capture;
+import carmera.io.carmera.fragments.CaptureFragment;
 import carmera.io.carmera.fragments.DetailsSearchFragment;
-import carmera.io.carmera.fragments.ListingsFragment;
+import carmera.io.carmera.fragments.ListingsV2Fragment;
 import carmera.io.carmera.fragments.RecognitionResultsDisplay;
 import carmera.io.carmera.fragments.SettingsFragment;
 import io.codetail.animation.SupportAnimator;
@@ -38,21 +38,22 @@ import yalantis.com.sidemenu.util.ViewAnimator;
  * Created by bski on 6/3/15.
  */
 public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimatorListener,
-                                                       Capture.OnCameraResultListener,
+                                                       CaptureFragment.OnCameraResultListener,
                                                        BasicSearchFragment.OnSearchVehiclesListener,
                                                        BasicSearchFragment.OnBuildQueryDetailsListener,
-                                                       DetailsSearchFragment.OnEditBaseSearchListener {
+                                                       DetailsSearchFragment.OnEditBaseSearchListener,
+                                                       RecognitionResultsDisplay.RetakePhotoListener{
 
+    public static final String CLOSE = "Close";
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
-    private ContentFragment contentFragment;
-    private Capture captureFragment;
+    private CaptureFragment captureFragmentFragment;
     private BasicSearchFragment searchFragment;
     private SettingsFragment settingsFragment;
     private RecognitionResultsDisplay recognitionResultsFragment;
     private DetailsSearchFragment detailsSearchFragment;
-    private ListingsFragment listingsFragment;
+    private ListingsV2Fragment listingsV2Fragment;
     private ViewAnimator viewAnimator;
     private int res = R.drawable.content_music;
     private LinearLayout linearLayout;
@@ -60,13 +61,22 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     private String TAG = this.getClass().getCanonicalName();
 
     @Override
+    public void retakePhoto() {
+        captureFragmentFragment = CaptureFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, captureFragmentFragment)
+                .addToBackStack("CAPTURE")
+                .commit();
+    }
+
+    @Override
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
-        args.putParcelable(ListingsFragment.EXTRA_LISTING_QUERY, query);
-        listingsFragment = ListingsFragment.newInstance();
-        listingsFragment.setArguments(args);
+        args.putParcelable(ListingsV2Fragment.EXTRA_LISTING_QUERY, query);
+        listingsV2Fragment = ListingsV2Fragment.newInstance();
+        listingsV2Fragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, listingsFragment)
+                .replace(R.id.content_frame, listingsV2Fragment)
                 .addToBackStack("LISTINGS")
                 .commit();
     }
@@ -113,9 +123,9 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base);
-        captureFragment = Capture.newInstance();
+        captureFragmentFragment = CaptureFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, captureFragment)
+                .replace(R.id.content_frame, captureFragmentFragment)
                 .addToBackStack("CAPTURE")
                 .commit();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,11 +141,11 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
 
         setActionBar();
         createMenuList();
-        viewAnimator = new ViewAnimator<>(this, list, captureFragment, drawerLayout, this);
+        viewAnimator = new ViewAnimator<>(this, list, captureFragmentFragment, drawerLayout, this);
     }
 
     private void createMenuList() {
-        SlideMenuItem close = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
+        SlideMenuItem close = new SlideMenuItem(CLOSE, R.drawable.icn_close);
         list.add(close);
         SlideMenuItem menuItem0 = new SlideMenuItem("Capture", R.drawable.ic_action_camera_white_small);
         list.add(menuItem0);
@@ -230,9 +240,9 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
 
         switch (fragmentName) {
             case "Capture":
-                captureFragment = Capture.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, captureFragment).commit();
-                return captureFragment;
+                captureFragmentFragment = CaptureFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, captureFragmentFragment).commit();
+                return captureFragmentFragment;
             case "Search":
                 searchFragment = BasicSearchFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
@@ -245,7 +255,7 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
         switch (slideMenuItem.getName()) {
-            case ContentFragment.CLOSE:
+            case CLOSE:
                 return screenShotable;
             case "Capture": {
                 return replaceFragment(screenShotable, position, "Capture");

@@ -17,5 +17,40 @@
         <item name="spinBars">true</item>
         <item name="color">@color/drawerArrowColor</item>
     </style>
-
+    <style name="DescStyle">
+        <item name="android:layout_column">0</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="EntryStyle" parent="DescStyle">
+        <item name="android:layout_column">1</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textColor">@android:color/background_light</item>
+    </style>
+    <style name="SmallDescStyle" parent="DescStyle">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="SmallEntryStyle" parent="EntryStyle">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TableStyle">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="TableRowStyle">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
 </resources>

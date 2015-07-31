@@ -355,7 +355,7 @@ public class Util {
         for (String x:strings) {
             result += x + delimiter;
         }
-        return result.substring(0, result.length()-1);
+        return result.substring(0, result.length()-2);
     }
 
     public static List<KeyPairBoolData> getSpinnerValues (List<String> values) {
@@ -375,6 +375,17 @@ public class Util {
         coordinates.add (31.301675);
         coordinates.add ( -94.641408);
         return coordinates;
+    }
+
+    public static String getRangeText (Object a, Object b) {
+        if (a != null && b != null )
+            return String.format("%s - %s", a.toString(), b.toString());
+        else if (a == null && b == null)
+            return null;
+        else if ( a == null )
+            return b.toString();
+        else
+            return a.toString();
     }
 
 }

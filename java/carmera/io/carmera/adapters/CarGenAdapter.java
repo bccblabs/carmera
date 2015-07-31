@@ -2,9 +2,11 @@ package carmera.io.carmera.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -22,10 +24,11 @@ import carmera.io.carmera.widgets.SquareImageView;
  */
 public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenAdapter.ViewHolder> {
 
+    public String TAG = getClass().getCanonicalName();
     private Context cxt;
     @Override
     public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from (parent.getContext()).inflate(R.layout.car_gen_item, parent, false);
+        View view = LayoutInflater.from (parent.getContext()).inflate(R.layout.gen_item, parent, false);
         this.cxt = parent.getContext();
         return new ViewHolder(view);
     }
@@ -33,30 +36,34 @@ public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenA
     @Override
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
-        Snapshot snapshot = getItem(i).snapshot;
-        viewHolder.gen_info.setText(snapshot.gen_name + snapshot.make + snapshot.model);
-        viewHolder.hp.setText(String.format("Horsepower: %d - %d hp", snapshot.hp_min, snapshot.hp_max));
-        viewHolder.tq.setText(String.format("Torque: %d - %d lb/ft", snapshot.tq_min, snapshot.tq_max));
-        viewHolder.city_mpg.setText(String.format("City MPG: %s - %s", snapshot.city_mpg_min, snapshot.city_mpg_max));
-        viewHolder.hwy_mpg.setText(String.format("Highway MPG: %s - %s", snapshot.hwy_mpg_min, snapshot.hwy_mpg_max));
-        viewHolder.msrp.setText(String.format("MSRP: $%d - %d", snapshot.msrp_min, snapshot.msrp_max));
-        viewHolder.tmv.setText(String.format("Used: $%d - %d", snapshot.used_tmv_min, snapshot.used_tmv_max));
-        viewHolder.drivetrain.setText(String.format("Available in %s", Util.joinStrings(snapshot.getDrivenWheelsList(), ", ") ));
-        String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
-        Picasso.with(cxt)
-                .load(base_url + snapshot.image_holder)
-                .placeholder(R.drawable.placeholder) //
-                .error(R.drawable.error) //
-                .centerCrop()
-                .fit()
-                .into(viewHolder.photo);
-    }
+        try {
+            Snapshot snapshot = getItem(i).snapshot;
+            viewHolder.gen_info.setText(snapshot.make + " " + snapshot.model + " " + snapshot.gen_name);
+            viewHolder.hp.setText(Util.getRangeText(snapshot.hp_min, snapshot.hp_max) + " HP");
+            viewHolder.tq.setText(Util.getRangeText(snapshot.tq_min, snapshot.tq_max) + " LB/FT");
+            viewHolder.city_mpg.setText(Util.getRangeText(snapshot.city_mpg_min, snapshot.city_mpg_max) + " MPG");
+            viewHolder.hwy_mpg.setText(Util.getRangeText(snapshot.hwy_mpg_min, snapshot.hwy_mpg_max) + " MPG");
+            viewHolder.msrp.setText((Util.getRangeText(snapshot.msrp_min, snapshot.msrp_max)));
+            viewHolder.tmv.setText(Util.getRangeText(snapshot.used_tmv_min, snapshot.used_tmv_max));
+            viewHolder.drivetrain.setText(String.format(Util.joinStrings(snapshot.getDrivenWheelsList(), ", ").toUpperCase()));
 
+            String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
+            Picasso.with(cxt)
+                    .load(base_url + snapshot.image_holder)
+                    .placeholder(R.drawable.placeholder) //
+                    .error(R.drawable.error) //
+                    .centerCrop()
+                    .fit()
+                    .into(viewHolder.photo);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.gen_info)
         public TextView gen_info;
         @Bind(R.id.photo)
-        public SquareImageView photo;
+        public ImageView photo;
         @Bind(R.id.hp)
         public TextView hp;
         @Bind(R.id.tq)

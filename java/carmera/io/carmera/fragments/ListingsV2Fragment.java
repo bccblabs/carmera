@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,23 +22,24 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.parceler.Parcels;
+
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
-import carmera.io.carmera.adapters.ListingsAdapter;
-import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.adapters.ListingsV2Adapter;
+import carmera.io.carmera.models.GenQuery;
+import carmera.io.carmera.models.ListingV2;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.VehicleQueries;
-import carmera.io.carmera.models.VehicleQuery;
-import carmera.io.carmera.requests.ListingsDataRequest;
+import carmera.io.carmera.models.ListingsV2;
+import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
 import carmera.io.carmera.ListingDetailsViewer;
+import carmera.io.carmera.utils.Util;
 
-/**
- * Created by bski on 7/13/15.
- */
-public class ListingsFragment extends Fragment {
+public class ListingsV2Fragment extends Fragment {
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
@@ -48,25 +48,21 @@ public class ListingsFragment extends Fragment {
     RecyclerView listings_recycler;
 
     final Context context = getActivity();
-    private ListingsAdapter listingsAdapter;
+    private ListingsV2Adapter listingsV2Adapter;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
-    private VehicleQueries vehicleQueries;
+    private GenQuery listingsQuery;
 
-    private final class ListingsRequestListener implements RequestListener<Listings> {
+    private final class ListingsRequestListener implements RequestListener<ListingsV2> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
         @Override
-        public void onRequestSuccess (Listings result) {
-            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
-            try {
-                listingsAdapter.addAll(result.getListings());
-                listingsAdapter.notifyDataSetChanged();
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
+        public void onRequestSuccess (ListingsV2 result) {
+            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsV2Adapter.getItemCount(), Toast.LENGTH_SHORT).show();
+            listingsV2Adapter.addAll(result.getListings());
+            listingsV2Adapter.notifyDataSetChanged();
         }
     }
 
@@ -76,8 +72,7 @@ public class ListingsFragment extends Fragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
-        this.vehicleQueries = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
-        Toast.makeText(getActivity(), "Queries to go: " + this.vehicleQueries.getQueries().size(), Toast.LENGTH_SHORT).show();
+        this.listingsQuery = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
         setRetainInstance(true);
     }
 
@@ -91,20 +86,17 @@ public class ListingsFragment extends Fragment {
     @Override
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
-            vehicleQuery.setPagenum(1);
-            vehicleQuery.setPagesize(5);
-            vehicleQuery.setRadius(200);
-            vehicleQuery.setZipcode(92612);
-            Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
-            ListingsDataRequest listingsDataRequest = new ListingsDataRequest(vehicleQuery);
-            spiceManager.execute (listingsDataRequest, vehicleQuery.getTrim(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
-        }
+        listingsQuery.setPagenum(1);
+        listingsQuery.setPagesize(5);
+        listingsQuery.setMax_dist(50);
+        listingsQuery.setCoordinates(Util.getCoordinatesFromZip(92612));
+        ListingsRequest listingsDataRequest = new ListingsRequest(listingsQuery);
+        spiceManager.execute (listingsDataRequest, new Date().toString(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
         listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listingsAdapter = new ListingsAdapter();
-        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
+        listingsV2Adapter = new ListingsV2Adapter();
+        listingsV2Adapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<ListingV2>() {
             @Override
-            public void onItemClick(View v, Listing item, int position) {
+            public void onItemClick(View v, ListingV2 item, int position) {
                 Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
                 Bundle args = new Bundle();
                 Parcelable listing_data = Parcels.wrap(item);
@@ -113,7 +105,7 @@ public class ListingsFragment extends Fragment {
                 startActivity(i);
             }
         });
-        listings_recycler.setAdapter(listingsAdapter);
+        listings_recycler.setAdapter(listingsV2Adapter);
         listings_recycler.setHasFixedSize(false);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
     }
@@ -142,8 +134,8 @@ public class ListingsFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    public static ListingsFragment newInstance() {
-        return new ListingsFragment();
+    public static ListingsV2Fragment newInstance() {
+        return new ListingsV2Fragment();
     }
 
 

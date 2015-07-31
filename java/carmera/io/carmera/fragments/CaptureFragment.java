@@ -3,7 +3,6 @@ package carmera.io.carmera.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +25,7 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 /**
  * Created by bski on 6/2/15.
  */
-public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
+public class CaptureFragment extends SupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
                                                               ScreenShotable,
                                                               View.OnTouchListener {
 
@@ -50,9 +49,9 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
         public void OnCameraResult (byte[] image_data);
     }
 
-    public static Capture newInstance () {
-        Capture capture = new Capture();
-        return capture;
+    public static CaptureFragment newInstance () {
+        CaptureFragment captureFragment = new CaptureFragment();
+        return captureFragment;
     }
 
 
@@ -87,12 +86,12 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
     public Bitmap getBitmap() { return bitmap; }
 
 
-    static Capture newInstance (boolean useFFC) {
-        Capture capture_frag = new Capture();
+    static CaptureFragment newInstance (boolean useFFC) {
+        CaptureFragment capture_Fragment_frag = new CaptureFragment();
         Bundle args=new Bundle();
         args.putBoolean(KEY_USE_FFC, useFFC);
-        capture_frag.setArguments(args);
-        return capture_frag;
+        capture_Fragment_frag.setArguments(args);
+        return capture_Fragment_frag;
     }
 
     @Override
@@ -199,7 +198,7 @@ public class Capture extends SupportCameraFragment implements SeekBar.OnSeekBarC
 
             if (doesZoomReallyWork() && parameters.getMaxZoom() > 0) {
                 zoom.setMax(parameters.getMaxZoom());
-                zoom.setOnSeekBarChangeListener(Capture.this);
+                zoom.setOnSeekBarChangeListener(CaptureFragment.this);
             }
             else {
                 zoom.setEnabled(false);

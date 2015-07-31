@@ -1,51 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.flavienlaurent.discrollview.lib.DiscrollView-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--xmlns:discrollve="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-
-    <!--<com.flavienlaurent.discrollview.lib.DiscrollViewContent-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-        <!--<include layout="@layout/material_view_pager_placeholder"/>-->
-
-        <!--<carmera.io.carmera.discroll_layout.White-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-
-<!--<com.github.ksoichiro.android.observablescrollview.ObservableScrollView-->
-    <!--android:id="@+id/scrollView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
 <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:pew="http://schemas.android.com/tools"
+    android:background="#99000000"
     android:id="@+id/scroll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/material_view_pager_placeholder"/>
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/rating_chart"
+        <RelativeLayout
+            android:id="@+id/trim_overview"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="wrap_content">
+            <com.fmsirvent.ParallaxEverywhere.PEWImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:scaleType="centerCrop"
+                android:background="@android:color/darker_gray"
+                android:id="@+id/trim_image"
+                />
+            <com.fmsirvent.ParallaxEverywhere.PEWTextView
+                android:id="@+id/trim_name"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                pew:block_parallax_x="true"
+                pew:parallax_x="160dp"
+                pew:parallax_y="160dp"
+                pew:reverse="reverseY"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/powertrain_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <com.fmsirvent.ParallaxEverywhere.PEWImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:id="@+id/engine_image" />
+            <com.fmsirvent.ParallaxEverywhere.PEWTextView
+                android:id="@+id/engine_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                pew:block_parallax_x="true"
+                pew:parallax_x="160dp"
+                pew:parallax_y="160dp"
+                pew:reverse="reverseY"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center|top"
+                android:textColor="@android:color/white"/>
+            <TableLayout
+                android:layout_alignBottom="@+id/engine_name"
+                style="@style/TableStyle">
+                <TableRow
+                    android:id="@+id/hp_row"
+                    style="@style/TableRowStyle">
+                    <TextView
+                        style="@style/DescStyle"
+                        android:text="@string/hp_desc"/>
+                    <TextView
+                        style="@style/EntryStyle"
+                        android:id="@+id/horsepower"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tq_row"
+                    style="@style/TableRowStyle">
+                    <TextView
+                        style="@style/DescStyle"
+                        android:text="@string/tq_desc"/>
+                    <TextView
+                        style="@style/EntryStyle"
+                        android:text="asdfasdf"
+                        android:id="@+id/torque"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/consumption_row"
+                    style="@style/TableRowStyle">
+                    <TextView
+                        style="@style/DescStyle"
+                        android:text="@string/fuel_consumption_desc"/>
+                    <TextView
+                        style="@style/EntryStyle"
+                        android:id="@+id/fuel_consumption"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/transmission_row"
+                    style="@style/TableRowStyle">
+                    <TextView
+                        style="@style/DescStyle"
+                        android:text="@string/transmission_desc"/>
+                    <TextView
+                        style="@style/EntryStyle"
+                        android:id="@+id/transmission"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/drivetrain_row"
+                    style="@style/TableRowStyle">
+                    <TextView
+                        style="@style/DescStyle"
+                        android:text="@string/drivetrain_desc"/>
+                    <TextView
+                        style="@style/EntryStyle"
+                        android:textAllCaps="true"
+                        android:id="@+id/drivetrain"/>
+                </TableRow>
+            </TableLayout>
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/price_chart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+        </RelativeLayout>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <include layout="@layout/material_view_pager_placeholder"/>
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/rating_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/tco_chart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/price_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/tco_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+        </LinearLayout>
     </LinearLayout>
-
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

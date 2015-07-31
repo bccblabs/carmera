@@ -38,7 +38,7 @@ public class GenDataRequest extends OkHttpSpiceRequest<GenerationData>{
             Log.i(TAG, req_json);
             RequestBody body = RequestBody.create(JSON, req_json);
             Request request = new Request.Builder()
-                    .url("http://52.24.11.145:3000/generations/trims/details")
+                    .url("http://52.27.114.36:3000/generations/trims/details")
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
