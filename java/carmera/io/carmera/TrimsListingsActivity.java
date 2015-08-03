@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import org.parceler.Parcels;
 
@@ -98,26 +99,6 @@ public class TrimsListingsActivity extends ActionBarActivity {
                 }
             }
 
-
-            @Override
-            public void setPrimaryItem(ViewGroup container, int position, Object object) {
-                super.setPrimaryItem(container, position, object);
-                if (position == init_position)
-                    return;
-                init_position = position;
-                String imageUrl = "";
-                switch (position) {
-                    case 0:
-                        imageUrl = getResources().getString (R.string.edmunds_baseurl) + generationData.getSnapshot().getImage_holder();
-                        break;
-                    case 1:
-                        imageUrl = getResources().getString (R.string.edmunds_baseurl) + generationData.getSnapshot().getImage_holder();
-                        break;
-                }
-                final int fadeDuration = 50;
-                trims_listings_viewpager.setImageUrl(imageUrl, fadeDuration);
-            }
-
             @Override
             public int getCount() {
                 return 2;
@@ -136,6 +117,5 @@ public class TrimsListingsActivity extends ActionBarActivity {
         });
         trims_listings_viewpager.getPagerTitleStrip().setViewPager(trims_listings_viewpager.getViewPager());
         trims_listings_viewpager.getViewPager().setCurrentItem(0);
-
     }
 }

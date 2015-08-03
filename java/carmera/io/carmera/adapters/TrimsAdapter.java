@@ -39,12 +39,14 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
         Engine engine = trimData.getEngine();
         Mpg mpg = trimData.getMpg();
         viewHolder.gen_info.setText(String.format ("%s", trimData.trim));
-        viewHolder.hp.setText(String.format("%d HP", engine.horsepower));
-        viewHolder.tq.setText( String.format("%d LB/FT", engine.torque));
-        viewHolder.city_mpg.setText(String.format("%d MPG", mpg.city));
-        viewHolder.hwy_mpg.setText(String.format("%d MPG", mpg.highway));
-        viewHolder.msrp.setText(Util.getRangeText(trimData.min_msrp, trimData.max_msrp));
-        viewHolder.tmv.setText(Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv));
+        if (engine != null)
+            viewHolder.hp.setText(String.format("%d HP", engine.horsepower));
+            viewHolder.tq.setText( String.format("%d LB/FT", engine.torque));
+        if (mpg != null)
+            viewHolder.fuel_consumption.setText(String.format("%d / %d MPG", mpg.city, mpg.highway));
+
+        viewHolder.msrp.setText("MSRP $" + Util.getRangeText(trimData.min_msrp, trimData.max_msrp));
+        viewHolder.tmv.setText("Used From $" + Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv));
         viewHolder.drivetrain.setText(String.format(trimData.drivenWheels.toUpperCase()));
 
         String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
@@ -57,7 +59,6 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
                     .fit()
                     .into(viewHolder.photo);
         } else {
-            viewHolder.photo.setImageResource(R.drawable.carmera);
         }
     }
 
@@ -70,10 +71,8 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
         public TextView hp;
         @Bind(R.id.tq)
         public TextView tq;
-        @Bind(R.id.city_mpg)
-        public TextView city_mpg;
-        @Bind(R.id.hwy_mpg)
-        public TextView hwy_mpg;
+        @Bind(R.id.fuel_consumption)
+        public TextView fuel_consumption;
         @Bind(R.id.msrp)
         public TextView msrp;
         @Bind(R.id.tmv)

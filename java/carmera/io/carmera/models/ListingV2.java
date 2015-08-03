@@ -66,14 +66,14 @@ public class ListingV2 {
     @JsonProperty
     public String interiorcolor;
 
-    @JsonProperty
-    public List<String> options;
+//    @JsonProperty
+//    public List<String> options;
 
     @JsonProperty
     public Double msrp;
 
     @JsonProperty
-    public Snapshot snapshot;
+    public TrimData snapshot;
 
     @JsonProperty
     public Integer miles;
@@ -243,13 +243,13 @@ public class ListingV2 {
         this.interiorcolor = interiorcolor;
     }
 
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
-    }
+//    public List<String> getOptions() {
+//        return options;
+//    }
+//
+//    public void setOptions(List<String> options) {
+//        this.options = options;
+//    }
 
     public Double getMsrp() {
         return msrp;
@@ -259,11 +259,11 @@ public class ListingV2 {
         this.msrp = msrp;
     }
 
-    public Snapshot getSnapshot() {
+    public TrimData getSnapshot() {
         return snapshot;
     }
 
-    public void setSnapshot(Snapshot snapshot) {
+    public void setSnapshot(TrimData snapshot) {
         this.snapshot = snapshot;
     }
 }

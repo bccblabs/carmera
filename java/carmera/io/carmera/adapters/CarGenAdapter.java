@@ -38,13 +38,12 @@ public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenA
         super.onBindViewHolder(viewHolder, i);
         try {
             Snapshot snapshot = getItem(i).snapshot;
-            viewHolder.gen_info.setText(snapshot.make + " " + snapshot.model + " " + snapshot.gen_name);
+            viewHolder.gen_info.setText(snapshot.make + " " + snapshot.model.replace("_", " ").replace(snapshot.make, "") + " " + snapshot.gen_name);
             viewHolder.hp.setText(Util.getRangeText(snapshot.hp_min, snapshot.hp_max) + " HP");
             viewHolder.tq.setText(Util.getRangeText(snapshot.tq_min, snapshot.tq_max) + " LB/FT");
-            viewHolder.city_mpg.setText(Util.getRangeText(snapshot.city_mpg_min, snapshot.city_mpg_max) + " MPG");
-            viewHolder.hwy_mpg.setText(Util.getRangeText(snapshot.hwy_mpg_min, snapshot.hwy_mpg_max) + " MPG");
-            viewHolder.msrp.setText((Util.getRangeText(snapshot.msrp_min, snapshot.msrp_max)));
-            viewHolder.tmv.setText(Util.getRangeText(snapshot.used_tmv_min, snapshot.used_tmv_max));
+            viewHolder.fuel_consumption.setText(Util.getRangeText(snapshot.city_mpg_min, snapshot.hwy_mpg_max) + " MPG");
+            viewHolder.msrp.setText("MSRP $ "+ (Util.getRangeText(snapshot.msrp_min, snapshot.msrp_max)));
+            viewHolder.tmv.setText("Used From $ "+ Util.getRangeText(snapshot.used_tmv_min, snapshot.used_tmv_max));
             viewHolder.drivetrain.setText(String.format(Util.joinStrings(snapshot.getDrivenWheelsList(), ", ").toUpperCase()));
 
             String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
@@ -59,6 +58,7 @@ public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenA
             Log.e(TAG, e.getMessage());
         }
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.gen_info)
         public TextView gen_info;
@@ -68,10 +68,8 @@ public class CarGenAdapter extends BetterRecyclerAdapter<GenerationData, CarGenA
         public TextView hp;
         @Bind(R.id.tq)
         public TextView tq;
-        @Bind(R.id.city_mpg)
-        public TextView city_mpg;
-        @Bind(R.id.hwy_mpg)
-        public TextView hwy_mpg;
+        @Bind(R.id.fuel_consumption)
+        public TextView fuel_consumption;
         @Bind(R.id.msrp)
         public TextView msrp;
         @Bind(R.id.tmv)

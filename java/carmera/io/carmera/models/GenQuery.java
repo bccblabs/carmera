@@ -22,14 +22,15 @@ public class GenQuery {
     public List<String> compressors = new ArrayList<>();
     public List<String> drivetrains = new ArrayList<>();
 
-    public String max_price;
-    public String max_mileage;
-    public String min_hp;
-    public String min_tq;
-    public String min_mpg;
+    public Integer max_price = Integer.MAX_VALUE;
+    public Integer min_price = 0;
+    public Integer max_mileage = Integer.MAX_VALUE;
+    public Integer min_hp = 0;
+    public Integer min_tq = 0;
+    public String min_mpg = "";
     public Integer zipcode;
 
-    public Integer max_dist;
+    public Integer max_dist = Integer.MAX_VALUE;
     public Integer pagenum;
     public Integer pagesize;
     public List<String> sortby;
@@ -40,9 +41,17 @@ public class GenQuery {
     public List<String> equipments = new ArrayList<>();
     public List<Double> coordinates = new ArrayList<>();
     public List<String> labels = new ArrayList<>();
-
+    public List<Integer> years = new ArrayList<>();
 
     public GenQuery() {}
+
+    public List<Integer> getYears() {
+        return years;
+    }
+
+    public void setYears(List<Integer> years) {
+        this.years = years;
+    }
 
     public List<Integer> getStyleIds() {
         return styleIds;
@@ -140,35 +149,43 @@ public class GenQuery {
         this.drivetrains = drivetrains;
     }
 
-    public String getMax_price() {
+    public Integer getMax_price() {
         return max_price;
     }
 
-    public void setMax_price(String max_price) {
+    public void setMax_price(Integer max_price) {
         this.max_price = max_price;
     }
 
-    public String getMax_mileage() {
+    public Integer getMin_price() {
+        return min_price;
+    }
+
+    public void setMin_price(Integer min_price) {
+        this.min_price = min_price;
+    }
+
+    public Integer getMax_mileage() {
         return max_mileage;
     }
 
-    public void setMax_mileage(String max_mileage) {
+    public void setMax_mileage(Integer max_mileage) {
         this.max_mileage = max_mileage;
     }
 
-    public String getMin_hp() {
+    public Integer getMin_hp() {
         return min_hp;
     }
 
-    public void setMin_hp(String min_hp) {
+    public void setMin_hp(Integer min_hp) {
         this.min_hp = min_hp;
     }
 
-    public String getMin_tq() {
+    public Integer getMin_tq() {
         return min_tq;
     }
 
-    public void setMin_tq(String min_tq) {
+    public void setMin_tq(Integer min_tq) {
         this.min_tq = min_tq;
     }
 

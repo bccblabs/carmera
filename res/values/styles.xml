@@ -1,8 +1,8 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@android:color/darker_gray</item>
-        <item name="android:textColor">@android:color/background_light</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorPrimary">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:actionBarStyle">@style/CarmeraTheme.ActionBarStyle</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -44,7 +44,7 @@
         <item name="android:textSize">12sp</item>
     </style>
     <style name="TableStyle">
-        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -52,5 +52,93 @@
     <style name="TableRowStyle">
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_width">wrap_content</item>
+    </style>
+    <style name="TwoButtonLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+    <style name="ButtonLeft">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="ButtonRight" parent="ButtonLeft">
+    </style>
+    <style name="EditTextStyle">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="price_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="mileage_title" parent="price_title">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="dealer_info_title" parent="mileage_title">
+    </style>
+    <style name="feature_title" parent="mileage_title">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="listing_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+    <style name="horizontal_bar_style">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_height">300dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="single_horizontal_bar_style">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_height">250dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="section_title" parent="listing_title">
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+    <style name="dealer_text" parent="mileage_title">
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="dealer_info_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="dealer_info_container">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+    <style name="circular_image_view">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 </resources>

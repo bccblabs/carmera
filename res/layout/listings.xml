@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/listings_recylcer"
-    android:background="@android:color/transparent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/loading_container"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <carmera.io.carmera.widgets.SquareImageView
+            android:layout_alignParentTop="true"
+            android:id="@+id/carmera_holder"
+            android:layout_width="300dp"
+            android:layout_height="300dp" />
+        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+            android:id="@+id/loading_listings"
+            android:background="@android:color/background_light"
+            android:layout_marginTop="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:layout_marginTop="350dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_listings"
+            android:id="@+id/loading_text"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="@android:color/holo_blue_light"
+            app:reflectionColor="@android:color/background_light"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listings_recylcer"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
+</RelativeLayout>

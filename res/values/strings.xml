@@ -14,7 +14,7 @@
     <string name="cancel_upload">Cancel Upload</string>
     <string name="edmunds_baseurl">http://media.ed.edmunds-media.com</string>
     <string name="aws_server">http://52.27.126.141:3000</string>
-
+    <string name="loading_listings">Loading Listings...</string>
     <string name="make_title">Car Make</string>
     <string name="model_title">Car Model</string>
     <string name="years_title">Years</string>
@@ -34,4 +34,17 @@
     <string name="drivetrain_desc">Drivetrain</string>
     <string name="tmv_desc">Used Market Value</string>
     <string name="msrp_desc">New MSRP</string>
+    <string name="start_search">Search</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="back">Back</string>
+    <string name="zip_hint">Zipcode Here!</string>
+    <string name="compare">Value Comparison</string>
+    <string name="dealer_info">Dealership Info</string>
+    <string name="more_images">More Images</string>
+    <string name="fav_features">Best Features</string>
+    <string name="improvements">Not Happy With...</string>
+    <string name="min_price">Min Price</string>
+    <string name="max_price">Max Price</string>
+    <string name="max_mileage">Max Mileage</string>
+    <string name="to">TO</string>
 </resources>

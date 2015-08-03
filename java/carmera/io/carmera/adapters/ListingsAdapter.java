@@ -57,10 +57,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
                 if (thumbnails.getCount() > 0) {
                     Picasso.with(cxt)
                             .load(thumbnails.getLinks().get(0).getHref())
-                            .placeholder(R.drawable.placeholder)
-                            .error(R.drawable.error)
-                            .centerCrop()
-                            .fit()
+                            .resize(350, 350)
                             .into(viewHolder.photo);
                 } else {
                     viewHolder.photo.setImageResource(R.drawable.carmera);

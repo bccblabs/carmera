@@ -378,12 +378,17 @@ public class Util {
     }
 
     public static String getRangeText (Object a, Object b) {
-        if (a != null && b != null )
+        if (a != null && b != null
+                && Integer.parseInt(a.toString()) > 0
+                && Integer.parseInt(b.toString()) > 0)
             return String.format("%s - %s", a.toString(), b.toString());
+
         else if (a == null && b == null)
             return null;
+
         else if ( a == null )
             return b.toString();
+
         else
             return a.toString();
     }

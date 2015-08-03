@@ -1,7 +1,9 @@
 package carmera.io.carmera.adapters;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +28,7 @@ public class ListingsV2Adapter extends BetterRecyclerAdapter<ListingV2, Listings
 
 
     private Context cxt;
+    public String TAG = getClass().getCanonicalName();
 
     @Override
     public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
@@ -35,32 +40,43 @@ public class ListingsV2Adapter extends BetterRecyclerAdapter<ListingV2, Listings
     @Override
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
-        ListingV2 listing = getItem(i);
-        viewHolder.car_info.setText(String.format ("%d %s %s %s",   listing.getYear(),
-                                                                    listing.getSnapshot().getMake(),
-                                                                    listing.getSnapshot().getModel(),
-                                                                    listing.getSnapshot().getTrim()));
-
-        viewHolder.price.setText(String.format("MSRP: %.0f", listing.getSellingprice()));
-        viewHolder.mileage.setText(String.format("Mileage: %d", listing.getMiles()));
-        viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getDateinstock()));
-        viewHolder.dealer_name.setText(String.format("%s", listing.getDealername()));
-        viewHolder.dealer_address.setText(String.format("%s, %s, %s", listing.getDealerAddress(),
-                                                                      listing.getDealerCity(),
-                                                                      listing.getDealerState()));
-
-        List<String> urls = listing.getImagelist();
+        try {
+            ListingV2 listing = getItem(i);
+            viewHolder.car_info.setText(String.format ("%d %s %s",   listing.getYear(),
+                    listing.getSnapshot().getMake(),
+                    listing.getSnapshot().getModel()
+                            .replace(listing.getSnapshot().getMake(), "")
+                            .replace("_", " ")
+            ));
+            if (listing.sellingprice != null)
+                viewHolder.price.setText(String.format("$ %s", NumberFormat.getNumberInstance(Locale.US).format(listing.getSellingprice().intValue())));
+            else
+                viewHolder.price.setVisibility(View.GONE);
+            if (listing.miles != null)
+                viewHolder.mileage.setText(String.format("%s miles", NumberFormat.getNumberInstance(Locale.US).format (listing.getMiles())));
+            else
+                viewHolder.mileage.setVisibility(View.GONE);
+            if (listing.dateinstock != null)
+                viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getDateinstock()));
+            else
+                viewHolder.listed_since.setVisibility(View.GONE);
+            viewHolder.dealer_name.setText(String.format("%s", listing.getDealername()));
+            viewHolder.dealer_address.setText(String.format("%s, %s, %s", listing.getDealerAddress(),
+                    listing.getDealerCity(),
+                    listing.getDealerState()));
+            List<String> urls = listing.getImagelist();
             if (urls.size() > 0) {
                 Picasso.with(cxt)
                         .load(urls.get(0))
-                        .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.error)
-                        .centerCrop()
-                        .fit()
+                        .resize(160, 120)
                         .into(viewHolder.photo);
             } else {
-                viewHolder.photo.setImageResource(R.drawable.carmera);
+//                viewHolder.photo.setImageResource(R.drawable.carmera);
             }
+        } catch (Exception e) {
+//            viewHolder.photo.setImageResource(R.drawable.carmera);
+            Log.e (TAG, e.getMessage());
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

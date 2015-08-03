@@ -40,8 +40,8 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
     private FrameLayout camera_preview;
     public final String TAG = getClass().getCanonicalName();
 
-    private Bitmap bitmap;
-    private View containerView;
+//    private Bitmap bitmap;
+//    private View containerView;
 
     private OnCameraResultListener camera_result_callback = null;
 
@@ -83,7 +83,7 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
     }
 
     @Override
-    public Bitmap getBitmap() { return bitmap; }
+    public Bitmap getBitmap() { return null; }
 
 
     static CaptureFragment newInstance (boolean useFFC) {
@@ -167,7 +167,6 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
     @Override
     public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.containerView = view.findViewById(R.id.camera_preview);
     }
 
     class CaptureHost extends SimpleCameraHost {

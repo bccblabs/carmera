@@ -20,16 +20,21 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
 import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsV2Adapter;
+import carmera.io.carmera.models.DataEntryFloat;
 import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.ListingV2;
 import carmera.io.carmera.models.Listings;
@@ -38,16 +43,30 @@ import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
 import carmera.io.carmera.ListingDetailsViewer;
 import carmera.io.carmera.utils.Util;
+import carmera.io.carmera.widgets.SquareImageView;
 
 public class ListingsV2Fragment extends Fragment {
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
+    public static final String EXTRA_LISTINGS_STAT = "extra_listing_stat";
 
     @Bind(R.id.listings_recylcer)
     RecyclerView listings_recycler;
 
-    final Context context = getActivity();
+    @Bind(R.id.loading_container)
+    View loading_container;
+
+    @Bind (R.id.carmera_holder)
+    SquareImageView carmera_holder;
+
+    @Bind (R.id.loading_text)
+    ShimmerTextView loading_text;
+
+
+    private Context context;
+    private Shimmer shimmer = new Shimmer();
+    private List<DataEntryFloat> listings_stats;
     private ListingsV2Adapter listingsV2Adapter;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
@@ -56,13 +75,17 @@ public class ListingsV2Fragment extends Fragment {
     private final class ListingsRequestListener implements RequestListener<ListingsV2> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onRequestSuccess (ListingsV2 result) {
-            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsV2Adapter.getItemCount(), Toast.LENGTH_SHORT).show();
-            listingsV2Adapter.addAll(result.getListings());
-            listingsV2Adapter.notifyDataSetChanged();
+            if (result != null) {
+                listingsV2Adapter.addAll(result.getListings());
+                listingsV2Adapter.notifyDataSetChanged();
+                loading_container.setVisibility(View.GONE);
+                listings_recycler.setVisibility(View.VISIBLE);
+                listings_stats = result.getStats();
+            }
         }
     }
 
@@ -80,6 +103,10 @@ public class ListingsV2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.listings, container, false);
         ButterKnife.bind(this, v);
+
+        Picasso.with(context).load(R.drawable.carmera).fit().centerCrop().into(carmera_holder);
+        shimmer.setDuration(2000);
+        shimmer.start(loading_text);
         return v;
     }
 
@@ -87,7 +114,7 @@ public class ListingsV2Fragment extends Fragment {
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         listingsQuery.setPagenum(1);
-        listingsQuery.setPagesize(5);
+        listingsQuery.setPagesize(15);
         listingsQuery.setMax_dist(50);
         listingsQuery.setCoordinates(Util.getCoordinatesFromZip(92612));
         ListingsRequest listingsDataRequest = new ListingsRequest(listingsQuery);
@@ -101,6 +128,7 @@ public class ListingsV2Fragment extends Fragment {
                 Bundle args = new Bundle();
                 Parcelable listing_data = Parcels.wrap(item);
                 args.putParcelable(EXTRA_LISTING_DATA, listing_data);
+                args.putParcelable (EXTRA_LISTINGS_STAT, Parcels.wrap(listings_stats));
                 i.putExtras(args);
                 startActivity(i);
             }
@@ -113,6 +141,7 @@ public class ListingsV2Fragment extends Fragment {
     @Override
     public void onAttach (Activity activity) {
         super.onAttach(activity);
+        context = activity;
     }
 
     @Override
