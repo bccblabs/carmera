@@ -41,9 +41,15 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
                 listing.getModel().getName(),
                 listing.getStyle().getTrim()));
 
-        viewHolder.price.setText(String.format("MSRP: %f", listing.getPrices().getMsrp()));
+        if (listing.getPrices().getMsrp() > 0.0f)
+            viewHolder.price.setText(String.format("MSRP: %.0f", listing.getPrices().getMsrp()));
+        else
+            viewHolder.price.setVisibility(View.GONE);
         viewHolder.mileage.setText(String.format("Mileage: %d", listing.getMileage()));
-        viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getListedSince()));
+        if (listing.getListedSince() != null)
+            viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getListedSince()));
+        else
+            viewHolder.listed_since.setVisibility(View.GONE);
         viewHolder.dealer_name.setText(String.format("%s", listing.getDealer().getName()));
         viewHolder.dealer_address.setText(String.format("%s, %s, %s", listing.getDealer().getAddress().getStreet(),
                 listing.getDealer().getAddress().getCity(),
@@ -53,11 +59,11 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         if (media != null) {
             Photos photos = media.getPhotos();
             if (photos != null) {
-                Photo thumbnails = photos.getThumbnails();
+                Photo thumbnails = photos.getLarge();
                 if (thumbnails.getCount() > 0) {
                     Picasso.with(cxt)
                             .load(thumbnails.getLinks().get(0).getHref())
-                            .resize(350, 350)
+                            .resize(320, 240)
                             .into(viewHolder.photo);
                 } else {
                     viewHolder.photo.setImageResource(R.drawable.carmera);

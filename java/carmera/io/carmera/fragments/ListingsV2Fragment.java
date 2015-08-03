@@ -114,8 +114,8 @@ public class ListingsV2Fragment extends Fragment {
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         listingsQuery.setPagenum(1);
-        listingsQuery.setPagesize(15);
-        listingsQuery.setMax_dist(50);
+        listingsQuery.setPagesize(40);
+        listingsQuery.setMax_dist(200);
         listingsQuery.setCoordinates(Util.getCoordinatesFromZip(92612));
         ListingsRequest listingsDataRequest = new ListingsRequest(listingsQuery);
         spiceManager.execute (listingsDataRequest, new Date().toString(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());

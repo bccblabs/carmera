@@ -158,7 +158,7 @@ public class TrimDetailsFragment extends Fragment implements BaseSliderView.OnSl
                 image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);
                 image_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
                 image_slider.setCustomAnimation(new DescriptionAnimation());
-                image_slider.setDuration(1000);
+                image_slider.setDuration(1500);
                 image_slider.addOnPageChangeListener(this);
             } else {
                 image_slider.setVisibility(View.GONE);
@@ -312,6 +312,8 @@ public class TrimDetailsFragment extends Fragment implements BaseSliderView.OnSl
 
     public String getTransmissionName (Transmission transmission) {
         try {
+            if (transmission.numberOfSpeeds.contains("continuous"))
+                return String.format("CVT %s", transmission.transmissionType);
             return String.format("%s speed %s", transmission.numberOfSpeeds, transmission.transmissionType);
         } catch (Exception e) {
             transmission_row.setVisibility(View.GONE);

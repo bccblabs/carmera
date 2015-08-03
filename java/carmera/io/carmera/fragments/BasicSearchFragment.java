@@ -148,6 +148,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.base_search, container, false);
+        query = new GenQuery();
         ButterKnife.bind(this, v);
         make_resid_map.put("Acura", R.array.acura);
         make_resid_map.put ("Audi", R.array.audi);
@@ -292,6 +293,11 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
+                        if (items.get(i).getName().equals("Automatic")) {
+                            query.transmissionTypes.add("UNKNOWN");
+                            query.transmissionTypes.add("AUTOMATED_MANUAL");
+                            query.transmissionTypes.add("DIRECT_DRIVE");
+                        }
                         query.transmissionTypes.add (items.get(i).getName());
                     }
                 }
@@ -304,7 +310,10 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        query.compressors.add(items.get(i).getName());
+                        if (items.get(i).getName().equals("Naturally Aspirated"))
+                            query.compressors.add("NA");
+                        else
+                            query.compressors.add(items.get(i).getName());
                     }
                 }
             }
@@ -316,6 +325,8 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
+                        if (items.get(i).getName().equals("All Wheel Drive"))
+                            query.drivetrains.add("four wheel drive");
                         query.drivetrains.add (items.get(i).getName());
                     }
                 }
@@ -434,15 +445,14 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     @Override
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate (savedBundleInstance);
-        Bundle args = getArguments();
-        if (args != null) {
-            Parcelable search_creteria = args.getParcelable(EXTRA_SEARCH_CRIT);
-            query = Parcels.unwrap(search_creteria);
-            Log.i (TAG, "not null");
-        } else {
-            query = new GenQuery();
-            Log.i(TAG, "null");
-        }
+
+//        if (args != null) {
+//            Parcelable search_creteria = args.getParcelable(EXTRA_SEARCH_CRIT);
+//            query = Parcels.unwrap(search_creteria);
+//            Log.i (TAG, "not null");
+//        } else {
+//            Log.i(TAG, "null");
+//        }
 
 
     }

@@ -167,7 +167,7 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
             image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);
             image_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
             image_slider.setCustomAnimation(new DescriptionAnimation());
-            image_slider.setDuration(1000);
+            image_slider.setDuration(2000);
             image_slider.addOnPageChangeListener(this);
         } else {
             image_slider.setVisibility(View.GONE);

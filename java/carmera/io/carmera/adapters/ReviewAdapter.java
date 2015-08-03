@@ -29,7 +29,7 @@ public class ReviewAdapter extends BetterRecyclerAdapter<String, ReviewAdapter.V
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         String review = getItem(i);
-        viewHolder.review_text.setText(String.format("\"%s\"", review));
+        viewHolder.review_text.setText(String.format("\"%s\"\n\n", review));
 
     }
 

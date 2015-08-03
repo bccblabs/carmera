@@ -68,7 +68,7 @@ public class ListingsV2Adapter extends BetterRecyclerAdapter<ListingV2, Listings
             if (urls.size() > 0) {
                 Picasso.with(cxt)
                         .load(urls.get(0))
-                        .resize(160, 120)
+                        .resize(320, 240)
                         .into(viewHolder.photo);
             } else {
 //                viewHolder.photo.setImageResource(R.drawable.carmera);

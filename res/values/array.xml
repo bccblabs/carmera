@@ -649,7 +649,6 @@
     </string-array>
     <string-array name="txn_array">
         <item>Manual</item>
-        <item>Automanual</item>
         <item>Automatic</item>
     </string-array>
     <string-array name="cylinder_array">
@@ -666,7 +665,7 @@
     <string-array name="compressor_array">
         <item>Naturally Aspirated</item>
         <item>Turbo</item>
-        <item>Supercharged</item>
+        <item>Supercharger</item>
     </string-array>
 
     <string-array name="drivetrain_array">

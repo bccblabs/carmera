@@ -44,6 +44,9 @@ public class ListingsFragment extends Fragment {
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
 
+    @Bind(R.id.loading_container)
+    View loading_container;
+
     @Bind(R.id.listings_recylcer)
     RecyclerView listings_recycler;
 
@@ -62,6 +65,8 @@ public class ListingsFragment extends Fragment {
         public void onRequestSuccess (Listings result) {
             Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
             try {
+                loading_container.setVisibility(View.GONE);
+                listings_recycler.setVisibility(View.VISIBLE);
                 listingsAdapter.addAll(result.getListings());
                 listingsAdapter.notifyDataSetChanged();
             } catch (Exception e) {
@@ -93,7 +98,7 @@ public class ListingsFragment extends Fragment {
         super.onViewCreated(v, savedInstanceState);
         for (VehicleQuery vehicleQuery : this.vehicleQueries.getQueries()) {
             vehicleQuery.setPagenum(1);
-            vehicleQuery.setPagesize(5);
+            vehicleQuery.setPagesize(10);
             vehicleQuery.setRadius(200);
             vehicleQuery.setZipcode(92612);
             Toast.makeText(getActivity(), "Query params: " + vehicleQuery.get_query_params(), Toast.LENGTH_SHORT).show();
@@ -102,17 +107,18 @@ public class ListingsFragment extends Fragment {
         }
         listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         listingsAdapter = new ListingsAdapter();
-        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
-            @Override
-            public void onItemClick(View v, Listing item, int position) {
-                Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
-                Bundle args = new Bundle();
-                Parcelable listing_data = Parcels.wrap(item);
-                args.putParcelable(EXTRA_LISTING_DATA, listing_data);
-                i.putExtras(args);
-                startActivity(i);
-            }
-        });
+//        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
+//            @Override
+//            public void onItemClick(View v, Listing item, int position) {
+//                Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
+//                Bundle args = new Bundle();
+//                Parcelable listing_data = Parcels.wrap(item);
+//                args.putParcelable(EXTRA_LISTING_DATA, listing_data);
+//
+//                i.putExtras(args);
+//                startActivity(i);
+//            }
+//        });
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setHasFixedSize(false);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
