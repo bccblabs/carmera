@@ -157,11 +157,13 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
         if (listing.getImagelist()!= null) {
             for (String url : listing.getImagelist()) {
                 TextSliderView sliderView = new TextSliderView(getActivity());
-                sliderView.description("")
-                        .image(url)
-                        .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                        .setOnSliderClickListener(this);
-                image_slider.addSlider(sliderView);
+                if (url.length() > 0) {
+                    sliderView.description("")
+                            .image(url)
+                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                            .setOnSliderClickListener(this);
+                    image_slider.addSlider(sliderView);
+                }
             }
 
             image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);

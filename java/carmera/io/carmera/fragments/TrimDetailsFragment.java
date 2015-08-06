@@ -148,12 +148,14 @@ public class TrimDetailsFragment extends Fragment implements BaseSliderView.OnSl
 
             if (all_urls.size() > 0) {
                 for (String url : all_urls) {
-                    TextSliderView sliderView = new TextSliderView(getActivity());
-                    sliderView.description("")
-                            .image(edmunds_base_url + url)
-                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                            .setOnSliderClickListener(this);
-                    image_slider.addSlider(sliderView);
+                    if (url.length() > 0) {
+                        TextSliderView sliderView = new TextSliderView(getActivity());
+                        sliderView.description("")
+                                .image(edmunds_base_url + url)
+                                .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                                .setOnSliderClickListener(this);
+                        image_slider.addSlider(sliderView);
+                    }
                 }
                 image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);
                 image_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -218,6 +220,13 @@ public class TrimDetailsFragment extends Fragment implements BaseSliderView.OnSl
         MaterialViewPagerHelper.registerScrollView(getActivity(), container, null);
     }
 
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
     private void setChart ( HorizontalBarChart chart,  List<DataEntryFloat> data_list, String name) {
         try {
             if (data_list.size() > 0) {
@@ -283,13 +292,6 @@ public class TrimDetailsFragment extends Fragment implements BaseSliderView.OnSl
         }
         return colors;
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
     public String getEngineName(Engine engine) {
         try {
             String compressor = engine.compressorType;

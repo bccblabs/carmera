@@ -3,13 +3,22 @@ package carmera.io.carmera.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -23,9 +32,15 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 import com.squareup.picasso.Picasso;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +60,8 @@ import carmera.io.carmera.ListingDetailsViewer;
 import carmera.io.carmera.utils.Util;
 import carmera.io.carmera.widgets.SquareImageView;
 
-public class ListingsV2Fragment extends Fragment {
+public class ListingsV2Fragment extends Fragment implements OnMenuItemClickListener,
+                                                            OnMenuItemLongClickListener {
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
@@ -72,6 +88,10 @@ public class ListingsV2Fragment extends Fragment {
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
     private GenQuery listingsQuery;
 
+
+    private FragmentManager menuDialogFragmentManager;
+    private DialogFragment menuDialogFragment;
+
     private final class ListingsRequestListener implements RequestListener<ListingsV2> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
@@ -89,6 +109,93 @@ public class ListingsV2Fragment extends Fragment {
         }
     }
 
+    /* menu setup */
+    private void initMenuFragment() {
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(getMenuObjects());
+        menuParams.setClosableOutside(false);
+        menuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+    }
+
+    private List<MenuObject> getMenuObjects() {
+        // You can use any [resource, bitmap, drawable, color] as image:
+        // item.setResource(...)
+        // item.setBitmap(...)
+        // item.setDrawable(...)
+        // item.setColor(...)
+        // You can set image ScaleType:
+        // item.setScaleType(ScaleType.FIT_XY)
+        // You can use any [resource, drawable, color] as background:
+        // item.setBgResource(...)
+        // item.setBgDrawable(...)
+        // item.setBgColor(...)
+        // You can use any [color] as text color:
+        // item.setTextColor(...)
+        // You can set any [color] as divider color:
+        // item.setDividerColor(...)
+
+        List<MenuObject> menuObjects = new ArrayList<>();
+
+        MenuObject close = new MenuObject();
+        close.setResource(R.drawable.icn_close);
+
+        MenuObject send = new MenuObject("Sort By Horsepower");
+        send.setResource(R.drawable.icn_1);
+
+        MenuObject like = new MenuObject("Sort By Price");
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icn_2);
+        like.setBitmap(b);
+
+        MenuObject addFr = new MenuObject("Sort By Year");
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
+        addFr.setDrawable(bd);
+
+        MenuObject addFav = new MenuObject("Sort By Mileage");
+        addFav.setResource(R.drawable.icn_4);
+
+        MenuObject block = new MenuObject("Sort By Torque");
+        block.setResource(R.drawable.icn_5);
+
+        MenuObject mpg = new MenuObject("Sort By MPG");
+        mpg.setResource(R.drawable.icn_5);
+
+        MenuObject near_me = new MenuObject("Near Me First");
+        near_me.setResource(R.drawable.icn_5);
+
+        menuObjects.add(close);
+        menuObjects.add(send);
+        menuObjects.add(like);
+        menuObjects.add(addFr);
+        menuObjects.add(addFav);
+        menuObjects.add(block);
+        menuObjects.add(mpg);
+        menuObjects.add(near_me);
+        return menuObjects;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.context_menu:
+                menuDialogFragment.show(menuDialogFragmentManager, ContextMenuDialogFragment.TAG);
+//                break;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMenuItemClick(View clickedView, int position) {
+        Toast.makeText(getActivity(), "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMenuItemLongClick(View clickedView, int position) {
+        Toast.makeText(getActivity(), "Long clicked on position: " + position, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +203,8 @@ public class ListingsV2Fragment extends Fragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
         this.listingsQuery = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
+        menuDialogFragmentManager = getChildFragmentManager();
+        initMenuFragment();
         setRetainInstance(true);
     }
 
@@ -157,6 +266,7 @@ public class ListingsV2Fragment extends Fragment {
         }
         super.onStop();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

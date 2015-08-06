@@ -1,8 +1,8 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@android:color/holo_blue_light</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:textColorPrimary">@android:color/background_light</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:actionBarStyle">@style/CarmeraTheme.ActionBarStyle</item>
         <item name="android:windowContentOverlay">@null</item>

@@ -8,11 +8,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -20,6 +22,8 @@ import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +36,6 @@ import carmera.io.carmera.R;
 public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCancelListener {
 
     private List<KeyPairBoolData> items;
-    //private boolean[] selected;
     private String defaultText;
     private MultiSpinnerSearchListener listener;
     MyAdapter adapter;
@@ -40,21 +43,16 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
     public MultiSpinnerSearch(Context context) {
         super(context);
     }
-
     public MultiSpinnerSearch(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
     }
-
     public MultiSpinnerSearch(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        // refresh text on spinner
-
         StringBuffer spinnerBuffer = new StringBuffer();
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).isSelected() == true) {
                 spinnerBuffer.append(items.get(i).getName());
@@ -68,68 +66,45 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
             spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
         else
             spinnerText = defaultText;
-
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
                 R.layout.textview_for_spinner,
                 new String[] { spinnerText });
         setAdapter(adapterSpinner);
-
         if(adapter != null)
             adapter.notifyDataSetChanged();
-
         listener.onItemsSelected(items);
     }
 
     @Override
     public boolean performClick() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(defaultText);
-
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-
-        View view = inflater.inflate(R.layout.alert_dialog_listview_search, null);
+        View view = inflater.inflate(R.layout.alert_dialog_listview_search, null),
+             title_view = inflater.inflate(R.layout.spinner_title, null);
         builder.setView(view);
-
+        builder.setCustomTitle(title_view);
         final ListView listView = (ListView) view.findViewById(R.id.alertSearchListView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setCacheColorHint(getResources().getColor(R.color.background_floating_material_dark));
         listView.setFastScrollEnabled(false);
         adapter = new MyAdapter(getContext(), items);
         listView.setAdapter(adapter);
-
         EditText editText = (EditText) view.findViewById(R.id.alertSearchEditText);
         editText.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter.getFilter().filter(s.toString());
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-
-        //builder.setMultiChoiceItems(items.toArray(new CharSequence[items.size()]), selected, this);
-        builder.setPositiveButton(android.R.string.ok,
-                new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-//				items = (ArrayList<KeyPairBoolData>) adapter.arrayList;
-
-                        Log.i("TAG", " ITEMS : " + items.size() );
-                        dialog.cancel();
-                    }
-                });
-
         builder.setOnCancelListener(this);
-        builder.show();
+        final AlertDialog dialog = builder.create();
+        dialog.show();
         return true;
     }
 
@@ -139,7 +114,6 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
         this.items = items;
         this.defaultText = allText;
         this.listener = listener;
-
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
                 R.layout.textview_for_spinner,
                 new String[] { defaultText });
@@ -148,7 +122,6 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
         if(position != -1)
         {
             items.get(position).setSelected(true);
-            //listener.onItemsSelected(items);
             onCancel(null);
         }
     }
@@ -157,7 +130,6 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
         public void onItemsSelected(List<KeyPairBoolData> items);
     }
 
-    //	// Adapter Class
     public class MyAdapter extends BaseAdapter implements Filterable {
 
         List<KeyPairBoolData> arrayList;

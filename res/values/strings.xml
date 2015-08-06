@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Carmera</string>
-
+    <string name="capture">Capture</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="history_logo">History</string>
@@ -11,6 +11,7 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="context_menu">Select</string>
+    <string name="done">Done</string>
     <string name="cancel_upload">Cancel Upload</string>
     <string name="edmunds_baseurl">http://media.ed.edmunds-media.com</string>
     <string name="aws_server">http://52.27.126.141:3000</string>

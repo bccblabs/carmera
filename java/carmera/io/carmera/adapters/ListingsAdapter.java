@@ -55,20 +55,24 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
                 listing.getDealer().getAddress().getCity(),
                 listing.getDealer().getAddress().getStateName()));
 
-        Media media = listing.getMedia();
-        if (media != null) {
-            Photos photos = media.getPhotos();
-            if (photos != null) {
-                Photo thumbnails = photos.getLarge();
-                if (thumbnails.getCount() > 0) {
-                    Picasso.with(cxt)
-                            .load(thumbnails.getLinks().get(0).getHref())
-                            .resize(320, 240)
-                            .into(viewHolder.photo);
-                } else {
-                    viewHolder.photo.setImageResource(R.drawable.carmera);
+        try {
+            Media media = listing.getMedia();
+            if (media != null) {
+                Photos photos = media.getPhotos();
+                if (photos != null) {
+                    Photo thumbnails = photos.getLarge();
+                    if (thumbnails.getCount() > 0) {
+                        Picasso.with(cxt)
+                                .load(thumbnails.getLinks().get(0).getHref())
+                                .resize(320, 240)
+                                .into(viewHolder.photo);
+                    } else {
+                        viewHolder.photo.setImageResource(R.drawable.carmera);
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 

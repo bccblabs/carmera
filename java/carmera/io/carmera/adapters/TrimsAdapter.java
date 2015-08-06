@@ -39,26 +39,43 @@ public class TrimsAdapter extends BetterRecyclerAdapter<TrimData, TrimsAdapter.V
         Engine engine = trimData.getEngine();
         Mpg mpg = trimData.getMpg();
         viewHolder.gen_info.setText(String.format ("%s", trimData.trim));
-        if (engine != null)
+        if (engine != null) {
             viewHolder.hp.setText(String.format("%d HP", engine.horsepower));
-            viewHolder.tq.setText( String.format("%d LB/FT", engine.torque));
-        if (mpg != null)
+            viewHolder.tq.setText(String.format("%d LB/FT", engine.torque));
+        }
+        if (mpg != null) {
             viewHolder.fuel_consumption.setText(String.format("%d / %d MPG", mpg.city, mpg.highway));
+        }
 
-        viewHolder.msrp.setText("MSRP $" + Util.getRangeText(trimData.min_msrp, trimData.max_msrp));
-        viewHolder.tmv.setText("Used From $" + Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv));
-        viewHolder.drivetrain.setText(String.format(trimData.drivenWheels.toUpperCase()));
-
-        String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
-        if (trimData.getImages().getExterior().size() > 0) {
-            Picasso.with(cxt)
-                    .load(base_url + trimData.getImages().getExterior().get(0))
-                    .placeholder(R.drawable.placeholder) //
-                    .error(R.drawable.error) //
-                    .centerCrop()
-                    .fit()
-                    .into(viewHolder.photo);
-        } else {
+        String msrp = Util.getRangeText(trimData.min_msrp, trimData.max_msrp);
+        if (msrp != null)
+            viewHolder.msrp.setText("MSRP $" + Util.getRangeText(trimData.min_msrp, trimData.max_msrp));
+        else
+            viewHolder.msrp.setVisibility(View.GONE);
+        String tmv = Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv);
+        if (tmv != null)
+            viewHolder.tmv.setText("Used From $" + Util.getRangeText(trimData.min_used_tmv, trimData.max_used_tmv));
+        else
+            viewHolder.tmv.setVisibility(View.GONE);
+        try {
+            viewHolder.drivetrain.setText(String.format(trimData.drivenWheels.toUpperCase()));
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        try {
+            String base_url = this.cxt.getResources().getString(R.string.edmunds_baseurl);
+            if (trimData.getImages().getExterior().size() > 0) {
+                Picasso.with(cxt)
+                        .load(base_url + trimData.getImages().getExterior().get(0))
+                        .placeholder(R.drawable.placeholder) //
+                        .error(R.drawable.error) //
+                        .centerCrop()
+                        .fit()
+                        .into(viewHolder.photo);
+            } else {
+            }
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 

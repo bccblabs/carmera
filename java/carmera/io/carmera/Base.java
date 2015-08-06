@@ -87,10 +87,9 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base);
-        captureFragmentFragment = CaptureFragment.newInstance();
+        searchFragment = BasicSearchFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, captureFragmentFragment)
-                .addToBackStack("CAPTURE")
+                .replace(R.id.content_frame, searchFragment)
                 .commit();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
@@ -105,7 +104,7 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
 
         setActionBar();
         createMenuList();
-        viewAnimator = new ViewAnimator<>(this, list, captureFragmentFragment, drawerLayout, this);
+        viewAnimator = new ViewAnimator<>(this, list, searchFragment, drawerLayout, this);
     }
 
     private void createMenuList() {
@@ -186,8 +185,13 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.carmera_capture:
+                captureFragmentFragment = CaptureFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, captureFragmentFragment)
+                        .addToBackStack("CAPTURE")
+                        .commit();
         }
         return super.onOptionsItemSelected(item);
     }
