@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -72,7 +74,11 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
 
     @Override
     public boolean performClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_HOLO_DARK);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View title_view = inflater.inflate(R.layout.spinner_title, null);
+        builder.setCustomTitle(title_view);
+
         builder.setTitle(defaultText);
         builder.setMultiChoiceItems(
                 items.toArray(new CharSequence[items.size()]), selected, this);

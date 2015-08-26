@@ -5,8 +5,10 @@
     android:paddingLeft="5dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background="@null"
-    android:layout_width="match_parent"
+    android:background="@color/background_material_dark"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:textColor="@android:color/holo_blue_light" />
+    android:textColor="@color/background_material_light"
+    android:textSize="15sp"
+    android:textStyle="bold" />

@@ -18,11 +18,15 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.parceler.Parcels;
+import org.parceler.apache.commons.collections.OrderedMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,43 +54,43 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     MultiSpinnerSearch model_spinner;
 
     @Bind(R.id.bodytype_spinner)
-    MultiSpinnerSearch bodytype_spinner;
+    MultiSpinner bodytype_spinner;
 
     @Bind(R.id.condition_spinner)
-    MultiSpinnerSearch condition_spinner;
+    MultiSpinner condition_spinner;
 
     @Bind(R.id.radius_spinner)
-    MultiSpinnerSearch radius_spinner;
+    MultiSpinner radius_spinner;
 
     @Bind(R.id.search_listings_base)
     ButtonRectangle search_listings;
 
     @Bind(R.id.transmission_spinner)
-    MultiSpinnerSearch transmission_spinner;
+    MultiSpinner transmission_spinner;
 
     @Bind(R.id.cylinders_spinner)
-    MultiSpinnerSearch cylinders_spinner;
+    MultiSpinner cylinders_spinner;
 
     @Bind(R.id.hp_spinner)
-    MultiSpinnerSearch hp_spinner;
+    MultiSpinner hp_spinner;
 
     @Bind(R.id.tq_spinner)
-    MultiSpinnerSearch tq_spinner;
+    MultiSpinner tq_spinner;
 
     @Bind(R.id.mpg_spinner)
-    MultiSpinnerSearch mpg_spinner;
+    MultiSpinner mpg_spinner;
 
     @Bind(R.id.ext_colors_spinner)
-    MultiSpinnerSearch ext_colors_spinner;
+    MultiSpinner ext_colors_spinner;
 
     @Bind(R.id.int_colors_spinner)
-    MultiSpinnerSearch int_colors_spinner;
+    MultiSpinner int_colors_spinner;
 
     @Bind(R.id.compressor_spinner)
-    MultiSpinnerSearch compressors_spinner;
+    MultiSpinner compressors_spinner;
 
     @Bind(R.id.drivetrain_spinner)
-    MultiSpinnerSearch drivetrain_spinner;
+    MultiSpinner drivetrain_spinner;
 
     @Bind(R.id.equipments_spinner)
     MultiSpinnerSearch equipments_spinner;
@@ -95,7 +99,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     EditText zipcode;
 
     @Bind(R.id.years_spinner)
-    MultiSpinnerSearch years_spinner;
+    MultiSpinner years_spinner;
 
 
     @Bind(R.id.search_min_price)
@@ -123,7 +127,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
 
     private Context cxt;
 
-    private HashMap<String, Integer> make_resid_map = new HashMap<>();
+    private SortedMap<String, Integer> make_resid_map = new TreeMap<>();
 
 
     private OnSearchVehiclesListener search_callback = null;
@@ -205,7 +209,7 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
                     if(items.get(i).isSelected()) {
                         selected_makes.add(items.get(i).getName());
                         if (items.get(i).getName().equals("Mercedes-Benz"))
-                            query.models.add ("mercedes");
+                            query.makes.add ("mercedes");
                         else
                             query.makes.add (items.get(i).getName());
                     }
@@ -237,167 +241,178 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
             }
         });
 
-        final List<KeyPairBoolData> years_types = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.years)));
-        years_spinner.setItems(years_types, "Choose Years", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> years_types = Arrays.asList(cxt.getResources().getStringArray(R.array.years));
+        years_spinner.setItems(years_types, "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
+            public void onItemsSelected(boolean[] selected) {
                 query.years.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.years.add (Integer.parseInt(items.get(i).getName()));
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.years.add (Integer.parseInt(years_types.get(i)));
                     }
                 }
             }
         });
-        final List<KeyPairBoolData> body_types = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array)));
-        bodytype_spinner.setItems(body_types, "Body Type(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> body_types = Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array));
+        bodytype_spinner.setItems(body_types, "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
+            public void onItemsSelected(boolean[] selected) {
                 query.bodyTypes.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.bodyTypes.add (items.get(i).getName());
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.bodyTypes.add (body_types.get(i));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> conditions = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array)));
-        condition_spinner.setItems(conditions, "Conditions(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> conditions = Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array));
+        condition_spinner.setItems(conditions, "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
+            public void onItemsSelected(boolean[] selected) {
                 query.conditions.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.conditions.add(items.get(i).getName());
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.conditions.add(conditions.get(i));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> radius = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.range_array)));
-        radius_spinner.setItems(radius, "Max Distance (miles)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.max_dist = Integer.parseInt(items.get(i).getName());
-                    }
-                }
-            }
-        });
+//        final List<KeyPairBoolData> radius = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.range_array)));
+//        radius_spinner.setItems(radius, "Max Distance (miles)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+//            @Override
+//            public void onItemsSelected(List<KeyPairBoolData> items) {
+//                for(int i=0; i<items.size(); i++) {
+//                    if(items.get(i).isSelected()) {
+//                        query.max_dist = Integer.parseInt(items.get(i).getName());
+//                    }
+//                }
+//            }
+//        });
 
-        final List<KeyPairBoolData> transmissions = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.txn_array)));
-        transmission_spinner.setItems(transmissions, "Transmission Type(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> transmissions = Arrays.asList(cxt.getResources().getStringArray(R.array.txn_array));
+        transmission_spinner.setItems(transmissions, "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        if (items.get(i).getName().equals("Automatic")) {
+            public void onItemsSelected(boolean[] selected) {
+                query.transmissionTypes.clear();
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        if (transmissions.get(i).equals("Automatic")) {
                             query.transmissionTypes.add("UNKNOWN");
                             query.transmissionTypes.add("AUTOMATED_MANUAL");
                             query.transmissionTypes.add("DIRECT_DRIVE");
+                        } else if (transmissions.get(i).equals("Manual")) {
+                            query.transmissionTypes.add ("MANUAL");
                         }
-                        query.transmissionTypes.add (items.get(i).getName());
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> compressor_types = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.compressor_array)));
-        compressors_spinner.setItems(compressor_types, "Engine Compressor Type(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> compressor_types = Arrays.asList(cxt.getResources().getStringArray(R.array.compressor_array));
+        compressors_spinner.setItems(compressor_types, "Choose Engine Compressor Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        if (items.get(i).getName().equals("Naturally Aspirated"))
+            public void onItemsSelected(boolean[] selected) {
+                query.compressors.clear();
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        if (compressor_types.get(i).equals("Naturally Aspirated"))
                             query.compressors.add("NA");
                         else
-                            query.compressors.add(items.get(i).getName());
+                            query.compressors.add(compressor_types.get(i));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> drivetrains = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.drivetrain_array)));
-        drivetrain_spinner.setItems(drivetrains, "Drivetrain (s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> drivetrains = Arrays.asList(cxt.getResources().getStringArray(R.array.drivetrain_array));
+        drivetrain_spinner.setItems(drivetrains, "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        if (items.get(i).getName().equals("All Wheel Drive"))
+            public void onItemsSelected(boolean[] selected) {
+                query.drivetrains.clear();
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        if (drivetrains.get(i).equals("All Wheel Drive"))
                             query.drivetrains.add("four wheel drive");
-                        query.drivetrains.add (items.get(i).getName());
+                        else
+                            query.drivetrains.add (drivetrains.get(i));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> cylinders = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.cylinder_array)));
-        cylinders_spinner.setItems(cylinders, "Cylinder Count", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> cylinders = Arrays.asList(cxt.getResources().getStringArray(R.array.cylinder_array));
+        cylinders_spinner.setItems(cylinders, "Choose Cylinder Count", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                        query.cylinders.add (Integer.parseInt(items.get(i).getName().replace("+", "")));
+            public void onItemsSelected(boolean[] selected) {
+                query.cylinders.clear();
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.cylinders.add (Integer.parseInt(cylinders.get(i).replace("+", "")));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> outputs = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.output_array)));
-        hp_spinner.setItems(outputs, "Horsepower", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> hps = Arrays.asList(cxt.getResources().getStringArray(R.array.output_array));
+        hp_spinner.setItems(hps, "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.min_hp = Integer.parseInt(items.get(i).getName().replace("+", ""));
-                    }
-                }
-            }
-        });
-        tq_spinner.setItems(outputs, "Torque", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.min_tq = Integer.parseInt(items.get(i).getName().replace("+", ""));
+            public void onItemsSelected(boolean[] selected) {
+                query.min_hp = 0;
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.min_hp = Integer.parseInt(hps.get(i).replace("+", ""));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> mpgs = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.mpg_array)));
-        mpg_spinner.setItems(mpgs, "MPG", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> tqs = Arrays.asList(cxt.getResources().getStringArray(R.array.output_array));
+        tq_spinner.setItems(tqs, "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.min_mpg = items.get(i).getName().replace("+", "");
+            public void onItemsSelected(boolean[] selected) {
+                query.min_tq = 0;
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.min_tq = Integer.parseInt(tqs.get(i).replace("+", ""));
                     }
                 }
             }
         });
 
-        final List<KeyPairBoolData> colors = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.color_array)));
-        ext_colors_spinner.setItems(colors, "Exterior Color(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> mpgs = Arrays.asList(cxt.getResources().getStringArray(R.array.mpg_array));
+        mpg_spinner.setItems(mpgs, "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.ext_colors.add (items.get(i).getName());
+            public void onItemsSelected(boolean[] selected) {
+                query.min_tq = 0;
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.min_mpg = mpgs.get(i).replace("+", "");
                     }
                 }
             }
         });
 
-        int_colors_spinner.setItems(colors, "Interior Color(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        final List<String> ext_colors = Arrays.asList(cxt.getResources().getStringArray(R.array.color_array));
+        ext_colors_spinner.setItems(ext_colors, "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.int_colors.add (items.get(i).getName());
+            public void onItemsSelected(boolean[] selected) {
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.ext_colors.add (ext_colors.get(i));
+                    }
+                }
+            }
+        });
+
+        final List<String> int_colors = Arrays.asList(cxt.getResources().getStringArray(R.array.color_array));
+        int_colors_spinner.setItems(int_colors, "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(boolean[] selected) {
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        query.int_colors.add (int_colors.get(i));
                     }
                 }
             }

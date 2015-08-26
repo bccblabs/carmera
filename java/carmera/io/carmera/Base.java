@@ -116,8 +116,6 @@ public class Base extends ActionBarActivity implements ViewAnimator.ViewAnimator
         list.add(menuItem2);
         SlideMenuItem menuItem1 = new SlideMenuItem("Favorites", R.drawable.ic_favorite_border_white_24dp);
         list.add(menuItem1);
-        SlideMenuItem menuItem3 = new SlideMenuItem("History", R.drawable.ic_stars_white_24dp);
-        list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem("Nearby", R.drawable.ic_location_on_white_24dp);
         list.add(menuItem4);
         SlideMenuItem menuItem5 = new SlideMenuItem("Settings", R.drawable.ic_settings_white_24dp);

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/years_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
@@ -32,17 +32,17 @@
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/bodytype_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/condition_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/radius_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
@@ -82,47 +82,47 @@
                 android:hint="@string/max_mileage"
                 android:id="@+id/search_max_mileage"/>
 
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/transmission_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/cylinders_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/compressor_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/drivetrain_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/hp_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/tq_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/mpg_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/ext_colors_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <carmera.io.carmera.utils.MultiSpinnerSearch
+            <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/int_colors_spinner"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"

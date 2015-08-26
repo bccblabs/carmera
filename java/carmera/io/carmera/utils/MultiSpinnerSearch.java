@@ -83,6 +83,8 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
              title_view = inflater.inflate(R.layout.spinner_title, null);
         builder.setView(view);
         builder.setCustomTitle(title_view);
+
+
         final ListView listView = (ListView) view.findViewById(R.id.alertSearchListView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setCacheColorHint(getResources().getColor(R.color.background_floating_material_dark));
