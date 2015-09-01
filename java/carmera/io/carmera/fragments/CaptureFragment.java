@@ -19,13 +19,13 @@ import com.gc.materialdesign.views.ButtonFloat;
 
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.widgets.SupportCameraFragment;
+import carmera.io.carmera.widgets.MySupportCameraFragment;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by bski on 6/2/15.
  */
-public class CaptureFragment extends SupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
+public class CaptureFragment extends MySupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
                                                               ScreenShotable,
                                                               View.OnTouchListener {
 
@@ -39,9 +39,6 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
 
     private FrameLayout camera_preview;
     public final String TAG = getClass().getCanonicalName();
-
-//    private Bitmap bitmap;
-//    private View containerView;
 
     private OnCameraResultListener camera_result_callback = null;
 
@@ -68,18 +65,6 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
 
     @Override
     public void takeScreenShot () {
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run() {
-//                Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-//                        containerView.getHeight(), Bitmap.Config.ARGB_8888);
-//                Canvas canvas = new Canvas(bitmap);
-//                containerView.draw(canvas);
-//                Capture.this.bitmap = bitmap;
-//            }
-//        };
-//
-//        thread.start();
     }
 
     @Override
@@ -214,20 +199,11 @@ public class CaptureFragment extends SupportCameraFragment implements SeekBar.On
     }
 
     void takeSimplePicture () {
-        PictureTransaction xact = new PictureTransaction(getHost());
+        PictureTransaction xact = new PictureTransaction(getCameraHost());
         if (isFlashMode) {
             xact.flashMode(flashMode);
         }
         takePicture(xact);
-    }
-
-    interface Contract {
-        boolean isSingleShotMode();
-        void setSingleShotMode (boolean mode);
-    }
-
-    Contract getContract() {
-        return ((Contract) getActivity());
     }
 
     @Override
