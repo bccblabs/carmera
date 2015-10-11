@@ -2,32 +2,18 @@ package carmera.io.carmera.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import com.gc.materialdesign.views.ButtonRectangle;
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-import org.parceler.Parcels;
-import org.parceler.apache.commons.collections.OrderedMap;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,12 +23,11 @@ import carmera.io.carmera.utils.KeyPairBoolData;
 import carmera.io.carmera.utils.MultiSpinner;
 import carmera.io.carmera.utils.MultiSpinnerSearch;
 import carmera.io.carmera.utils.Util;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by bski on 7/20/15.
  */
-public class BasicSearchFragment extends Fragment implements ScreenShotable {
+public class BasicSearchFragment extends Fragment {
     public static final String EXTRA_SEARCH_CRIT = "extra_search_crit";
     public String TAG = getClass().getCanonicalName();
     private GenQuery query;
@@ -58,12 +43,6 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
 
     @Bind(R.id.condition_spinner)
     MultiSpinner condition_spinner;
-
-    @Bind(R.id.radius_spinner)
-    MultiSpinner radius_spinner;
-
-    @Bind(R.id.search_listings_base)
-    ButtonRectangle search_listings;
 
     @Bind(R.id.transmission_spinner)
     MultiSpinner transmission_spinner;
@@ -95,34 +74,11 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     @Bind(R.id.equipments_spinner)
     MultiSpinnerSearch equipments_spinner;
 
-    @Bind(R.id.search_zipcode)
-    EditText zipcode;
-
     @Bind(R.id.years_spinner)
     MultiSpinner years_spinner;
 
-
-    @Bind(R.id.search_min_price)
-    MaterialEditText min_price;
-
-    @Bind(R.id.search_max_price)
-    MaterialEditText max_price;
-
-    @Bind(R.id.search_max_mileage)
-    MaterialEditText max_mileage;
-
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
-
-        if (!zipcode.getText().toString().equals(""))
-            this.query.setZipcode(Integer.parseInt(zipcode.getText().toString()));
-        if (!max_price.getText().toString().equals(""))
-            this.query.setMax_price(Integer.parseInt(max_price.getText().toString()));
-        if (!min_price.getText().toString().equals(""))
-            this.query.setMin_price(Integer.parseInt(min_price.getText().toString()));
-        if (!max_mileage.getText().toString().equals(""))
-            this.query.setMax_mileage(Integer.parseInt(max_mileage.getText().toString()));
-        search_callback.OnSearchListings(Parcels.wrap(this.query));
     }
 
     private Context cxt;
@@ -133,16 +89,8 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
     private OnSearchVehiclesListener search_callback = null;
 
     public interface OnSearchVehiclesListener {
-        public void OnSearchListings (Parcelable query);
+        void OnSearchListings (Parcelable query);
     }
-
-    @Override
-    public void takeScreenShot () {
-    }
-
-    @Override
-    public Bitmap getBitmap() { return null; }
-
 
     public static BasicSearchFragment newInstance () {
         BasicSearchFragment fragment = new BasicSearchFragment();
@@ -278,18 +226,6 @@ public class BasicSearchFragment extends Fragment implements ScreenShotable {
                 }
             }
         });
-
-//        final List<KeyPairBoolData> radius = Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(R.array.range_array)));
-//        radius_spinner.setItems(radius, "Max Distance (miles)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
-//            @Override
-//            public void onItemsSelected(List<KeyPairBoolData> items) {
-//                for(int i=0; i<items.size(); i++) {
-//                    if(items.get(i).isSelected()) {
-//                        query.max_dist = Integer.parseInt(items.get(i).getName());
-//                    }
-//                }
-//            }
-//        });
 
         final List<String> transmissions = Arrays.asList(cxt.getResources().getStringArray(R.array.txn_array));
         transmission_spinner.setItems(transmissions, "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {

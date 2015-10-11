@@ -26,7 +26,6 @@
     <uses-feature android:name="android.hardware.sensor.accelerometer" />
     <uses-feature android:name="android.hardware.sensor.gyroscope" />
     <uses-feature android:name="android.hardware.telephony" />
-
     <application
         tools:replace="android:icon"
         android:name=".CarmeraApp"
@@ -40,7 +39,6 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/parse_client_key" />
-
         <activity android:name=".Base"
             android:label="@string/app_name">
             <intent-filter>
@@ -48,19 +46,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ListingDetailsViewer"
             android:label="@string/app_name">
         </activity>
-
         <activity android:name=".TrimsListingsActivity"
             android:label="@string/app_name">
         </activity>
-
         <activity android:name=".TrimsViewerContainer"
             android:label="@string/app_name">
         </activity>
-
         <service
             android:name=".utils.InMemorySpiceService"
             android:exported="false"/>

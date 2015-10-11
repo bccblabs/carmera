@@ -4,12 +4,10 @@
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/camera_preview"/>
-
     <carmera.io.carmera.widgets.VerticalSeekBar
         android:id="@+id/zoombar"
         android:layout_alignParentLeft="true"
@@ -17,7 +15,6 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="300dp"/>
-
     <com.gc.materialdesign.views.ButtonFloat
         android:id="@+id/capture_btn"
         android:layout_width="wrap_content"
@@ -37,5 +34,4 @@
         android:background="@android:color/holo_blue_dark"
         materialdesign:animate="true"
         materialdesign:iconDrawable="@drawable/ic_flash_on_white_24dp" />
-
 </RelativeLayout>

@@ -48,4 +48,8 @@
     <string name="max_price">Max Price</string>
     <string name="max_mileage">Max Mileage</string>
     <string name="to">TO</string>
+    <string name="car_search">Search Cars</string>
+    <string name="carmera">Carmera</string>
+    <string name="settings">Settings</string>
+    <string name="saved_listings">Saved Listings</string>
 </resources>

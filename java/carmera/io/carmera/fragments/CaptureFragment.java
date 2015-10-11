@@ -20,13 +20,11 @@ import com.gc.materialdesign.views.ButtonFloat;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.widgets.MySupportCameraFragment;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by bski on 6/2/15.
  */
 public class CaptureFragment extends MySupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
-                                                              ScreenShotable,
                                                               View.OnTouchListener {
 
     private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
@@ -62,14 +60,6 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
                     ": needs to implement CameraResultListener" );
         }
     }
-
-    @Override
-    public void takeScreenShot () {
-    }
-
-    @Override
-    public Bitmap getBitmap() { return null; }
-
 
     static CaptureFragment newInstance (boolean useFFC) {
         CaptureFragment capture_Fragment_frag = new CaptureFragment();

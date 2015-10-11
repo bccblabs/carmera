@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_material_dark"
+    android:background="@color/background_material_light"
     android:gravity="center_horizontal">
 
     <EditText
@@ -12,15 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:textColor="@color/selected_item_color"
+        android:textStyle="bold"
         android:layout_margin="15dp"
         android:padding="5dp"
         android:textAllCaps="true"
-        android:textStyle="bold"
         android:hint="@string/type_to_search"
         android:inputType="text" >
         <requestFocus />
     </EditText>
-
     <ListView
         android:id="@+id/alertSearchListView"
         android:layout_width="match_parent"

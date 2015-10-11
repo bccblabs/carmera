@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background_material_dark"
+    android:background="@color/background_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="5"
@@ -47,41 +46,6 @@
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_marginTop="20dp"
-                style="@style/EditTextStyle"
-                app:met_primaryColor="@android:color/holo_green_dark"
-                android:hint="@string/zip_hint"
-                android:id="@+id/search_zipcode"/>
-
-            <LinearLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    app:met_primaryColor="@android:color/holo_green_dark"
-                    android:hint="@string/min_price"
-                    android:id="@+id/search_min_price"/>
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/max_price"
-                    android:layout_margin="20dp"
-                    app:met_primaryColor="@android:color/holo_green_dark"
-                    android:id="@+id/search_max_price"/>
-            </LinearLayout>
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:layout_marginTop="20dp"
-                style="@style/EditTextStyle"
-                app:met_primaryColor="@android:color/holo_green_dark"
-                android:hint="@string/max_mileage"
-                android:id="@+id/search_max_mileage"/>
-
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/transmission_spinner"
                 android:layout_margin="8dp"

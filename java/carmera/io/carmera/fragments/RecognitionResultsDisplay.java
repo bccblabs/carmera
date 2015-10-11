@@ -3,8 +3,6 @@ package carmera.io.carmera.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -15,9 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.octo.android.robospice.SpiceManager;
@@ -28,12 +24,9 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
-
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,40 +43,24 @@ import carmera.io.carmera.requests.PredictionsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
 import carmera.io.carmera.TrimsListingsActivity;
 import carmera.io.carmera.widgets.SquareImageView;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
-public class RecognitionResultsDisplay extends Fragment implements ScreenShotable {
+public class RecognitionResultsDisplay extends Fragment {
 
     public static final String EXTRA_GEN_DATA = "extra_gen_data";
-
-    @Bind(R.id.car_gen_recycler)
-    RecyclerView car_gen_recycler;
-
-    @Bind (R.id.content_container)
-    View containerView;
-
-    @Bind(R.id.preview_container)
-    View preview_container;
+    @Bind(R.id.car_gen_recycler) RecyclerView car_gen_recycler;
+    @Bind(R.id.preview_container) View preview_container;
+    @Bind (R.id.photo_holder) SquareImageView photo;
+    @Bind (R.id.upload_progress_bar) ProgressBarCircularIndeterminate progress_bar;
+    @Bind (R.id.retake_photo_btn) View retake_btn;
 
     @OnClick(R.id.retake_photo_btn)
     public void backToCamera () {
         spiceManager.cancelAllRequests();
         retakePhotoListener.retakePhoto();
     }
-
-    @Bind (R.id.photo_holder)
-    SquareImageView photo;
-
-    @Bind (R.id.upload_progress_bar)
-    ProgressBarCircularIndeterminate progress_bar;
-
-    @Bind(R.id.retake_photo_btn)
-    View retake_btn;
-
     private CarGenAdapter carGenAdapter;
     private Context context;
 
-    private Bitmap bitmap;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
     private SpiceManager genSpiceManager = new SpiceManager (InMemorySpiceService.class);
@@ -107,7 +84,7 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
     };
 
     public interface RetakePhotoListener {
-        public void retakePhoto();
+        void retakePhoto();
     }
 
     private final class GenerationDataRequestListener implements RequestListener<GenerationData> {
@@ -125,7 +102,6 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
             Toast.makeText(getActivity(), "Adapter length: " + carGenAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private final class PredictionsRequestListener implements RequestListener<Predictions> {
         @Override
@@ -155,28 +131,6 @@ public class RecognitionResultsDisplay extends Fragment implements ScreenShotabl
         }
     }
 
-    @Override
-    public void takeScreenShot () {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-                        containerView.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap);
-                containerView.draw(canvas);
-                RecognitionResultsDisplay.this.bitmap = bitmap;
-            }
-        };
-
-        thread.start();
-    }
-
-    @Override
-    public Bitmap getBitmap() { return bitmap; }
-
-    public static RecognitionResultsDisplay newInstance() {
-        return new RecognitionResultsDisplay();
-    }
 
     @Override
     public void onCreate (Bundle savedInstanceState) {

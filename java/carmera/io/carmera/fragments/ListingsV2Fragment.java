@@ -29,8 +29,6 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.romainpiel.shimmer.Shimmer;
-import com.romainpiel.shimmer.ShimmerTextView;
 import com.squareup.picasso.Picasso;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
@@ -52,7 +50,6 @@ import carmera.io.carmera.adapters.ListingsV2Adapter;
 import carmera.io.carmera.models.DataEntryFloat;
 import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.ListingV2;
-import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsV2;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
@@ -76,12 +73,11 @@ public class ListingsV2Fragment extends Fragment implements OnMenuItemClickListe
     @Bind (R.id.carmera_holder)
     SquareImageView carmera_holder;
 
-    @Bind (R.id.loading_text)
-    ShimmerTextView loading_text;
+//    @Bind (R.id.loading_text)
+//    ShimmerTextView loading_text;
 
 
     private Context context;
-    private Shimmer shimmer = new Shimmer();
     private List<DataEntryFloat> listings_stats;
     private ListingsV2Adapter listingsV2Adapter;
     private String TAG = getClass().getCanonicalName();
@@ -214,8 +210,6 @@ public class ListingsV2Fragment extends Fragment implements OnMenuItemClickListe
         ButterKnife.bind(this, v);
 
         Picasso.with(context).load(R.drawable.carmera).fit().centerCrop().into(carmera_holder);
-        shimmer.setDuration(2000);
-        shimmer.start(loading_text);
         return v;
     }
 

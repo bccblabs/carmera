@@ -11,17 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.fmsirvent.ParallaxEverywhere.PEWImageView;
-import com.fmsirvent.ParallaxEverywhere.PEWTextView;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -32,7 +28,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
