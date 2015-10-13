@@ -1,8 +1,6 @@
 package carmera.io.carmera.fragments;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -29,7 +27,6 @@ import carmera.io.carmera.models.GenQuery;
 public class SearchContainer extends Fragment {
 
     public String TAG = getClass().getCanonicalName();
-    public static final String EXTRA_SEARCH_CRIT = "extra_search_crit";
     @Bind(R.id.search_viewpager) public MaterialViewPager viewPager;
     private Toolbar toolbar;
 
@@ -67,12 +64,10 @@ public class SearchContainer extends Fragment {
                         return BasicSearchFragment.newInstance();
                 }
             }
-
             @Override
             public int getCount() {
                 return 3;
             }
-
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position % getCount()) {
@@ -85,7 +80,6 @@ public class SearchContainer extends Fragment {
                 }
                 return "";
             }
-
         });
         viewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
@@ -113,7 +107,6 @@ public class SearchContainer extends Fragment {
         if (toolbar != null) {
             toolbar.setVisibility(View.GONE);
         }
-
         return v;
     }
 
