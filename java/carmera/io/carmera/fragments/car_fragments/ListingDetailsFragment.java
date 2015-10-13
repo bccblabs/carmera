@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.car_fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -27,15 +26,11 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.parceler.Parcels;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,7 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.DataEntryFloat;
-import carmera.io.carmera.models.ListingV2;
+import carmera.io.carmera.models.Listing;
 
 /**
  * Created by bski on 8/1/15.
@@ -108,7 +103,7 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
     SliderLayout image_slider;
 
     public String TAG = getClass().getCanonicalName();
-    private ListingV2 listing;
+    private Listing listing;
     private List<DataEntryFloat> stats;
     private Context context;
 
@@ -127,7 +122,6 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         this.listing = Parcels.unwrap(args.getParcelable(ListingsFragment.EXTRA_LISTING_DATA));
-//        this.stats = Parcels.unwrap(args.getParcelable(ListingsFragment.EXTRA_LISTINGS_STAT));
         Log.i (TAG, stats.toString());
         setRetainInstance(true);
     }
@@ -137,43 +131,43 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
         ButterKnife.bind(this, v);
 
         year.setText(String.format("%d", listing.year));
-        car_info.setText(String.format("%s %s",
-                        listing.snapshot.make,
-                        listing.snapshot.model.replace(listing.snapshot.make, "").replace("_", " ")));
-        trim_name.setText(listing.snapshot.trim);
-        if (listing.sellingprice != null)
-            price.setText(String.format("$ %s", NumberFormat.getNumberInstance(Locale.US).format(listing.sellingprice.intValue())));
-        else
-            price.setVisibility(View.GONE);
-        if (listing.miles != null)
-            mileage.setText(String.format("%s miles", NumberFormat.getNumberInstance(Locale.US).format (listing.miles)));
-        else
-            mileage.setVisibility(View.GONE);
-
-        setTextWrapper(dealer_name, listing.dealername, name_container);
-        setTextWrapper(dealer_email, listing.dealeremail, email_container);
-        setTextWrapper(dealer_phone, listing.dealerFax, phone_container);
-
-        if (listing.getImagelist()!= null) {
-            for (String url : listing.getImagelist()) {
-                TextSliderView sliderView = new TextSliderView(getActivity());
-                if (url.length() > 0) {
-                    sliderView.description("")
-                            .image(url)
-                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                            .setOnSliderClickListener(this);
-                    image_slider.addSlider(sliderView);
-                }
-            }
-
-            image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);
-            image_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-            image_slider.setCustomAnimation(new DescriptionAnimation());
-            image_slider.setDuration(2000);
-            image_slider.addOnPageChangeListener(this);
-        } else {
-            image_slider.setVisibility(View.GONE);
-        }
+//        car_info.setText(String.format("%s %s",
+//                        listing.snapshot.make,
+//                        listing.snapshot.model.replace(listing.snapshot.make, "").replace("_", " ")));
+//        trim_name.setText(listing.snapshot.trim);
+//        if (listing.sellingprice != null)
+//            price.setText(String.format("$ %s", NumberFormat.getNumberInstance(Locale.US).format(listing.sellingprice.intValue())));
+//        else
+//            price.setVisibility(View.GONE);
+//        if (listing.miles != null)
+//            mileage.setText(String.format("%s miles", NumberFormat.getNumberInstance(Locale.US).format (listing.miles)));
+//        else
+//            mileage.setVisibility(View.GONE);
+//
+//        setTextWrapper(dealer_name, listing.dealername, name_container);
+//        setTextWrapper(dealer_email, listing.dealeremail, email_container);
+//        setTextWrapper(dealer_phone, listing.dealerFax, phone_container);
+//
+//        if (listing.getImagelist()!= null) {
+//            for (String url : listing.getImagelist()) {
+//                TextSliderView sliderView = new TextSliderView(getActivity());
+//                if (url.length() > 0) {
+//                    sliderView.description("")
+//                            .image(url)
+//                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+//                            .setOnSliderClickListener(this);
+//                    image_slider.addSlider(sliderView);
+//                }
+//            }
+//
+//            image_slider.setPresetTransformer(SliderLayout.Transformer.Stack);
+//            image_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//            image_slider.setCustomAnimation(new DescriptionAnimation());
+//            image_slider.setDuration(2000);
+//            image_slider.addOnPageChangeListener(this);
+//        } else {
+//            image_slider.setVisibility(View.GONE);
+//        }
 
         return v;
     }

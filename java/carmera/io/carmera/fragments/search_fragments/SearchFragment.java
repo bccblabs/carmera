@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.search_fragments;
 import carmera.io.carmera.models.GenQuery;
 
 /**

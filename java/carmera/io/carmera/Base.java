@@ -13,17 +13,17 @@ import android.widget.FrameLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import carmera.io.carmera.fragments.ListingsFragment;
-import carmera.io.carmera.fragments.SearchContainer;
-import carmera.io.carmera.fragments.CaptureFragment;
-import carmera.io.carmera.fragments.RecognitionResultsDisplay;
+import carmera.io.carmera.activities.ListingsActivity;
+import carmera.io.carmera.fragments.car_fragments.ListingsFragment;
+import carmera.io.carmera.fragments.search_fragments.SearchContainer;
+import carmera.io.carmera.fragments.utility.CaptureFragment;
 
 /**
  * Created by bski on 6/3/15.
  */
 public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
                                                        SearchContainer.OnSearchVehiclesListener,
-                                                       RecognitionResultsDisplay.RetakePhotoListener{
+                                                       ListingsActivity.RetakeImageListener {
 
     private final String TAG = getClass().getCanonicalName();
 
@@ -62,14 +62,9 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     @Override
     public void OnCameraResult (byte[] image_data) {
+        /* socket io stuff goes here */
         Bundle args = new Bundle();
         args.putByteArray("image_data", image_data);
-        RecognitionResultsDisplay recognitionResultsFragment = new RecognitionResultsDisplay();
-        recognitionResultsFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(R.id.content_frame, recognitionResultsFragment)
-                                   .addToBackStack("RECOGNITION_RESULTS")
-                                   .commit();
     }
 
     @Override
@@ -93,7 +88,8 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         saved = guillotineMenu.findViewById(R.id.saved_listings);
 
 
-        guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+        guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu,
+                guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
                 .setActionBarViewForAnimation(toolbar)
                 .build();

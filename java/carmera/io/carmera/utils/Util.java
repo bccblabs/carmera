@@ -21,9 +21,13 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,36 +35,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-
-/**
- * This is the standard utils file containing common util functions
- * throughout my applications.
- *
- * @author drew.heavner
- *
- */
 public class Util {
 
-
-    /**
-     * Constants
-     */
-
-
-    /**
-     * Variables
-     */
-
-    // Random generator for use in the application
+    private static Socket uploadSocket;
     private static Random random = new Random();
-
+    private static final String TAG = "Util";
 
     /**
      * Get the Random Number Generator
      * @return  the static random class
      */
     public static Random getRandom(){ return random; }
-
 
     /**
      * Get the time from epoch in seconds
@@ -70,7 +55,6 @@ public class Util {
     public static long time(){
         return System.currentTimeMillis()/1000;
     }
-
 
     /**
      * Return whether or not a given string is a valid email address according to
@@ -82,7 +66,6 @@ public class Util {
     public static boolean isValidEmail(CharSequence email){
         return Patterns.EMAIL_ADDRESS.matcher(email).find();
     }
-
 
     /**
      * Generate a unique device identifier that can be replicated
@@ -106,7 +89,6 @@ public class Util {
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
         return deviceUuid.toString();
     }
-
 
     /**
      * Generate a new UUID if one is not stored. This id is session/install based so every time
@@ -259,9 +241,6 @@ public class Util {
         return Math.max(min, Math.min(max, value));
     }
 
-
-
-
     /**
      * Compares two {@code long} values.
      * @return 0 if lhs = rhs, less than 0 if lhs &lt; rhs, and greater than 0 if lhs &gt; rhs.
@@ -270,7 +249,6 @@ public class Util {
     public static int compare(long lhs, long rhs) {
         return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
     }
-
 
     /**
      * Compares two {@code int} values.
@@ -281,7 +259,6 @@ public class Util {
     public static int compare(int lhs, int rhs) {
         return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
     }
-
 
     /**
      * Parse a float from a String in a safe manner.
@@ -299,7 +276,6 @@ public class Util {
         }
     }
 
-
     /**
      * Parse a int from a String in a safe manner.
      *
@@ -316,7 +292,6 @@ public class Util {
         }
     }
 
-
     /**
      * Parse a long from a String in a safe manner.
      *
@@ -332,7 +307,6 @@ public class Util {
             return defValue;
         }
     }
-
 
     /**
      * Parse a double from a String in a safe manner
@@ -370,13 +344,6 @@ public class Util {
         return kv_list;
     }
 
-    public static List<Double> getCoordinatesFromZip (Integer zipcode) {
-        List <Double> coordinates = new ArrayList<>();
-        coordinates.add (31.301675);
-        coordinates.add ( -94.641408);
-        return coordinates;
-    }
-
     public static String getRangeText (Object a, Object b) {
         if (a != null && b != null
                 && Integer.parseInt(a.toString()) > 0
@@ -391,6 +358,19 @@ public class Util {
 
         else
             return a.toString();
+    }
+
+    public static Socket getUploadSocket () {
+        if (uploadSocket == null) {
+            try {
+                uploadSocket = IO.socket(Constants.ServerAddr);
+                uploadSocket.connect();
+            } catch (URISyntaxException e) {
+                Log.i(TAG, e.getMessage());
+            }
+        }
+        Log.i (TAG, uploadSocket.toString());
+        return uploadSocket;
     }
 
 }

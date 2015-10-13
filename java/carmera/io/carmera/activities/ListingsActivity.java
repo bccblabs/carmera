@@ -1,13 +1,10 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,25 +22,26 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import carmera.io.carmera.fragments.RecognitionResultsDisplay;
+import carmera.io.carmera.R;
 
 /**
  * Created by bski on 7/7/15.
  */
-public class VehiclesDisplayContainer extends ActionBarActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
+public class ListingsActivity extends ActionBarActivity implements  OnMenuItemClickListener,
+                                                                    OnMenuItemLongClickListener {
 
     private String TAG = getClass().getCanonicalName();
     private DialogFragment mMenuDialogFragment;
-    private FragmentManager fragmentManager;
 
+    public interface RetakeImageListener {
+        public void retakePhoto ();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vehicles_display_container);
-        fragmentManager = getSupportFragmentManager();
         initToolbar();
         initMenuFragment();
-        addFragment( new RecognitionResultsDisplay(), true, R.id.fragment_container);
     }
 
 
@@ -96,29 +94,15 @@ public class VehiclesDisplayContainer extends ActionBarActivity implements OnMen
         });
     }
 
-    protected void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {
-        invalidateOptionsMenu();
-        String backStackName = fragment.getClass().getName();
-        boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);
-        if (!fragmentPopped) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(containerId, fragment, backStackName)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            if (addToBackStack)
-                transaction.addToBackStack(backStackName);
-            transaction.commit();
-        }
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(final Menu menu) {
-////        MenuInflater inflater = getMenuInflater();
-////        inflater.inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 //        switch (item.getItemId()) {
 //            case R.id.context_menu:
 //                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
@@ -126,8 +110,8 @@ public class VehiclesDisplayContainer extends ActionBarActivity implements OnMen
 //                }
 //                break;
 //        }
-//        return super.onOptionsItemSelected(item);
-//    }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {

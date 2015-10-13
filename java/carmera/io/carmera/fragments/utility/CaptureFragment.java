@@ -1,8 +1,7 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.utility;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

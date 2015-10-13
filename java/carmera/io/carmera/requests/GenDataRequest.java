@@ -15,6 +15,7 @@ import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.GenerationData;
 import carmera.io.carmera.models.Predictions;
 import carmera.io.carmera.models.VehicleQuery;
+import carmera.io.carmera.utils.Constants;
 
 public class GenDataRequest extends OkHttpSpiceRequest<GenerationData>{
     private static final String TAG = "GENERATION_DATA_REQUEST";
@@ -28,8 +29,6 @@ public class GenDataRequest extends OkHttpSpiceRequest<GenerationData>{
         super(GenerationData.class);
         this.vehicleQuery = query;
     }
-
-
     @Override
     public GenerationData loadDataFromNetwork () throws Exception {
 
@@ -38,16 +37,13 @@ public class GenDataRequest extends OkHttpSpiceRequest<GenerationData>{
             Log.i(TAG, req_json);
             RequestBody body = RequestBody.create(JSON, req_json);
             Request request = new Request.Builder()
-                    .url("http://52.27.114.36:3000/generations/trims/details")
+                    .url(Constants.VehicleInfoEndPoint)
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
-
             if (!response.isSuccessful())
                 throw new IOException(response.message());
             return gson.fromJson (response.body().charStream(), GenerationData.class);
-
-
         } catch (IOException ie) {
             Log.i(TAG, ie.getMessage());
             return null;

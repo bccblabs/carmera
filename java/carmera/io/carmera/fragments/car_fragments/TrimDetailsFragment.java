@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.car_fragments;
 
 import android.app.Activity;
 import android.content.Context;

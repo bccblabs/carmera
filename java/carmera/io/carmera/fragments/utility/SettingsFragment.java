@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.utility;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

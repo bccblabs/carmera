@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.support.v4.app.Fragment;
 

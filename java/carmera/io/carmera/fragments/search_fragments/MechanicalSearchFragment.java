@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments;
+package carmera.io.carmera.fragments.search_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
