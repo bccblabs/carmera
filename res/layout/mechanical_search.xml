@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mechanical_container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/material_view_pager_placeholder"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/transmission_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/cylinders_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/compressor_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/drivetrain_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/hp_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/tq_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <carmera.io.carmera.utils.MultiSpinner
+            android:id="@+id/mpg_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

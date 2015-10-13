@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import carmera.io.carmera.fragments.BasicSearchFragment;
+import carmera.io.carmera.fragments.SearchContainer;
 import carmera.io.carmera.fragments.CaptureFragment;
 import carmera.io.carmera.fragments.ListingsV2Fragment;
 import carmera.io.carmera.fragments.RecognitionResultsDisplay;
@@ -22,7 +22,7 @@ import carmera.io.carmera.fragments.RecognitionResultsDisplay;
  * Created by bski on 6/3/15.
  */
 public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
-                                                       BasicSearchFragment.OnSearchVehiclesListener,
+                                                       SearchContainer.OnSearchVehiclesListener,
                                                        RecognitionResultsDisplay.RetakePhotoListener{
 
     private final String TAG = getClass().getCanonicalName();
@@ -69,7 +69,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base);
-        BasicSearchFragment searchFragment = BasicSearchFragment.newInstance();
+        SearchContainer searchFragment = SearchContainer.newInstance();
         ButterKnife.bind(this);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, searchFragment)
@@ -95,7 +95,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, BasicSearchFragment.newInstance())
+                        .replace(R.id.content_frame, SearchContainer.newInstance())
                         .commit();
                 guillotineAnimation.close();
                 return false;

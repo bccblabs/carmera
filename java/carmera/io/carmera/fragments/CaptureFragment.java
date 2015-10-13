@@ -41,7 +41,7 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
     private OnCameraResultListener camera_result_callback = null;
 
     public interface OnCameraResultListener {
-        public void OnCameraResult (byte[] image_data);
+        void OnCameraResult (byte[] image_data);
     }
 
     public static CaptureFragment newInstance () {
@@ -118,7 +118,6 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
         return v;
     }
 
-
     @Override
     public boolean onTouch (View v, MotionEvent e) {
         autoFocus();
@@ -180,7 +179,6 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
             return(super.adjustPreviewParameters(parameters));
         }
     }
-
 
     @Override
     public void onDestroyView() {
