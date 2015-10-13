@@ -126,8 +126,8 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        this.listing = Parcels.unwrap(args.getParcelable(ListingsV2Fragment.EXTRA_LISTING_DATA));
-        this.stats = Parcels.unwrap(args.getParcelable(ListingsV2Fragment.EXTRA_LISTINGS_STAT));
+        this.listing = Parcels.unwrap(args.getParcelable(ListingsFragment.EXTRA_LISTING_DATA));
+//        this.stats = Parcels.unwrap(args.getParcelable(ListingsFragment.EXTRA_LISTINGS_STAT));
         Log.i (TAG, stats.toString());
         setRetainInstance(true);
     }

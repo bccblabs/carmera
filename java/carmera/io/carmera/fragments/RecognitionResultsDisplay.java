@@ -196,6 +196,7 @@ public class RecognitionResultsDisplay extends Fragment {
         }
         super.onStop();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -20,7 +20,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.ListingsFragment;
-import carmera.io.carmera.fragments.ListingsV2Fragment;
 import carmera.io.carmera.fragments.TrimDetailsFragment;
 import carmera.io.carmera.fragments.TrimsFragment;
 import carmera.io.carmera.models.GenQuery;

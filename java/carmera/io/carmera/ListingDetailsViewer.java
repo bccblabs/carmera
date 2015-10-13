@@ -16,9 +16,9 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.ListingDetailsFragment;
-import carmera.io.carmera.fragments.ListingsV2Fragment;
+import carmera.io.carmera.fragments.ListingsFragment;
 import carmera.io.carmera.fragments.TrimDetailsFragment;
-import carmera.io.carmera.models.ListingV2;
+import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.TrimData;
 
 /**
@@ -26,9 +26,9 @@ import carmera.io.carmera.models.TrimData;
  */
 public class ListingDetailsViewer extends ActionBarActivity {
     public final String TAG = getClass().getCanonicalName();
-    private Parcelable listings_stats;
+//    private Parcelable listings_stats;
     private Parcelable listing;
-    private ListingV2 listing_data;
+    private Listing listing_data;
 
     @Bind(R.id.trims_listings_viewpager)
     MaterialViewPager listing_view_pager;
@@ -43,8 +43,8 @@ public class ListingDetailsViewer extends ActionBarActivity {
             final ActionBar actionBar = getSupportActionBar();
             actionBar.hide();
         }
-        listing = getIntent().getExtras().getParcelable(ListingsV2Fragment.EXTRA_LISTING_DATA);
-        listings_stats = getIntent().getExtras().getParcelable(ListingsV2Fragment.EXTRA_LISTINGS_STAT);
+        listing = getIntent().getExtras().getParcelable(ListingsFragment.EXTRA_LISTING_DATA);
+//        listings_stats = getIntent().getExtras().getParcelable(ListingsFragment.EXTRA_LISTINGS_STAT);
         listing_data = Parcels.unwrap(listing);
 
         listing_view_pager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -56,14 +56,14 @@ public class ListingDetailsViewer extends ActionBarActivity {
                 switch (position) {
                     case 0:
                         fragment = ListingDetailsFragment.newInstance();
-                        args.putParcelable(ListingsV2Fragment.EXTRA_LISTING_DATA, listing);
-                        args.putParcelable(ListingsV2Fragment.EXTRA_LISTINGS_STAT, listings_stats);
+                        args.putParcelable(ListingsFragment.EXTRA_LISTING_DATA, listing);
+//                        args.putParcelable(ListingsFragment.EXTRA_LISTINGS_STAT, listings_stats);
                         fragment.setArguments(args);
                         return fragment;
                     case 1:
                         fragment = TrimDetailsFragment.newInstance();
-                        ListingV2 listingData = Parcels.unwrap(listing);
-                        args.putParcelable(TrimDetailsFragment.EXTRA_TRIM_DATA, Parcels.wrap(TrimData.class, listingData.snapshot));
+                        Listing listingData = Parcels.unwrap(listing);
+//                        args.putParcelable(TrimDetailsFragment.EXTRA_TRIM_DATA, Parcels.wrap(TrimData.class, listingData.snapshot));
                         fragment.setArguments(args);
                         return fragment;
                     default:

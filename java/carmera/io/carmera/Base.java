@@ -13,9 +13,9 @@ import android.widget.FrameLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.fragments.ListingsFragment;
 import carmera.io.carmera.fragments.SearchContainer;
 import carmera.io.carmera.fragments.CaptureFragment;
-import carmera.io.carmera.fragments.ListingsV2Fragment;
 import carmera.io.carmera.fragments.RecognitionResultsDisplay;
 
 /**
@@ -26,12 +26,19 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
                                                        RecognitionResultsDisplay.RetakePhotoListener{
 
     private final String TAG = getClass().getCanonicalName();
+
     private static final long RIPPLE_DURATION = 250;
+
     private static GuillotineAnimation guillotineAnimation;
+
     @Bind(R.id.toolbar) Toolbar toolbar;
+
     @Bind(R.id.root) FrameLayout root;
+
     @Bind(R.id.content_hamburger) View contentHamburger;
+
     private View search, carmera, saved;
+
     @Override
     public void retakePhoto() {
         CaptureFragment captureFragmentFragment = CaptureFragment.newInstance();
@@ -44,11 +51,11 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     @Override
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
-        args.putParcelable(ListingsV2Fragment.EXTRA_LISTING_QUERY, query);
-        ListingsV2Fragment listingsV2Fragment = ListingsV2Fragment.newInstance();
-        listingsV2Fragment.setArguments(args);
+        args.putParcelable(ListingsFragment.EXTRA_LISTING_QUERY, query);
+        ListingsFragment listingsFragment = ListingsFragment.newInstance();
+        listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, listingsV2Fragment)
+                .replace(R.id.content_frame, listingsFragment)
                 .addToBackStack("LISTINGS")
                 .commit();
     }
@@ -112,7 +119,6 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
                 return false;
             }
         });
-
     }
 
     @Override

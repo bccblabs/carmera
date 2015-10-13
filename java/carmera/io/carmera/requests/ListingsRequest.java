@@ -13,10 +13,10 @@ import java.io.IOException;
 
 import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.ListingsV2;
+import carmera.io.carmera.utils.Constants;
 
-public class ListingsRequest extends OkHttpSpiceRequest<ListingsV2> {
-    private static final String TAG = "LISTINGS_DATA_REQUEST";
+public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
+    private static final String TAG = "LISTINGS_REQUEST";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
     public static final com.squareup.okhttp.MediaType JSON =
@@ -24,27 +24,24 @@ public class ListingsRequest extends OkHttpSpiceRequest<ListingsV2> {
     private GenQuery vehicleQuery;
 
     public ListingsRequest(GenQuery query) {
-        super(ListingsV2.class);
+        super(Listings.class);
         this.vehicleQuery = query;
     }
 
     @Override
-    public ListingsV2 loadDataFromNetwork () throws Exception {
-
+    public Listings loadDataFromNetwork () throws Exception {
         try {
             String req_json = gson.toJson(vehicleQuery);
             Log.i(TAG, "Request Json" +  req_json);
             RequestBody body = RequestBody.create(JSON, req_json);
             Request request = new Request.Builder()
-                    .url("http://52.27.114.36:3000/v2/listings")
+                    .url(Constants.ListingsEndPoint)
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
-
             if (!response.isSuccessful())
                 throw new IOException(response.message());
-            return gson.fromJson (response.body().charStream(), ListingsV2.class);
-
+            return gson.fromJson (response.body().charStream(), Listings.class);
 
         } catch (IOException ie) {
             Log.i(TAG, ie.getMessage());
