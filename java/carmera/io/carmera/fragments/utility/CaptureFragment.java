@@ -29,7 +29,6 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
     private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
     private SeekBar zoom = null;
     private ButtonFloat capture_btn = null;
-
     private ButtonFloat flash_btn = null;
     String flashMode = null;
     boolean isFlashMode = false;
@@ -58,14 +57,6 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
             throw new ClassCastException(activity.toString() +
                     ": needs to implement CameraResultListener" );
         }
-    }
-
-    static CaptureFragment newInstance (boolean useFFC) {
-        CaptureFragment capture_Fragment_frag = new CaptureFragment();
-        Bundle args=new Bundle();
-        args.putBoolean(KEY_USE_FFC, useFFC);
-        capture_Fragment_frag.setArguments(args);
-        return capture_Fragment_frag;
     }
 
     @Override
@@ -124,8 +115,7 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
     }
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress,
-                                  boolean fromUser) {
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
             zoom.setEnabled(false);
             zoomTo(zoom.getProgress()).onComplete(new Runnable() {

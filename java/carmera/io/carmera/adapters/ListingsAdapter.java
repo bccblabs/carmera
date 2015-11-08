@@ -13,9 +13,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
-import carmera.io.carmera.models.Media;
-import carmera.io.carmera.models.Photo;
-import carmera.io.carmera.models.Photos;
+import carmera.io.carmera.models.listings_subdocuments.Media;
+import carmera.io.carmera.models.listings_subdocuments.Photo;
+import carmera.io.carmera.models.listings_subdocuments.Photos;
 import carmera.io.carmera.widgets.SquareImageView;
 
 /**

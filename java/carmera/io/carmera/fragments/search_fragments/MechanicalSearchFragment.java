@@ -131,10 +131,10 @@ public class MechanicalSearchFragment extends SearchFragment {
         hp_spinner.setItems(hps, "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(boolean[] selected) {
-                getGenQuery().min_hp = 0;
+                getGenQuery().minHp = 0;
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
-                        getGenQuery().min_hp = Integer.parseInt(hps.get(i).replace("+", ""));
+                        getGenQuery().minHp = Integer.parseInt(hps.get(i).replace("+", ""));
                     }
                 }
             }
@@ -144,10 +144,10 @@ public class MechanicalSearchFragment extends SearchFragment {
         tq_spinner.setItems(tqs, "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(boolean[] selected) {
-                getGenQuery().min_tq = 0;
+                getGenQuery().minTq = 0;
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
-                        getGenQuery().min_tq = Integer.parseInt(tqs.get(i).replace("+", ""));
+                        getGenQuery().minTq = Integer.parseInt(tqs.get(i).replace("+", ""));
                     }
                 }
             }
@@ -157,10 +157,10 @@ public class MechanicalSearchFragment extends SearchFragment {
         mpg_spinner.setItems(mpgs, "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(boolean[] selected) {
-                getGenQuery().min_tq = 0;
+                getGenQuery().minMpg = 0;
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
-                        getGenQuery().min_mpg = mpgs.get(i).replace("+", "");
+                        getGenQuery().minMpg = Integer.parseInt(mpgs.get(i).replace("+", ""));
                     }
                 }
             }

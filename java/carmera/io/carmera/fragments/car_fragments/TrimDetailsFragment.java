@@ -39,11 +39,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.ReviewAdapter;
-import carmera.io.carmera.models.DataEntryFloat;
-import carmera.io.carmera.models.Engine;
-import carmera.io.carmera.models.Mpg;
-import carmera.io.carmera.models.Transmission;
-import carmera.io.carmera.models.TrimData;
+import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
+import carmera.io.carmera.models.car_data_subdocuments.Engine;
+import carmera.io.carmera.models.car_data_subdocuments.Mpg;
+import carmera.io.carmera.models.car_data_subdocuments.Transmission;
 
 /**
  * Created by bski on 7/13/15.

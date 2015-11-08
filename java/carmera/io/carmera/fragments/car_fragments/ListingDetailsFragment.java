@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
@@ -29,15 +27,13 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.parceler.Parcels;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.models.DataEntryFloat;
+import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
 import carmera.io.carmera.models.Listing;
 
 /**

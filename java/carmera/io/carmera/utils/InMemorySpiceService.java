@@ -8,12 +8,9 @@ import com.octo.android.robospice.SpiceService;
 import com.octo.android.robospice.persistence.CacheManager;
 import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.memory.LruCacheStringObjectPersister;
-import com.octo.android.robospice.persistence.springandroid.json.gson.GsonObjectPersister;
 import com.octo.android.robospice.persistence.springandroid.json.jackson.JacksonObjectPersister;
 
-import carmera.io.carmera.models.GenerationData;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.Predictions;
 
 
 public class InMemorySpiceService extends SpiceService {

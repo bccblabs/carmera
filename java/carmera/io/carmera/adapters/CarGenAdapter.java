@@ -14,10 +14,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.models.GenerationData;
-import carmera.io.carmera.models.Snapshot;
 import carmera.io.carmera.utils.Util;
-import carmera.io.carmera.widgets.SquareImageView;
 
 /**
  * Created by bski on 7/13/15.

@@ -29,18 +29,23 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
+
+import carmera.io.carmera.models.Listing;
 
 public class Util {
 
     private static Socket uploadSocket;
     private static Random random = new Random();
     private static final String TAG = "Util";
-
+    public static Comparator<Listing> PRICE_COMPARATOR, MILEAGE_COMPARATOR, DATE_COMPARATOR;
     /**
      * Get the Random Number Generator
      * @return  the static random class
@@ -373,4 +378,48 @@ public class Util {
         return uploadSocket;
     }
 
+    public static void disconnectSocket () {
+        if (uploadSocket != null)
+            uploadSocket.disconnect();
+    }
+
+    public static Comparator<Listing> getDateComparator () {
+        return new Comparator<Listing>() {
+            @Override
+            public int compare(Listing lhs, Listing rhs) {
+                java.text.DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                try {
+                    return (fmt.parse (lhs.listedSince).before(fmt.parse(rhs.listedSince)))?-1:1;
+                } catch (Exception e) {
+                    return 0;
+                }
+            }
+        };
+    }
+
+    public static Comparator<Listing> getMileageComparator () {
+        return new Comparator<Listing>() {
+            @Override
+            public int compare(Listing lhs, Listing rhs) {
+                try {
+                    return lhs.mileage - rhs.mileage;
+                } catch (Exception e) {
+                    return 0;
+                }
+            }
+        };
+    }
+
+    public static Comparator<Listing> getPriceComparator () {
+        return new Comparator<Listing>() {
+            @Override
+            public int compare(Listing lhs, Listing rhs) {
+                try {
+                    return (int) (lhs.prices.msrp - rhs.prices.msrp);
+                } catch (Exception e) {
+                    return 0;
+                }
+            }
+        };
+    }
 }

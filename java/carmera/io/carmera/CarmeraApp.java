@@ -9,8 +9,6 @@ import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import carmera.io.carmera.models.CapturedVehicle;
-
 public class CarmeraApp extends Application {
     private static final String CANARO_EXTRA_BOLD_PATH = "fonts/canaro_extra_bold.otf";
     public static Typeface canaroExtraBold;

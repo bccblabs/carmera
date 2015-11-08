@@ -19,7 +19,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
-import carmera.io.carmera.models.GenQuery;
 
 /**
  * Created by bski on 7/20/15.

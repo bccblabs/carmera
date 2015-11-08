@@ -4,6 +4,14 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
 
+import carmera.io.carmera.models.listings_subdocuments.Make;
+import carmera.io.carmera.models.listings_subdocuments.Model;
+import carmera.io.carmera.models.listings_subdocuments.Prices;
+import carmera.io.carmera.models.listings_subdocuments.Dealer;
+import carmera.io.carmera.models.listings_subdocuments.Media;
+import carmera.io.carmera.models.listings_subdocuments.Style;
+import carmera.io.carmera.models.listings_subdocuments.Year;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Parcel
 public class Listing {

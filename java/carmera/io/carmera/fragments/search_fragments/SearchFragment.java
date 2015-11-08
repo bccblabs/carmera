@@ -1,5 +1,4 @@
 package carmera.io.carmera.fragments.search_fragments;
-import carmera.io.carmera.models.GenQuery;
 
 /**
  * Created by bski on 10/12/15.

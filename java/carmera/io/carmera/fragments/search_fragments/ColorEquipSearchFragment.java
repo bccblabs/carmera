@@ -64,7 +64,7 @@ public class ColorEquipSearchFragment extends SearchFragment {
             public void onItemsSelected(boolean[] selected) {
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
-                        getGenQuery().ext_colors.add (ext_colors.get(i));
+                        getGenQuery().extColors.add (ext_colors.get(i));
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class ColorEquipSearchFragment extends SearchFragment {
             public void onItemsSelected(boolean[] selected) {
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
-                        getGenQuery().int_colors.add (int_colors.get(i));
+                        getGenQuery().intColors.add (int_colors.get(i));
                     }
                 }
             }

@@ -25,7 +25,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.ListingsAdapter;
-import carmera.io.carmera.models.GenQuery;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.InMemorySpiceService;
