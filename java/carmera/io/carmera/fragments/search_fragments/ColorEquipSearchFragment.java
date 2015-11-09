@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 
 import java.util.Arrays;
@@ -27,10 +26,6 @@ import carmera.io.carmera.utils.Util;
 public class ColorEquipSearchFragment extends SearchFragment {
 
     private Context cxt;
-
-    public static ColorEquipSearchFragment newInstance() {
-        return new ColorEquipSearchFragment();
-    }
 
     @Bind(R.id.colors_container) ObservableScrollView color_container;
     
@@ -52,7 +47,6 @@ public class ColorEquipSearchFragment extends SearchFragment {
     @Override
     public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MaterialViewPagerHelper.registerScrollView(getActivity(), color_container, null);
     }
 
     @Override

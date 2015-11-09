@@ -22,7 +22,6 @@ public class CarmeraApp extends Application {
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
         ParseACL.setDefaultACL(defaultACL, true);
-        ParseObject.registerSubclass(CapturedVehicle.class);
         initTypeface();
     }
 

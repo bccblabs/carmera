@@ -11,6 +11,7 @@ import com.octo.android.robospice.persistence.memory.LruCacheStringObjectPersist
 import com.octo.android.robospice.persistence.springandroid.json.jackson.JacksonObjectPersister;
 
 import carmera.io.carmera.models.Listings;
+import carmera.io.carmera.models.StyleData;
 
 
 public class InMemorySpiceService extends SpiceService {
@@ -19,7 +20,7 @@ public class InMemorySpiceService extends SpiceService {
     public CacheManager createCacheManager(Application application) {
         CacheManager manager = new CacheManager();
         try {
-            JacksonObjectPersister genDataPersister = new JacksonObjectPersister(application, GenerationData.class);
+            JacksonObjectPersister genDataPersister = new JacksonObjectPersister(application, StyleData.class);
             JacksonObjectPersister listingDataPersister = new JacksonObjectPersister(application, Listings.class);
             manager.addPersister(genDataPersister);
             manager.addPersister(listingDataPersister);

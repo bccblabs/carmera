@@ -2,6 +2,7 @@ package carmera.io.carmera.models.car_data_subdocuments;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.parceler.Parcel;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  */
 
 @JsonIgnoreProperties (ignoreUnknown = true)
+@Parcel
 public class Recalls {
     @JsonProperty
     public Integer numberOfRecalls;

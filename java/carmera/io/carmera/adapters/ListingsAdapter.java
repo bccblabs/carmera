@@ -2,27 +2,32 @@ package carmera.io.carmera.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marvinlabs.widget.slideshow.SlideShowAdapter;
+import com.marvinlabs.widget.slideshow.SlideShowView;
+import com.marvinlabs.widget.slideshow.picasso.PicassoBitmapAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
-import carmera.io.carmera.models.listings_subdocuments.Media;
-import carmera.io.carmera.models.listings_subdocuments.Photo;
-import carmera.io.carmera.models.listings_subdocuments.Photos;
+import carmera.io.carmera.models.listings_subdocuments.Link;
 import carmera.io.carmera.widgets.SquareImageView;
 
 /**
  * Created by bski on 7/15/15.
  */
 public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdapter.ViewHolder> {
-
 
     private Context cxt;
     @Override
@@ -36,64 +41,38 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         Listing listing = getItem(i);
-        viewHolder.car_info.setText(String.format ("%d %s %s %s",   listing.getYear().getYear(),
-                listing.getMake().getName(),
-                listing.getModel().getName(),
-                listing.getStyle().getTrim()));
+        viewHolder.car_info.setText(String.format("%d %s %s",   listing.getYear().getYear(),
+                                                                listing.getMake().getName(),
+                                                                listing.getModel().getName()));
 
-        if (listing.getPrices().getMsrp() > 0.0f)
-            viewHolder.price.setText(String.format("MSRP: %.0f", listing.getPrices().getMsrp()));
+        viewHolder.trim_info.setText(listing.getStyle().getTrim());
+        if (listing.getPrices() != null)
+            viewHolder.price.setText(String.format("$%.0f", listing.getPrices().getListPrice()));
         else
             viewHolder.price.setVisibility(View.GONE);
-        viewHolder.mileage.setText(String.format("Mileage: %d", listing.getMileage()));
-        if (listing.getListedSince() != null)
-            viewHolder.listed_since.setText(String.format("Listed Since: %s", listing.getListedSince()));
-        else
-            viewHolder.listed_since.setVisibility(View.GONE);
-        viewHolder.dealer_name.setText(String.format("%s", listing.getDealer().getName()));
-        viewHolder.dealer_address.setText(String.format("%s, %s, %s", listing.getDealer().getAddress().getStreet(),
-                listing.getDealer().getAddress().getCity(),
-                listing.getDealer().getAddress().getStateName()));
+        viewHolder.mileage.setText(String.format("%d Miles", listing.getMileage()));
 
         try {
-            Media media = listing.getMedia();
-            if (media != null) {
-                Photos photos = media.getPhotos();
-                if (photos != null) {
-                    Photo thumbnails = photos.getLarge();
-                    if (thumbnails.getCount() > 0) {
-                        Picasso.with(cxt)
-                                .load(thumbnails.getLinks().get(0).getHref())
-                                .resize(320, 240)
-                                .into(viewHolder.photo);
-                    } else {
-                        viewHolder.photo.setImageResource(R.drawable.carmera);
-                    }
-                }
+            List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
+            if (links.size() > 0) {
+                Picasso.with(cxt).load (links.get(0).getHref()).into(viewHolder.listingImage);
+                Log.i(this.getClass().getCanonicalName(), " image url: " + links.get(0).getHref());
             }
         } catch (Exception e) {
-            e.getMessage();
+            Log.e(this.getClass().getCanonicalName(), e.getMessage());
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.car_info)
-        public TextView car_info;
-        @Bind(R.id.photo)
-        public SquareImageView photo;
-        @Bind(R.id.price)
-        public TextView price;
-        @Bind(R.id.mileage)
-        public TextView mileage;
-        @Bind(R.id.listed_since)
-        public TextView listed_since;
-        @Bind(R.id.dealer_name)
-        public TextView dealer_name;
-        @Bind(R.id.dealer_address)
-        public TextView dealer_address;
+        @Bind(R.id.car_info) public TextView car_info;
+        @Bind(R.id.trim_info) public TextView trim_info;
+        @Bind(R.id.listing_photo) public ImageView listingImage;
+        @Bind(R.id.price) public TextView price;
+        @Bind(R.id.mileage) public TextView mileage;
         public ViewHolder (View itemView) {
-            super (itemView);
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

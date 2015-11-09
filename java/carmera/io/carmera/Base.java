@@ -13,17 +13,16 @@ import android.widget.FrameLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import carmera.io.carmera.activities.ListingsActivity;
-import carmera.io.carmera.fragments.car_fragments.ListingsFragment;
+import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
+import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
-import carmera.io.carmera.fragments.utility.CaptureFragment;
+import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 
 /**
  * Created by bski on 6/3/15.
  */
 public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
-                                                       SearchContainer.OnSearchVehiclesListener,
-                                                       ListingsActivity.RetakeImageListener {
+                                                       SearchContainer.OnSearchVehiclesListener {
 
     private final String TAG = getClass().getCanonicalName();
 
@@ -37,16 +36,16 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     @Bind(R.id.content_hamburger) View contentHamburger;
 
-    private View search, carmera, saved;
+    private View search, carmera, saved, settings;
 
-    @Override
-    public void retakePhoto() {
-        CaptureFragment captureFragmentFragment = CaptureFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, captureFragmentFragment)
-                .addToBackStack("CAPTURE")
-                .commit();
-    }
+//    @Override
+//    public void retakePhoto() {
+//        CaptureFragment captureFragmentFragment = CaptureFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.content_frame, captureFragmentFragment)
+//                .addToBackStack("CAPTURE")
+//                .commit();
+//    }
 
     @Override
     public void OnSearchListings (Parcelable query) {
@@ -86,6 +85,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         search = guillotineMenu.findViewById(R.id.car_search);
         carmera = guillotineMenu.findViewById(R.id.carmera);
         saved = guillotineMenu.findViewById(R.id.saved_listings);
+        settings = guillotineMenu.findViewById(R.id.settings);
 
 
         guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu,
@@ -110,6 +110,17 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
             public boolean onTouch(View v, MotionEvent event) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, CaptureFragment.newInstance())
+                        .commit();
+                guillotineAnimation.close();
+                return false;
+            }
+        });
+
+        settings.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new SettingsFragment())
                         .commit();
                 guillotineAnimation.close();
                 return false;

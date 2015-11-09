@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 
 import java.util.Arrays;
@@ -24,10 +23,6 @@ import carmera.io.carmera.utils.MultiSpinner;
 public class MechanicalSearchFragment extends SearchFragment {
 
     private Context cxt;
-
-    public static MechanicalSearchFragment newInstance() {
-        return new MechanicalSearchFragment();
-    }
 
     @Bind(R.id.transmission_spinner) MultiSpinner transmission_spinner;
 
@@ -51,14 +46,13 @@ public class MechanicalSearchFragment extends SearchFragment {
         View v = inflater.inflate(R.layout.mechanical_search, container, false);
         ButterKnife.bind(this, v);
         cxt = getActivity();
-        init_spinners();
         return v;
     }
 
     @Override
     public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MaterialViewPagerHelper.registerScrollView(getActivity(), mechanical_container, null);
+        init_spinners();
     }
 
     @Override

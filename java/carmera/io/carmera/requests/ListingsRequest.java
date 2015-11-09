@@ -12,6 +12,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import carmera.io.carmera.models.Listings;
+import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
 public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
@@ -20,9 +21,9 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
     private final Gson gson = new Gson();
     public static final com.squareup.okhttp.MediaType JSON =
             com.squareup.okhttp.MediaType.parse("application/json; charset=utf-8");
-    private GenQuery vehicleQuery;
+    private ListingsQuery vehicleQuery;
 
-    public ListingsRequest(GenQuery query) {
+    public ListingsRequest(ListingsQuery query) {
         super(Listings.class);
         this.vehicleQuery = query;
     }

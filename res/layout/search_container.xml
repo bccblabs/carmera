@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/background_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.github.florent37.materialviewpager.MaterialViewPager
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/viewpagertab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height"
+        app:stl_customTabTextLayoutId="@layout/medium_like_tab"
+        app:stl_customTabTextViewId="@id/custom_text"
+        app:stl_dividerColor="@color/transparent"
+        app:stl_dividerThickness="0dp"
+        app:stl_overlineColor="@color/black_20"
+        app:stl_overlineThickness="1dp"
+        app:stl_indicatorColor="@color/black"
+        app:stl_indicatorCornerRadius="1dp"
+        app:stl_indicatorGravity="top"
+        app:stl_indicatorInterpolation="linear"
+        app:stl_indicatorThickness="1dp"
+        app:stl_indicatorWithoutPadding="true"
+        app:stl_underlineColor="@color/transparent"
+        app:stl_underlineThickness="0dp"
+        />
+    <android.support.v4.view.ViewPager
         android:id="@+id/search_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_newstand"
-        app:viewpager_logoMarginTop="25dp"
-        app:viewpager_color="@color/selected_item_color"
-        app:viewpager_headerHeight="50dp"
-        app:viewpager_headerAlpha="1.0"
-        app:viewpager_imageHeaderDarkLayerAlpha="0.2"
-        app:viewpager_hideLogoWithFade="false"
-        app:viewpager_hideToolbarAndTitle="true"
-        app:viewpager_enableToolbarElevation="true"
-        app:viewpager_parallaxHeaderFactor="1.5"
-        app:viewpager_headerAdditionalHeight="15dp"
-        app:viewpager_displayToolbarWhenSwipe="false"
-        app:viewpager_transparentToolbar="true"
-        app:viewpager_animatedHeaderImage="true"
-        />
+        android:layout_height="400dp"
+        android:layout_below="@id/viewpagertab"
+    />
     <com.gc.materialdesign.views.ButtonRectangle
-        android:layout_weight="1"
+        android:layout_below="@id/search_viewpager"
         android:layout_margin="28dp"
-        android:layout_height="0dp"
+        android:layout_height="72dp"
         android:layout_width="match_parent"
         android:background="@color/selected_item_color"
         android:id="@+id/search_listings_base"
         android:text="@string/start_search"/>
-</LinearLayout>
+</RelativeLayout>

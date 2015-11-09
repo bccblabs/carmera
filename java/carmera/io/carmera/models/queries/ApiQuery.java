@@ -8,8 +8,8 @@ import org.parceler.Parcel;
 
 @Parcel
 public class ApiQuery {
-    public Integer zipcode;
+    public String zipcode;
     public Integer pagenum;
-    public Integer pagesize;
-    public Integer radius;
+    public String pagesize;
+    public String radius;
 }

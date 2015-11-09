@@ -1,4 +1,4 @@
-package carmera.io.carmera.fragments.car_fragments;
+package carmera.io.carmera.fragments.main_fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -209,7 +208,6 @@ public class ListingDetailsFragment extends Fragment implements BaseSliderView.O
         setChart(torque_chart, tq, "torque");
         setChart(city_mpg_chart, city_mpg, "city");
         setChart(hwy_mpg_chart, hwy_mpg, "highway");
-        MaterialViewPagerHelper.registerScrollView(getActivity(), container, null);
     }
     @Override
     public void onDestroyView() {

@@ -1,8 +1,12 @@
-package carmera.io.carmera.fragments.car_fragments;
+package carmera.io.carmera.fragments.main_fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -26,7 +29,11 @@ import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.ListingsAdapter;
 import carmera.io.carmera.models.Listings;
+import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.queries.ApiQuery;
+import carmera.io.carmera.models.queries.CarQuery;
 import carmera.io.carmera.requests.ListingsRequest;
+import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.InMemorySpiceService;
 
 /**
@@ -47,7 +54,7 @@ public class ListingsFragment extends Fragment {
     private ListingsAdapter listingsAdapter;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
-    private GenQuery vehicleQuery;
+    private ListingsQuery vehicleQuery;
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
@@ -56,7 +63,6 @@ public class ListingsFragment extends Fragment {
         }
         @Override
         public void onRequestSuccess (Listings result) {
-            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
             try {
                 loading_container.setVisibility(View.GONE);
                 listings_recycler.setVisibility(View.VISIBLE);
@@ -65,6 +71,7 @@ public class ListingsFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
+            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -74,7 +81,16 @@ public class ListingsFragment extends Fragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
-        this.vehicleQuery = Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        vehicleQuery = new ListingsQuery();
+        vehicleQuery.setCar((CarQuery) Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY)));
+        vehicleQuery.api = new ApiQuery();
+        vehicleQuery.api.pagenum = 1;
+        vehicleQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+        vehicleQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT);
+        vehicleQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT);
+
+
         Log.i (TAG, "Queries to go: " + this.vehicleQuery.toString());
         setRetainInstance(true);
     }
@@ -107,7 +123,6 @@ public class ListingsFragment extends Fragment {
 //        });
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setHasFixedSize(false);
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listings_recycler, null);
     }
 
     @Override

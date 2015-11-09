@@ -21,8 +21,28 @@ public class Prices {
     public double invoice;
     @JsonProperty
     public double monthlyPayment;
+    @JsonProperty
+    public double listPrice;
+    @JsonProperty
+    public double dealerOfferPrice;
 
     public Prices() {
+    }
+
+    public double getListPrice() {
+        return listPrice;
+    }
+
+    public void setListPrice(double listPrice) {
+        this.listPrice = listPrice;
+    }
+
+    public double getDealerOfferPrice() {
+        return dealerOfferPrice;
+    }
+
+    public void setDealerOfferPrice(double dealerOfferPrice) {
+        this.dealerOfferPrice = dealerOfferPrice;
     }
 
     public double getMsrp() {

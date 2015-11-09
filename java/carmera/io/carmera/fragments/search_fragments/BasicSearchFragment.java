@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 
 import java.util.ArrayList;
@@ -31,10 +30,6 @@ public class BasicSearchFragment extends SearchFragment {
 
     private Context cxt;
 
-    public static BasicSearchFragment newInstance() {
-        return new BasicSearchFragment();
-    }
-
     @Bind(R.id.years_spinner) MultiSpinner years_spinner;
 
     @Bind(R.id.make_spinner) MultiSpinnerSearch make_spinner;
@@ -54,14 +49,13 @@ public class BasicSearchFragment extends SearchFragment {
         View v = inflater.inflate(R.layout.basic_search, container, false);
         ButterKnife.bind(this, v);
         cxt = getActivity();
-        init_spinners();
         return v;
     }
 
     @Override
     public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MaterialViewPagerHelper.registerScrollView(getActivity(), basic_container, null);
+        init_spinners();
     }
 
     private List<KeyPairBoolData> getModels (List<String> makes) {

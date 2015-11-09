@@ -1,15 +1,17 @@
 package carmera.io.carmera.fragments.search_fragments;
 
+import carmera.io.carmera.models.queries.CarQuery;
+
 /**
  * Created by bski on 10/12/15.
  */
 public abstract class SearchFragment extends android.support.v4.app.Fragment {
 
-    public static GenQuery genQuery;
+    public static CarQuery genQuery;
 
-    public static GenQuery getGenQuery() {
+    public static CarQuery getGenQuery() {
         if (genQuery == null)
-            genQuery = new GenQuery();
+            genQuery = new CarQuery();
         return genQuery;
     }
 

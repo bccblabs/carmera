@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/listings_search_title">
+        <EditTextPreference
+            android:key="pref_key_zipcode"
+            android:title="@string/pref_key_zipcode"
+            android:defaultValue="@string/pref_zipcode_default"/>
+        <ListPreference
+            android:key="pref_key_radius"
+            android:title="@string/pref_key_radius"
+            android:entries="@array/range_array"
+            android:entryValues="@array/range_array"
+            android:defaultValue="@string/pref_radius_default"/>
+    </PreferenceCategory>
+</PreferenceScreen>

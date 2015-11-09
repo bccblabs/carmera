@@ -5,20 +5,21 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.github.florent37.materialviewpager.MaterialViewPager;
-import com.github.florent37.materialviewpager.header.HeaderDesign;
+
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import org.parceler.Parcels;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
+import carmera.io.carmera.models.queries.CarQuery;
 
 /**
  * Created by bski on 7/20/15.
@@ -26,12 +27,14 @@ import carmera.io.carmera.R;
 public class SearchContainer extends Fragment {
 
     public String TAG = getClass().getCanonicalName();
-    @Bind(R.id.search_viewpager) public MaterialViewPager viewPager;
-    private Toolbar toolbar;
+
+    @Bind(R.id.search_viewpager) public ViewPager viewPager;
+
+    @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
 
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
-        search_callback.OnSearchListings(Parcels.wrap(GenQuery.class, SearchFragment.genQuery));
+        search_callback.OnSearchListings(Parcels.wrap(CarQuery.class, SearchFragment.genQuery));
     }
 
     private OnSearchVehiclesListener search_callback = null;
@@ -49,63 +52,18 @@ public class SearchContainer extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.search_container, container, false);
         ButterKnife.bind(this, v);
-        viewPager.getViewPager().setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return BasicSearchFragment.newInstance();
-                    case 1:
-                        return MechanicalSearchFragment.newInstance();
-                    case 2:
-                        return ColorEquipSearchFragment.newInstance();
-                    default:
-                        return BasicSearchFragment.newInstance();
-                }
-            }
-            @Override
-            public int getCount() {
-                return 3;
-            }
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position % getCount()) {
-                    case 0:
-                        return "Basic";
-                    case 1:
-                        return "Mechanical";
-                    case 2:
-                        return "Equipments";
-                }
-                return "";
-            }
-        });
-        viewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-            @Override
-            public HeaderDesign getHeaderDesign(int page) {
-                switch (page) {
-                    case 0:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.green,
-                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
-                    case 1:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
-                    case 2:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.cyan,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
-                }
-                return null;
-            }
-        });
-        viewPager.getViewPager().setOffscreenPageLimit(viewPager.getViewPager().getAdapter().getCount());
-        viewPager.getPagerTitleStrip().setViewPager(viewPager.getViewPager());
-        toolbar = viewPager.getToolbar();
-        if (toolbar != null) {
-            toolbar.setVisibility(View.GONE);
-        }
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getChildFragmentManager(),
+                FragmentPagerItems.with(getActivity())
+                .add (R.string.basic_search, BasicSearchFragment.class)
+                .add (R.string.mechanical_search, MechanicalSearchFragment.class)
+                .add (R.string.equipments_search, ColorEquipSearchFragment.class)
+                .create());
+
+        viewPager.setAdapter(adapter);
+        viewPagerTab.setViewPager(viewPager);
+
         return v;
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/guillotine_background"
+    android:background="@color/background_material_light"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         style="@style/Toolbar"
@@ -14,43 +14,43 @@
             android:src="@drawable/ic_menu_black" />
     </android.support.v7.widget.Toolbar>
     <LinearLayout
-        android:id="@+id/start_verification"
-        style="@style/LinearLayout.GuillotineItem">
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_search_white_24dp" />
-        <widgets.CanaroTextView
-            android:id="@+id/car_search"
-            style="@style/TextView.GuillotineItem"
-            android:text="@string/car_search" />
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/check_results"
         style="@style/LinearLayout.GuillotineItem">
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_action_camera_white_small" />
+            android:src="@drawable/ic_carmera_small_light" />
         <widgets.CanaroTextView
             android:id="@+id/carmera"
             style="@style/TextView.GuillotineItem"
             android:text="@string/carmera" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/start_verification"
+        style="@style/LinearLayout.GuillotineItem">
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_search_black_24dp" />
+        <widgets.CanaroTextView
+            android:id="@+id/car_search"
+            style="@style/TextView.GuillotineItem"
+            android:text="@string/car_search" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/saved_listings"
         style="@style/LinearLayout.GuillotineItem">
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_save_white_24dp" />
+            android:src="@drawable/ic_favorite_border_black_24dp" />
         <widgets.CanaroTextView
             style="@style/TextView.GuillotineItem"
             android:text="@string/saved_listings" />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/settings_group"
+        android:id="@+id/settings"
         style="@style/LinearLayout.GuillotineItem">
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_settings_white_24dp" />
+            android:src="@drawable/ic_settings_black_24dp" />
         <widgets.CanaroTextView
             style="@style/TextView.GuillotineItem"
             android:text="@string/settings" />

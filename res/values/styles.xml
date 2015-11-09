@@ -3,19 +3,19 @@
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="android:textColor">@color/guillotine_background</item>
         <item name="android:textColorPrimary">@color/guillotine_background</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:actionBarStyle">@style/CarmeraTheme.ActionBarStyle</item>
+        <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="CarmeraTheme.PreferenceStyle" parent="@style/PreferenceThemeOverlay">
+        <item name="android:textColorPrimary">@color/selected_item_color</item>
+        <item name="android:textColorSecondary">@color/selected_item_color</item>
+        <item name="android:textColorTertiary">@color/selected_item_color</item>
     </style>
     <style name="CarmeraTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:titleTextStyle">@style/CarmeraTheme.ActionBar.TitleTextStyle</item>
     </style>
     <style name="CarmeraTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/background_light</item>
-    </style>
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
-        <item name="color">@color/drawerArrowColor</item>
     </style>
     <style name="DescStyle">
         <item name="android:layout_column">0</item>
@@ -101,10 +101,11 @@
     <style name="listing_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:layout_gravity">top|right</item>
+        <item name="android:textColor">@color/background_floating_material_light</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginTop">15dp</item>
     </style>
@@ -190,7 +191,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">@dimen/guillotine_small_margin</item>
+        <item name="android:layout_marginLeft">@dimen/guillotine_medium_margin</item>
     </style>
 
 
