@@ -64,6 +64,8 @@ public class SearchContainer extends Fragment {
         viewPager.setAdapter(adapter);
         viewPagerTab.setViewPager(viewPager);
 
+        /* reset the static query variable */
+        SearchFragment.genQuery = new CarQuery();
         return v;
     }
 
@@ -75,8 +77,8 @@ public class SearchContainer extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     @Override

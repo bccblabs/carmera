@@ -20,7 +20,7 @@ public class Safety {
     public Nhtsa nhtsa;
 
     @JsonProperty
-    public IIHS iihs;
+    public List<CategoryValuePair> iihs;
 
     public List<String> getEquipments() {
         return equipments;

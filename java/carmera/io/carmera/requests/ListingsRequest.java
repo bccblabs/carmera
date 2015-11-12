@@ -44,7 +44,7 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
             return gson.fromJson (response.body().charStream(), Listings.class);
 
         } catch (IOException ie) {
-            Log.i(TAG, ie.getMessage());
+            Log.e (TAG, ie.getMessage());
             return null;
         }
     }

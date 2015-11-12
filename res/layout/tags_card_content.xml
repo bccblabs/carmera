@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <widgets.CanaroTextView
+        style="@style/listing_title_small"
+        android:id="@+id/desc_line0"/>
+
+    <widgets.CanaroTextView
+        style="@style/listing_title_small"
+        android:id="@+id/desc_line1"/>
+
+    <me.gujun.android.taggroup.TagGroup
+        style="@style/TagGroup.Large"
+        android:layout_margin="10dp"
+        android:id="@+id/tags"/>
+</LinearLayout>

@@ -1,118 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pew="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/transparent"
     android:id="@+id/scroll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:background="@android:color/background_dark"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/slider"
+        <it.gmariotti.cardslib.library.view.CardView
+            android:id="@+id/listing_info_card"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            custom:pager_animation="Stack"
-            custom:auto_cycle="true"
-            custom:indicator_visibility="visible"
-            custom:pager_animation_span="1100"
-            android:layout_height="200dp"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:background="#70000000"
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                style="@style/listing_title"
-                android:id="@+id/listing_car_year"/>
-            <TextView
-                style="@style/listing_title"
-                android:id="@+id/car_info"/>
-            <TextView
-                style="@style/listing_title"
-                android:id="@+id/trim_name"/>
-            <TextView
-                style="@style/listing_title"
-                android:id="@+id/listing_price"/>
-            <TextView
-                style="@style/listing_title"
-                android:id="@+id/listing_mileage"/>
-        </LinearLayout>
-        <TextView
-            style="@style/section_title"
-            android:text="@string/compare"/>
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/price"/>
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/mileage" />
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/hp" />
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/torque"/>
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/city_mpg"/>
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                style="@style/single_horizontal_bar_style"
-                android:id="@+id/hwy_mpg"/>
-        </LinearLayout>
-        <TextView
-            style="@style/section_title"
-            android:text="@string/dealer_info"/>
-        <LinearLayout
-            android:id="@+id/name_container"
-            style="@style/dealer_info_container">
-            <de.hdodenhof.circleimageview.CircleImageView
-                style="@style/circular_image_view"
-                app:border_width="5dp"
-                app:border_color="@android:color/holo_orange_light"
-                android:src="@drawable/ic_store_white_24dp"/>
-            <TextView
-                android:text="bo chen mofo dealership nigga"
-                style="@style/dealer_text"
-                android:id="@+id/dealer_name"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/email_container"
-            style="@style/dealer_info_container">
-            <de.hdodenhof.circleimageview.CircleImageView
-                style="@style/circular_image_view"
-                app:border_width="5dp"
-                app:border_color="@android:color/holo_red_light"
-                android:src="@drawable/ic_email_white_24dp"/>
-            <TextView
-                android:text="bo nigga"
-                style="@style/dealer_text"
-                android:id="@+id/dealer_email"/>
-        </LinearLayout>
+        />
+        <it.gmariotti.cardslib.library.view.CardView
+            android:id="@+id/specs_card"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
+        <it.gmariotti.cardslib.library.view.CardView
+            android:id="@+id/cost_card"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
+        <it.gmariotti.cardslib.library.view.CardView
+            android:id="@+id/review_card"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
+        <it.gmariotti.cardslib.library.view.CardView
+            android:id="@+id/issues_card"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
 
-        <LinearLayout
-            android:id="@+id/phone_container"
-            style="@style/dealer_info_container">
-            <de.hdodenhof.circleimageview.CircleImageView
-                style="@style/circular_image_view"
-                app:border_width="5dp"
-                app:border_color="@android:color/holo_blue_light"
-                android:src="@drawable/ic_contact_phone_white_24dp"/>
-            <TextView
-                android:text="bo chen mofo dealership nigga"
-                style="@style/dealer_text"
-                android:id="@+id/dealer_phone"/>
-        </LinearLayout>
     </LinearLayout>
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

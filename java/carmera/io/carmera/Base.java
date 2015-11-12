@@ -17,6 +17,7 @@ import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
+import carmera.io.carmera.utils.Constants;
 
 /**
  * Created by bski on 6/3/15.
@@ -50,7 +51,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     @Override
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
-        args.putParcelable(ListingsFragment.EXTRA_LISTING_QUERY, query);
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, query);
         ListingsFragment listingsFragment = ListingsFragment.newInstance();
         listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()

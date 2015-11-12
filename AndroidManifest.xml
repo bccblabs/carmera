@@ -46,6 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ListingDetails"
+            android:label="@string/app_name">
+        </activity>
+        <activity android:name=".DataViewer"
+            android:label="@string/app_name">
+        </activity>
 
         <service
             android:name=".utils.InMemorySpiceService"

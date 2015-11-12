@@ -24,7 +24,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
+import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.TextView;
+
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
@@ -423,5 +426,12 @@ public class Util {
         };
     }
 
-//    public static
+
+    public static void setText (TextView textview, String text) {
+        if (text != null)
+            textview.setText(text);
+        else
+            textview.setVisibility(View.GONE);
+    }
+
 }

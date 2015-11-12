@@ -26,8 +26,11 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.ListingDetails;
 import carmera.io.carmera.R;
+import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
+import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ApiQuery;
@@ -41,8 +44,6 @@ import carmera.io.carmera.utils.InMemorySpiceService;
  */
 public class ListingsFragment extends Fragment {
 
-    public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
-    public static final String EXTRA_LISTING_DATA = "extra_listing_data";
 
     @Bind(R.id.loading_container)
     View loading_container;
@@ -83,7 +84,7 @@ public class ListingsFragment extends Fragment {
         Bundle args = getArguments();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         vehicleQuery = new ListingsQuery();
-        vehicleQuery.setCar((CarQuery) Parcels.unwrap(args.getParcelable(EXTRA_LISTING_QUERY)));
+        vehicleQuery.setCar((CarQuery) Parcels.unwrap(args.getParcelable(Constants.EXTRA_LISTING_QUERY)));
         vehicleQuery.api = new ApiQuery();
         vehicleQuery.api.pagenum = 1;
         vehicleQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
@@ -109,18 +110,18 @@ public class ListingsFragment extends Fragment {
         spiceManager.execute (listingsRequest, vehicleQuery.hashCode(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
         listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         listingsAdapter = new ListingsAdapter();
-//        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
-//            @Override
-//            public void onItemClick(View v, Listing item, int position) {
-//                Intent i = new Intent(getActivity(), ListingDetailsViewer.class);
-//                Bundle args = new Bundle();
-//                Parcelable listing_data = Parcels.wrap(item);
-//                args.putParcelable(EXTRA_LISTING_DATA, listing_data);
-//
-//                i.putExtras(args);
-//                startActivity(i);
-//            }
-//        });
+        listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
+            @Override
+            public void onItemClick(View v, Listing item, int position) {
+                Intent i = new Intent(getActivity(), ListingDetails.class);
+                Bundle args = new Bundle();
+                Parcelable listing_data = Parcels.wrap(item);
+                args.putParcelable(Constants.EXTRA_LISTING_DATA, listing_data);
+
+                i.putExtras(args);
+                startActivity(i);
+            }
+        });
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setHasFixedSize(false);
     }

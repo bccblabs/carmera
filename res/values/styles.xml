@@ -101,14 +101,21 @@
     <style name="listing_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">top|right</item>
         <item name="android:textColor">@color/background_floating_material_light</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">top|right</item>
         <item name="android:textSize">15sp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:layout_marginTop">15dp</item>
     </style>
+    <style name="listing_title_blue" parent="listing_title">
+        <item name="android:textColor">@color/default_blue</item>
+    </style>
+    <style name="listing_title_small" parent="listing_title">
+        <item name="android:layout_gravity">top|start</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
     <style name="horizontal_bar_style">
         <item name="android:layout_margin">10dp</item>
         <item name="android:layout_height">300dp</item>
@@ -193,6 +200,25 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/guillotine_medium_margin</item>
     </style>
-
-
+    <style name="TagGroup.LargeBlue" parent="TagGroup">
+        <item name="atg_borderColor">@color/default_blue</item>
+        <item name="atg_textColor">#FFFFFF</item>
+        <item name="atg_backgroundColor">@color/default_blue</item>
+        <item name="atg_inputHintColor">@color/default_blue</item>
+        <item name="atg_inputTextColor">@color/default_blue</item>
+        <item name="atg_checkedBorderColor">@color/default_blue</item>
+        <item name="atg_checkedTextColor">@color/default_blue</item>
+        <item name="atg_checkedMarkerColor">@color/default_blue</item>
+        <item name="atg_checkedBackgroundColor">#FFFFFF</item>
+        <item name="atg_pressedBackgroundColor">@color/default_blue</item>
+        <item name="atg_borderStrokeWidth">0.7dp</item>
+        <item name="atg_textSize">15sp</item>
+        <item name="atg_horizontalSpacing">9dp</item>
+        <item name="atg_verticalSpacing">5dp</item>
+        <item name="atg_horizontalPadding">14dp</item>
+        <item name="atg_verticalPadding">4dp</item>
+    </style>
+    <style name="card.content_outer_layout.staggered">
+        <item name="android:minHeight">20dp</item>
+    </style>
 </resources>

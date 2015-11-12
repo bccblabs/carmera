@@ -24,14 +24,15 @@
                 android:layout_width="333dp"
                 android:layout_height="222dp"/>
             <LinearLayout
-                android:background="#23000000"
+                android:background="@color/floating_background_dark"
                 android:layout_centerInParent="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:orientation="vertical"
                 android:layout_marginTop="20dp"
-                android:layout_width="333dp"
-                android:layout_height="222dp">
+                android:layout_width="@dimen/ed_img_lg_w"
+                android:layout_height="@dimen/ed_img_lg_h">
                 <widgets.CanaroTextView
                     style="@style/listing_title"
                     android:id="@+id/car_info"/>
