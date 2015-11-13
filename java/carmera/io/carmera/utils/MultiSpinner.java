@@ -4,10 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.Filterable;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -18,10 +25,12 @@ import carmera.io.carmera.R;
  */
 public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
 
-    private List<String> items;
+    private List<KeyPairBoolData> items;
     private boolean[] selected;
     private String defaultText;
     private MultiSpinnerListener listener;
+
+    private MyAdapter adapter;
 
     public MultiSpinner(Context context) {
         super(context);
@@ -43,15 +52,12 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
             selected[which] = false;
     }
 
-    @Override
+    @Override // same
     public void onCancel(DialogInterface dialog) {
-        // refresh text on spinner
-
         StringBuffer spinnerBuffer = new StringBuffer();
-
         for (int i = 0; i < items.size(); i++) {
-            if (selected[i] == true) {
-                spinnerBuffer.append(items.get(i));
+            if (items.get(i).isSelected() ) {
+                spinnerBuffer.append(items.get(i).getName());
                 spinnerBuffer.append(", ");
             }
         }
@@ -63,25 +69,37 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
         else
             spinnerText = defaultText;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
                 R.layout.textview_for_spinner,
                 new String[] { spinnerText });
-        setAdapter(adapter);
-        if(selected.length > 0)
-            listener.onItemsSelected(selected);
+        setAdapter(adapterSpinner);
+        if(adapter != null)
+            adapter.notifyDataSetChanged();
+        listener.onItemsSelected(items);
+
 
     }
 
     @Override
     public boolean performClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_HOLO_DARK);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        View title_view = inflater.inflate(R.layout.spinner_title, null);
+
+        View view = inflater.inflate(R.layout.alert_dialog_listview_search, null),
+                title_view = inflater.inflate(R.layout.spinner_title, null);
+        builder.setView(view);
         builder.setCustomTitle(title_view);
 
-        builder.setTitle(defaultText);
-        builder.setMultiChoiceItems(
-                items.toArray(new CharSequence[items.size()]), selected, this);
+        final ListView listView = (ListView) view.findViewById(R.id.alertSearchListView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setCacheColorHint(getResources().getColor(R.color.background_floating_material_dark));
+        listView.setFastScrollEnabled(false);
+        adapter = new MyAdapter(getContext(), items);
+        listView.setAdapter(adapter);
+
+
+//        builder.setMultiChoiceItems(
+//                items.toArray(new CharSequence[items.size()]), selected, this);
         builder.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
 
@@ -95,33 +113,99 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
         return true;
     }
 
-    public void setItems(List<String> items, String allText, int position,
+    // same
+    public void setItems(List<KeyPairBoolData> items, String allText, int position,
                          MultiSpinnerListener listener) {
         this.items = items;
         this.defaultText = allText;
         this.listener = listener;
 
-        // all selected by default
-        selected = new boolean[items.size()];
-        for (int i = 0; i < selected.length; i++)
-            selected[i] = false;
-
-        // all text on the spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
                 R.layout.textview_for_spinner, new String[] { allText });
-        setAdapter(adapter);
+        setAdapter(adapterSpinner);
 
         if(position != -1)
         {
-            selected[position] = true;
-            listener.onItemsSelected(selected);
-
+            items.get(position).setSelected(true);
             onCancel(null);
         }
-
     }
 
+
+    public class MyAdapter extends BaseAdapter {
+
+        List<KeyPairBoolData> arrayList;
+        List<KeyPairBoolData> mOriginalValues; // Original Values
+        LayoutInflater inflater;
+
+        public MyAdapter(Context context, List<KeyPairBoolData> arrayList) {
+            this.arrayList = arrayList;
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public int getCount() {
+            return arrayList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        private class ViewHolder {
+            TextView textView;
+            CheckBox checkBox;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+
+            if (convertView == null) {
+
+                holder = new ViewHolder();
+                convertView = inflater.inflate(R.layout.alert_dialog_listview_search_subview, null);
+                holder.textView = (TextView) convertView.findViewById(R.id.alertTextView);
+                holder.checkBox = (CheckBox) convertView.findViewById(R.id.alertCheckbox);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final KeyPairBoolData data = arrayList.get(position);
+
+            holder.textView.setText(data.getName());
+            holder.checkBox.setChecked(data.isSelected());
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    ViewHolder temp = (ViewHolder) v.getTag();
+                    temp.checkBox.setChecked(!temp.checkBox.isChecked());
+
+                    int len = arrayList.size();
+                    for (int i = 0; i < len; i++) {
+                        if (i == position) {
+                            data.setSelected(!data.isSelected());
+                            Log.i("TAG", "On Click Selected : " + data.getName() + " : " + data.isSelected());
+                            break;
+                        }
+                    }
+                }
+            });
+            holder.checkBox.setTag(holder);
+            return convertView;
+        }
+    }
     public interface MultiSpinnerListener {
-        public void onItemsSelected(boolean[] selected);
+        public void onItemsSelected(List<KeyPairBoolData> items);
     }
+
 }

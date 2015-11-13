@@ -105,8 +105,8 @@ public class BasicSearchFragment extends SearchFragment {
         make_resid_map.put ("Subaru", R.array.subaru);
         make_resid_map.put ("Suzuki", R.array.suzuki);
         make_resid_map.put ("Toyota", R.array.toyota);
-        make_resid_map.put ("Volkswagen", R.array.volkswagen);
-        make_resid_map.put ("Volvo", R.array.volvo);
+        make_resid_map.put("Volkswagen", R.array.volkswagen);
+        make_resid_map.put("Volvo", R.array.volvo);
 
         List<String> all_makes = new ArrayList<>();
         all_makes.addAll(make_resid_map.keySet());
@@ -146,47 +146,47 @@ public class BasicSearchFragment extends SearchFragment {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().models.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        getGenQuery().models.add (items.get(i).getName());
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).isSelected()) {
+                        getGenQuery().models.add(items.get(i).getName());
                     }
                 }
             }
         });
 
         final List<String> years_types = Arrays.asList(cxt.getResources().getStringArray(R.array.years));
-        years_spinner.setItems(years_types, "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        years_spinner.setItems(Util.getSpinnerValues(years_types), "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().years.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().years.add (Integer.parseInt(years_types.get(i)));
                     }
                 }
             }
         });
         final List<String> body_types = Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array));
-        bodytype_spinner.setItems(body_types, "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        bodytype_spinner.setItems(Util.getSpinnerValues(body_types), "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().bodyTypes.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
-                        getGenQuery().bodyTypes.add (body_types.get(i));
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        getGenQuery().bodyTypes.add (items.get(i).getName());
                     }
                 }
             }
         });
 
         final List<String> conditions = Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array));
-        condition_spinner.setItems(conditions, "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
+        condition_spinner.setItems(Util.getSpinnerValues(conditions), "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().conditions.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
-                        getGenQuery().conditions.add(conditions.get(i));
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        getGenQuery().conditions.add(items.get(i).getName());
                     }
                 }
             }

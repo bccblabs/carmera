@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:id="@+id/txn_speeds_row">
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:text="@string/txn_speeds"/>
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:id="@+id/txn_speeds"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/txn_type_row">
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:text="@string/txn_type"/>
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:id="@+id/txn_type"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/drivetrain_row">
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:text="@string/drivetrain"/>
+            <widgets.CanaroTextView
+                style="@style/entry_title"
+                android:id="@+id/drivetrain"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

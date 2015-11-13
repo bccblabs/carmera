@@ -88,8 +88,8 @@ public class ListingsFragment extends Fragment {
         vehicleQuery.api = new ApiQuery();
         vehicleQuery.api.pagenum = 1;
         vehicleQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-        vehicleQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT);
-        vehicleQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT);
+        vehicleQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
+        vehicleQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
 
 
         Log.i (TAG, "Queries to go: " + this.vehicleQuery.toString());

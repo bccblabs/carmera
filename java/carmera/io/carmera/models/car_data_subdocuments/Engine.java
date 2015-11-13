@@ -26,8 +26,18 @@ public class Engine {
     public Integer totalValves;
     @JsonProperty
     public String desc;
+    @JsonProperty
+    public RPM rpm;
 
     public Engine() {
+    }
+
+    public RPM getRpm() {
+        return rpm;
+    }
+
+    public void setRpm(RPM rpm) {
+        this.rpm = rpm;
     }
 
     public String getCompressionRatio() {

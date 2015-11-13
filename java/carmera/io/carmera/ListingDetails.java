@@ -34,6 +34,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.cards.CarInfoCard;
+import carmera.io.carmera.cards.CompositeHeader;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.models.listings_subdocuments.Address;
@@ -104,55 +106,9 @@ public class ListingDetails extends AppCompatActivity
 
     }
 
-    public class CarInfoCard extends Card {
-        protected TagGroup tagGroup;
-        protected List<String> tags;
-        protected int BgdResId;
-        protected String desc0, desc1;
-        protected TextView desc0_tv, desc1_tv;
 
-        public CarInfoCard (Context cxt, List<String> tags, String desc0, @Nullable String desc1, int background) {
-            super (cxt, R.layout.tags_card_content);
-            this.tags = tags;
-            this.BgdResId = background;
-            this.desc0 = desc0;
-            this.desc1 = desc1;
-        }
-        @Override
-        public void setupInnerViewElements (ViewGroup parent, View view) {
-            if (view == null)
-                return;
-            this.setBackgroundResourceId(BgdResId);
-            tagGroup = (TagGroup) view.findViewById(R.id.tags);
-            tagGroup.setTags(this.tags);
-            desc0_tv = (TextView) view.findViewById(R.id.desc_line0);
-            desc1_tv = (TextView) view.findViewById(R.id.desc_line1);
-            Util.setText(desc0_tv, this.desc0);
-            Util.setText(desc1_tv, this.desc1);
-        }
-    }
 
-    public class ListingBasicInfoHeader extends CardHeader {
-        protected TextView price_tv, mileage_tv, header_tv;
-        protected String text0, text1, title;
-        public ListingBasicInfoHeader (Context cxt, @Nullable String text0, @Nullable String text1, String title) {
-            super (cxt, R.layout.listing_info_header);
-            this.text0 = text0;
-            this.text1 = text1;
-            this.title = title;
-        }
-        @Override
-        public void setupInnerViewElements(ViewGroup parent, View view) {
-            if (view != null) {
-                header_tv = (TextView) view.findViewById(R.id.header_text);
-                price_tv = (TextView) parent.findViewById(R.id.listing_price);
-                mileage_tv = (TextView) parent.findViewById(R.id.listing_mileage);
-                Util.setText(price_tv, this.text0);
-                Util.setText(mileage_tv, this.text1);
-                Util.setText(header_tv, this.title);
-            }
-        }
-    }
+
 
     public class ListingBasicInfoExpand extends CardExpand {
         protected TextView name, address, phone, email;
@@ -208,7 +164,7 @@ public class ListingDetails extends AppCompatActivity
                                             String.format("Estimated Annual Fuel Cost $%.0f", styleData.estimated_annual_fuel_cost),
                                             null, R.drawable.card_select1);
 
-                ListingBasicInfoHeader hdr = new ListingBasicInfoHeader(ListingDetails.this,
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this,
                                                                         null, null,
                                                                         "Prices and Costs");
                 costsCard.setOnClickListener(new Card.OnCardClickListener() {
@@ -232,9 +188,9 @@ public class ListingDetails extends AppCompatActivity
                         line1 = null;
                 try {
                     if (styleData.powertrain.engine.horsepower != null && styleData.powertrain.engine.torque != null)
-                        line0 = String.format("%s\n%d hp %d lb/ft", styleData.powertrain.engine.desc,
-                                styleData.powertrain.engine.horsepower,
-                                styleData.powertrain.engine.torque);
+                        line0 = String.format("%d hp %d lb/ft\n%s", styleData.powertrain.engine.horsepower,
+                                                                    styleData.powertrain.engine.torque,
+                                                                    styleData.powertrain.engine.desc);
                     else
                         line0 = styleData.powertrain.engine.desc;
 
@@ -249,7 +205,7 @@ public class ListingDetails extends AppCompatActivity
                                             perf, line0, line1,
                                             R.drawable.card_select2);
 
-                ListingBasicInfoHeader hdr = new ListingBasicInfoHeader(ListingDetails.this,
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this,
                                                 null, null,
                                                 "Specs");
                 specsCard.setOnClickListener(new Card.OnCardClickListener() {
@@ -278,9 +234,9 @@ public class ListingDetails extends AppCompatActivity
                                                 null,null,
                                                 R.drawable.card_select3);
 
-                ListingBasicInfoHeader hdr = new ListingBasicInfoHeader(ListingDetails.this,
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this,
                                                     null, null,
-                                                    "Issues");
+                                                    "Safety & Issues");
 
                 issuesCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
@@ -309,7 +265,7 @@ public class ListingDetails extends AppCompatActivity
                         review,
                         null, null,
                         R.drawable.card_select4);
-                ListingBasicInfoHeader hdr = new ListingBasicInfoHeader(ListingDetails.this, null, null, "Reviews");
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this, null, null, "Reviews");
                 reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
@@ -347,7 +303,7 @@ public class ListingDetails extends AppCompatActivity
 
         ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard (this);
 
-        ListingBasicInfoHeader basic_info_header = new ListingBasicInfoHeader(this,
+        CompositeHeader basic_info_header = new CompositeHeader(this,
                                         String.format("$%.0f", listing.getPrices().getListPrice()),
                                         String.format("%d Miles", listing.getMileage()),
                                         String.format("%d %s %s", listing.getYear().getYear(),

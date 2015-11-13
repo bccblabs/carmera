@@ -16,9 +16,6 @@ public class Transmission {
     @JsonProperty
     public String numberOfSpeeds;
 
-    @JsonProperty
-    public String automaticType;
-
     public String getTransmissionType() {
         return transmissionType;
     }
@@ -33,14 +30,6 @@ public class Transmission {
 
     public void setNumberOfSpeeds(String numberOfSpeeds) {
         this.numberOfSpeeds = numberOfSpeeds;
-    }
-
-    public String getAutomaticType() {
-        return automaticType;
-    }
-
-    public void setAutomaticType(String automaticType) {
-        this.automaticType = automaticType;
     }
 
     public Transmission() {

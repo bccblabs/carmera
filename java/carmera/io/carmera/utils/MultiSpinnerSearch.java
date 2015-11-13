@@ -54,7 +54,7 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
     public void onCancel(DialogInterface dialog) {
         StringBuffer spinnerBuffer = new StringBuffer();
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).isSelected() == true) {
+            if (items.get(i).isSelected() ) {
                 spinnerBuffer.append(items.get(i).getName());
                 spinnerBuffer.append(", ");
             }
@@ -204,9 +204,7 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
                     }
                 }
             });
-
             holder.checkBox.setTag(holder);
-
             return convertView;
         }
 

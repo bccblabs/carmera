@@ -53,11 +53,11 @@ public class ColorEquipSearchFragment extends SearchFragment {
     public void init_spinners () {
 
         final List<String> ext_colors = Arrays.asList(cxt.getResources().getStringArray(R.array.color_array));
-        ext_colors_spinner.setItems(ext_colors, "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        ext_colors_spinner.setItems(Util.getSpinnerValues(ext_colors), "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().extColors.add (ext_colors.get(i));
                     }
                 }
@@ -65,11 +65,11 @@ public class ColorEquipSearchFragment extends SearchFragment {
         });
 
         final List<String> int_colors = Arrays.asList(cxt.getResources().getStringArray(R.array.color_array));
-        int_colors_spinner.setItems(int_colors, "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        int_colors_spinner.setItems(Util.getSpinnerValues(int_colors), "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().intColors.add (int_colors.get(i));
                     }
                 }

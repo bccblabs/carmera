@@ -31,9 +31,7 @@
     <string name="fuel_consumption_desc">Fuel Consumption</string>
     <string name="city_desc">City MPG</string>
     <string name="hwy_desc">Highway MPG</string>
-    <string name="zero_sixty_desc">Zero-Sixty</string>
     <string name="transmission_desc">Transmission</string>
-    <string name="drivetrain_desc">Drivetrain</string>
     <string name="tmv_desc">Used Market Value</string>
     <string name="msrp_desc">New MSRP</string>
     <string name="start_search">Search</string>
@@ -89,4 +87,34 @@
     <string name="rating_performance">Fast</string>
     <string name="rating_int">Int.</string>
     <string name="rating_ext">Ext.</string>
+
+
+    <string name="compressor">Compressor</string>
+    <string name="displacement">Displacement</string>
+    <string name="horsepower">Horsepower</string>
+    <string name="torque">Torque</string>
+    <string name="valves">Valves</string>
+
+    <string name="drivetrain">Drivetrain</string>
+    <string name="txn_type">Type</string>
+    <string name="txn_speeds">Speeds</string>
+
+    <string name="mpg">MPG</string>
+    <string name="zero_sixty">0-60 Time</string>
+    <string name="fuel_capacity">Fuel Capacity</string>
+    <string name="turning_diameter">Turning Diameter</string>
+
+    <string name="recall_num">Total Recalled</string>
+    <string name="num_effected">Total Effected</string>
+    <string name="notification_date">Notification Date</string>
+    <string name="recall_component">Component</string>
+    <string name="recall_subcomponent">Sub-Component</string>
+    <string name="manu_from">From</string>
+    <string name="manu_to">To</string>
+    <string name="defect_consequence">Consequence</string>
+    <string name="defect_description">Description</string>
+
+
+
+
 </resources>

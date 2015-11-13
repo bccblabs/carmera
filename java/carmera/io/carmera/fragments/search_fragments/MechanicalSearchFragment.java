@@ -15,7 +15,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
+import carmera.io.carmera.utils.KeyPairBoolData;
 import carmera.io.carmera.utils.MultiSpinner;
+import carmera.io.carmera.utils.Util;
 
 /**
  * Created by bski on 10/12/15.
@@ -58,18 +60,18 @@ public class MechanicalSearchFragment extends SearchFragment {
     @Override
     public void init_spinners() {
         final List<String> transmissions = Arrays.asList(cxt.getResources().getStringArray(R.array.txn_array));
-        transmission_spinner.setItems(transmissions, "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        transmission_spinner.setItems(Util.getSpinnerValues(transmissions), "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().transmissionTypes.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         if (transmissions.get(i).equals("Automatic")) {
                             getGenQuery().transmissionTypes.add("UNKNOWN");
                             getGenQuery().transmissionTypes.add("AUTOMATED_MANUAL");
                             getGenQuery().transmissionTypes.add("DIRECT_DRIVE");
                         } else if (transmissions.get(i).equals("Manual")) {
-                            getGenQuery().transmissionTypes.add ("MANUAL");
+                            getGenQuery().transmissionTypes.add("MANUAL");
                         }
                     }
                 }
@@ -77,28 +79,25 @@ public class MechanicalSearchFragment extends SearchFragment {
         });
 
         final List<String> compressor_types = Arrays.asList(cxt.getResources().getStringArray(R.array.compressor_array));
-        compressors_spinner.setItems(compressor_types, "Choose Engine Compressor Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        compressors_spinner.setItems(Util.getSpinnerValues(compressor_types), "Choose Engine Compressor Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().compressors.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
-                        if (compressor_types.get(i).equals("Naturally Aspirated"))
-                            getGenQuery().compressors.add("NA");
-                        else
-                            getGenQuery().compressors.add(compressor_types.get(i));
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        getGenQuery().compressors.add(compressor_types.get(i));
                     }
                 }
             }
         });
 
         final List<String> drivetrains = Arrays.asList(cxt.getResources().getStringArray(R.array.drivetrain_array));
-        drivetrain_spinner.setItems(drivetrains, "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        drivetrain_spinner.setItems(Util.getSpinnerValues(drivetrains), "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().drivetrains.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         if (drivetrains.get(i).equals("All Wheel Drive"))
                             getGenQuery().drivetrains.add("four wheel drive");
                         else
@@ -109,12 +108,12 @@ public class MechanicalSearchFragment extends SearchFragment {
         });
 
         final List<String> cylinders = Arrays.asList(cxt.getResources().getStringArray(R.array.cylinder_array));
-        cylinders_spinner.setItems(cylinders, "Choose Cylinder Count", -1, new MultiSpinner.MultiSpinnerListener() {
+        cylinders_spinner.setItems(Util.getSpinnerValues(cylinders), "Choose Cylinder Count", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().cylinders.clear();
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().cylinders.add (Integer.parseInt(cylinders.get(i).replace("+", "")));
                     }
                 }
@@ -122,12 +121,12 @@ public class MechanicalSearchFragment extends SearchFragment {
         });
 
         final List<String> hps = Arrays.asList(cxt.getResources().getStringArray(R.array.output_array));
-        hp_spinner.setItems(hps, "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
+        hp_spinner.setItems(Util.getSpinnerValues(hps), "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().minHp = 0;
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().minHp = Integer.parseInt(hps.get(i).replace("+", ""));
                     }
                 }
@@ -135,12 +134,12 @@ public class MechanicalSearchFragment extends SearchFragment {
         });
 
         final List<String> tqs = Arrays.asList(cxt.getResources().getStringArray(R.array.output_array));
-        tq_spinner.setItems(tqs, "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
+        tq_spinner.setItems(Util.getSpinnerValues(tqs), "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().minTq = 0;
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().minTq = Integer.parseInt(tqs.get(i).replace("+", ""));
                     }
                 }
@@ -148,12 +147,12 @@ public class MechanicalSearchFragment extends SearchFragment {
         });
 
         final List<String> mpgs = Arrays.asList(cxt.getResources().getStringArray(R.array.mpg_array));
-        mpg_spinner.setItems(mpgs, "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
+        mpg_spinner.setItems(Util.getSpinnerValues(mpgs), "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
-            public void onItemsSelected(boolean[] selected) {
+            public void onItemsSelected(List<KeyPairBoolData> items) {
                 getGenQuery().minMpg = 0;
-                for(int i=0; i<selected.length; i++) {
-                    if(selected[i]) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
                         getGenQuery().minMpg = Integer.parseInt(mpgs.get(i).replace("+", ""));
                     }
                 }

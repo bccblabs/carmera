@@ -16,6 +16,20 @@ public class Nhtsa {
     @JsonProperty
     public List<CategoryValue> categories;
 
+    @JsonProperty
+    public String overall;
+
+    public Nhtsa() {
+    }
+
+    public String getOverall() {
+        return overall;
+    }
+
+    public void setOverall(String overall) {
+        this.overall = overall;
+    }
+
     public List<CategoryValue> getCategories() {
         return categories;
     }

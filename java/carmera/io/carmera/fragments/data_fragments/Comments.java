@@ -16,9 +16,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.ListingDetails;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
-import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
@@ -27,11 +27,11 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 /**
  * Created by bski on 11/11/15.
  */
-public class Dimensions extends Fragment {
-    @Bind(R.id.cards_recycler)
-    CardRecyclerView cardRecyclerView;
+public class Comments extends Fragment {
 
-    private List<DataEntryFloat> dimensions;
+    @Bind(R.id.cards_recycler) CardRecyclerView cardRecyclerView;
+
+    private List<String> comments;
     private List<Card> cards;
     private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
     private Context cxt;
@@ -39,7 +39,11 @@ public class Dimensions extends Fragment {
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        dimensions = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_DIMENSIONS));
+        comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_REVIEW));
+        if (comments == null)
+            comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_FAV));
+        if (comments == null)
+            comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_IMPR));
         cxt = getActivity();
     }
 
@@ -51,22 +55,22 @@ public class Dimensions extends Fragment {
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
         cards = new ArrayList<>();
 
-        for (int i = 0; i < dimensions.size(); i++) {
-            DataEntryFloat dimension = dimensions.get(i);
+        for (int i = 0; i < comments.size(); i++) {
+            String txt = comments.get(i);
             if (i % 5 == 0) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select0);
+                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select0);
                 cards.add(carInfoCard);
             } else if (i % 5 == 1) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select1);
+                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select1);
                 cards.add(carInfoCard);
             } else if (i % 5 == 2) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select2);
+                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select2);
                 cards.add(carInfoCard);
             } else if (i % 5 == 3) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select3);
+                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select3);
                 cards.add(carInfoCard);
             } else if (i % 5 == 4) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select4);
+                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select4);
                 cards.add(carInfoCard);
             }
         }

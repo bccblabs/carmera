@@ -4,7 +4,7 @@ package carmera.io.carmera.utils;
  * Created by bski on 10/12/15.
  */
 public class Constants {
-    public final static String ServerAddr = "http://52.33.180.55:8080";
+    public final static String ServerAddr = "http://52.25.148.113:8080";
     public final static String ListingsEndPoint = ServerAddr +  "/listings";
     public final static String VehicleInfoEndPoint = ServerAddr + "/vehicle_info";
 

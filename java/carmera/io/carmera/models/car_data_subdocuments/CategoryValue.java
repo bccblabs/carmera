@@ -18,5 +18,34 @@ public class CategoryValue {
 
     @JsonProperty
     public List<DataEntry> options;
-    
+
+    @JsonProperty
+    public String overall;
+
+    public CategoryValue() {
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<DataEntry> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<DataEntry> options) {
+        this.options = options;
+    }
+
+    public String getOverall() {
+        return overall;
+    }
+
+    public void setOverall(String overall) {
+        this.overall = overall;
+    }
 }

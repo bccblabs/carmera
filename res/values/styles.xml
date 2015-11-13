@@ -115,6 +115,16 @@
         <item name="android:layout_gravity">top|start</item>
         <item name="android:layout_margin">5dp</item>
     </style>
+    <style name="entry_title" parent="listing_title">
+        <item name="android:layout_gravity">top|start</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="entry_title_right" parent="listing_title">
+        <item name="android:layout_gravity">top|end</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
 
     <style name="horizontal_bar_style">
         <item name="android:layout_margin">10dp</item>
@@ -220,5 +230,24 @@
     </style>
     <style name="card.content_outer_layout.staggered">
         <item name="android:minHeight">20dp</item>
+    </style>
+
+    <style name="cardwithlist">
+        <item name="android:layout_marginTop">@dimen/card_base_cardwithlist_list_margin_top</item>
+        <item name="android:layout_marginLeft">@dimen/card_base_cardwithlist_list_margin_left</item>
+        <item name="android:divider">@color/card_native_base_cardwithlist_divider_color</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/default_blue</item>
+    </style>
+
+    <style name="TagGroup.CarTags" parent="TagGroup.Small">
+        <item name="atg_textSize">12sp</item>
+        <item name="atg_horizontalSpacing">6dp</item>
+        <item name="atg_verticalSpacing">3dp</item>
+        <item name="atg_horizontalPadding">8dp</item>
+        <item name="atg_verticalPadding">2dp</item>
+        <item name="atg_textColor">@color/default_blue</item>
     </style>
 </resources>
