@@ -40,7 +40,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
 
         viewHolder.trim_info.setText(listing.getStyle().getTrim());
         if (listing.getPrices() != null)
-            viewHolder.price.setText(String.format("$%.0f", listing.getPrices().getListPrice()));
+            viewHolder.price.setText(String.format("$%.0f", listing.getMin_price()));
         else
             viewHolder.price.setVisibility(View.GONE);
         viewHolder.mileage.setText(String.format("%d Miles", listing.getMileage()));

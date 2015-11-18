@@ -54,7 +54,7 @@
         </activity>
 
         <service
-            android:name=".utils.InMemorySpiceService"
+            android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false"/>
     </application>
 </manifest>

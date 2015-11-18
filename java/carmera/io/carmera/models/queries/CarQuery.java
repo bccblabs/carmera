@@ -1,5 +1,7 @@
 package carmera.io.carmera.models.queries;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
@@ -8,30 +10,61 @@ import java.util.List;
 /**
  * Created by bski on 11/7/15.
  */
+@JsonIgnoreProperties (ignoreUnknown = true)
 @Parcel
 public class CarQuery {
-    public List<String> makes = new ArrayList<>();
-    public List<String> models = new ArrayList<>();
-    public List<String> bodyTypes = new ArrayList<>();
-    public List<String> transmissionTypes = new ArrayList<>();
-    public List<Integer> cylinders = new ArrayList<>();
-    public List<String> compressors = new ArrayList<>();
-    public List<String> drivetrains = new ArrayList<>();
-    public List<String> conditions = new ArrayList<>();
-    public List<String> extColors = new ArrayList<>();
-    public List<String> intColors = new ArrayList<>();
-    public List<String> equipments = new ArrayList<>();
-    public List<Double> coordinates = new ArrayList<>();
-    public List<String> labels = new ArrayList<>();
-    public List<Integer> years = new ArrayList<>();
 
+    @JsonProperty
+    public List<String> makes = new ArrayList<>();
+    @JsonProperty
+    public List<String> models = new ArrayList<>();
+    @JsonProperty
+    public List<String> bodyTypes = new ArrayList<>();
+    @JsonProperty
+    public List<String> transmissionTypes = new ArrayList<>();
+    @JsonProperty
+    public List<Integer> cylinders = new ArrayList<>();
+    @JsonProperty
+    public List<String> compressors = new ArrayList<>();
+    @JsonProperty
+    public List<String> drivetrains = new ArrayList<>();
+    @JsonProperty
+    public List<String> conditions = new ArrayList<>();
+    @JsonProperty
+    public List<String> extColors = new ArrayList<>();
+    @JsonProperty
+    public List<String> intColors = new ArrayList<>();
+    @JsonProperty
+    public List<String> equipments = new ArrayList<>();
+    @JsonProperty
+    public List<Double> coordinates = new ArrayList<>();
+    @JsonProperty
+    public List<String> labels = new ArrayList<>();
+    @JsonProperty
+    public List<Integer> years = new ArrayList<>();
+    @JsonProperty
+    public List<String> tags = new ArrayList<>();
+
+    @JsonProperty
     public Integer minHp = 0;
+    @JsonProperty
     public Integer minTq = 0;
+    @JsonProperty
     public Integer minMpg = 0;
-    public Integer maxPrice = Integer.MAX_VALUE;
-    public Integer minPrice = 0;
-    public Integer minLeasePayment = 0;
-    public Integer max_mileage = Integer.MAX_VALUE;
+
+    @JsonProperty
+    public List<List<String>> sortBy;
+
+    public CarQuery() {
+    }
+
+    public List<List<String>> getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(List<List<String>> sortBy) {
+        this.sortBy = sortBy;
+    }
 
     public List<String> getMakes() {
         return makes;
@@ -169,35 +202,12 @@ public class CarQuery {
         this.minMpg = minMpg;
     }
 
-    public Integer getMaxPrice() {
-        return maxPrice;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setMaxPrice(Integer maxPrice) {
-        this.maxPrice = maxPrice;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
-    public Integer getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(Integer minPrice) {
-        this.minPrice = minPrice;
-    }
-
-    public Integer getMinLeasePayment() {
-        return minLeasePayment;
-    }
-
-    public void setMinLeasePayment(Integer minLeasePayment) {
-        this.minLeasePayment = minLeasePayment;
-    }
-
-    public Integer getMax_mileage() {
-        return max_mileage;
-    }
-
-    public void setMax_mileage(Integer max_mileage) {
-        this.max_mileage = max_mileage;
-    }
 }

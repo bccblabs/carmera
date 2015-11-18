@@ -352,6 +352,18 @@ public class Util {
         return kv_list;
     }
 
+    public static List<KeyPairBoolData> getIntegerSpinnerValues (List<Integer> values) {
+        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
+        for(int i=0; i<values.size(); i++) {
+            KeyPairBoolData h = new KeyPairBoolData();
+            h.setId(i+1);
+            h.setName(values.get(i).toString());
+            h.setSelected(false);
+            kv_list.add(h);
+        }
+        return kv_list;
+    }
+
     public static String getRangeText (Object a, Object b) {
         if (a != null && b != null
                 && Integer.parseInt(a.toString()) > 0
@@ -432,6 +444,24 @@ public class Util {
             textview.setText(text);
         else
             textview.setVisibility(View.GONE);
+    }
+
+
+
+    public static  List<KeyPairBoolData> getSelectedValues (List<String> values) {
+        List<KeyPairBoolData> items = Util.getSpinnerValues(values);
+        for (KeyPairBoolData item : items) {
+            item.setSelected(true);
+        }
+        return items;
+    }
+
+    public static List<KeyPairBoolData> getIntSelectedValues (List<Integer> values) {
+        List<KeyPairBoolData> items = Util.getIntegerSpinnerValues(values);
+        for (KeyPairBoolData item : items) {
+            item.setSelected(true);
+        }
+        return items;
     }
 
 }

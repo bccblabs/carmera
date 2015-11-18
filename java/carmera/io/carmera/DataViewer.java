@@ -47,7 +47,7 @@ public class DataViewer extends FragmentActivity {
 
             if (extras_id.equals(Constants.EXTRA_RECALLS)) {
                 carmera.io.carmera.models.car_data_subdocuments.Recalls recalls = Parcels.unwrap(data);
-                if (recalls.numberOfRecalls == null && recalls.numberOfRecalls < 1 )
+                if (recalls.numberOfRecalls == null || recalls.numberOfRecalls < 1 )
                     return;
             }
 

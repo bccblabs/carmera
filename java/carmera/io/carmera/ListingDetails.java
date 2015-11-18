@@ -19,6 +19,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
+import com.octo.android.robospice.Jackson2SpringAndroidSpiceService;
+import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -74,7 +76,7 @@ public class ListingDetails extends AppCompatActivity
 
     private Listing listing;
 
-    private SpiceManager spiceManager = new SpiceManager(InMemorySpiceService.class);
+    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
 
     public class ListingsBasicInfoCard extends Card {

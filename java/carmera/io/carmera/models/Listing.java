@@ -19,6 +19,8 @@ public class Listing {
     }
 
     @JsonProperty
+    public Float min_price;
+    @JsonProperty
     public String id;
     @JsonProperty
     public String type;
@@ -44,6 +46,15 @@ public class Listing {
     public Prices prices;
     @JsonProperty
     public Dealer dealer;
+
+
+    public Float getMin_price() {
+        return min_price;
+    }
+
+    public void setMin_price(Float min_price) {
+        this.min_price = min_price;
+    }
 
     public String getId() {
         return id;

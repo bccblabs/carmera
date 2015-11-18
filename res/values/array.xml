@@ -669,7 +669,6 @@
         <item>Turbo</item>
         <item>Supercharger</item>
     </string-array>
-
     <string-array name="drivetrain_array">
         <item>All Wheel Drive</item>
         <item>Front Wheel Drive</item>
@@ -692,15 +691,96 @@
         <item>35+</item>
         <item>40+</item>
     </string-array>
+    <string-array name="min_msrp_array">
+        <item>None</item>
+        <item>5000</item>
+        <item>10000</item>
+        <item>20000</item>
+        <item>30000</item>
+        <item>40000</item>
+        <item>50000</item>
+        <item>60000</item>
+        <item>70000</item>
+        <item>80000</item>
+        <item>90000</item>
+        <item>100000</item>
+        <item>150000</item>
+        <item>300000</item>
+        <item>500000</item>
+    </string-array>
+    <string-array name="max_msrp_array">
+        <item>5000</item>
+        <item>10000</item>
+        <item>20000</item>
+        <item>30000</item>
+        <item>40000</item>
+        <item>50000</item>
+        <item>60000</item>
+        <item>70000</item>
+        <item>80000</item>
+        <item>90000</item>
+        <item>100000</item>
+        <item>150000</item>
+        <item>300000</item>
+        <item>500000</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="min_lease_array">
+        <item>None</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+        <item>1500</item>
+    </string-array>
+    <string-array name="max_lease_array">
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="max_mileage_array">
+        <item>5000</item>
+        <item>10000</item>
+        <item>20000</item>
+        <item>30000</item>
+        <item>40000</item>
+        <item>50000</item>
+        <item>60000</item>
+        <item>70000</item>
+        <item>80000</item>
+        <item>90000</item>
+        <item>100000</item>
+        <item>None</item>
+    </string-array>
     <string-array name="color_array">
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>Black</item>
-        <item>White</item>
-        <item>Gray</item>
-        <item>Silver</item>
-        <item>Green</item>
-        <item>Orange</item>
+        <item>black</item>
+        <item>blue</item>
+        <item>brown</item>
+        <item>cream</item>
+        <item>gold</item>
+        <item>gray</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>purple</item>
+        <item>red</item>
+        <item>silver</item>
+        <item>white</item>
+        <item>yellow</item>
     </string-array>
     <string-array name="equipment_array">
         <item>Sport Package</item>
@@ -725,7 +805,8 @@
         <item>Auto Cruise Control</item>
         <item>Parking Camera</item>
         <item>Night Vision</item>
-
     </string-array>
+
+
 
 </resources>

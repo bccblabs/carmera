@@ -1,5 +1,6 @@
 package carmera.io.carmera.fragments.search_fragments;
 
+import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
 
 /**
@@ -8,6 +9,7 @@ import carmera.io.carmera.models.queries.CarQuery;
 public abstract class SearchFragment extends android.support.v4.app.Fragment {
 
     public static CarQuery genQuery;
+    public static ApiQuery apiQuery;
 
     public static CarQuery getGenQuery() {
         if (genQuery == null)
@@ -15,5 +17,10 @@ public abstract class SearchFragment extends android.support.v4.app.Fragment {
         return genQuery;
     }
 
+    public static ApiQuery getApiQuery() {
+        if (apiQuery == null)
+            apiQuery = new ApiQuery();
+        return apiQuery;
+    }
     abstract public void init_spinners();
 }

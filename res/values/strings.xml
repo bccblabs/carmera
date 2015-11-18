@@ -53,8 +53,9 @@
     <string name="pref_zipcode_default">92612</string>
     <string name="pref_key_radius">Radius</string>
     <string name="pref_radius_default">50</string>
-    <string name="basic_search">Basics</string>
 
+    <string name="basic_search">Basics</string>
+    <string name="price_mileage_search">Price &amp; Milage</string>
     <string name="mechanical_search">Performance</string>
     <string name="equipments_search">Equipments</string>
 
@@ -114,7 +115,8 @@
     <string name="defect_consequence">Consequence</string>
     <string name="defect_description">Description</string>
 
-
+    <string name="str_sort">Sort</string>
+    <string name="str_filter">Filter</string>
 
 
 </resources>

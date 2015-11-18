@@ -243,11 +243,17 @@
     </style>
 
     <style name="TagGroup.CarTags" parent="TagGroup.Small">
-        <item name="atg_textSize">12sp</item>
+        <item name="atg_textSize">13sp</item>
         <item name="atg_horizontalSpacing">6dp</item>
         <item name="atg_verticalSpacing">3dp</item>
         <item name="atg_horizontalPadding">8dp</item>
         <item name="atg_verticalPadding">2dp</item>
         <item name="atg_textColor">@color/default_blue</item>
     </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/ic_stars_white_24dp</item>
+        <item name="android:textColor">@color/card_pressed</item>
+    </style>
+
 </resources>

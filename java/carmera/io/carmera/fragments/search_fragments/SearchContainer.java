@@ -19,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
+import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
 
 /**
@@ -32,15 +34,19 @@ public class SearchContainer extends Fragment {
 
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
 
+
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
-        search_callback.OnSearchListings(Parcels.wrap(CarQuery.class, SearchFragment.genQuery));
+        ListingsQuery listingsQuery = new ListingsQuery();
+        listingsQuery.car = SearchFragment.getGenQuery();
+        listingsQuery.api = SearchFragment.getApiQuery();
+        search_callback.OnSearchListings(Parcels.wrap(ListingsQuery.class, listingsQuery));
     }
 
     private OnSearchVehiclesListener search_callback = null;
 
     public interface OnSearchVehiclesListener {
-        void OnSearchListings (Parcelable query);
+        void OnSearchListings (Parcelable car_query);
     }
 
     public static SearchContainer newInstance () {
@@ -57,7 +63,8 @@ public class SearchContainer extends Fragment {
                 getChildFragmentManager(),
                 FragmentPagerItems.with(getActivity())
                 .add (R.string.basic_search, BasicSearchFragment.class)
-                .add (R.string.mechanical_search, MechanicalSearchFragment.class)
+                .add (R.string.price_mileage_search, PricingMileage.class)
+                .add(R.string.mechanical_search, MechanicalSearchFragment.class)
                 .add (R.string.equipments_search, ColorEquipSearchFragment.class)
                 .create());
 

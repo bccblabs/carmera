@@ -13,7 +13,21 @@ import java.util.List;
 @Parcel
 public class Listings {
     @JsonProperty
+    public ListingsQuery query;
+
+    @JsonProperty
     public List<Listing> listings;
+
+    public Listings() {
+    }
+
+    public ListingsQuery getListingsQuery() {
+        return query;
+    }
+
+    public void setListingsQuery(ListingsQuery listingsQuery) {
+        this.query = listingsQuery;
+    }
 
     public List<Listing> getListings() {
         return listings;
@@ -23,6 +37,4 @@ public class Listings {
         this.listings = listings;
     }
 
-    public Listings() {
-    }
 }
