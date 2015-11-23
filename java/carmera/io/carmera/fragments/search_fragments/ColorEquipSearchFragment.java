@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,8 +28,6 @@ public class ColorEquipSearchFragment extends SearchFragment {
 
     private Context cxt;
 
-    @Bind(R.id.colors_container) ObservableScrollView color_container;
-    
     @Bind(R.id.ext_colors_spinner) MultiSpinner ext_colors_spinner;
 
     @Bind(R.id.int_colors_spinner) MultiSpinner int_colors_spinner;
@@ -56,23 +55,28 @@ public class ColorEquipSearchFragment extends SearchFragment {
         ext_colors_spinner.setItems(Util.getSpinnerValues(ext_colors), "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
+                List<String> selected_ext = new ArrayList<>();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().extColors.add (ext_colors.get(i));
+                        selected_ext.add (ext_colors.get(i));
                     }
                 }
+                getApiQuery().ext_colors = selected_ext;
             }
         });
+
 
         final List<String> int_colors = Arrays.asList(cxt.getResources().getStringArray(R.array.color_array));
         int_colors_spinner.setItems(Util.getSpinnerValues(int_colors), "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
+                List<String> selected_int = new ArrayList<>();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().intColors.add (int_colors.get(i));
+                        selected_int.add (int_colors.get(i));
                     }
                 }
+                getApiQuery().int_colors = selected_int;
             }
         });
 
@@ -80,11 +84,13 @@ public class ColorEquipSearchFragment extends SearchFragment {
         equipments_spinner.setItems(equipments, "Equipments(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
+                List<String> selected_eqp = new ArrayList<>();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().equipments.add (items.get(i).getName());
+                        selected_eqp.add(items.get(i).getName());
                     }
                 }
+                getApiQuery().equipments = selected_eqp;
             }
         });
     }

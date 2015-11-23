@@ -35,6 +35,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -341,6 +342,7 @@ public class Util {
     }
 
     public static List<KeyPairBoolData> getSpinnerValues (List<String> values) {
+        Collections.sort(values);
         final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
         for(int i=0; i<values.size(); i++) {
             KeyPairBoolData h = new KeyPairBoolData();
@@ -353,6 +355,7 @@ public class Util {
     }
 
     public static List<KeyPairBoolData> getIntegerSpinnerValues (List<Integer> values) {
+        Collections.sort(values);
         final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
         for(int i=0; i<values.size(); i++) {
             KeyPairBoolData h = new KeyPairBoolData();
@@ -384,12 +387,10 @@ public class Util {
         if (uploadSocket == null) {
             try {
                 uploadSocket = IO.socket(Constants.ServerAddr);
-                uploadSocket.connect();
             } catch (URISyntaxException e) {
                 Log.i(TAG, e.getMessage());
             }
         }
-        Log.i (TAG, uploadSocket.toString());
         return uploadSocket;
     }
 

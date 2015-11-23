@@ -56,6 +56,7 @@
         <item>Lexus</item>
         <item>Lincoln</item>
         <item>Lotus</item>
+        <item>Maserati</item>>
         <item>Mazda</item>
         <item>Mercedes-Benz</item>
         <item>Mini</item>
@@ -94,6 +95,13 @@
         <item>100</item>
         <item>200</item>
         <item>500</item>
+    </string-array>
+    <string-array name="maserati">
+        <item>QuattroPorte</item>
+        <item>GranTurismo</item>
+        <item>GranSport</item>
+        <item>Coupe</item>
+        <item>Ghibli</item>
     </string-array>
     <string-array name="acura">
         <item>CL</item>
@@ -482,7 +490,7 @@
         <item>ES</item>
         <item>GS</item>
         <item>GX</item>
-        <item>HS</item>>
+        <item>HS</item>
         <item>IS</item>
         <item>LFA</item>
         <item>LS</item>
@@ -545,7 +553,7 @@
         <item>GLA AMG</item>
         <item>GLK</item>
         <item>ML</item>
-        <item>ML AMG</item>>
+        <item>ML AMG</item>
         <item>G</item>
         <item>G AMG</item>
         <item>GL</item>

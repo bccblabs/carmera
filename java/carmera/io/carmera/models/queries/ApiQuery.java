@@ -4,6 +4,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,22 @@ public class ApiQuery {
     public Integer max_mileage;
     @JsonProperty
     public String sortby;
+
+
+    @JsonProperty
+    public List<String> ext_colors;
+    @JsonProperty
+    public List<String> int_colors;
+    @JsonProperty
+    public List<String> equipments = new ArrayList<>();
+
+    public List<String> getExt_colors() {
+        return ext_colors;
+    }
+
+    public void setEquipments(List<String> equipments) {
+        this.equipments = equipments;
+    }
 
     public ApiQuery() {
     }
@@ -136,4 +153,22 @@ public class ApiQuery {
     public void setSortby(String sortby) {
         this.sortby = sortby;
     }
+
+
+    public void setExt_colors(List<String> ext_colors) {
+        this.ext_colors = ext_colors;
+    }
+
+    public List<String> getInt_colors() {
+        return int_colors;
+    }
+
+    public void setInt_colors(List<String> int_colors) {
+        this.int_colors = int_colors;
+    }
+
+    public List<String> getEquipments() {
+        return equipments;
+    }
+
 }

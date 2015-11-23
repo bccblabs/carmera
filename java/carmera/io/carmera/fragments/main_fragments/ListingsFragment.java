@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -19,7 +20,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -27,6 +32,10 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.parceler.Parcels;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,13 +51,20 @@ import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.Constants;
-import carmera.io.carmera.utils.InMemorySpiceService;
+import carmera.io.carmera.utils.EndlessRecyclerOnScrollListener;
+import carmera.io.carmera.utils.Util;
 
 /**
  * Created by bski on 7/13/15.
  */
 public class ListingsFragment extends Fragment implements OnResearchListener {
 
+
+    final Context context = getActivity();
+    private ListingsAdapter listingsAdapter;
+    private String TAG = getClass().getCanonicalName();
+    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+    private ListingsQuery listingsQuery;
 
     @Bind (R.id.filter_sort_btn) View filter_sort_btn;
 
@@ -60,7 +76,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
 
     @Bind(R.id.filter_btn) FloatingActionButton filter_btn;
 
+    private String server_address;
 
+
+    SharedPreferences sharedPreferences;
 
     @OnClick(R.id.sort_btn)
     public void onSort () {
@@ -82,20 +101,18 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         filterFragment.show(getChildFragmentManager(), "filter_dialog");
     }
 
+
+
+
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         filter_sort_btn.setVisibility(View.INVISIBLE);
-        ListingsRequest listingsRequest = new ListingsRequest(listingsQuery);
-        spiceManager.execute (listingsRequest, listingsQuery.hashCode(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
-        listingsAdapter.clear();
+        loading_container.setVisibility(View.VISIBLE);
+        ListingsRequest listingsRequest = new ListingsRequest(listingsQuery, server_address);
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        spiceManager.execute(listingsRequest, ts, DurationInMillis.ALWAYS_EXPIRED, new ListingsRequestListener());
     }
-
-
-    final Context context = getActivity();
-    private ListingsAdapter listingsAdapter;
-    private String TAG = getClass().getCanonicalName();
-    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
-    private ListingsQuery listingsQuery;
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
@@ -106,14 +123,15 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         public void onRequestSuccess (Listings result) {
             try {
                 filter_sort_btn.setVisibility(View.VISIBLE);
-                loading_container.setVisibility(View.GONE);
+                loading_container.setVisibility(View.INVISIBLE);
                 listings_recycler.setVisibility(View.VISIBLE);
-                listingsAdapter.addAll(result.getListings());
-                listingsAdapter.notifyDataSetChanged();
-
-
                 listingsQuery = result.getListingsQuery();
                 Log.i (getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
+                if (result.listings == null ||  result.listings.size() < 1)
+                    return;
+                listingsAdapter.clear();
+                listingsAdapter.addAll(result.getListings());
+                listingsAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -121,26 +139,33 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         }
     }
 
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bundle args = getArguments();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        listingsQuery = (Parcels.unwrap(args.getParcelable(Constants.EXTRA_LISTING_QUERY)));
-        listingsQuery.api.pagenum = 1;
-        listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-        listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-        listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
 
-        Log.i (TAG, "Queries to go: " + this.listingsQuery.toString());
-        setRetainInstance(true);
+        Parcelable query_data = args.getParcelable(Constants.EXTRA_LISTING_QUERY);
+        if (query_data != null) {
+            listingsQuery = Parcels.unwrap(query_data);
+            listingsQuery.api.pagenum = 1;
+            listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+            listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
+            listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
+            final ListingsRequest listingsRequest = new ListingsRequest(listingsQuery, server_address);
+            Long tsLong = System.currentTimeMillis() / 1000;
+            String ts = tsLong.toString();
+            spiceManager.execute(listingsRequest, ts, DurationInMillis.ALWAYS_EXPIRED, new ListingsRequestListener());
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate (R.layout.listings, container, false);
+        View v = inflater.inflate(R.layout.listings, container, false);
         ButterKnife.bind(this, v);
         return v;
     }
@@ -148,9 +173,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Override
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ListingsRequest listingsRequest = new ListingsRequest(listingsQuery);
-        spiceManager.execute (listingsRequest, listingsQuery.hashCode(), DurationInMillis.ALWAYS_RETURNED, new ListingsRequestListener());
-        listings_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+
+
+        listings_recycler.setLayoutManager(linearLayoutManager);
         listingsAdapter = new ListingsAdapter();
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
             @Override
@@ -166,6 +192,17 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         });
         listings_recycler.setAdapter(listingsAdapter);
         listings_recycler.setHasFixedSize(false);
+        listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                listings_recycler.setVisibility(View.INVISIBLE);
+                loading_container.setVisibility(View.VISIBLE);
+                ListingsRequest listingsRequest1 = new ListingsRequest(listingsQuery, server_address);
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
+                spiceManager.execute(listingsRequest1, ts, DurationInMillis.ALWAYS_EXPIRED, new ListingsRequestListener());
+            }
+        });
         sort_btn.setIcon(R.drawable.ic_sort_white_24dp);
         filter_btn.setIcon(R.drawable.ic_filter_list_white_24dp);
     }
@@ -178,7 +215,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Override
     public void onStart () {
         super.onStart();
-        spiceManager.start (getActivity());
+        spiceManager.start(getActivity());
     }
 
     @Override
@@ -192,6 +229,15 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            Activity a = getActivity();
+            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     public static ListingsFragment newInstance() {

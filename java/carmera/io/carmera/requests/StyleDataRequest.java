@@ -18,17 +18,19 @@ public class StyleDataRequest extends OkHttpSpiceRequest<StyleData> {
     public String styleId;
     private final Gson gson = new Gson();
     private final OkHttpClient client = new OkHttpClient();
+    private String server_addr;
 
-    public StyleDataRequest(String styleId) {
+    public StyleDataRequest(String styleId, String server_addr_) {
         super(StyleData.class);
         this.styleId = styleId;
+        this.server_addr = server_addr_;
     }
     @Override
     public StyleData loadDataFromNetwork () throws Exception {
         try {
 
             Log.i(StyleData.class.getSimpleName(), this.styleId);
-            String url = String.format (Constants.VehicleInfoEndPoint + "?styleId=%s",
+            String url = String.format (this.server_addr + Constants.VehicleInfoEndPoint + "?styleId=%s",
                     this.styleId);
             Request req = new Request.Builder().url(url).get().build();
             Response response = client.newCall(req).execute();

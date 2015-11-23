@@ -27,15 +27,10 @@ public class CarQuery {
     @JsonProperty
     public List<String> compressors = new ArrayList<>();
     @JsonProperty
-    public List<String> drivetrains = new ArrayList<>();
+    public List<String> drivenWheels = new ArrayList<>();
     @JsonProperty
     public List<String> conditions = new ArrayList<>();
-    @JsonProperty
-    public List<String> extColors = new ArrayList<>();
-    @JsonProperty
-    public List<String> intColors = new ArrayList<>();
-    @JsonProperty
-    public List<String> equipments = new ArrayList<>();
+
     @JsonProperty
     public List<Double> coordinates = new ArrayList<>();
     @JsonProperty
@@ -44,6 +39,11 @@ public class CarQuery {
     public List<Integer> years = new ArrayList<>();
     @JsonProperty
     public List<String> tags = new ArrayList<>();
+    @JsonProperty
+    public List<String> remaining_submodels = new ArrayList<>();
+    @JsonProperty
+    public List<String> fetched_submodels = new ArrayList<>();
+
 
     @JsonProperty
     public Integer minHp = 0;
@@ -114,12 +114,12 @@ public class CarQuery {
         this.compressors = compressors;
     }
 
-    public List<String> getDrivetrains() {
-        return drivetrains;
+    public List<String> getdrivenWheels() {
+        return drivenWheels;
     }
 
-    public void setDrivetrains(List<String> drivetrains) {
-        this.drivetrains = drivetrains;
+    public void setdrivenWheels(List<String> drivenWheels) {
+        this.drivenWheels = drivenWheels;
     }
 
     public List<String> getConditions() {
@@ -128,30 +128,6 @@ public class CarQuery {
 
     public void setConditions(List<String> conditions) {
         this.conditions = conditions;
-    }
-
-    public List<String> getExtColors() {
-        return extColors;
-    }
-
-    public void setExtColors(List<String> extColors) {
-        this.extColors = extColors;
-    }
-
-    public List<String> getIntColors() {
-        return intColors;
-    }
-
-    public void setIntColors(List<String> intColors) {
-        this.intColors = intColors;
-    }
-
-    public List<String> getEquipments() {
-        return equipments;
-    }
-
-    public void setEquipments(List<String> equipments) {
-        this.equipments = equipments;
     }
 
     public List<Double> getCoordinates() {
@@ -210,4 +186,19 @@ public class CarQuery {
         this.tags = tags;
     }
 
+    public List<String> getRemaining_submodels() {
+        return remaining_submodels;
+    }
+
+    public void setRemaining_submodels(List<String> remaining_submodels) {
+        this.remaining_submodels = remaining_submodels;
+    }
+
+    public List<String> getFetched_submodels() {
+        return fetched_submodels;
+    }
+
+    public void setFetched_submodels(List<String> fetched_submodels) {
+        this.fetched_submodels = fetched_submodels;
+    }
 }

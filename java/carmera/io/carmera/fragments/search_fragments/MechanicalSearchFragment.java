@@ -95,13 +95,13 @@ public class MechanicalSearchFragment extends SearchFragment {
         drivetrain_spinner.setItems(Util.getSpinnerValues(drivetrains), "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().drivetrains.clear();
+                getGenQuery().drivenWheels.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
                         if (drivetrains.get(i).equals("All Wheel Drive"))
-                            getGenQuery().drivetrains.add("four wheel drive");
+                            getGenQuery().drivenWheels.add("four wheel drive");
                         else
-                            getGenQuery().drivetrains.add (drivetrains.get(i));
+                            getGenQuery().drivenWheels.add (drivetrains.get(i));
                     }
                 }
             }

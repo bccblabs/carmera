@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/tools">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/camera_preview"/>
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+        android:id="@+id/loading"
+        android:layout_centerInParent="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/cardview_light_background"/>
+
     <carmera.io.carmera.widgets.VerticalSeekBar
         android:id="@+id/zoombar"
         android:layout_alignParentLeft="true"
@@ -15,23 +23,22 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="300dp"/>
-    <com.gc.materialdesign.views.ButtonFloat
+    <com.dd.processbutton.iml.SubmitProcessButton
         android:id="@+id/capture_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/holo_blue_dark"
-        materialdesign:animate="true"
-        materialdesign:iconDrawable="@drawable/ic_action_camera_white_small" />
-    <com.gc.materialdesign.views.ButtonFloat
-        android:id="@+id/flash_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/holo_blue_dark"
-        materialdesign:animate="true"
-        materialdesign:iconDrawable="@drawable/ic_flash_on_white_24dp" />
+        android:text="@string/capture"
+        custom:pb_textComplete="@string/success"
+        custom:pb_textProgress="@string/uploading"
+        custom:pb_textError="@string/error"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorNormal="@color/blue_normal"
+        custom:pb_colorPressed="@color/blue_pressed"
+        custom:pb_colorProgress="@color/purple_progress"/>
+
 </RelativeLayout>

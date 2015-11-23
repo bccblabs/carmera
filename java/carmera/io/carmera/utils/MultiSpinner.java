@@ -54,23 +54,23 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
 
     @Override // same
     public void onCancel(DialogInterface dialog) {
-        StringBuffer spinnerBuffer = new StringBuffer();
-        int num_selected = 0;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).isSelected() ) {
-                spinnerBuffer.append(items.get(i).getName());
-                num_selected ++;
-                spinnerBuffer.append(", ");
-            }
-        }
-
+//        StringBuffer spinnerBuffer = new StringBuffer();
+//        int num_selected = 0;
+//        for (int i = 0; i < items.size(); i++) {
+//            if (items.get(i).isSelected() ) {
+//                spinnerBuffer.append(items.get(i).getName());
+//                num_selected ++;
+//                spinnerBuffer.append(", ");
+//            }
+//        }
+//
         String spinnerText = "";
-        spinnerText = spinnerBuffer.toString();
-        if (spinnerText.length() > 2)
-            spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
-        else if (num_selected > 3)
-            spinnerText = defaultText;
-        else
+//        spinnerText = spinnerBuffer.toString();
+//        if (spinnerText.length() <= 3 && spi)
+//            spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+//        else if (num_selected > 3)
+//            spinnerText = defaultText;
+//        else
             spinnerText = defaultText;
 
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),

@@ -67,8 +67,10 @@ public class PricingMileage extends SearchFragment {
                     if (items.get(i).isSelected()) {
                         if (max_msrp.get(i).equals("None"))
                             getApiQuery().msrpmax = Integer.MAX_VALUE;
-                        else
+                        else {
                             getApiQuery().msrpmax = Integer.valueOf(max_msrp.get(i));
+
+                        }
                         break;
                     }
                 }

@@ -2,7 +2,9 @@ package carmera.io.carmera;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -49,13 +51,10 @@ import carmera.io.carmera.predicates.RatingsPredicate;
 import carmera.io.carmera.predicates.ReliabilityPredicate;
 import carmera.io.carmera.requests.StyleDataRequest;
 import carmera.io.carmera.utils.Constants;
-import carmera.io.carmera.utils.InMemorySpiceService;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardExpand;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by bski on 11/9/15.
@@ -76,41 +75,51 @@ public class ListingDetails extends AppCompatActivity
 
     private Listing listing;
 
+    private String server_address;
+
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
 
     public class ListingsBasicInfoCard extends Card {
         protected SliderLayout photos;
-        public ListingsBasicInfoCard (Context context) {
+        protected List<String> stock_images;
+        public ListingsBasicInfoCard (Context context, List<String> stock_photos) {
            super(context, R.layout.listings_basic_info_card_content);
+            this.stock_images = stock_photos;
         }
         @Override
         public void setupInnerViewElements (ViewGroup parent, View view) {
             photos = (SliderLayout) parent.findViewById(R.id.listing_photos);
+            photos.setPresetTransformer(SliderLayout.Transformer.Default);
+            photos.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            photos.setCustomAnimation(new DescriptionAnimation());
+            photos.setDuration(2000);
+            photos.addOnPageChangeListener(ListingDetails.this);
 
             if (photos != null) {
-                photos.setPresetTransformer(SliderLayout.Transformer.Default);
-                photos.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                photos.setCustomAnimation(new DescriptionAnimation());
-                photos.setDuration(4000);
-                photos.addOnPageChangeListener(ListingDetails.this);
                 try {
                     for (Link link : listing.getMedia().getPhotos().getLarge().getLinks()) {
                         DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
-                        sliderView.image (link.getHref()).setOnSliderClickListener(ListingDetails.this);
+                        sliderView.image(link.getHref()).setOnSliderClickListener(ListingDetails.this);
                         photos.addSlider(sliderView);
                     }
                 } catch (Exception e) {
-                    Log.e (getClass().getCanonicalName(), e.getMessage());
+                    Log.e(getClass().getCanonicalName(), e.getMessage());
+                    if (stock_images == null) {
+                        DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
+                        sliderView.image(R.drawable.carmera_small).setOnSliderClickListener(ListingDetails.this);
+                        photos.addSlider(sliderView);
+                    } else {
+                        for (String url : stock_images) {
+                            DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
+                            sliderView.image(Constants.EdmundsMedia + url.replace("_150.", "_300.")).setOnSliderClickListener(ListingDetails.this);
+                            photos.addSlider(sliderView);
+                        }
+                    }
                 }
             }
         }
-
     }
-
-
-
-
 
     public class ListingBasicInfoExpand extends CardExpand {
         protected TextView name, address, phone, email;
@@ -151,6 +160,24 @@ public class ListingDetails extends AppCompatActivity
         @Override
         public void onRequestSuccess (final StyleData styleData) {
             Log.i (getClass().getCanonicalName(), "styleId: " + styleData.styleId);
+
+            ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard (ListingDetails.this, styleData.images);
+
+            CompositeHeader basic_info_header = new CompositeHeader(ListingDetails.this,
+                    String.format("$%.0f", listing.getMin_price()),
+                    String.format("%d Miles", listing.getMileage()),
+                    String.format("%d %s %s", listing.getYear().getYear(),
+                            listing.getMake().getName(),
+                            listing.getModel().getName()));
+
+            ListingBasicInfoExpand basic_info_expand = new ListingBasicInfoExpand(ListingDetails.this);
+            basic_info_header.setButtonExpandVisible(true);
+            basic_info_card.addCardHeader(basic_info_header);
+            basic_info_card.addCardExpand(basic_info_expand);
+            basic_info_card.setBackgroundResourceId(R.drawable.card_select0);
+            listing_info_card.setCard(basic_info_card);
+
+
             List<String> costs = new ArrayList<>(Collections2.filter(styleData.tags, new CostsPredicate()));
 
             List<String> perf = new ArrayList<>(Collections2.filter(styleData.tags, new PerformancePredicate()));
@@ -303,23 +330,10 @@ public class ListingDetails extends AppCompatActivity
 
 
 
-        ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard (this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
+        StyleDataRequest styleDataRequest = new StyleDataRequest(listing.style.id, server_address);
 
-        CompositeHeader basic_info_header = new CompositeHeader(this,
-                                        String.format("$%.0f", listing.getPrices().getListPrice()),
-                                        String.format("%d Miles", listing.getMileage()),
-                                        String.format("%d %s %s", listing.getYear().getYear(),
-                                                listing.getMake().getName(),
-                                                listing.getModel().getName()));
-
-        ListingBasicInfoExpand basic_info_expand = new ListingBasicInfoExpand(this);
-        basic_info_header.setButtonExpandVisible(true);
-        basic_info_card.addCardHeader(basic_info_header);
-        basic_info_card.addCardExpand(basic_info_expand);
-        basic_info_card.setBackgroundResourceId(R.drawable.card_select0);
-        listing_info_card.setCard(basic_info_card);
-
-        StyleDataRequest styleDataRequest = new StyleDataRequest(listing.style.id);
         spiceManager.execute(styleDataRequest, listing.style.id, DurationInMillis.ALWAYS_RETURNED,
                                                                  new StyleDataRequestListener());
 

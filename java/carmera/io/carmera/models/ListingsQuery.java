@@ -16,6 +16,14 @@ import carmera.io.carmera.models.queries.CarQuery;
 @Parcel
 public class ListingsQuery {
 
+
+    @JsonProperty
+    public String userId;
+
+    @JsonProperty
+    public String time_stamp;
+
+
     @JsonProperty
     public Integer max_price;
 
@@ -93,5 +101,21 @@ public class ListingsQuery {
 
     public void setCar(CarQuery car) {
         this.car = car;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTime_stamp() {
+        return time_stamp;
+    }
+
+    public void setTime_stamp(String time_stamp) {
+        this.time_stamp = time_stamp;
     }
 }

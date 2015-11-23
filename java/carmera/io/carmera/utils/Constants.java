@@ -4,9 +4,10 @@ package carmera.io.carmera.utils;
  * Created by bski on 10/12/15.
  */
 public class Constants {
-    public final static String ServerAddr = "http://52.34.74.125:8080";
-    public final static String ListingsEndPoint = ServerAddr +  "/listings";
-    public final static String VehicleInfoEndPoint = ServerAddr + "/vehicle_info";
+    public final static String ServerAddr = "http://52.34.80.150:8080";
+    public final static String ListingsEndPoint = "/listings";
+    public final static String VehicleInfoEndPoint = "/vehicle_info";
+    public final static String EdmundsMedia = "http://media.ed.edmunds-media.com";
 
     public final static String ZIPCODE_DEFAULT = "92612";
     public final static String RADIUS_DEFAULT = "50";

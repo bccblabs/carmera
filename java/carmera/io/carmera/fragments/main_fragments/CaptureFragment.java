@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,32 +17,59 @@ import android.widget.SeekBar;
 import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
-import com.gc.materialdesign.views.ButtonFloat;
+import com.dd.processbutton.iml.SubmitProcessButton;
+import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.R;
+import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.widgets.MySupportCameraFragment;
 
 /**
  * Created by bski on 6/2/15.
  */
-public class CaptureFragment extends MySupportCameraFragment implements SeekBar.OnSeekBarChangeListener,
-                                                              View.OnTouchListener {
+public class CaptureFragment extends MySupportCameraFragment implements
+                                                                SeekBar.OnSeekBarChangeListener,
+                                                                View.OnTouchListener {
 
-    private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
-    private SeekBar zoom = null;
-    private ButtonFloat capture_btn = null;
-    private ButtonFloat flash_btn = null;
+
     String flashMode = null;
+
     boolean isFlashMode = false;
 
-    private FrameLayout camera_preview;
-    public final String TAG = getClass().getCanonicalName();
+    private Activity activity;
 
     private OnCameraResultListener camera_result_callback = null;
 
+    public final String TAG = getClass().getCanonicalName();
+
+    private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
+
+    @Bind (R.id.zoombar) public SeekBar zoom;
+
+    @Bind (R.id.capture_btn) public SubmitProcessButton capture_btn;
+
+    @OnClick (R.id.capture_btn)
+    void takePhoto () {
+        takeSimplePicture();
+    }
+
+    @Bind(R.id.camera_preview) public FrameLayout camera_preview;
+
+    @Bind (R.id.loading) public View loading;
+
+
     public interface OnCameraResultListener {
-        void OnCameraResult (byte[] image_data);
+        void OnCameraResult (Parcelable query);
     }
 
     public static CaptureFragment newInstance () {
@@ -62,8 +92,14 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
     @Override
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
-        SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(getActivity()));
-        setHost(builder.useFullBleedPreview(true).build());
+        activity = getActivity();
+        new Thread() {
+            @Override
+            public void run () {
+                SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
+                setHost(builder.useFullBleedPreview(true).build());
+            }
+        }.start();
     }
 
     @Override
@@ -75,36 +111,11 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View cameraView = super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.capture, container, false);
-        camera_preview = (FrameLayout) v.findViewById(R.id.camera_preview);
-
-        ((ViewGroup)v.findViewById(R.id.camera_preview)).addView(cameraView);
-        zoom = (SeekBar) v.findViewById(R.id.zoombar);
-        capture_btn = (ButtonFloat) v.findViewById(R.id.capture_btn);
-        flash_btn = (ButtonFloat) v.findViewById(R.id.flash_btn);
-
-        zoom.setKeepScreenOn(true);
-        capture_btn.setKeepScreenOn(true);
-        capture_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeSimplePicture ();
-            }
-        });
-
-        flash_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
-                isFlashMode = !(isFlashMode);
-                if (isFlashMode)
-                    flash_btn.setBackgroundColor(getActivity().getResources().getColor(R.color.material_blue_grey_800));
-                else
-                    flash_btn.setBackgroundColor(0x1E88E5);
-
-            }
-        });
-
         ButterKnife.bind(this, v);
+        camera_preview.addView(cameraView);
+        loading.setVisibility(View.INVISIBLE);
         camera_preview.setOnTouchListener(this);
+
         return v;
     }
 
@@ -127,14 +138,9 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
         }
     }
 
-    @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     class CaptureHost extends SimpleCameraHost {
         public CaptureHost (Context cxt) {
-            super (cxt);
+            super(cxt);
         }
 
         @Override
@@ -147,7 +153,22 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
 
         @Override
         public void saveImage (PictureTransaction xact, byte[] image) {
-            camera_result_callback.OnCameraResult(image);
+            ImageQuery imageQuery = new ImageQuery();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddhh:mm:ss.mmm", Locale.US);
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            imageQuery.setImageData(Base64.encodeToString(image, Base64.DEFAULT));
+            imageQuery.setDate(sdf.format(new Date()));
+            imageQuery.setUserId(ParseUser.getCurrentUser().getUsername());
+            camera_result_callback.OnCameraResult(Parcels.wrap(ImageQuery.class, imageQuery));
+            CaptureFragment.this.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    capture_btn.setVisibility(View.INVISIBLE);
+                    loading.setVisibility(View.VISIBLE);
+                    zoom.setVisibility(View.INVISIBLE);
+                }
+            });
+
         }
 
         @Override
@@ -188,6 +209,13 @@ public class CaptureFragment extends MySupportCameraFragment implements SeekBar.
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {}
+
+    @Override
+    public void onDestroy() {
+        Log.i (TAG, "on destroy");
+        super.onDestroy();
+    }
+
 
 
 }

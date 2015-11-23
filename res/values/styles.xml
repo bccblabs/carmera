@@ -1,8 +1,8 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="android:textColor">@color/guillotine_background</item>
-        <item name="android:textColorPrimary">@color/guillotine_background</item>
+        <item name="android:textColor">@color/card_pressed</item>
+        <item name="android:textColorPrimary">@color/card_pressed</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -255,5 +255,4 @@
         <item name="android:background">@drawable/ic_stars_white_24dp</item>
         <item name="android:textColor">@color/card_pressed</item>
     </style>
-
 </resources>
