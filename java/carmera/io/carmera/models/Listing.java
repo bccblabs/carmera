@@ -4,6 +4,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
 
+import java.util.List;
+
+import carmera.io.carmera.models.listings_subdocuments.Equipment;
 import carmera.io.carmera.models.listings_subdocuments.Make;
 import carmera.io.carmera.models.listings_subdocuments.Model;
 import carmera.io.carmera.models.listings_subdocuments.Prices;
@@ -46,6 +49,12 @@ public class Listing {
     public Prices prices;
     @JsonProperty
     public Dealer dealer;
+    @JsonProperty
+    public List<String> features;
+    @JsonProperty
+    public List<String> options;
+    @JsonProperty
+    public List<Equipment> equipment;
 
 
     public Float getMin_price() {
@@ -158,5 +167,29 @@ public class Listing {
 
     public void setDealer(Dealer dealer) {
         this.dealer = dealer;
+    }
+
+    public List<String> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(List<String> features) {
+        this.features = features;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
+
+    public List<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(List<Equipment> equipment) {
+        this.equipment = equipment;
     }
 }

@@ -81,13 +81,6 @@ public class Safety extends Fragment {
                 cards.add(nhtsa);
             }
         }
-        if (safety.equipments != null && safety.equipments.size() > 0) {
-            CarInfoCard equipments = new CarInfoCard(cxt, safety.equipments, null, null, R.color.selected_item_color);
-            CompositeHeader hdr = new CompositeHeader(cxt, null, null, "Equipments");
-            equipments.addCardHeader(hdr);
-            cards.add(equipments);
-        }
-
         cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
         cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
         return v;

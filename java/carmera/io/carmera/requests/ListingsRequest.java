@@ -20,7 +20,7 @@ import carmera.io.carmera.utils.Constants;
 public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
     private static final String TAG = "LISTINGS_REQUEST";
     private String server_addr;
-    private final OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
     public static final com.squareup.okhttp.MediaType JSON =
             com.squareup.okhttp.MediaType.parse("application/json; charset=utf-8");
@@ -31,6 +31,10 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
         this.vehicleQuery = query;
         this.server_addr = server_addr_;
         RetryPolicy retryPolicy = getRetryPolicy();
+        client.setConnectTimeout(120, TimeUnit.SECONDS);
+        client.setReadTimeout(120, TimeUnit.SECONDS);
+        client.setRetryOnConnectionFailure(false);
+        client.setWriteTimeout(120, TimeUnit.SECONDS);
         Log.i (TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
@@ -44,14 +48,8 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
                     .url(server_addr + Constants.ListingsEndPoint)
                     .post(body)
                     .build();
-            client.setConnectTimeout(60, TimeUnit.SECONDS);
-            client.setReadTimeout(60, TimeUnit.SECONDS);
             Response response = client.newCall(request).execute();
             Log.i (TAG,response.toString());
             return gson.fromJson (response.body().charStream(), Listings.class);
-
-//        } catch (Exception ie) {
-//            return null;
-//        }
     }
 }

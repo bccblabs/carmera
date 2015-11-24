@@ -50,6 +50,16 @@ public class ApiQuery {
     public List<String> getExt_colors() {
         return ext_colors;
     }
+    @JsonProperty
+    public List<String> conditions = new ArrayList<>();
+
+    public List<String> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<String> conditions) {
+        this.conditions = conditions;
+    }
 
     public void setEquipments(List<String> equipments) {
         this.equipments = equipments;

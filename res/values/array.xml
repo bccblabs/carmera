@@ -815,6 +815,16 @@
         <item>Night Vision</item>
     </string-array>
 
-
+    <string-array name="tags_array">
+        <item>No Recalls</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Muscle</item>
+        <item>No Powertrain Complaints</item>
+        <item>No Airbag Complaints</item>
+        <item>Has Incentives</item>
+        <item>Affordable Luxury</item>
+        <item>Hot Hatchback</item>
+    </string-array>
 
 </resources>

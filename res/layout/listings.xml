@@ -5,27 +5,29 @@
     android:background="@color/background_floating_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/loading_container"
-        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
         android:layout_centerInParent="true"
-        android:background="#20000000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-            android:layout_centerInParent="true"
-            android:layout_width="50dp"
-            android:background="@color/card_pressed"
-            android:layout_height="50dp"/>
-    </RelativeLayout>
+        android:id="@+id/loading_container"
+        android:layout_width="50dp"
+        android:background="@color/card_pressed"
+        android:layout_height="50dp"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listings_recylcer"
         android:layout_alignParentTop="true"
         android:visibility="gone"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="28dp"
+        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:background="@color/selected_item_color"
+        android:id="@+id/more_cars"
+        android:text="@string/more_cars"/>
+
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:visibility="invisible"
@@ -34,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         fab:fab_addButtonColorNormal="@color/white"
         fab:fab_addButtonColorPressed="@color/white_pressed"
         fab:fab_addButtonSize="mini"

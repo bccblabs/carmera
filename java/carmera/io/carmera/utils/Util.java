@@ -383,10 +383,10 @@ public class Util {
             return a.toString();
     }
 
-    public static Socket getUploadSocket () {
+    public static Socket getUploadSocket (String server_addr) {
         if (uploadSocket == null) {
             try {
-                uploadSocket = IO.socket(Constants.ServerAddr);
+                uploadSocket = IO.socket(server_addr);
             } catch (URISyntaxException e) {
                 Log.i(TAG, e.getMessage());
             }

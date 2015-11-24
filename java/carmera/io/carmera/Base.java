@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.parse.ParseUser;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +39,7 @@ import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
+import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
@@ -67,13 +69,16 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     private Socket socket;
 
+    private String socket_addr;
+
+    private SharedPreferences sharedPreferences;
 
 
     @Override
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, query);
-        ListingsFragment listingsFragment = ListingsFragment.newInstance();
+        ListingsFragment listingsFragment = new ListingsFragment();
         listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, listingsFragment)
@@ -84,8 +89,8 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     @Override
     public void OnCameraResult (Parcelable query) {
         ImageQuery imageQuery = Parcels.unwrap(query);
-        Util.getUploadSocket().emit("clz_data", new Gson().toJson(imageQuery));
-        Util.getUploadSocket().on("clz_res", OnClzResult);
+        Util.getUploadSocket(socket_addr).emit("clz_data", new Gson().toJson(imageQuery));
+        Util.getUploadSocket(socket_addr).on("listings", OnListings);
         Base.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -94,22 +99,12 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         });
     }
 
-
-    public void OnRecognitionResult (Parcelable listing_query)  {
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, listing_query);
-        ListingsFragment listingsFragment = ListingsFragment.newInstance();
-        listingsFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, listingsFragment)
-                .addToBackStack("LISTINGS")
-                .commitAllowingStateLoss();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        socket = Util.getUploadSocket().connect();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        socket_addr = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
+        socket = Util.getUploadSocket(socket_addr).connect();
         socket.on("register", OnRegister);
         Toast.makeText(this, "socket connected", Toast.LENGTH_LONG).show();
         setContentView(R.layout.base);
@@ -203,32 +198,33 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         }
     };
 
-    private Emitter.Listener OnClzResult = new Emitter.Listener() {
+    private Emitter.Listener OnListings = new Emitter.Listener() {
         @Override
         public void call (final Object... args) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Base.this);
-                    String data = (String) args[0];
-                    ListingsQuery listingsQuery = new ListingsQuery();
-                    listingsQuery.car = new CarQuery();
-
-                    listingsQuery.car.labels.add(data);
-                    listingsQuery.api = new ApiQuery();
-
-                    listingsQuery.api.pagenum = 1;
-                    listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-                    listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-
-                    listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
-
-                    OnRecognitionResult(Parcels.wrap(ListingsQuery.class, listingsQuery));
-                }
+                    Gson gson = new Gson();
+                    Log.i (TAG, gson.toJson (args[0]));
+                    Listings listings = new Gson().fromJson((String)args[0], Listings.class);
+                    Parcelable listings_pclb = Parcels.wrap(Listings.class, listings);
+                    Bundle args = new Bundle();
+                    args.putParcelable(Constants.EXTRA_LISTINGS_DATA, listings_pclb);
+                    ListingsFragment listingsFragment = new ListingsFragment();
+                    listingsFragment.setArguments(args);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, listingsFragment)
+                            .addToBackStack("LISTINGS")
+                            .commitAllowingStateLoss();
+                        }
             });
         }
     };
 
+
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     public void onDestroy () {

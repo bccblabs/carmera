@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -93,13 +94,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
         activity = getActivity();
-        new Thread() {
-            @Override
-            public void run () {
-                SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
-                setHost(builder.useFullBleedPreview(true).build());
-            }
-        }.start();
     }
 
     @Override
@@ -115,6 +109,13 @@ public class CaptureFragment extends MySupportCameraFragment implements
         camera_preview.addView(cameraView);
         loading.setVisibility(View.INVISIBLE);
         camera_preview.setOnTouchListener(this);
+        new Thread() {
+            @Override
+            public void run () {
+                SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
+                setHost(builder.useFullBleedPreview(true).build());
+            }
+        }.start();
 
         return v;
     }
@@ -215,7 +216,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
         Log.i (TAG, "on destroy");
         super.onDestroy();
     }
-
 
 
 }

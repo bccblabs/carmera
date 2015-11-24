@@ -61,6 +61,7 @@
 
     <string name="complaints">Complaints</string>
     <string name="safety">Safety</string>
+    <string name="safety_equipments">Safety Equipments</string>
     <string name="recalls">Recalls</string>
 
     <string name="ratings">Ratings</string>
@@ -74,6 +75,11 @@
 
     <string name="prices">Market Value</string>
     <string name="costs">Costs</string>
+
+    <string name="equipments">Equipments</string>
+    <string name="features">Features</string>
+    <string name="options">Options</string>
+
 
     <string name="msrp">MSRP</string>
     <string name="private_party">Private</string>
@@ -124,5 +130,7 @@
     <string name="uploading">Uploading</string>
     <string name="success">Success</string>
     <string name="error">Error</string>
+
+    <string name="more_cars">More Cars</string>
 
 </resources>

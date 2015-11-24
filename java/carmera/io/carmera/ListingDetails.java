@@ -63,6 +63,10 @@ public class ListingDetails extends AppCompatActivity
                             implements  BaseSliderView.OnSliderClickListener,
                                         ViewPagerEx.OnPageChangeListener {
 
+    @Bind (R.id.loading_view) View loading_view;
+
+    @Bind (R.id.content) View content_container;
+
     @Bind (R.id.listing_info_card) CardView listing_info_card;
 
     @Bind (R.id.specs_card) CardView perf_card;
@@ -72,6 +76,8 @@ public class ListingDetails extends AppCompatActivity
     @Bind (R.id.review_card) CardView review_card;
 
     @Bind (R.id.issues_card) CardView issues_card;
+
+    @Bind (R.id.equipments_card) CardView equipments_card;
 
     private Listing listing;
 
@@ -212,6 +218,35 @@ public class ListingDetails extends AppCompatActivity
             } else {
                 cost_card.setVisibility(View.GONE);
             }
+
+            if (listing.equipment != null || listing.features != null || listing.options != null) {
+                CarInfoCard equipmentCard = new CarInfoCard(
+                        ListingDetails.this,
+                        null,
+                        "Click to See Options and Equipments",
+                        null,
+                        R.drawable.card_bgd1
+                );
+                equipmentCard.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        if (listing.options != null && listing.options.size() > 0)
+                            viewer.putExtra(Constants.EXTRA_OPTIONS, Parcels.wrap(listing.options));
+                        if (listing.features != null && listing.features.size() > 0)
+                            viewer.putExtra(Constants.EXTRA_FEATURES, Parcels.wrap(listing.features));
+                        if (listing.equipment != null && listing.equipment.size() > 0)
+                            viewer.putExtra(Constants.EXTRA_EQUIPMENTS, Parcels.wrap(listing.equipment));
+                        startActivity (viewer);
+                    }
+                });
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this, null, null, "Options, Features, Equipements");
+                equipmentCard.addCardHeader(hdr);
+                equipments_card.setCard(equipmentCard);
+            } else {
+                equipments_card.setVisibility(View.GONE);
+            }
+
             if (perf.size() > 0) {
                 String line0 = null,
                         line1 = null;
@@ -317,6 +352,10 @@ public class ListingDetails extends AppCompatActivity
             } else {
                 review_card.setVisibility(View.GONE);
             }
+
+            loading_view.setVisibility(View.GONE);
+            content_container.setVisibility(View.VISIBLE);
+
         }
     }
 

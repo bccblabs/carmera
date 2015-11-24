@@ -77,16 +77,6 @@ public class ListingsQuery {
         this.sortBy = sortBy;
     }
 
-    public List<String> getRemaining_submodels() {
-        return remaining_submodels;
-    }
-
-    public void setRemaining_submodels(List<String> remaining_submodels) {
-        this.remaining_submodels = remaining_submodels;
-    }
-
-    public List<String> remaining_submodels;
-
     public ApiQuery getApi() {
         return api;
     }
@@ -118,4 +108,5 @@ public class ListingsQuery {
     public void setTime_stamp(String time_stamp) {
         this.time_stamp = time_stamp;
     }
+
 }

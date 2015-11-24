@@ -4,7 +4,7 @@ package carmera.io.carmera.utils;
  * Created by bski on 10/12/15.
  */
 public class Constants {
-    public final static String ServerAddr = "http://52.34.80.150:8080";
+    public final static String ServerAddr = "http://52.32.208.93:8080";
     public final static String ListingsEndPoint = "/listings";
     public final static String VehicleInfoEndPoint = "/vehicle_info";
     public final static String EdmundsMedia = "http://media.ed.edmunds-media.com";
@@ -15,6 +15,7 @@ public class Constants {
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
+    public static final String EXTRA_LISTINGS_DATA = "extra_listings_data";
 
     public static final String EXTRA_PRICES = "extra_prices";
     public static final String EXTRA_COSTS = "extra_costs";
@@ -32,6 +33,12 @@ public class Constants {
     public static final String EXTRA_SAFETY = "extra_safety";
     public static final String EXTRA_CMPL = "extra_complaints";
     public static final String EXTRA_RECALLS = "extra_recalls";
+
+
+    public static final String EXTRA_EQUIPMENTS = "extra_equipments";
+    public static final String EXTRA_FEATURES = "extra_features";
+    public static final String EXTRA_OPTIONS = "extra_options";
+
 
     public static final String MILEAGE_ASC = "mileage:asc";
     public static final String MILEAGE_DESC = "mileage:desc";

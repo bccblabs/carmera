@@ -42,6 +42,8 @@ public class BasicSearchFragment extends SearchFragment {
 
     @Bind(R.id.basic_container) public ObservableScrollView basic_container;
 
+    @Bind(R.id.tags_spinner) MultiSpinner tags_spinner;
+
     private SortedMap<String, Integer> make_resid_map = new TreeMap<>();
 
     @Override
@@ -183,12 +185,26 @@ public class BasicSearchFragment extends SearchFragment {
         condition_spinner.setItems(Util.getSpinnerValues(conditions), "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().conditions.clear();
+                getApiQuery().conditions.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().conditions.add(items.get(i).getName());
+                        getApiQuery().conditions.add(items.get(i).getName());
                     }
                 }
+            }
+        });
+
+        final List<String> tags = Arrays.asList(cxt.getResources().getStringArray(R.array.tags_array));
+        tags_spinner.setItems(Util.getSpinnerValues(tags), "Popular Search", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                getGenQuery().tags.clear();
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        getGenQuery().tags.add(items.get(i).getName());
+                    }
+                }
+
             }
         });
     }

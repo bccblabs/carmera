@@ -62,10 +62,10 @@ public class SearchContainer extends Fragment {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getChildFragmentManager(),
                 FragmentPagerItems.with(getActivity())
-                .add (R.string.basic_search, BasicSearchFragment.class)
+                .add(R.string.basic_search, BasicSearchFragment.class)
                 .add (R.string.price_mileage_search, PricingMileage.class)
-                .add(R.string.mechanical_search, MechanicalSearchFragment.class)
                 .add (R.string.equipments_search, ColorEquipSearchFragment.class)
+                .add(R.string.mechanical_search, MechanicalSearchFragment.class)
                 .create());
 
         viewPager.setAdapter(adapter);

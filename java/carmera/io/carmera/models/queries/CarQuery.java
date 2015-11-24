@@ -29,9 +29,6 @@ public class CarQuery {
     @JsonProperty
     public List<String> drivenWheels = new ArrayList<>();
     @JsonProperty
-    public List<String> conditions = new ArrayList<>();
-
-    @JsonProperty
     public List<Double> coordinates = new ArrayList<>();
     @JsonProperty
     public List<String> labels = new ArrayList<>();
@@ -40,22 +37,27 @@ public class CarQuery {
     @JsonProperty
     public List<String> tags = new ArrayList<>();
     @JsonProperty
-    public List<String> remaining_submodels = new ArrayList<>();
-    @JsonProperty
-    public List<String> fetched_submodels = new ArrayList<>();
-
-
-    @JsonProperty
     public Integer minHp = 0;
     @JsonProperty
     public Integer minTq = 0;
     @JsonProperty
     public Integer minMpg = 0;
-
+    @JsonProperty
+    public List<String> main_models = new ArrayList<>();
     @JsonProperty
     public List<List<String>> sortBy;
+    @JsonProperty
+    public List<Integer> remaining_ids;
 
     public CarQuery() {
+    }
+
+    public List<String> getMain_models() {
+        return main_models;
+    }
+
+    public void setMain_models(List<String> main_models) {
+        this.main_models = main_models;
     }
 
     public List<List<String>> getSortBy() {
@@ -122,14 +124,6 @@ public class CarQuery {
         this.drivenWheels = drivenWheels;
     }
 
-    public List<String> getConditions() {
-        return conditions;
-    }
-
-    public void setConditions(List<String> conditions) {
-        this.conditions = conditions;
-    }
-
     public List<Double> getCoordinates() {
         return coordinates;
     }
@@ -186,19 +180,12 @@ public class CarQuery {
         this.tags = tags;
     }
 
-    public List<String> getRemaining_submodels() {
-        return remaining_submodels;
+
+    public List<Integer> getRemaining_ids() {
+        return remaining_ids;
     }
 
-    public void setRemaining_submodels(List<String> remaining_submodels) {
-        this.remaining_submodels = remaining_submodels;
-    }
-
-    public List<String> getFetched_submodels() {
-        return fetched_submodels;
-    }
-
-    public void setFetched_submodels(List<String> fetched_submodels) {
-        this.fetched_submodels = fetched_submodels;
+    public void setRemaining_ids(List<Integer> remaining_ids) {
+        this.remaining_ids = remaining_ids;
     }
 }
