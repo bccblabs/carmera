@@ -79,6 +79,8 @@ public class ListingDetails extends AppCompatActivity
 
     @Bind (R.id.equipments_card) CardView equipments_card;
 
+    @Bind (R.id.incentives_card) CardView incentives_card;
+
     private Listing listing;
 
     private String server_address;
@@ -247,6 +249,31 @@ public class ListingDetails extends AppCompatActivity
                 equipments_card.setVisibility(View.GONE);
             }
 
+
+            if (styleData.incentives != null && styleData.incentives.getCount() > 0) {
+                String incentives_desc = String.format("Click to see %d ongoing incentives", styleData.incentives.getCount());
+                CarInfoCard incentives_info_card = new CarInfoCard(
+                        ListingDetails.this,
+                        null,
+                        incentives_desc,
+                        null,
+                        R.drawable.card_bgd2
+                );
+                incentives_info_card.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_INCENTIVES, Parcels.wrap(styleData.incentives));
+                        startActivity (viewer);
+                    }
+                });
+                CompositeHeader hdr = new CompositeHeader(ListingDetails.this, null, null, "Incentives & Rebates");
+                incentives_info_card.addCardHeader(hdr);
+                incentives_card.setCard(incentives_info_card);
+
+            } else {
+                incentives_card.setVisibility(View.GONE);
+            }
             if (perf.size() > 0) {
                 String line0 = null,
                         line1 = null;
@@ -267,7 +294,7 @@ public class ListingDetails extends AppCompatActivity
                 CarInfoCard specsCard = new CarInfoCard (
                                             ListingDetails.this,
                                             perf, line0, line1,
-                                            R.drawable.card_select2);
+                                            R.drawable.card_select3);
 
                 CompositeHeader hdr = new CompositeHeader(ListingDetails.this,
                                                 null, null,
@@ -296,7 +323,7 @@ public class ListingDetails extends AppCompatActivity
                                                 ListingDetails.this,
                                                 reliability,
                                                 null,null,
-                                                R.drawable.card_select3);
+                                                R.drawable.card_select4);
 
                 CompositeHeader hdr = new CompositeHeader(ListingDetails.this,
                                                     null, null,
@@ -328,7 +355,7 @@ public class ListingDetails extends AppCompatActivity
                         ListingDetails.this,
                         review,
                         null, null,
-                        R.drawable.card_select4);
+                        R.drawable.card_select1);
                 CompositeHeader hdr = new CompositeHeader(ListingDetails.this, null, null, "Reviews");
                 reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override

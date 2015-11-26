@@ -93,6 +93,15 @@ public class Ratings extends Fragment {
         bar_chart.setDescription("");
         bar_chart.setData(barData);
 
+        bar_chart.setDrawBarShadow(false);
+        bar_chart.setDrawHighlightArrow(false);
+        bar_chart.setClickable(false);
+        bar_chart.setFilterTouchesWhenObscured(false);
+        bar_chart.setTouchEnabled(false);
+        bar_chart.setSaveEnabled(false);
+        bar_chart.setFocusable(false);
+        bar_chart.setScaleEnabled(false);
+        bar_chart.setPinchZoom(false);
         return v;
     }
 }

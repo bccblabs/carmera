@@ -109,12 +109,12 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
-        models_spnr.setItems(Util.getSelectedValues(listingsQuery.car.models), "Filter Models", -1, new MultiSpinner.MultiSpinnerListener() {
+        models_spnr.setItems(Util.getSelectedValues(listingsQuery.car.main_models), "Filter Models", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for(int i=0; i<items.size(); i++) {
                     if(!items.get(i).isSelected()) {
-                        for (Iterator<String> iter = listingsQuery.car.models.listIterator(); iter.hasNext();) {
+                        for (Iterator<String> iter = listingsQuery.car.main_models.listIterator(); iter.hasNext();) {
                             String test = iter.next();
                             if (test.equals(items.get(i).getName()))
                                 iter.remove();

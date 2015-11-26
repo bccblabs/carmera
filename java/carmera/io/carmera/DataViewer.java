@@ -22,6 +22,7 @@ import carmera.io.carmera.fragments.data_fragments.Costs;
 import carmera.io.carmera.fragments.data_fragments.Dimensions;
 import carmera.io.carmera.fragments.data_fragments.Equipments;
 import carmera.io.carmera.fragments.data_fragments.Features;
+import carmera.io.carmera.fragments.data_fragments.Incentives;
 import carmera.io.carmera.fragments.data_fragments.Performance;
 import carmera.io.carmera.fragments.data_fragments.Prices;
 import carmera.io.carmera.fragments.data_fragments.Options;
@@ -66,6 +67,12 @@ public class DataViewer extends FragmentActivity {
                     return;
             }
 
+            if (extras_id.equals(Constants.EXTRA_INCENTIVES)) {
+                carmera.io.carmera.models.car_data_subdocuments.Incentives incentives = Parcels.unwrap(data);
+                if (incentives.getCount() < 1)
+                    return;
+            }
+
             page_creator.add (StringResId, clzz, new Bundler().putParcelable(extras_id, data).get());
 
         }
@@ -98,6 +105,7 @@ public class DataViewer extends FragmentActivity {
         add_page(R.string.features, Constants.EXTRA_FEATURES, Features.class);
         add_page(R.string.options, Constants.EXTRA_OPTIONS, Options.class);
 
+        add_page (R.string.incentives, Constants.EXTRA_INCENTIVES, Incentives.class);
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 page_creator.create());

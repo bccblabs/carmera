@@ -99,6 +99,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onSort () {
         SortFragment sortFragment = new SortFragment();
         Bundle args = new Bundle();
+        listingsQuery.car.remaining_ids = new ArrayList<>();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         sortFragment.setArguments(args);
         sortFragment.setTargetFragment(this, 1);
@@ -109,6 +110,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onFilter () {
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        listingsQuery.car.remaining_ids = new ArrayList<>();
         FilterFragment filterFragment = new FilterFragment();
         filterFragment.setArguments(args);
         filterFragment.setTargetFragment(this, 0);
@@ -141,9 +143,21 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
+                    ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
                     loading_container.setVisibility(View.INVISIBLE);
                     filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
+                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
+                        @Override
+                        public void onLoadMore(int current_page) {
+                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
+                                more_cars.setVisibility(View.VISIBLE);
+                            else
+                                more_cars.setVisibility(View.INVISIBLE);
+
+                        }
+                    });
+
                     listingsQuery = result.getListingsQuery();
                     Log.i(getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
                     if (result.listings == null ||  result.listings.size() < 1)
@@ -167,9 +181,20 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
+                    ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
                     loading_container.setVisibility(View.INVISIBLE);
                     filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
+                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
+                        @Override
+                        public void onLoadMore(int current_page) {
+                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
+                                more_cars.setVisibility(View.VISIBLE);
+                            else
+                                more_cars.setVisibility(View.INVISIBLE);
+
+                        }
+                    });
                     listingsQuery = result.getListingsQuery();
                     Log.i(getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
                     if (result.listings == null ||  result.listings.size() < 1)
@@ -207,7 +232,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
-
         listings_recycler.setLayoutManager(scrollingLinearLayoutManager);
         listingsAdapter = new ListingsAdapter();
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {

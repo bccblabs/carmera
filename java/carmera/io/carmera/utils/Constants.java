@@ -39,6 +39,7 @@ public class Constants {
     public static final String EXTRA_FEATURES = "extra_features";
     public static final String EXTRA_OPTIONS = "extra_options";
 
+    public static final String EXTRA_INCENTIVES = "extra_incentives";
 
     public static final String MILEAGE_ASC = "mileage:asc";
     public static final String MILEAGE_DESC = "mileage:desc";

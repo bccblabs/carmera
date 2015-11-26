@@ -9,6 +9,7 @@ import java.util.List;
 import carmera.io.carmera.models.car_data_subdocuments.Complaints;
 import carmera.io.carmera.models.car_data_subdocuments.Costs;
 import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
+import carmera.io.carmera.models.car_data_subdocuments.Incentives;
 import carmera.io.carmera.models.car_data_subdocuments.Powertrain;
 import carmera.io.carmera.models.car_data_subdocuments.Prices;
 import carmera.io.carmera.models.car_data_subdocuments.Ratings;
@@ -90,6 +91,9 @@ public class StyleData {
 
     @JsonProperty
     public String make;
+
+    @JsonProperty
+    public Incentives incentives;
 
     public List<String> getGood_tags() {
         return good_tags;
@@ -273,5 +277,13 @@ public class StyleData {
 
     public void setMake(String make) {
         this.make = make;
+    }
+
+    public Incentives getIncentives() {
+        return incentives;
+    }
+
+    public void setIncentives(Incentives incentives) {
+        this.incentives = incentives;
     }
 }
