@@ -33,12 +33,13 @@ import carmera.io.carmera.utils.Constants;
 public class Costs extends Fragment {
     @Bind(R.id.chartview) PieChart pie_chart;
 
-    private carmera.io.carmera.models.car_data_subdocuments.Costs src_data;
+    public static Costs newInstance () {
+        return new Costs();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_COSTS));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class Costs extends Fragment {
         ButterKnife.bind(this, v);
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Costs src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_COSTS));
 
         if (src_data.depreciation != null && src_data.depreciation > 0) {
             xVals.add("Depreciation");
@@ -85,4 +87,9 @@ public class Costs extends Fragment {
         return v;
     }
 
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

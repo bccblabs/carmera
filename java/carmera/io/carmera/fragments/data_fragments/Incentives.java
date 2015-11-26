@@ -32,17 +32,13 @@ public class Incentives extends Fragment {
     @Bind(R.id.cards_recycler)
     CardRecyclerView cardRecyclerView;
 
-    private List<Card> cards;
-    private List<Incentive> incentives;
-    private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
-    private Context cxt;
+    public static Incentives newInstance () {
+        return new Incentives();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        carmera.io.carmera.models.car_data_subdocuments.Incentives incentives_doc = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_INCENTIVES));
-        incentives = incentives_doc.incentiveHolder;
-        cxt = getActivity();
     }
 
 
@@ -50,9 +46,12 @@ public class Incentives extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
+        Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        cards = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Incentives incentives_doc = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_INCENTIVES));
+        List<Incentive> incentives = incentives_doc.incentiveHolder;
+        List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < incentives.size(); i++) {
             Incentive incentive = incentives.get(i);
@@ -95,11 +94,13 @@ public class Incentives extends Fragment {
                 }
             }
         }
-
-        cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
-        cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
+        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
 
     }
 
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

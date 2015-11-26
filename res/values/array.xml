@@ -421,14 +421,28 @@
     </string-array>
     <string-array name="infiniti">
         <item>Any</item>
+        <item>EX35</item>
+        <item>EX37</item>
+        <item>FX35</item>
+        <item>FX37</item>
+        <item>FX50</item>
+        <item>JX35</item>
+        <item>JX37</item>
+        <item>G25</item>
+        <item>G35</item>
+        <item>G37</item>
+        <item>I20</item>
         <item>Q40</item>
+        <item>Q45</item>
         <item>Q50</item>
         <item>Q50 Hybrid</item>
         <item>Q60</item>
         <item>Q70</item>
         <item>Q70 L</item>
         <item>Q70 Hybrid</item>
+        <item>QX4</item>
         <item>QX50</item>
+        <item>QX56</item>
         <item>QX60</item>
         <item>QX60 Hybrid</item>
         <item>QX70</item>

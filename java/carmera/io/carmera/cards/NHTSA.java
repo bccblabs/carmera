@@ -47,8 +47,7 @@ public class NHTSA extends CardWithList {
         if (values.size() < 1) return null;
         List<ListObject> items = new ArrayList<ListObject>();
         for (DataEntry kv : values) {
-            CatetoryRating rating= new CatetoryRating(this, kv.name, kv.value);
-            items.add (rating);
+            items.add (new CatetoryRating(this, kv.name, kv.value));
         }
         return items;
     }

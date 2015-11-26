@@ -17,7 +17,6 @@ import me.gujun.android.taggroup.TagGroup;
  * Created by bski on 11/12/15.
  */
 public class CarInfoCard extends Card {
-    protected TagGroup tagGroup;
     protected List<String> tags;
     protected int BgdResId;
     protected String desc0, desc1;
@@ -35,7 +34,7 @@ public class CarInfoCard extends Card {
         if (view == null)
             return;
         this.setBackgroundResourceId(BgdResId);
-        tagGroup = (TagGroup) view.findViewById(R.id.tags);
+        TagGroup tagGroup = (TagGroup) view.findViewById(R.id.tags);
         if (this.tags != null && this.tags.size() > 0)
             tagGroup.setTags(this.tags);
         else

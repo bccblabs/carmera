@@ -68,6 +68,9 @@ public class SortFragment extends DialogFragment {
         SortFragment.this.dismiss();
     }
 
+    public static SortFragment newInstance() {
+        return new SortFragment();
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -231,6 +234,11 @@ public class SortFragment extends DialogFragment {
                     }
                 });
 
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
 }

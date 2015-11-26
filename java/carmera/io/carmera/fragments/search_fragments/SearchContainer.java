@@ -1,8 +1,10 @@
 package carmera.io.carmera.fragments.search_fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,7 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
+import carmera.io.carmera.utils.Constants;
 
 /**
  * Created by bski on 7/20/15.
@@ -38,8 +41,13 @@ public class SearchContainer extends Fragment {
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
         ListingsQuery listingsQuery = new ListingsQuery();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         listingsQuery.car = SearchFragment.getGenQuery();
         listingsQuery.api = SearchFragment.getApiQuery();
+        listingsQuery.api.pagenum = 1;
+        listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+        listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
+        listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
         search_callback.OnSearchListings(Parcels.wrap(ListingsQuery.class, listingsQuery));
     }
 
@@ -101,6 +109,8 @@ public class SearchContainer extends Fragment {
 
     @Override
     public void onCreate (Bundle savedBundleInstance) {
-        super.onCreate (savedBundleInstance);
+        super.onCreate(savedBundleInstance);
     }
+
+
 }

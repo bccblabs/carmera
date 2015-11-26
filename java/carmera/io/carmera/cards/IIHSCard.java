@@ -49,8 +49,7 @@ public class IIHSCard extends CardWithList {
         if (values.size() < 1) return null;
         List<ListObject> items = new ArrayList<ListObject>();
         for (CategoryValuePair kv : values) {
-            CatetoryRating rating= new CatetoryRating(this, kv.category, kv.value);
-            items.add (rating);
+            items.add (new CatetoryRating(this, kv.category, kv.value));
         }
         return items;
     }

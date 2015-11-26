@@ -30,12 +30,14 @@ import carmera.io.carmera.utils.Constants;
  */
 public class Prices extends Fragment {
     @Bind(R.id.chartview) BarChart bar_chart;
-    private carmera.io.carmera.models.car_data_subdocuments.Prices src_data;
+
+    public static Prices newInstance() {
+        return new Prices();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_PRICES));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class Prices extends Fragment {
         ButterKnife.bind(this, v);
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Prices src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_PRICES));
 
         if (src_data.baseMSRP != null && src_data.baseMSRP > 0) {
             xVals.add(getString(R.string.msrp));
@@ -74,17 +77,30 @@ public class Prices extends Fragment {
         BarData barData = new BarData(xVals, bar_data_set);
         Typeface canaro = CarmeraApp.canaroExtraBold;
         barData.setValueTypeface(canaro);
+        bar_chart.getXAxis().setTypeface(canaro);
+        bar_chart.setDescription("");
+        bar_chart.setData(barData);
 
         bar_chart.getLegend().setEnabled(false);
         bar_chart.setPinchZoom(false);
         bar_chart.setDrawBarShadow(true);
         bar_chart.setDrawGridBackground(false);
-
         bar_chart.getAxisLeft().setEnabled(false);
         bar_chart.getAxisRight().setEnabled(false);
-        bar_chart.getXAxis().setTypeface(canaro);
-        bar_chart.setDescription("");
-        bar_chart.setData(barData);
+        bar_chart.setDrawBarShadow(false);
+        bar_chart.setDrawHighlightArrow(false);
+        bar_chart.setClickable(false);
+        bar_chart.setFilterTouchesWhenObscured(false);
+        bar_chart.setTouchEnabled(false);
+        bar_chart.setSaveEnabled(false);
+        bar_chart.setFocusable(false);
+        bar_chart.setScaleEnabled(false);
+        bar_chart.setPinchZoom(false);
         return v;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

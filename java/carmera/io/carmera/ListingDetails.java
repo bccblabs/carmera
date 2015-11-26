@@ -420,6 +420,12 @@ public class ListingDetails extends AppCompatActivity
     }
 
     @Override
+    public void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
+    }
+
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
     @Override

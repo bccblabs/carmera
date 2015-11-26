@@ -95,5 +95,10 @@ public class ColorEquipSearchFragment extends SearchFragment {
         });
     }
 
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
 
 }

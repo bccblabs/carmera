@@ -47,7 +47,7 @@ public class Constants {
     public static final String PRICE_DESC = "price:desc";
 
 
-    public static final String MPG_ASC = "mpg:asc";
+    public static final  String MPG_ASC = "mpg:asc";
     public static final String MPG_DESC = "mpg:desc";
     public static final String HP_ASC = "horsepower:asc";
     public static final String HP_DESC = "horsepower:desc";
@@ -62,5 +62,11 @@ public class Constants {
 
     public static final String YEAR_ASC = "year:asc";
     public static final String YEAR_DESC = "year:desc";
+
+    public static final Integer GUILLOTINE_ANIMATION_DURATION = 250;
+    public static final Integer BITMAP_QUALITY = 60;
+
+
+    public static final int IMAGE_RESULT = 9076;
 
 }

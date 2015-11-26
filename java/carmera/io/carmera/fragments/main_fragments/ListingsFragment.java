@@ -21,22 +21,13 @@ import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-import com.google.gson.Gson;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import org.parceler.Parcels;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,12 +52,12 @@ import carmera.io.carmera.utils.ScrollingLinearLayoutManager;
 public class ListingsFragment extends Fragment implements OnResearchListener {
 
 
-    final Context context = getActivity();
     private ListingsAdapter listingsAdapter;
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private ListingsQuery listingsQuery;
-    private Bundle args;
+    private String server_address;
+
 
     @Bind (R.id.filter_sort_btn) public View filter_sort_btn;
 
@@ -85,19 +76,14 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         listings_recycler.setVisibility(View.INVISIBLE);
         more_cars.setVisibility(View.INVISIBLE);
         loading_container.setVisibility(View.VISIBLE);
-        ListingsRequest listingsRequest1 = new ListingsRequest(listingsQuery, server_address);
-        spiceManager.execute(listingsRequest1, new ListingsRequestListener());
+        spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
     }
 
 
-    private String server_address;
-
-
-    SharedPreferences sharedPreferences;
 
     @OnClick(R.id.sort_btn)
     public void onSort () {
-        SortFragment sortFragment = new SortFragment();
+        SortFragment sortFragment = SortFragment.newInstance();
         Bundle args = new Bundle();
         listingsQuery.car.remaining_ids = new ArrayList<>();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
@@ -108,10 +94,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
 
     @OnClick(R.id.filter_btn)
     public void onFilter () {
+        FilterFragment filterFragment = FilterFragment.newInstance();
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         listingsQuery.car.remaining_ids = new ArrayList<>();
-        FilterFragment filterFragment = new FilterFragment();
         filterFragment.setArguments(args);
         filterFragment.setTargetFragment(this, 0);
         filterFragment.show(getChildFragmentManager(), "filter_dialog");
@@ -130,8 +116,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         loading_container.setVisibility(View.VISIBLE);
         if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
             listingsQuery.car.remaining_ids.clear();
-        ListingsRequest listingsRequest = new ListingsRequest(listingsQuery, server_address);
-        spiceManager.execute(listingsRequest, new ResearchListener());
+        spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
     }
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
@@ -143,11 +128,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
-                    ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
                     loading_container.setVisibility(View.INVISIBLE);
                     filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
-                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
+                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
                         @Override
                         public void onLoadMore(int current_page) {
                             if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
@@ -159,7 +143,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                     });
 
                     listingsQuery = result.getListingsQuery();
-                    Log.i(getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
                     if (result.listings == null ||  result.listings.size() < 1)
                         return;
                     listingsAdapter.addAll(result.getListings());
@@ -181,11 +164,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
-                    ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
                     loading_container.setVisibility(View.INVISIBLE);
                     filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
-                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
+                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
                         @Override
                         public void onLoadMore(int current_page) {
                             if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
@@ -196,7 +178,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                         }
                     });
                     listingsQuery = result.getListingsQuery();
-                    Log.i(getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
                     if (result.listings == null ||  result.listings.size() < 1)
                         return;
                     listingsAdapter.addAll(result.getListings());
@@ -206,18 +187,19 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
-            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static ListingsFragment newInstance () {
+        return new ListingsFragment();
     }
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        args = getArguments();
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
+        server_address = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_server_addr", Constants.ServerAddr).trim();
 
     }
 
@@ -261,7 +243,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         sort_btn.setIcon(R.drawable.ic_sort_white_24dp);
         filter_btn.setIcon(R.drawable.ic_filter_list_white_24dp);
 
-        Listings listings = Parcels.unwrap(args.getParcelable(Constants.EXTRA_LISTINGS_DATA));
+        Listings listings = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTINGS_DATA));
         if (listings != null) {
             Toast.makeText(getActivity(), "listings parcelable received", Toast.LENGTH_SHORT).show();
             filter_sort_btn.setVisibility(View.VISIBLE);
@@ -269,7 +251,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             listings_recycler.setVisibility(View.VISIBLE);
             listingsQuery = listings.getListingsQuery();
 
-            Log.i(getClass().getCanonicalName(), new Gson().toJson(listingsQuery));
             if (listings.listings == null ||  listings.listings.size() < 1)
                 return;
             listingsAdapter.addAll(listings.getListings());
@@ -281,15 +262,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onStart () {
         super.onStart();
         spiceManager.start(getActivity());
-        Parcelable query_data = args.getParcelable(Constants.EXTRA_LISTING_QUERY);
+        Parcelable query_data = getArguments().getParcelable(Constants.EXTRA_LISTING_QUERY);
         if (query_data != null) {
             listingsQuery = Parcels.unwrap(query_data);
-            listingsQuery.api.pagenum = 1;
-            listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-            listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-            listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
-            final ListingsRequest listingsRequest = new ListingsRequest(listingsQuery, server_address);
-            spiceManager.execute(listingsRequest, new ListingsRequestListener());
+            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
         }
     }
 

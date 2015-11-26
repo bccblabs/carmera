@@ -32,16 +32,14 @@ public class Recalls extends Fragment {
     @Bind(R.id.cards_recycler)
     CardRecyclerView cardRecyclerView;
 
-    private carmera.io.carmera.models.car_data_subdocuments.Recalls recalls;
-    private List<Card> cards;
-    private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
-    private Context cxt;
+
+    public static Recalls newInstance () {
+        return new Recalls();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        recalls = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_RECALLS));
-        cxt = getActivity();
     }
 
     @Override
@@ -50,32 +48,35 @@ public class Recalls extends Fragment {
         View v = inflater.inflate(R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
         cardRecyclerView.setHasFixedSize(true);
+
+        Context cxt = getActivity();
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Recalls recalls = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_RECALLS));
         List<Recall> recalls_list = recalls.recalls;
+
         if (recalls_list != null) {
             for (int i = 0; i < recalls_list.size(); i++) {
                 if (i % 5 == 0) {
-                    RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select0);
-                    cards.add(recallCard);
+                    cards.add(new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select0));
                 } else if (i % 5 == 1) {
-                    RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select1);
-                    cards.add(recallCard);
+                    cards.add(new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select1));
                 } else if (i % 5 == 2) {
-                    RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select2);
-                    cards.add(recallCard);
+                    cards.add(new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select2));
                 } else if (i % 5 == 3) {
-                    RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select3);
-                    cards.add(recallCard);
+                    cards.add(new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select3));
                 } else if (i % 5 == 4) {
-                    RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select4);
-                    cards.add(recallCard);
+                    cards.add(new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select4));
                 }                
             }
-            cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
-            cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
+            cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         }
         return v;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
 }

@@ -36,16 +36,13 @@ public class Performance extends Fragment {
     @Bind(R.id.cards_recycler)
     CardRecyclerView cardRecyclerView;
 
-    private Powertrain powertrain;
-    private List<Card> cards;
-    private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
-    private Context cxt;
+    public static Performance newInstance () {
+        return new Performance();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        powertrain = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_POWERTRAIN));
-        cxt = getActivity();
     }
 
     @Override
@@ -53,21 +50,23 @@ public class Performance extends Fragment {
 
         View v = inflater.inflate (R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
+        Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        cards = new ArrayList<>();
 
+        List<Card> cards = new ArrayList<>();
+        Powertrain powertrain = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_POWERTRAIN));
         if (powertrain.engine != null) {
-            EngineCard engineCard = new EngineCard(cxt, this.powertrain.engine, R.drawable.card_bgd1);
-            CompositeHeader hdr = new CompositeHeader (cxt, this.powertrain.engine.desc,
+            EngineCard engineCard = new EngineCard(cxt, powertrain.engine, R.drawable.card_bgd1);
+            CompositeHeader hdr = new CompositeHeader (cxt, powertrain.engine.desc,
                                                             null,  "Engine Parameters");
             engineCard.addCardHeader(hdr);
             cards.add(engineCard);
         }
         if (powertrain.transmission != null) {
             TransmissionCard transmissionCard = new TransmissionCard(cxt,
-                                                                    this.powertrain.transmission,
-                                                                    this.powertrain.drivenWheels,
+                                                                    powertrain.transmission,
+                                                                    powertrain.drivenWheels,
                                                                     R.drawable.card_bgd2);
             CompositeHeader hdr = new CompositeHeader (cxt, null, null,  "Drivetrain");
             transmissionCard.addCardHeader(hdr);
@@ -82,9 +81,13 @@ public class Performance extends Fragment {
             card.addCardHeader(hdr);
             cards.add(card);
         }
-        cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
-        cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
+        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
 
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

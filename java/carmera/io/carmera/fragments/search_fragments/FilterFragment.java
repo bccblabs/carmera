@@ -69,6 +69,10 @@ public class FilterFragment extends DialogFragment {
         FilterFragment.this.dismiss();
     }
 
+    public static FilterFragment newInstance() {
+        return new FilterFragment();
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -233,4 +237,8 @@ public class FilterFragment extends DialogFragment {
 
     }
 
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
+}

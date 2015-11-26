@@ -37,23 +37,22 @@ import carmera.io.carmera.utils.Constants;
 public class Complaints extends Fragment implements OnChartValueSelectedListener {
 
     @Bind(R.id.chartview) PieChart pie_chart;
-    private carmera.io.carmera.models.car_data_subdocuments.Complaints src_data;
-    private Context context;
 
+    public static Complaints newInstance () {
+        return new Complaints();
+    }
     private ArrayList<String> xVals = new ArrayList<>();
-    private ArrayList<Entry> entries = new ArrayList<>();
-
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        context = getActivity();
-        src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_CMPL));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.pie_chart, container, false);
         ButterKnife.bind(this, v);
+        ArrayList<Entry> entries = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Complaints src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_CMPL));
         for (ComplaintDetails entry : src_data.details) {
             xVals.add (entry.getComponent());
             entries.add (new Entry (entry.count, xVals.indexOf(entry.component)));
@@ -66,16 +65,13 @@ public class Complaints extends Fragment implements OnChartValueSelectedListener
         pie_data_set.setValueTextSize(12f);
         PieData pie_data = new PieData(xVals, pie_data_set);
         pie_data.setValueFormatter(new PercentFormatter());
-        Typeface canaro = CarmeraApp.canaroExtraBold;
-        pie_data.setValueTypeface(canaro);
-
-
+        pie_data.setValueTypeface(CarmeraApp.canaroExtraBold);
         pie_chart.setOnChartValueSelectedListener(this);
         pie_chart.setUsePercentValues(true);
         pie_chart.setDrawSliceText(false);
-        pie_chart.setCenterTextTypeface(canaro);
+        pie_chart.setCenterTextTypeface(CarmeraApp.canaroExtraBold);
         pie_chart.setCenterTextSize(10f);
-        pie_chart.setCenterTextTypeface(canaro);
+        pie_chart.setCenterTextTypeface(CarmeraApp.canaroExtraBold);
         pie_chart.getLegend().setEnabled(false);
         pie_chart.setHoleRadius(20f);
         pie_chart.setDescription("");
@@ -92,5 +88,10 @@ public class Complaints extends Fragment implements OnChartValueSelectedListener
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

@@ -30,16 +30,14 @@ public class Options extends Fragment {
     @Bind(R.id.cards_recycler)
     CardRecyclerView cardRecyclerView;
 
-    private List<String> comments;
-    private List<Card> cards;
-    private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
-    private Context cxt;
+    public static Options newInstance () {
+        return new Options();
+    }
 
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_OPTIONS));
-        cxt = getActivity();
+
     }
 
 
@@ -47,33 +45,33 @@ public class Options extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
+        List<Card> cards = new ArrayList<>();
+        Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        cards = new ArrayList<>();
+        List<String> comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_OPTIONS));
 
         for (int i = 0; i < comments.size(); i++) {
             String txt = comments.get(i);
             if (i % 5 == 0) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select0);
-                cards.add(carInfoCard);
+                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select0));
             } else if (i % 5 == 1) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select1);
-                cards.add(carInfoCard);
+                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select1));
             } else if (i % 5 == 2) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select2);
-                cards.add(carInfoCard);
+                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select2));
             } else if (i % 5 == 3) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select3);
-                cards.add(carInfoCard);
+                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select3));
             } else if (i % 5 == 4) {
-                CarInfoCard carInfoCard = new CarInfoCard(cxt, null, txt, null, R.drawable.card_select4);
-                cards.add(carInfoCard);
+                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select4));
             }
         }
-
-        cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
-        cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
+        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
 
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

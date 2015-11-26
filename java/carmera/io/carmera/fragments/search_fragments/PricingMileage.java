@@ -127,4 +127,8 @@ public class PricingMileage extends SearchFragment {
 
     }
 
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

@@ -38,13 +38,11 @@ import carmera.io.carmera.utils.Constants;
 public class DataViewer extends FragmentActivity {
     public String TAG = getClass().getCanonicalName();
 
-    private FragmentPagerItems.Creator page_creator;
-
     @Bind(R.id.data_viewpager) public ViewPager viewPager;
 
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
 
-    private void add_page (@StringRes int StringResId, String extras_id, Class<? extends Fragment> clzz) {
+    private void add_page (@StringRes int StringResId, String extras_id, Class<? extends Fragment> clzz, FragmentPagerItems.Creator page_creator) {
         Parcelable data = getIntent().getParcelableExtra(extras_id);
 
         if (data != null) {
@@ -83,29 +81,29 @@ public class DataViewer extends FragmentActivity {
         super.onCreate(savedBundle);
         setContentView(R.layout.data_viewer_layout);
         ButterKnife.bind(this);
-        page_creator = new FragmentPagerItems.Creator(this);
+        FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
 
-        add_page(R.string.complaints, Constants.EXTRA_CMPL, Complaints.class);
-        add_page(R.string.safety, Constants.EXTRA_SAFETY, Safety.class);
-        add_page(R.string.safety_equipments, Constants.EXTRA_SAFETY, SafetyEquipments.class);
-        add_page(R.string.recalls, Constants.EXTRA_RECALLS, Recalls.class);
+        add_page(R.string.complaints, Constants.EXTRA_CMPL, Complaints.class, page_creator);
+        add_page(R.string.safety, Constants.EXTRA_SAFETY, Safety.class, page_creator);
+        add_page(R.string.safety_equipments, Constants.EXTRA_SAFETY, SafetyEquipments.class, page_creator);
+        add_page(R.string.recalls, Constants.EXTRA_RECALLS, Recalls.class, page_creator);
 
-        add_page(R.string.performance, Constants.EXTRA_POWERTRAIN, Performance.class);
-        add_page(R.string.dimensions, Constants.EXTRA_DIMENSIONS, Dimensions.class);
+        add_page(R.string.performance, Constants.EXTRA_POWERTRAIN, Performance.class, page_creator);
+        add_page(R.string.dimensions, Constants.EXTRA_DIMENSIONS, Dimensions.class, page_creator);
 
-        add_page(R.string.prices, Constants.EXTRA_PRICES, Prices.class);
-        add_page(R.string.costs, Constants.EXTRA_COSTS, Costs.class);
+        add_page(R.string.prices, Constants.EXTRA_PRICES, Prices.class, page_creator);
+        add_page(R.string.costs, Constants.EXTRA_COSTS, Costs.class, page_creator);
 
-        add_page(R.string.ratings, Constants.EXTRA_RATINGS, Ratings.class);
-        add_page(R.string.favorites, Constants.EXTRA_FAV, Comments.class);
-        add_page(R.string.improvements, Constants.EXTRA_IMPR, Comments.class);
-        add_page(R.string.reviews, Constants.EXTRA_REVIEW, Comments.class);
+        add_page(R.string.ratings, Constants.EXTRA_RATINGS, Ratings.class, page_creator);
+        add_page(R.string.favorites, Constants.EXTRA_FAV, Comments.class, page_creator);
+        add_page(R.string.improvements, Constants.EXTRA_IMPR, Comments.class, page_creator);
+        add_page(R.string.reviews, Constants.EXTRA_REVIEW, Comments.class, page_creator);
 
-        add_page(R.string.equipments, Constants.EXTRA_EQUIPMENTS, Equipments.class);
-        add_page(R.string.features, Constants.EXTRA_FEATURES, Features.class);
-        add_page(R.string.options, Constants.EXTRA_OPTIONS, Options.class);
+        add_page(R.string.equipments, Constants.EXTRA_EQUIPMENTS, Equipments.class, page_creator);
+        add_page(R.string.features, Constants.EXTRA_FEATURES, Features.class, page_creator);
+        add_page(R.string.options, Constants.EXTRA_OPTIONS, Options.class, page_creator);
 
-        add_page (R.string.incentives, Constants.EXTRA_INCENTIVES, Incentives.class);
+        add_page (R.string.incentives, Constants.EXTRA_INCENTIVES, Incentives.class, page_creator);
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 page_creator.create());

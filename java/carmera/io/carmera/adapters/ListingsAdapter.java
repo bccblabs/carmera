@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.listings_subdocuments.Link;
-import carmera.io.carmera.widgets.SquareImageView;
 
 /**
  * Created by bski on 7/15/15.

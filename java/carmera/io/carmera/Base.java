@@ -1,10 +1,17 @@
 package carmera.io.carmera;
-
-import android.content.Context;
+import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -14,35 +21,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
+import com.commonsware.cwac.cam2.CameraActivity;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.parse.ParseUser;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
-
-import org.parceler.Parcel;
 import org.parceler.Parcels;
-
+import org.parceler.apache.commons.lang.RandomStringUtils;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.zip.Inflater;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
+import carmera.io.carmera.fragments.main_fragments.LoadingFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
-import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.models.Listings;
-import carmera.io.carmera.models.ListingsQuery;
-import carmera.io.carmera.models.queries.ApiQuery;
-import carmera.io.carmera.models.queries.CarQuery;
 import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
@@ -50,14 +52,9 @@ import carmera.io.carmera.utils.Util;
 /**
  * Created by bski on 6/3/15.
  */
-public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
-                                                       SearchContainer.OnSearchVehiclesListener {
+public class Base extends AppCompatActivity implements SearchContainer.OnSearchVehiclesListener {
 
     private final String TAG = getClass().getCanonicalName();
-
-    private static final long RIPPLE_DURATION = 250;
-
-    private static GuillotineAnimation guillotineAnimation;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
 
@@ -65,53 +62,47 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     @Bind(R.id.content_hamburger) View contentHamburger;
 
-    private View search, carmera, saved, settings;
+    @Bind (R.id.loading) View loading;
 
     private Socket socket;
 
     private String socket_addr;
 
-    private SharedPreferences sharedPreferences;
+    private File root_dir;
 
+    private ListingsFragment listingsFragment;
 
     @Override
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, query);
-        ListingsFragment listingsFragment = new ListingsFragment();
+        listingsFragment = ListingsFragment.newInstance();
         listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, listingsFragment)
-                .addToBackStack("LISTINGS")
                 .commitAllowingStateLoss();
-    }
-
-    @Override
-    public void OnCameraResult (Parcelable query) {
-        ImageQuery imageQuery = Parcels.unwrap(query);
-        Util.getUploadSocket(socket_addr).emit("clz_data", new Gson().toJson(imageQuery));
-        Util.getUploadSocket(socket_addr).on("listings", OnListings);
-        Base.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(Base.this, "emiting data...", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        View search, carmera, saved, settings;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
+        }
+
+        root_dir = new File(Environment.getExternalStorageDirectory(), "MaterialCamera");
+        root_dir.mkdirs();
+
         socket_addr = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
         socket = Util.getUploadSocket(socket_addr).connect();
-        socket.on("register", OnRegister);
         Toast.makeText(this, "socket connected", Toast.LENGTH_LONG).show();
         setContentView(R.layout.base);
-        SearchContainer searchFragment = SearchContainer.newInstance();
         ButterKnife.bind(this);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, searchFragment)
+                .replace(R.id.content_frame, SearchContainer.newInstance())
                 .commit();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -124,9 +115,9 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         carmera = guillotineMenu.findViewById(R.id.carmera);
         saved = guillotineMenu.findViewById(R.id.saved_listings);
         settings = guillotineMenu.findViewById(R.id.settings);
-        guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu,
+        final GuillotineAnimation guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu,
                 guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
+                .setStartDelay(Constants.GUILLOTINE_ANIMATION_DURATION)
                 .setActionBarViewForAnimation(toolbar)
                 .build();
         guillotineAnimation.close();
@@ -136,7 +127,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
             public boolean onTouch(View v, MotionEvent event) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, SearchContainer.newInstance())
-                        .commit();
+                        .commitAllowingStateLoss();
                 guillotineAnimation.close();
                 return false;
             }
@@ -145,10 +136,19 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         carmera.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, CaptureFragment.newInstance())
-                        .commit();
+            try {
+
                 guillotineAnimation.close();
+                String file_name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(5), ".jpg");
+                Intent i= new CameraActivity.IntentBuilder(Base.this)
+                        .skipConfirm()
+                        .facing(CameraActivity.Facing.BACK)
+                        .to (new File (root_dir, file_name))
+                        .build();
+                startActivityForResult(i, Constants.IMAGE_RESULT);
+            } catch (Exception e) {
+                Log.i (TAG, e.getMessage());
+            }
                 return false;
             }
         });
@@ -156,10 +156,10 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         settings.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                guillotineAnimation.close();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new SettingsFragment())
-                        .commit();
-                guillotineAnimation.close();
+                        .commitAllowingStateLoss();
                 return false;
             }
         });
@@ -175,62 +175,103 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.carmera_capture:
-                CaptureFragment captureFragmentFragment = CaptureFragment.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, captureFragmentFragment)
-                        .addToBackStack("CAPTURE")
-                        .commit();
+                try {
+                    String file_name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(5), "jpg");
+                    Intent i=new CameraActivity.IntentBuilder(Base.this)
+                            .skipConfirm()
+                            .facing(CameraActivity.Facing.BACK)
+                            .to(new File(root_dir, file_name))
+                            .updateMediaStore()
+                            .build();
+                    startActivityForResult(i, Constants.IMAGE_RESULT);
+                } catch (Exception e) {
+                    Log.i (TAG, e.getMessage());
+                }
+
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    private Emitter.Listener OnRegister = new Emitter.Listener() {
-        @Override
-        public void call (final Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String data = (String) args[0];
-                    Log.i(TAG, "connection socket id: " + data);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener OnListings = new Emitter.Listener() {
-        @Override
-        public void call (final Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Gson gson = new Gson();
-                    Log.i (TAG, gson.toJson (args[0]));
-                    Listings listings = new Gson().fromJson((String)args[0], Listings.class);
-                    Parcelable listings_pclb = Parcels.wrap(Listings.class, listings);
-                    Bundle args = new Bundle();
-                    args.putParcelable(Constants.EXTRA_LISTINGS_DATA, listings_pclb);
-                    ListingsFragment listingsFragment = new ListingsFragment();
-                    listingsFragment.setArguments(args);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, listingsFragment)
-                            .addToBackStack("LISTINGS")
-                            .commitAllowingStateLoss();
-                        }
-            });
-        }
-    };
-
-
-    @Override
-    public void onBackPressed() {
-    }
-
     @Override
     public void onDestroy () {
         super.onDestroy();
         Log.i(TAG, "[socket] disconnects");
+        ButterKnife.unbind(this);
         Util.disconnectSocket();
     }
 
+    @Override
+    public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
+        switch (requestCode) {
+            case Constants.IMAGE_RESULT:
+//                getFragmentManager().beginTransaction().replace(R.id.content_frame, LoadingFragment.newInstance()).commitAllowingStateLoss();
+                try {
+                    System.gc();
+                    if (resultCode == RESULT_OK) {
+                        new Runnable() {
+                            @Override
+                            public void run () {
+                                try {
+                                    InputStream is = getContentResolver().openInputStream(data.getData());
+                                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                                    is.close();
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddhh:mm:ss.mmm", Locale.US);
+                                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                                    Util.getUploadSocket(socket_addr).emit("clz_data", new Gson().toJson(
+                                            new ImageQuery(ParseUser.getCurrentUser().getUsername(),
+                                                    Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT),
+                                                    sdf.format(new Date()))
+                                    ));
+                                    baos = null;
+                                    Util.getUploadSocket(socket_addr).on("listings", new Emitter.Listener() {
+                                        @Override
+                                        public void call (final Object... args) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        listingsFragment = ListingsFragment.newInstance();
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, new Gson().fromJson((String) args[0], Listings.class)));
+                                                        listingsFragment.setArguments(bundle);
+                                                        getSupportFragmentManager().beginTransaction()
+                                                                .replace(R.id.content_frame, listingsFragment)
+                                                                .commitAllowingStateLoss();
+
+                                                    } catch (Exception e) {
+                                                        Log.e(TAG, e.getMessage());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    Log.e (TAG, e.getMessage());
+                                }
+                            }
+                        }.run();
+                    } else {
+                        Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e (TAG, e.getMessage());
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            // Sample was denied WRITE_EXTERNAL_STORAGE permission
+        }
+    }
 }
+

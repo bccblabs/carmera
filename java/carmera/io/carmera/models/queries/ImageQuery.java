@@ -20,6 +20,15 @@ public class ImageQuery {
     @JsonProperty
     public String date;
 
+    public ImageQuery() {
+    }
+
+    public ImageQuery(String userId, String imageData, String date) {
+        this.userId = userId;
+        this.imageData = imageData;
+        this.date = date;
+    }
+
     public String getDate() {
         return date;
     }

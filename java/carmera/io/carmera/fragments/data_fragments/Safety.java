@@ -33,26 +33,20 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 public class Safety extends Fragment {
     @Bind(R.id.cards_recycler) CardRecyclerView cardRecyclerView;
 
-    private carmera.io.carmera.models.car_data_subdocuments.Safety safety;
-    private List<Card> cards;
-    private CardArrayRecyclerViewAdapter cardArrayRecyclerViewAdapter;
-    private Context cxt;
-
-
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        safety = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_SAFETY));
-        cxt = getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
+        Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
+        carmera.io.carmera.models.car_data_subdocuments.Safety safety = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_SAFETY));
 
         if (safety.iihs != null && safety.iihs.size() > 0) {
             IIHSCard iihs = new IIHSCard(cxt, null, null, "IIHS Ratings", safety.iihs);
@@ -64,8 +58,7 @@ public class Safety extends Fragment {
         if (safety.nhtsa != null && safety.nhtsa.overall != null) {
             String overall = String.format("Overall: %s / 5", safety.nhtsa.overall);
             if (overall != null) {
-                CarInfoCard nhtsa_rating = new CarInfoCard(cxt, null, overall, null, R.drawable.card_bgd1);
-                cards.add(nhtsa_rating);
+                cards.add(new CarInfoCard(cxt, null, overall, null, R.drawable.card_bgd1));
             }
         }
         if (safety.nhtsa != null && safety.nhtsa.categories.size() > 0) {
@@ -81,8 +74,12 @@ public class Safety extends Fragment {
                 cards.add(nhtsa);
             }
         }
-        cardArrayRecyclerViewAdapter = new CardArrayRecyclerViewAdapter(cxt, cards);
-        cardRecyclerView.setAdapter(cardArrayRecyclerViewAdapter);
+        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
