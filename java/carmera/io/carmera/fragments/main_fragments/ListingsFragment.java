@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -41,6 +42,7 @@ import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.requests.FranchiseListings;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.EndlessRecyclerOnScrollListener;
@@ -85,7 +87,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onSort () {
         SortFragment sortFragment = SortFragment.newInstance();
         Bundle args = new Bundle();
-        listingsQuery.car.remaining_ids = new ArrayList<>();
+        if (listingsQuery.car != null) {
+            listingsQuery.car.remaining_ids = new ArrayList<>();
+            listingsQuery.car.tags = new ArrayList<>();
+        }
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         sortFragment.setArguments(args);
         sortFragment.setTargetFragment(this, 1);
@@ -94,10 +99,14 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
 
     @OnClick(R.id.filter_btn)
     public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
+        FilterFragment filterFragment = new FilterFragment();
+        Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         Bundle args = new Bundle();
+        if (listingsQuery.car != null) {
+            listingsQuery.car.tags = new ArrayList<>();
+            listingsQuery.car.remaining_ids = new ArrayList<>();
+        }
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        listingsQuery.car.remaining_ids = new ArrayList<>();
         filterFragment.setArguments(args);
         filterFragment.setTargetFragment(this, 0);
         filterFragment.show(getChildFragmentManager(), "filter_dialog");
@@ -115,7 +124,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         more_cars.setVisibility(View.INVISIBLE);
         loading_container.setVisibility(View.VISIBLE);
         if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
-            listingsQuery.car.remaining_ids.clear();
+            listingsQuery.car.remaining_ids = new ArrayList<>();
         spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
     }
 
@@ -138,7 +147,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                                 more_cars.setVisibility(View.VISIBLE);
                             else
                                 more_cars.setVisibility(View.INVISIBLE);
-
                         }
                     });
 
@@ -190,9 +198,9 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         }
     }
 
-    public static ListingsFragment newInstance () {
-        return new ListingsFragment();
-    }
+//    public static ListingsFragment newInstance () {
+//        return new ListingsFragment();
+//    }
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
@@ -250,6 +258,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             loading_container.setVisibility(View.INVISIBLE);
             listings_recycler.setVisibility(View.VISIBLE);
             listingsQuery = listings.getListingsQuery();
+            listingsQuery.car.remaining_ids = new ArrayList<>();
 
             if (listings.listings == null ||  listings.listings.size() < 1)
                 return;
@@ -266,6 +275,11 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         if (query_data != null) {
             listingsQuery = Parcels.unwrap(query_data);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
+        } else {
+            String franchiseId = getArguments().getString(Constants.EXTRA_FRANCHISEID);
+            if (franchiseId != null) {
+                spiceManager.execute(new FranchiseListings(franchiseId, 1, server_address), new ListingsRequestListener());
+            }
         }
     }
 

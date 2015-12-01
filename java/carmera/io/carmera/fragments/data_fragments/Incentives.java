@@ -14,8 +14,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
 import carmera.io.carmera.cards.CompositeHeader;
@@ -29,8 +27,6 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * Created by bski on 11/24/15.
  */
 public class Incentives extends Fragment {
-    @Bind(R.id.cards_recycler)
-    CardRecyclerView cardRecyclerView;
 
     public static Incentives newInstance () {
         return new Incentives();
@@ -45,8 +41,8 @@ public class Incentives extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.cards_recycler, container, false);
-        ButterKnife.bind(this, v);
         Context cxt = getActivity();
+        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
         carmera.io.carmera.models.car_data_subdocuments.Incentives incentives_doc = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_INCENTIVES));
@@ -97,10 +93,5 @@ public class Incentives extends Fragment {
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
 
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

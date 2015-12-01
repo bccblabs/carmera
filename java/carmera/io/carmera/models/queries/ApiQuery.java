@@ -38,6 +38,9 @@ public class ApiQuery {
     public Integer max_mileage;
     @JsonProperty
     public String sortby;
+    @JsonProperty
+    public String franchiseId;
+
 
 
     @JsonProperty

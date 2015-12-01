@@ -76,7 +76,7 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
     public void OnSearchListings (Parcelable query) {
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, query);
-        listingsFragment = ListingsFragment.newInstance();
+        listingsFragment = new ListingsFragment();
         listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, listingsFragment)
@@ -233,7 +233,7 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
                                                 @Override
                                                 public void run() {
                                                     try {
-                                                        listingsFragment = ListingsFragment.newInstance();
+                                                        listingsFragment = new ListingsFragment();
                                                         Bundle bundle = new Bundle();
                                                         bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, new Gson().fromJson((String) args[0], Listings.class)));
                                                         listingsFragment.setArguments(bundle);

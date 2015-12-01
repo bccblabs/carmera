@@ -14,15 +14,11 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.CarInfoCard;
 import carmera.io.carmera.cards.CompositeHeader;
 import carmera.io.carmera.cards.EngineCard;
 import carmera.io.carmera.cards.PowertrainMetrics;
 import carmera.io.carmera.cards.TransmissionCard;
-import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
 import carmera.io.carmera.models.car_data_subdocuments.Powertrain;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -33,8 +29,6 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * Created by bski on 11/11/15.
  */
 public class Performance extends Fragment {
-    @Bind(R.id.cards_recycler)
-    CardRecyclerView cardRecyclerView;
 
     public static Performance newInstance () {
         return new Performance();
@@ -49,7 +43,7 @@ public class Performance extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate (R.layout.cards_recycler, container, false);
-        ButterKnife.bind(this, v);
+        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
@@ -75,7 +69,10 @@ public class Performance extends Fragment {
 
         if ((powertrain.mpg != null && powertrain.mpg.desc != null) || powertrain.zero_sixty != null ||
                 powertrain.turning_diameter != null || powertrain.fuel_capacity != null) {
-            PowertrainMetrics card = new PowertrainMetrics(cxt, powertrain.mpg.desc,
+            String mpg_desc = "";
+            if (powertrain.mpg != null)
+                mpg_desc = powertrain.mpg.desc;
+            PowertrainMetrics card = new PowertrainMetrics(cxt, mpg_desc,
                     powertrain.zero_sixty, powertrain.fuel_capacity, powertrain.turning_diameter, R.drawable.card_bgd3);
             CompositeHeader hdr = new CompositeHeader (cxt, null, null,  "More Specs");
             card.addCardHeader(hdr);
@@ -84,10 +81,5 @@ public class Performance extends Fragment {
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;
 
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

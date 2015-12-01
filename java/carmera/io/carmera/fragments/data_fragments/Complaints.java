@@ -1,8 +1,5 @@
 package carmera.io.carmera.fragments.data_fragments;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -24,8 +20,6 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import carmera.io.carmera.CarmeraApp;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.car_data_subdocuments.ComplaintDetails;
@@ -35,8 +29,6 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 11/11/15.
  */
 public class Complaints extends Fragment implements OnChartValueSelectedListener {
-
-    @Bind(R.id.chartview) PieChart pie_chart;
 
     public static Complaints newInstance () {
         return new Complaints();
@@ -50,7 +42,7 @@ public class Complaints extends Fragment implements OnChartValueSelectedListener
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.pie_chart, container, false);
-        ButterKnife.bind(this, v);
+        PieChart pie_chart = (PieChart) v.findViewById(R.id.chartview);
         ArrayList<Entry> entries = new ArrayList<>();
         carmera.io.carmera.models.car_data_subdocuments.Complaints src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_CMPL));
         for (ComplaintDetails entry : src_data.details) {
@@ -66,6 +58,7 @@ public class Complaints extends Fragment implements OnChartValueSelectedListener
         PieData pie_data = new PieData(xVals, pie_data_set);
         pie_data.setValueFormatter(new PercentFormatter());
         pie_data.setValueTypeface(CarmeraApp.canaroExtraBold);
+
         pie_chart.setOnChartValueSelectedListener(this);
         pie_chart.setUsePercentValues(true);
         pie_chart.setDrawSliceText(false);
@@ -88,10 +81,5 @@ public class Complaints extends Fragment implements OnChartValueSelectedListener
     @Override
     public void onNothingSelected() {
 
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

@@ -6,16 +6,23 @@ package carmera.io.carmera.utils;
 public class Constants {
     public final static String ServerAddr = "http://52.32.208.93:8080";
     public final static String ListingsEndPoint = "/listings";
+    public final static String DealerEndPoint = "http://api.edmunds.com/api/dealer/v2/dealers/";
+    public final static String DealerReviewsEndPoint = "http://api.edmunds.com/v1/api/drrrepository/getdrrbydealerid";
     public final static String VehicleInfoEndPoint = "/vehicle_info";
+    public final static String FranchiseEndPoint = "/dealerListings";
+
     public final static String EdmundsMedia = "http://media.ed.edmunds-media.com";
 
     public final static String ZIPCODE_DEFAULT = "92612";
     public final static String RADIUS_DEFAULT = "50";
     public final static String PAGESIZE_DEFAULT = "20";
+    public final static String PAGENUM_DEFAULT = "1";
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";
     public static final String EXTRA_LISTINGS_DATA = "extra_listings_data";
+
+    public static final String EDMUNDS_API_KEY = "d442cka8a6mvgfnjcdt5fbns";
 
     public static final String EXTRA_PRICES = "extra_prices";
     public static final String EXTRA_COSTS = "extra_costs";
@@ -28,6 +35,9 @@ public class Constants {
     public static final String EXTRA_IMPR = "extra_impr";
     public static final String EXTRA_FAV = "extra_fav";
     public static final String EXTRA_RATINGS = "extra_ratings";
+    public static final String EXTRA_DEALERID = "extra_dealerId";
+    public static final String EXTRA_FRANCHISEID = "extra_franchiseId";
+    public static final String EXTRA_LISTINGS_CHAT_INFO = "extra_listings_chat_info";
 
 
     public static final String EXTRA_SAFETY = "extra_safety";
@@ -69,4 +79,5 @@ public class Constants {
 
     public static final int IMAGE_RESULT = 9076;
 
+    public static final String STATIC_MOCK_USER = "Bo";
 }

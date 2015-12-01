@@ -1,6 +1,5 @@
 package carmera.io.carmera.fragments.data_fragments;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -19,8 +17,6 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import carmera.io.carmera.CarmeraApp;
 import carmera.io.carmera.R;
 import carmera.io.carmera.utils.Constants;
@@ -29,7 +25,6 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 11/11/15.
  */
 public class Ratings extends Fragment {
-    @Bind(R.id.chartview) BarChart bar_chart;
 
     public static Ratings newInstance() {
         return new Ratings();
@@ -42,7 +37,7 @@ public class Ratings extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bar_chart, container, false);
-        ButterKnife.bind(this, v);
+        BarChart bar_chart = (BarChart) v.findViewById(R.id.chartview);
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
         carmera.io.carmera.models.car_data_subdocuments.Ratings src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_RATINGS));
@@ -109,8 +104,4 @@ public class Ratings extends Fragment {
         return v;
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

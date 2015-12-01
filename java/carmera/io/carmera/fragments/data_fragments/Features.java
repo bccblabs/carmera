@@ -14,8 +14,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
 import carmera.io.carmera.utils.Constants;
@@ -27,8 +25,6 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * Created by bski on 11/23/15.
  */
 public class Features extends Fragment {
-    @Bind(R.id.cards_recycler)
-    CardRecyclerView cardRecyclerView;
 
     public static Features newInstance() {
         return new Features();
@@ -43,8 +39,8 @@ public class Features extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cards_recycler, container, false);
-        ButterKnife.bind(this, v);
         Context cxt = getActivity();
+        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         cardRecyclerView.setHasFixedSize(true);
         cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
         List<Card> cards = new ArrayList<>();
@@ -69,8 +65,4 @@ public class Features extends Fragment {
 
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

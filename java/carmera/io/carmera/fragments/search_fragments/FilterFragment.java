@@ -6,12 +6,15 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.google.gson.Gson;
 
 import org.parceler.Parcels;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnResearchListener;
+import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.KeyPairBoolData;
@@ -69,9 +73,9 @@ public class FilterFragment extends DialogFragment {
         FilterFragment.this.dismiss();
     }
 
-    public static FilterFragment newInstance() {
-        return new FilterFragment();
-    }
+//    public static FilterFragment newInstance() {
+//        return new FilterFragment();
+//    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -88,6 +92,7 @@ public class FilterFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.filter_fragment, null);
         this.listingsQuery = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTING_QUERY));
+        Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         builder.setView(view);
         ButterKnife.bind(this, view);
         init_spinners();
@@ -220,20 +225,22 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
-        tags_spnr.setItems(Util.getSelectedValues(listingsQuery.car.tags), "Filter Tags", -1, new MultiSpinner.MultiSpinnerListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for (int i = 0; i < items.size(); i++) {
-                    if (!items.get(i).isSelected()) {
-                        for (Iterator<String> iter = listingsQuery.car.tags.listIterator(); iter.hasNext();) {
-                            String test = iter.next();
-                            if (test.equals(items.get(i).getName()))
-                                iter.remove();
-                        }
-                    }
-                }
-            }
-        });
+        tags_spnr.setVisibility(View.GONE);
+//        final List<String> tags = Arrays.asList(getActivity().getResources().getStringArray(R.array.tags_array));
+//        tags_spnr.setItems(Util.getSpinnerValues(tags), "Filter Tags", -1, new MultiSpinner.MultiSpinnerListener() {
+//            @Override
+//            public void onItemsSelected(List<KeyPairBoolData> items) {
+//                for (int i = 0; i < items.size(); i++) {
+//                    if (!items.get(i).isSelected()) {
+//                        for (Iterator<String> iter = listingsQuery.car.tags.listIterator(); iter.hasNext();) {
+//                            String test = iter.next();
+//                            if (test.equals(items.get(i).getName()))
+//                                iter.remove();
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 

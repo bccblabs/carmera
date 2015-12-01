@@ -14,11 +14,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.RecallCard;
-import carmera.io.carmera.models.car_data_subdocuments.Powertrain;
 import carmera.io.carmera.models.car_data_subdocuments.Recall;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -29,9 +27,6 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * Created by bski on 11/11/15.
  */
 public class Recalls extends Fragment {
-    @Bind(R.id.cards_recycler)
-    CardRecyclerView cardRecyclerView;
-
 
     public static Recalls newInstance () {
         return new Recalls();
@@ -47,6 +42,7 @@ public class Recalls extends Fragment {
 
         View v = inflater.inflate(R.layout.cards_recycler, container, false);
         ButterKnife.bind(this, v);
+        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         cardRecyclerView.setHasFixedSize(true);
 
         Context cxt = getActivity();
@@ -72,11 +68,6 @@ public class Recalls extends Fragment {
             cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         }
         return v;
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 }
