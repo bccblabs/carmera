@@ -386,6 +386,8 @@ public class Util {
     public static Socket getUploadSocket (String server_addr) {
         if (uploadSocket == null) {
             try {
+                IO.Options opts = new IO.Options();
+                opts.timeout = 60000;
                 uploadSocket = IO.socket(server_addr);
             } catch (URISyntaxException e) {
                 Log.i(TAG, e.getMessage());

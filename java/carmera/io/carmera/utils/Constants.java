@@ -74,7 +74,7 @@ public class Constants {
     public static final String YEAR_DESC = "year:desc";
 
     public static final Integer GUILLOTINE_ANIMATION_DURATION = 250;
-    public static final Integer BITMAP_QUALITY = 60;
+    public static final Integer BITMAP_QUALITY = 10;
 
 
     public static final int IMAGE_RESULT = 9076;

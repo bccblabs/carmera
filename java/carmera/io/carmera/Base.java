@@ -98,6 +98,70 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
 
         socket_addr = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
         socket = Util.getUploadSocket(socket_addr).connect();
+        socket.on("connect_timeout", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Base.this, "Socket connection timeout", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        socket.on("reconnect_attempt", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Base.this, "Socket now reconnecting", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        socket.on("reconnecting", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Base.this, "Socket reconnecting", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+            }
+        });
+
+        socket.on("reconnect_error", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Base.this, "Socket reconnect error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+        socket.on("reconnect_failed", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Base.this, "Socket reconnect failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
         Toast.makeText(this, "socket connected", Toast.LENGTH_LONG).show();
         setContentView(R.layout.base);
         ButterKnife.bind(this);
@@ -209,9 +273,9 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
                 try {
                     System.gc();
                     if (resultCode == RESULT_OK) {
-                        new Runnable() {
-                            @Override
-                            public void run () {
+//                        new Runnable() {
+//                            @Override
+//                            public void run () {
                                 try {
                                     InputStream is = getContentResolver().openInputStream(data.getData());
                                     Bitmap bitmap = BitmapFactory.decodeStream(is);
@@ -251,8 +315,8 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
                                 } catch (Exception e) {
                                     Log.e (TAG, e.getMessage());
                                 }
-                            }
-                        }.run();
+//                            }
+//                        }.run();
                     } else {
                         Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
 
