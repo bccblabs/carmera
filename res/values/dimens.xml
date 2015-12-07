@@ -26,5 +26,6 @@
     <dimen name="carddemo_extras_basestaggered_height3">180dp</dimen>
 
     <dimen name="spacing">8dp</dimen>
+    <dimen name="parallax_image_height">180dp</dimen>
 
 </resources>

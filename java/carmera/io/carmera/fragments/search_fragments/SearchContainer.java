@@ -1,6 +1,7 @@
 package carmera.io.carmera.fragments.search_fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -20,7 +21,12 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import carmera.io.carmera.BasicSearchActivity;
+import carmera.io.carmera.ConditionSearchActivity;
+import carmera.io.carmera.EquipmentSearchActivity;
+import carmera.io.carmera.MechanicalSearchActivity;
 import carmera.io.carmera.R;
+import carmera.io.carmera.ReliabilitySearchActivity;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
@@ -31,19 +37,14 @@ import carmera.io.carmera.utils.Constants;
  */
 public class SearchContainer extends Fragment {
 
-    public String TAG = getClass().getCanonicalName();
-
-    @Bind(R.id.search_viewpager) public ViewPager viewPager;
-
-    @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
-
-
+    @Bind (R.id.basic_container) View basic_container;
+    @Bind (R.id.condition_container) View condition_container;
+    @Bind (R.id.equipment_container) View equipment_container;
+    @Bind (R.id.reliability_container) View reliability_container;
+    @Bind (R.id.mechanical_container) View mechanical_container;
     @OnClick(R.id.search_listings_base)
     public void search_listings() {
-        ListingsQuery listingsQuery = new ListingsQuery();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        listingsQuery.car = SearchFragment.getGenQuery();
-        listingsQuery.api = SearchFragment.getApiQuery();
         listingsQuery.api.pagenum = 1;
         listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
         listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
@@ -52,6 +53,8 @@ public class SearchContainer extends Fragment {
     }
 
     private OnSearchVehiclesListener search_callback = null;
+    public String TAG = getClass().getCanonicalName();
+    private ListingsQuery listingsQuery = new ListingsQuery();
 
     public interface OnSearchVehiclesListener {
         void OnSearchListings (Parcelable car_query);
@@ -66,21 +69,51 @@ public class SearchContainer extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate (R.layout.search_container, container, false);
         ButterKnife.bind(this, v);
+        basic_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), BasicSearchActivity.class);
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
 
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getChildFragmentManager(),
-                FragmentPagerItems.with(getActivity())
-                .add(R.string.basic_search, BasicSearchFragment.class)
-                .add (R.string.price_mileage_search, PricingMileage.class)
-                .add (R.string.equipments_search, ColorEquipSearchFragment.class)
-                .add(R.string.mechanical_search, MechanicalSearchFragment.class)
-                .create());
+        condition_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ConditionSearchActivity.class);
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
 
-        viewPager.setAdapter(adapter);
-        viewPagerTab.setViewPager(viewPager);
+        equipment_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), EquipmentSearchActivity.class);
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
 
-        /* reset the static query variable */
-        SearchFragment.genQuery = new CarQuery();
+        reliability_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ReliabilitySearchActivity.class);
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
+
+        mechanical_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MechanicalSearchActivity.class);
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
+
         return v;
     }
 
@@ -108,9 +141,15 @@ public class SearchContainer extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            this.listingsQuery = Parcels.unwrap((Parcelable) data.getExtras().get(Constants.EXTRA_LISTING_QUERY));
+        }
+    }
+
+    @Override
     public void onCreate (Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
     }
-
-
 }

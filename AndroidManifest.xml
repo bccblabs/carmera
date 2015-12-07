@@ -60,6 +60,26 @@
             android:label="@string/app_name">
         </activity>
 
+        <activity android:name=".BasicSearchActivity"
+            android:label="@string/basic_search">
+        </activity>
+
+        <activity android:name=".ConditionSearchActivity"
+            android:label="@string/conditions_search">
+        </activity>
+
+        <activity android:name=".EquipmentSearchActivity"
+            android:label="@string/equipments_search">
+        </activity>
+
+        <activity android:name=".ReliabilitySearchActivity"
+            android:label="@string/reliability_search">
+        </activity>
+
+        <activity android:name=".MechanicalSearchActivity"
+            android:label="@string/mechanical_search">
+        </activity>
+
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false"/>

@@ -53,11 +53,6 @@
     <string name="pref_key_radius">Radius</string>
     <string name="pref_radius_default">50</string>
 
-    <string name="basic_search">Basics</string>
-    <string name="price_mileage_search">Price &amp; Milage</string>
-    <string name="mechanical_search">Performance</string>
-    <string name="equipments_search">Colors</string>
-
     <string name="complaints">Complaints</string>
     <string name="safety">Safety</string>
     <string name="safety_equipments">Safety Equipments</string>
@@ -160,5 +155,24 @@
     <string name="message_user_joined">%s joined</string>
     <string name="message_user_left">%s left</string>
     <string name="user_action_typing">is typing</string>
+
+
+
+    <string name="basic_search">Basics</string>
+    <string name="basic_search_desc">Year, Make, Model &amp; BodyType</string>
+
+    <string name="conditions_search">Conditions</string>
+    <string name="conditions_search_desc">Used, New, and Mileage</string>
+
+    <string name="mechanical_search">Specs &amp; Performance</string>
+    <string name="mechanical_search_desc">For Petrol-Heads</string>
+
+
+    <string name="equipments_search">Colors &amp; Equipments</string>
+    <string name="equipments_search_desc">Colors, Amneties, &amp; Options</string>
+
+    <string name="reliability_search">Safety &amp; Reliabilities</string>
+    <string name="reliability_search_desc">Safety Ratings, Recalls, and Reliability Complaints</string>
+
 
 </resources>

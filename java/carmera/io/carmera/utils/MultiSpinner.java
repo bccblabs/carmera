@@ -91,6 +91,8 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
 
         View view = inflater.inflate(R.layout.alert_dialog_listview_search, null),
                 title_view = inflater.inflate(R.layout.spinner_title, null);
+        View search_view = view.findViewById(R.id.alertSearchEditText);
+        search_view.setVisibility(View.GONE);
         builder.setView(view);
         builder.setCustomTitle(title_view);
 

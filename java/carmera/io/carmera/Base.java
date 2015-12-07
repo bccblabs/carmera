@@ -1,7 +1,6 @@
 package carmera.io.carmera;
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,9 +23,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.commonsware.cwac.cam2.CameraActivity;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
-import com.google.gson.Gson;
+import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 import com.parse.ParseUser;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import org.parceler.Parcels;
@@ -34,20 +34,15 @@ import org.parceler.apache.commons.lang.RandomStringUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
-import carmera.io.carmera.fragments.main_fragments.LoadingFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.queries.ImageQuery;
+import carmera.io.carmera.requests.ClassifyRequest;
 import carmera.io.carmera.utils.Constants;
-import carmera.io.carmera.utils.Util;
 
 /**
  * Created by bski on 6/3/15.
@@ -64,13 +59,36 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
 
     @Bind (R.id.loading) View loading;
 
-    private Socket socket;
-
-    private String socket_addr;
-
     private File root_dir;
 
     private ListingsFragment listingsFragment;
+
+    private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+
+    private String server_address;
+
+
+    private final class ListingsRequestListener implements RequestListener<Listings> {
+        @Override
+        public void onRequestFailure (SpiceException spiceException) {
+            Toast.makeText(Base.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onRequestSuccess (Listings result) {
+            try {
+                listingsFragment = new ListingsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));
+                listingsFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, listingsFragment)
+                        .commitAllowingStateLoss();
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+    }
 
     @Override
     public void OnSearchListings (Parcelable query) {
@@ -87,7 +105,6 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View search, carmera, saved, settings;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
@@ -96,78 +113,14 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         root_dir = new File(Environment.getExternalStorageDirectory(), "MaterialCamera");
         root_dir.mkdirs();
 
-        socket_addr = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
-        socket = Util.getUploadSocket(socket_addr).connect();
-        socket.on("connect_timeout", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Base.this, "Socket connection timeout", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        socket.on("reconnect_attempt", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Base.this, "Socket now reconnecting", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        socket.on("reconnecting", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Base.this, "Socket reconnecting", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-            }
-        });
-
-        socket.on("reconnect_error", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Base.this, "Socket reconnect error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-
-        socket.on("reconnect_failed", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Base.this, "Socket reconnect failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-
-        Toast.makeText(this, "socket connected", Toast.LENGTH_LONG).show();
         setContentView(R.layout.base);
         ButterKnife.bind(this);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, SearchContainer.newInstance())
                 .commit();
+
+        server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
+
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
@@ -256,72 +209,50 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStart () {
+        super.onStart();
+        spiceManager.start(Base.this);
+    }
+
+    @Override
+    public void onStop () {
+        if (spiceManager.isStarted()) {
+            spiceManager.shouldStop();
+        }
+        super.onStop();
+    }
+
 
     @Override
     public void onDestroy () {
         super.onDestroy();
-        Log.i(TAG, "[socket] disconnects");
         ButterKnife.unbind(this);
-        Util.disconnectSocket();
     }
 
     @Override
     public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case Constants.IMAGE_RESULT:
-//                getFragmentManager().beginTransaction().replace(R.id.content_frame, LoadingFragment.newInstance()).commitAllowingStateLoss();
                 try {
                     System.gc();
                     if (resultCode == RESULT_OK) {
-//                        new Runnable() {
-//                            @Override
-//                            public void run () {
-                                try {
-                                    InputStream is = getContentResolver().openInputStream(data.getData());
-                                    Bitmap bitmap = BitmapFactory.decodeStream(is);
-                                    is.close();
-                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddhh:mm:ss.mmm", Locale.US);
-                                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-                                    Util.getUploadSocket(socket_addr).emit("clz_data", new Gson().toJson(
-                                            new ImageQuery(ParseUser.getCurrentUser().getUsername(),
-                                                    Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT),
-                                                    sdf.format(new Date()))
-                                    ));
-                                    baos = null;
-                                    Util.getUploadSocket(socket_addr).on("listings", new Emitter.Listener() {
-                                        @Override
-                                        public void call (final Object... args) {
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    try {
-                                                        listingsFragment = new ListingsFragment();
-                                                        Bundle bundle = new Bundle();
-                                                        bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, new Gson().fromJson((String) args[0], Listings.class)));
-                                                        listingsFragment.setArguments(bundle);
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.content_frame, listingsFragment)
-                                                                .commitAllowingStateLoss();
-
-                                                    } catch (Exception e) {
-                                                        Log.e(TAG, e.getMessage());
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    });
-                                } catch (Exception e) {
-                                    Log.e (TAG, e.getMessage());
-                                }
-//                            }
-//                        }.run();
+                        try {
+                            InputStream is = getContentResolver().openInputStream(data.getData());
+                            Bitmap bitmap = BitmapFactory.decodeStream(is);
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
+                            ImageQuery imageQuery = new ImageQuery(ParseUser.getCurrentUser().getUsername(),
+                                            Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT));
+                            spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
+                            is.close();
+                        } catch (Exception e) {
+                            Log.e (TAG, e.getMessage());
+                        }
                     } else {
                         Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
-
                     }
-
                 } catch (Exception e) {
                     Log.e (TAG, e.getMessage());
                 }
@@ -334,7 +265,6 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            // Sample was denied WRITE_EXTERNAL_STORAGE permission
         }
     }
 }

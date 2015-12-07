@@ -1,9 +1,7 @@
 package carmera.io.carmera.fragments.main_fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -42,6 +40,7 @@ import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.requests.FranchiseListings;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.Constants;
@@ -125,7 +124,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         loading_container.setVisibility(View.VISIBLE);
         if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
             listingsQuery.car.remaining_ids = new ArrayList<>();
-        spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
+        if (listingsQuery.api.franchiseId == null)
+            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
+        else
+            spiceManager.execute(new FranchiseListings(listingsQuery, server_address), new ListingsRequestListener());
     }
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
@@ -278,7 +280,12 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         } else {
             String franchiseId = getArguments().getString(Constants.EXTRA_FRANCHISEID);
             if (franchiseId != null) {
-                spiceManager.execute(new FranchiseListings(franchiseId, 1, server_address), new ListingsRequestListener());
+                listingsQuery = new ListingsQuery();
+                listingsQuery.api = new ApiQuery();
+                listingsQuery.api.franchiseId = franchiseId;
+                listingsQuery.api.pagenum = Integer.parseInt(Constants.PAGENUM_DEFAULT);
+                listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+                spiceManager.execute(new FranchiseListings(listingsQuery, server_address), new ListingsRequestListener());
             }
         }
     }

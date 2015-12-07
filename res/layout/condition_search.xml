@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/parallax_image_height"
                 android:scaleType="centerCrop"
-                android:src="@drawable/basic_search_image" />
+                android:src="@drawable/condition_search_image" />
 
             <View
                 android:id="@+id/anchor"
@@ -37,25 +37,7 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <carmera.io.carmera.utils.MultiSpinner
-                    android:id="@+id/years_spinner"
-                    android:layout_margin="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-                <carmera.io.carmera.utils.MultiSpinnerSearch
-                    android:id="@+id/make_spinner"
-                    android:layout_margin="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-                <carmera.io.carmera.utils.MultiSpinnerSearch
-                    android:id="@+id/model_spinner"
+                    android:id="@+id/condition_spinner"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -64,7 +46,7 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <carmera.io.carmera.utils.MultiSpinner
-                    android:id="@+id/bodytype_spinner"
+                    android:id="@+id/min_msrp_spinner"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -73,7 +55,7 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <carmera.io.carmera.utils.MultiSpinner
-                    android:id="@+id/tags_spinner"
+                    android:id="@+id/max_msrp_spinner"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -81,9 +63,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
-            </LinearLayout>
-        </RelativeLayout>
+                <carmera.io.carmera.utils.MultiSpinner
+                    android:id="@+id/min_lease_spinner"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <carmera.io.carmera.utils.MultiSpinner
+                    android:id="@+id/max_lease_spinner"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <carmera.io.carmera.utils.MultiSpinner
+                    android:id="@+id/max_mileage_spinner"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+        </LinearLayout>
+    </RelativeLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
-
     <include layout="@layout/gradient_header" />
 </FrameLayout>

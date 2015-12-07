@@ -1,13 +1,19 @@
-package carmera.io.carmera.fragments.search_fragments;
+package carmera.io.carmera;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.nineoldandroids.view.ViewHelper;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,59 +23,42 @@ import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import carmera.io.carmera.R;
+import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.KeyPairBoolData;
 import carmera.io.carmera.utils.MultiSpinner;
 import carmera.io.carmera.utils.MultiSpinnerSearch;
 import carmera.io.carmera.utils.Util;
 
 /**
- * Created by bski on 10/12/15.
+ * Created by bski on 12/7/15.
  */
-public class BasicSearchFragment extends SearchFragment {
+public class BasicSearchActivity extends AppCompatActivity
+                                 implements ObservableScrollViewCallbacks {
 
-    private Context cxt;
 
-    @Bind(R.id.years_spinner) MultiSpinner years_spinner;
+    @Bind (R.id.image) View mImageView;
+    @Bind (R.id.basic_container) ObservableScrollView mScrollView;
 
-    @Bind(R.id.make_spinner) MultiSpinnerSearch make_spinner;
+    @Bind (R.id.years_spinner) MultiSpinner years_spinner;
+    @Bind (R.id.make_spinner) MultiSpinnerSearch make_spinner;
+    @Bind (R.id.model_spinner) MultiSpinnerSearch model_spinner;
+    @Bind (R.id.bodytype_spinner) MultiSpinner bodytype_spinner;
+    @Bind (R.id.tags_spinner) MultiSpinner tags_spinner;
 
-    @Bind(R.id.model_spinner) MultiSpinnerSearch model_spinner;
 
-    @Bind(R.id.bodytype_spinner) MultiSpinner bodytype_spinner;
-
-    @Bind(R.id.condition_spinner) MultiSpinner condition_spinner;
-
-    @Bind(R.id.basic_container) public ObservableScrollView basic_container;
-
-    @Bind(R.id.tags_spinner) MultiSpinner tags_spinner;
-
-    private SortedMap<String, Integer> make_resid_map = new TreeMap<>();
+    private ListingsQuery query;
 
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.basic_search, container, false);
-        ButterKnife.bind(this, v);
-        cxt = getActivity();
-        return v;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.basic_search);
+        ButterKnife.bind(this);
 
-    @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init_spinners();
-    }
+        mScrollView.setScrollViewCallbacks(this);
+        query = Parcels.unwrap (getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
+        final SortedMap<String, Integer> make_resid_map = new TreeMap<>();
 
-    private List<KeyPairBoolData> getModels (List<String> makes) {
-        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
-        for(int i=0; i<makes.size(); i++) {
-            kv_list.addAll(Util.getSpinnerValues(Arrays.asList(cxt.getResources().getStringArray(make_resid_map.get(makes.get(i))))));
-        }
-        return kv_list;
-    }
-
-    @Override
-    public void init_spinners() {
         make_resid_map.put ("Acura", R.array.acura);
         make_resid_map.put ("Audi", R.array.audi);
         make_resid_map.put ("Aston Martin", R.array.astonmartin);
@@ -119,23 +108,23 @@ public class BasicSearchFragment extends SearchFragment {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 List<String> selected_makes = new ArrayList<String>();
-                getGenQuery().makes.clear();
+                query.car.makes.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
                         selected_makes.add(items.get(i).getName());
                         if (items.get(i).getName().equals("Mercedes-Benz"))
-                            getGenQuery().makes.add ("mercedes");
+                            query.car.makes.add ("mercedes");
                         else
-                            getGenQuery().makes.add (items.get(i).getName());
+                            query.car.makes.add (items.get(i).getName());
                     }
                 }
-                model_spinner.setItems(getModels(selected_makes), "Model(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+                model_spinner.setItems(getModels(make_resid_map, selected_makes), "Model(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
                     @Override
                     public void onItemsSelected(List<KeyPairBoolData> items) {
-                        getGenQuery().models.clear();
+                        query.car.models.clear();
                         for(int i=0; i<items.size(); i++) {
                             if(items.get(i).isSelected()) {
-                                getGenQuery().models.add (items.get(i).getName());
+                                query.car.models.add (items.get(i).getName());
                             }
                         }
                     }
@@ -144,64 +133,51 @@ public class BasicSearchFragment extends SearchFragment {
         });
 
 
-        model_spinner.setItems(getModels(all_makes), "Models(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+        model_spinner.setItems(getModels(make_resid_map, all_makes), "Models(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().models.clear();
+                query.car.models.clear();
                 for (int i = 0; i < items.size(); i++) {
                     if (items.get(i).isSelected()) {
-                        getGenQuery().models.add(items.get(i).getName());
+                        query.car.models.add(items.get(i).getName());
                     }
                 }
             }
         });
 
-        final List<String> years_types = Arrays.asList(cxt.getResources().getStringArray(R.array.years));
+        final List<String> years_types = Arrays.asList(getResources().getStringArray(R.array.years));
         years_spinner.setItems(Util.getSpinnerValues(years_types), "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().years.clear();
+                query.car.years.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().years.add (Integer.parseInt(years_types.get(i)));
+                        query.car.years.add (Integer.parseInt(years_types.get(i)));
                     }
                 }
             }
         });
-        final List<String> body_types = Arrays.asList(cxt.getResources().getStringArray(R.array.body_style_array));
+        final List<String> body_types = Arrays.asList(getResources().getStringArray(R.array.body_style_array));
         bodytype_spinner.setItems(Util.getSpinnerValues(body_types), "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().bodyTypes.clear();
+                query.car.bodyTypes.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().bodyTypes.add (items.get(i).getName());
+                        query.car.bodyTypes.add (items.get(i).getName());
                     }
                 }
             }
         });
 
-        final List<String> conditions = Arrays.asList(cxt.getResources().getStringArray(R.array.car_state_array));
-        condition_spinner.setItems(Util.getSpinnerValues(conditions), "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                getApiQuery().conditions.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        getApiQuery().conditions.add(items.get(i).getName());
-                    }
-                }
-            }
-        });
-
-        final List<String> tags = Arrays.asList(cxt.getResources().getStringArray(R.array.tags_array));
+        final List<String> tags = Arrays.asList(getResources().getStringArray(R.array.tags_array));
         tags_spinner.setItems(Util.getSpinnerValues(tags), "Popular Search", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                getGenQuery().tags.clear();
+                query.car.tags.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
-                        getGenQuery().tags.add(items.get(i).getName());
+                        query.car.tags.add(items.get(i).getName());
                     }
                 }
 
@@ -209,8 +185,48 @@ public class BasicSearchFragment extends SearchFragment {
         });
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    private List<KeyPairBoolData> getModels (SortedMap<String, Integer> make_resid_map, List<String> makes) {
+        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
+        for(int i=0; i<makes.size(); i++) {
+            kv_list.addAll(Util.getSpinnerValues(Arrays.asList(getResources().getStringArray(make_resid_map.get(makes.get(i))))));
+        }
+        return kv_list;
     }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent returned_intent = new Intent();
+        returned_intent.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, query));
+        setResult(Activity.RESULT_OK, returned_intent);
+        finish();
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        onScrollChanged(mScrollView.getCurrentScrollY(), false, false);
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        ViewHelper.setTranslationY(mImageView, scrollY / 2);
+    }
+
+
+    @Override
+    public void onDownMotionEvent() {
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+    }
+
+    @Override
+    public void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
+    }
+
 }

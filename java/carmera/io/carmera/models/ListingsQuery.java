@@ -37,10 +37,10 @@ public class ListingsQuery {
     public String sortBy;
 
     @JsonProperty
-    public ApiQuery api;
+    public ApiQuery api = new ApiQuery() ;
 
     @JsonProperty
-    public CarQuery car;
+    public CarQuery car = new CarQuery();
 
     public ListingsQuery() {
     }

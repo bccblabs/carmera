@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
     android:padding="15dp" >
     <widgets.CanaroTextView
         android:id="@+id/alertTextView"
-        android:textColor="@color/card_pressed"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

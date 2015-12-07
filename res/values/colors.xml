@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_blue">#ff33b5e5</color>
     <color name="guillotine_background">#FFFFFF</color>
     <color name="guillotine_background_dark">#FFFFFF</color>
     <color name="selected_item_color">#30d1d5</color>
@@ -10,7 +9,10 @@
     <color name="medium_text_enabled">#FF000000</color>
     <color name="medium_text_disabled">#4D000000</color>
     <color name="floating_background_dark">#23000000</color>
+    <color name="search_background_dark">#53000000</color>
 
+
+    <color name="default_blue">#ff33b5e5</color>
     <color name="demoextra_card_background_color1">#FFBB33</color>
     <color name="demoextra_card_background_color2">#98CC00</color>
     <color name="demoextra_card_background_color3">#A966CC</color>

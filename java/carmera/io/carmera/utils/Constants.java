@@ -6,6 +6,7 @@ package carmera.io.carmera.utils;
 public class Constants {
     public final static String ServerAddr = "http://52.32.208.93:8080";
     public final static String ListingsEndPoint = "/listings";
+    public final static String ClassifyEndpoint = "/classifyCar";
     public final static String DealerEndPoint = "http://api.edmunds.com/api/dealer/v2/dealers/";
     public final static String DealerReviewsEndPoint = "http://api.edmunds.com/v1/api/drrrepository/getdrrbydealerid";
     public final static String VehicleInfoEndPoint = "/vehicle_info";
@@ -16,6 +17,7 @@ public class Constants {
     public final static String ZIPCODE_DEFAULT = "92612";
     public final static String RADIUS_DEFAULT = "50";
     public final static String PAGESIZE_DEFAULT = "20";
+    public final static String FRANCHISE_PAGESIZE = "50";
     public final static String PAGENUM_DEFAULT = "1";
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
@@ -74,8 +76,7 @@ public class Constants {
     public static final String YEAR_DESC = "year:desc";
 
     public static final Integer GUILLOTINE_ANIMATION_DURATION = 250;
-    public static final Integer BITMAP_QUALITY = 10;
-
+    public static final Integer BITMAP_QUALITY = 8;
 
     public static final int IMAGE_RESULT = 9076;
 

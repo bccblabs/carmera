@@ -14,24 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
-import carmera.io.carmera.models.queries.ApiQuery;
+import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.utils.Constants;
 
 /**
- * Created by bski on 12/1/15.
+ * Created by bski on 12/2/15.
  */
-public class FranchiseListings extends OkHttpSpiceRequest<Listings> {
-    private static final String TAG = "LISTINGS_REQUEST";
+public class ClassifyRequest extends OkHttpSpiceRequest<Listings> {
+    private String TAG = getClass().getCanonicalName();
     private String server_addr;
-    private ListingsQuery vehicleQuery;
     private OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
     public static final com.squareup.okhttp.MediaType JSON =
             com.squareup.okhttp.MediaType.parse("application/json; charset=utf-8");
+    private ImageQuery imageQuery;
 
-    public FranchiseListings (ListingsQuery listingQuery, String server_addr_) {
+    public ClassifyRequest (ImageQuery query, String server_addr_) {
         super(Listings.class);
-        this.vehicleQuery = listingQuery;
+        this.imageQuery = query;
         this.server_addr = server_addr_;
         RetryPolicy retryPolicy = getRetryPolicy();
         client.setConnectTimeout(120, TimeUnit.SECONDS);
@@ -41,19 +41,17 @@ public class FranchiseListings extends OkHttpSpiceRequest<Listings> {
         Log.i(TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
-
     @Override
     public Listings loadDataFromNetwork () throws Exception {
-        String req_json = gson.toJson(vehicleQuery);
-        Log.i(TAG, "Request Json" + req_json);
+        String req_json = gson.toJson(imageQuery);
+        Log.i(TAG, "Request Json" +  req_json);
         RequestBody body = RequestBody.create(JSON, req_json);
         Request request = new Request.Builder()
-                .url(server_addr + Constants.FranchiseEndPoint)
+                .url(server_addr + Constants.ClassifyEndpoint)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
         Log.i (TAG,response.toString());
         return gson.fromJson (response.body().charStream(), Listings.class);
     }
-
 }

@@ -1,8 +1,16 @@
 package carmera.io.carmera.models.queries;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+import carmera.io.carmera.utils.Constants;
 
 /**
  * Created by bski on 11/19/15.
@@ -17,32 +25,20 @@ public class ImageQuery {
     @JsonProperty
     public String imageData;
 
-    @JsonProperty
-    public String date;
-
     public ImageQuery() {
     }
 
-    public ImageQuery(String userId, String imageData, String date) {
+    public ImageQuery(String userId, String imageData) {
         this.userId = userId;
         this.imageData = imageData;
-        this.date = date;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getUserId() {
+        return userId;
     }
 
     public String getImageData() {
