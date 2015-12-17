@@ -51,7 +51,7 @@ public class EquipmentSearchActivity extends AppCompatActivity
 
 
         final List<String> ext_colors = Arrays.asList(getResources().getStringArray(R.array.color_array));
-        ext_colors_spinner.setItems(Util.getSpinnerValues(ext_colors), "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        ext_colors_spinner.setItems(Util.getSpinnerValues(ext_colors, true), "Exterior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 List<String> selected_ext = new ArrayList<>();
@@ -66,7 +66,7 @@ public class EquipmentSearchActivity extends AppCompatActivity
 
 
         final List<String> int_colors = Arrays.asList(getResources().getStringArray(R.array.color_array));
-        int_colors_spinner.setItems(Util.getSpinnerValues(int_colors), "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        int_colors_spinner.setItems(Util.getSpinnerValues(int_colors, true), "Interior Color(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 List<String> selected_int = new ArrayList<>();
@@ -79,7 +79,7 @@ public class EquipmentSearchActivity extends AppCompatActivity
             }
         });
 
-        final List<KeyPairBoolData> equipments = Util.getSpinnerValues(Arrays.asList(getResources().getStringArray(R.array.equipment_array)));
+        final List<KeyPairBoolData> equipments = Util.getSpinnerValues(Arrays.asList(getResources().getStringArray(R.array.equipment_array)), true);
         equipments_spinner.setItems(equipments, "Equipments(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {

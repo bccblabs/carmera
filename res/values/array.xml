@@ -714,7 +714,6 @@
         <item>40+</item>
     </string-array>
     <string-array name="min_msrp_array">
-        <item>None</item>
         <item>5000</item>
         <item>10000</item>
         <item>20000</item>
@@ -745,10 +744,8 @@
         <item>150000</item>
         <item>300000</item>
         <item>500000</item>
-        <item>None</item>
     </string-array>
     <string-array name="min_lease_array">
-        <item>None</item>
         <item>50</item>
         <item>100</item>
         <item>200</item>
@@ -773,7 +770,6 @@
         <item>900</item>
         <item>1000</item>
         <item>1500</item>
-        <item>None</item>
     </string-array>
     <string-array name="max_mileage_array">
         <item>5000</item>
@@ -787,7 +783,6 @@
         <item>80000</item>
         <item>90000</item>
         <item>100000</item>
-        <item>None</item>
     </string-array>
     <string-array name="color_array">
         <item>black</item>
@@ -830,16 +825,22 @@
     </string-array>
 
     <string-array name="tags_array">
-        <item>No Recalls</item>
-        <item>No Major Recalls</item>
-        <item>No Complaints</item>
-        <item>No Major Complaints</item>
         <item>German</item>
         <item>Italian</item>
         <item>Muscle</item>
         <item>Has Incentives</item>
         <item>Affordable Luxury</item>
         <item>Hot Hatchback</item>
+    </string-array>
+
+    <string-array name="complaints_array">
+        <item>No Complaints</item>
+        <item>No Major Complaints</item>
+    </string-array>
+
+    <string-array name="recalls_array">
+        <item>No Recalls</item>
+        <item>No Major Recalls</item>
     </string-array>
 
 </resources>

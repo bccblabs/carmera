@@ -42,7 +42,18 @@ public class ListingsQuery {
     @JsonProperty
     public CarQuery car = new CarQuery();
 
+    @JsonProperty
+    public Integer submodelCount;
+
     public ListingsQuery() {
+    }
+
+    public Integer getSubmodelCount() {
+        return submodelCount;
+    }
+
+    public void setSubmodelCount(Integer submodelCount) {
+        this.submodelCount = submodelCount;
     }
 
     public Integer getMax_price() {

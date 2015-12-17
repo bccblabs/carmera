@@ -9,6 +9,8 @@
     <string name="watch_list_logo">Watch List</string>
     <string name="parse_app_id">4C3g4JMvuWMEuTVeTtjoQdvxCOv80XHRtIYnM3Kg</string>
     <string name="parse_client_key">OTwE5Qi7WuZ4gs8q66T2nKrDArWPbph3u1CmPjP1</string>
+    <string name="gms_api_key">AIzaSyDqZraFAjQluv_KAgF9CGGrAyEGbP9P-F8</string>
+    <string name="debug_gms_api_key">AIzaSyAp58riqX9t1fS5bq84elOFkCoRBPP9JGg</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="context_menu">Select</string>
@@ -52,7 +54,7 @@
     <string name="pref_zipcode_default">92612</string>
     <string name="pref_key_radius">Radius</string>
     <string name="pref_radius_default">50</string>
-
+    <string name="save_and_drive">Save &amp; Drive</string>
     <string name="complaints">Complaints</string>
     <string name="safety">Safety</string>
     <string name="safety_equipments">Safety Equipments</string>
@@ -175,4 +177,13 @@
     <string name="reliability_search_desc">Safety Ratings, Recalls, and Reliability Complaints</string>
 
 
+    <string name="has_incentives">Has Ongoing Incentives</string>
+    <string name="schedule_test_drive">Test Drive</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="save_for_later">Save</string>
+
+    <string name="contact_info">Contact Info</string>
+    <string name="pref_key_email">E-Mail</string>
+    <string name="pref_key_phone">Contact Number</string>
+    <string name="pref_key_name">First Name</string>
 </resources>

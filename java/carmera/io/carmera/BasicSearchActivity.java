@@ -6,17 +6,23 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.gson.Gson;
 import com.nineoldandroids.view.ViewHelper;
+import com.rey.material.widget.CheckBox;
+import com.rey.material.widget.Spinner;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -37,6 +43,7 @@ public class BasicSearchActivity extends AppCompatActivity
                                  implements ObservableScrollViewCallbacks {
 
 
+    public String TAG = getClass().getCanonicalName();
     @Bind (R.id.image) View mImageView;
     @Bind (R.id.basic_container) ObservableScrollView mScrollView;
 
@@ -44,8 +51,7 @@ public class BasicSearchActivity extends AppCompatActivity
     @Bind (R.id.make_spinner) MultiSpinnerSearch make_spinner;
     @Bind (R.id.model_spinner) MultiSpinnerSearch model_spinner;
     @Bind (R.id.bodytype_spinner) MultiSpinner bodytype_spinner;
-    @Bind (R.id.tags_spinner) MultiSpinner tags_spinner;
-
+    @Bind (R.id.incentives_cb) CheckBox incentives_checkbox;
 
     private ListingsQuery query;
 
@@ -94,38 +100,44 @@ public class BasicSearchActivity extends AppCompatActivity
         make_resid_map.put ("Scion", R.array.scion);
         make_resid_map.put ("Smart", R.array.smart);
         make_resid_map.put ("Subaru", R.array.subaru);
-        make_resid_map.put ("Suzuki", R.array.suzuki);
-        make_resid_map.put ("Toyota", R.array.toyota);
+        make_resid_map.put("Suzuki", R.array.suzuki);
+        make_resid_map.put("Toyota", R.array.toyota);
         make_resid_map.put("Volkswagen", R.array.volkswagen);
         make_resid_map.put("Volvo", R.array.volvo);
 
         List<String> all_makes = new ArrayList<>();
+        List<String> selected_makes = query.car.makes;
         all_makes.addAll(make_resid_map.keySet());
 
-        final List<KeyPairBoolData> makes = Util.getSpinnerValues(all_makes);
+        final List<KeyPairBoolData> makes = Util.getSpinnerValues(all_makes, true);
+
+        for (KeyPairBoolData make : makes) {
+            if (selected_makes.contains(make.getName()))
+                make.setSelected(true);
+        }
 
         make_spinner.setItems(makes, "Make(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                List<String> selected_makes = new ArrayList<String>();
-                query.car.makes.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        selected_makes.add(items.get(i).getName());
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).isSelected()) {
+                        query.car.makes.add(items.get(i).getName());
                         if (items.get(i).getName().equals("Mercedes-Benz"))
-                            query.car.makes.add ("mercedes");
+                            query.car.makes.add("mercedes");
                         else
-                            query.car.makes.add (items.get(i).getName());
+                            query.car.makes.add(items.get(i).getName());
                     }
                 }
-                model_spinner.setItems(getModels(make_resid_map, selected_makes), "Model(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
+
+                model_spinner.setItems(getModels(make_resid_map, query.car.makes), "Model(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
                     @Override
                     public void onItemsSelected(List<KeyPairBoolData> items) {
-                        query.car.models.clear();
-                        for(int i=0; i<items.size(); i++) {
-                            if(items.get(i).isSelected()) {
-                                query.car.models.add (items.get(i).getName());
+                        for (int i = 0; i < items.size(); i++) {
+                            if (items.get(i).isSelected()) {
+                                query.car.models.add(items.get(i).getName());
                             }
+                            if (query.car.models.contains(items.get(i).getName()))
+                                items.get(i).setSelected(true);
                         }
                     }
                 });
@@ -136,17 +148,26 @@ public class BasicSearchActivity extends AppCompatActivity
         model_spinner.setItems(getModels(make_resid_map, all_makes), "Models(s)", -1, new MultiSpinnerSearch.MultiSpinnerSearchListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                query.car.models.clear();
                 for (int i = 0; i < items.size(); i++) {
                     if (items.get(i).isSelected()) {
                         query.car.models.add(items.get(i).getName());
                     }
+                    if (query.car.models.contains(items.get(i).getName()))
+                        items.get(i).setSelected(true);
                 }
             }
         });
 
         final List<String> years_types = Arrays.asList(getResources().getStringArray(R.array.years));
-        years_spinner.setItems(Util.getSpinnerValues(years_types), "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+
+        Collections.sort(years_types,
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return Integer.valueOf(o2).compareTo(Integer.valueOf(o1));
+                    }
+                });
+        years_spinner.setItems(Util.getSpinnerValues(years_types, false), "Choose Year(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.years.clear();
@@ -157,38 +178,32 @@ public class BasicSearchActivity extends AppCompatActivity
                 }
             }
         });
+
         final List<String> body_types = Arrays.asList(getResources().getStringArray(R.array.body_style_array));
-        bodytype_spinner.setItems(Util.getSpinnerValues(body_types), "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        bodytype_spinner.setItems(Util.getSpinnerValues(body_types, true), "Choose Body Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
-                query.car.bodyTypes.clear();
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).isSelected()) {
                         query.car.bodyTypes.add (items.get(i).getName());
                     }
+                    if (query.car.bodyTypes.contains(items.get(i).getName()))
+                        items.get(i).setSelected(true);
                 }
             }
         });
 
-        final List<String> tags = Arrays.asList(getResources().getStringArray(R.array.tags_array));
-        tags_spinner.setItems(Util.getSpinnerValues(tags), "Popular Search", -1, new MultiSpinner.MultiSpinnerListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                query.car.tags.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
-                        query.car.tags.add(items.get(i).getName());
-                    }
-                }
-
-            }
-        });
+        if (query.car.tags.contains("Has Incentives"))
+            incentives_checkbox.setChecked(true);
+        if (incentives_checkbox.isChecked() && !query.car.tags.contains("Has Incentives")) {
+            query.car.tags.add("Has Incentives");
+        }
     }
 
     private List<KeyPairBoolData> getModels (SortedMap<String, Integer> make_resid_map, List<String> makes) {
         final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
         for(int i=0; i<makes.size(); i++) {
-            kv_list.addAll(Util.getSpinnerValues(Arrays.asList(getResources().getStringArray(make_resid_map.get(makes.get(i))))));
+            kv_list.addAll(Util.getSpinnerValues(Arrays.asList(getResources().getStringArray(make_resid_map.get(makes.get(i)))), true));
         }
         return kv_list;
     }
@@ -197,6 +212,8 @@ public class BasicSearchActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         Intent returned_intent = new Intent();
+        Log.i(TAG, new Gson().toJson (query));
+
         returned_intent.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, query));
         setResult(Activity.RESULT_OK, returned_intent);
         finish();

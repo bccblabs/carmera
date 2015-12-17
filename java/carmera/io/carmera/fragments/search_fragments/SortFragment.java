@@ -96,7 +96,7 @@ public class SortFragment extends DialogFragment {
 
     private void init_spinners () {
         price_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.PRICE_ASC, Constants.PRICE_DESC)),
+                        Lists.newArrayList(Constants.PRICE_ASC, Constants.PRICE_DESC), true),
                 "Sort By Price",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -114,7 +114,7 @@ public class SortFragment extends DialogFragment {
                     });
 
         mileage_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.MILEAGE_ASC, Constants.MILEAGE_DESC)),
+                        Lists.newArrayList(Constants.MILEAGE_ASC, Constants.MILEAGE_DESC), true),
                         "Sort By Mileage",
                         -1,
                         new MultiSpinner.MultiSpinnerListener() {
@@ -131,7 +131,7 @@ public class SortFragment extends DialogFragment {
                         });
 
         year_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.YEAR_ASC, Constants.YEAR_DESC)),
+                        Lists.newArrayList(Constants.YEAR_ASC, Constants.YEAR_DESC), true),
                 "Sort By Year",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -148,7 +148,7 @@ public class SortFragment extends DialogFragment {
                 });
 
         mpg_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.MPG_ASC, Constants.MPG_DESC)),
+                        Lists.newArrayList(Constants.MPG_ASC, Constants.MPG_DESC), true),
                 "Sort By MPG",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -166,7 +166,7 @@ public class SortFragment extends DialogFragment {
 
 
         hp_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.HP_ASC, Constants.HP_DESC)),
+                        Lists.newArrayList(Constants.HP_ASC, Constants.HP_DESC), true),
                 "Sort By Horsepower",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -183,7 +183,7 @@ public class SortFragment extends DialogFragment {
                 });
 
         tq_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.TQ_ASC, Constants.TQ_DESC)),
+                        Lists.newArrayList(Constants.TQ_ASC, Constants.TQ_DESC), true),
                 "Sort By Torque",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -200,7 +200,7 @@ public class SortFragment extends DialogFragment {
                 });
 
         complaints_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.CMPL_ASC, Constants.CMPL_DESC)),
+                        Lists.newArrayList(Constants.CMPL_ASC, Constants.CMPL_DESC), true),
                 "Sort By Complaints",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -218,7 +218,7 @@ public class SortFragment extends DialogFragment {
 
         final List<String> list = Arrays.asList(Constants.RECALLS_ASC, Constants.RECALLS_DESC);
         Log.i(getClass().getCanonicalName(), "" + list.size());
-        recalls_sort_spinner.setItems(Util.getSpinnerValues(list),
+        recalls_sort_spinner.setItems(Util.getSpinnerValues(list, true),
                 "Sort By Recalls",
                 -1,
                 new MultiSpinner.MultiSpinnerListener() {
@@ -233,7 +233,6 @@ public class SortFragment extends DialogFragment {
                         }
                     }
                 });
-
     }
 
     @Override public void onDestroyView() {

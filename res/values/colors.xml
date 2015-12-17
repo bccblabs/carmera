@@ -60,4 +60,19 @@
         <item>@color/username11</item>
     </array>
 
+
+
+    <color name="btn_default_light_normal">#00000000</color>
+    <color name="btn_default_light_pressed">#40ffffff</color>
+    <color name="btn_send_normal">#02c754</color>
+    <color name="btn_send_pressed">#006633</color>
+    <color name="btn_default_shadow">#99000000</color>
+    <color name="btn_context_menu_normal">#ffffff</color>
+    <color name="btn_context_menu_pressed">#40000000</color>
+    <color name="btn_context_menu_text_red">#ffff0000</color>
+
+    <color name="colorControlNormal">#FF78909C</color>
+    <color name="colorAccent">#FF00E5FF</color>
+    <color name="colorPrimaryHalf">#9003A9F4</color>
+    <color name="colorAccentHalf">#9000E5FF</color>
 </resources>

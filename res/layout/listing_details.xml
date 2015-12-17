@@ -1,91 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/transparent"
-    android:id="@+id/scroll_container"
+
+<FrameLayout
+    android:id="@+id/content_frame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
+
+    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@android:color/transparent"
+        android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/loading_view"
             android:layout_width="match_parent"
-            android:layout_height="620dp"
-            android:background="@color/cardview_light_background">
-            <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-                android:layout_centerInParent="true"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/card_pressed"/>
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/loading_view"
+                android:layout_width="match_parent"
+                android:layout_height="620dp"
+                android:background="@color/cardview_light_background">
+                <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+                    android:layout_centerInParent="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/card_pressed"/>
+            </RelativeLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/content">
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/listing_info_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/equipments_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/incentives_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/specs_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/cost_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/review_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                    <it.gmariotti.cardslib.library.view.CardView
+                        android:id="@+id/issues_card"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        />
+                </LinearLayout>
         </RelativeLayout>
-
-        <LinearLayout
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/content">
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/listing_info_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-            />
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/equipments_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/incentives_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/specs_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/cost_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/review_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/issues_card"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
-</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+    <com.gc.materialdesign.views.ButtonFloat
+        android:id="@+id/save_listing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        materialdesign:iconDrawable="@drawable/ic_vpn_key_black_24dp"
+        android:layout_gravity="end|center_vertical" />
+</FrameLayout>

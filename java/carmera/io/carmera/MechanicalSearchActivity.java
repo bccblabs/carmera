@@ -53,7 +53,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         query = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
 
         final List<String> transmissions = Arrays.asList(getResources().getStringArray(R.array.txn_array));
-        transmission_spinner.setItems(Util.getSpinnerValues(transmissions), "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        transmission_spinner.setItems(Util.getSpinnerValues(transmissions, true), "Choose Transmission Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.transmissionTypes.clear();
@@ -72,7 +72,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> compressor_types = Arrays.asList(getResources().getStringArray(R.array.compressor_array));
-        compressors_spinner.setItems(Util.getSpinnerValues(compressor_types), "Choose Engine Compressor Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        compressors_spinner.setItems(Util.getSpinnerValues(compressor_types, true), "Choose Engine Compressor Type(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.compressors.clear();
@@ -85,7 +85,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> drivetrains = Arrays.asList(getResources().getStringArray(R.array.drivetrain_array));
-        drivetrain_spinner.setItems(Util.getSpinnerValues(drivetrains), "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
+        drivetrain_spinner.setItems(Util.getSpinnerValues(drivetrains, true), "Choose Drivetrain(s)", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.drivenWheels.clear();
@@ -101,7 +101,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> cylinders = Arrays.asList(getResources().getStringArray(R.array.cylinder_array));
-        cylinders_spinner.setItems(Util.getSpinnerValues(cylinders), "Choose Cylinder Count", -1, new MultiSpinner.MultiSpinnerListener() {
+        cylinders_spinner.setItems(Util.getSpinnerValues(cylinders, true), "Choose Cylinder Count", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.cylinders.clear();
@@ -114,7 +114,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> hps = Arrays.asList(getResources().getStringArray(R.array.output_array));
-        hp_spinner.setItems(Util.getSpinnerValues(hps), "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
+        hp_spinner.setItems(Util.getSpinnerValues(hps, true), "Minimum Horsepower", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.minHp = 0;
@@ -127,7 +127,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> tqs = Arrays.asList(getResources().getStringArray(R.array.output_array));
-        tq_spinner.setItems(Util.getSpinnerValues(tqs), "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
+        tq_spinner.setItems(Util.getSpinnerValues(tqs, true), "Minimum Torque", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.minTq = 0;
@@ -140,7 +140,7 @@ public class MechanicalSearchActivity extends AppCompatActivity
         });
 
         final List<String> mpgs = Arrays.asList(getResources().getStringArray(R.array.mpg_array));
-        mpg_spinner.setItems(Util.getSpinnerValues(mpgs), "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
+        mpg_spinner.setItems(Util.getSpinnerValues(mpgs, true), "Minimum Highway MPG", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.car.minMpg = 0;

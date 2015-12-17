@@ -72,11 +72,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
-                <carmera.io.carmera.utils.MultiSpinner
-                    android:id="@+id/tags_spinner"
+                <LinearLayout
+                    android:paddingLeft="5dp"
                     android:layout_margin="8dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <widgets.CanaroTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="start|center_vertical"
+                        android:text="@string/has_incentives"/>
+                    <View android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                    <com.rey.material.widget.CheckBox
+                        style="@style/Material.Drawable.CheckBox"
+                        android:layout_gravity="end"
+                        android:id="@+id/incentives_cb"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

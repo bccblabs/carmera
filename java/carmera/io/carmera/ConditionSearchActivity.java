@@ -14,6 +14,8 @@ import com.nineoldandroids.view.ViewHelper;
 import org.parceler.Parcels;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,12 +56,12 @@ public class ConditionSearchActivity extends AppCompatActivity
 
 
         final List<String> conditions = Arrays.asList(getResources().getStringArray(R.array.car_state_array));
-        condition_spinner.setItems(Util.getSpinnerValues(conditions), "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
+        condition_spinner.setItems(Util.getSpinnerValues(conditions, true), "Certified / New / Used", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 query.api.conditions.clear();
-                for(int i=0; i<items.size(); i++) {
-                    if(items.get(i).isSelected()) {
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).isSelected()) {
                         query.api.conditions.add(items.get(i).getName());
                     }
                 }
@@ -67,7 +69,14 @@ public class ConditionSearchActivity extends AppCompatActivity
         });
 
         final List<String> min_msrp = Arrays.asList(getResources().getStringArray(R.array.min_msrp_array));
-        min_msrp_spinner.setItems(Util.getSpinnerValues(min_msrp), "Minimum Price", -1, new MultiSpinner.MultiSpinnerListener() {
+        Collections.sort(min_msrp, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+            }
+        });
+
+        min_msrp_spinner.setItems(Util.getSpinnerValues(min_msrp, false), "Minimum Price", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for (int i = 0; i < items.size(); i++) {
@@ -83,7 +92,14 @@ public class ConditionSearchActivity extends AppCompatActivity
         });
 
         final List<String> max_msrp = Arrays.asList(getResources().getStringArray(R.array.max_msrp_array));
-        max_msrp_spinner.setItems(Util.getSpinnerValues(max_msrp), "Maximum Price", -1, new MultiSpinner.MultiSpinnerListener() {
+        Collections.sort(max_msrp, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.valueOf(o2).compareTo(Integer.valueOf(o1));
+            }
+        });
+
+        max_msrp_spinner.setItems(Util.getSpinnerValues(max_msrp, false), "Maximum Price", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for (int i = 0; i < items.size(); i++) {
@@ -100,7 +116,14 @@ public class ConditionSearchActivity extends AppCompatActivity
             }
         });
         final List<String> min_lease = Arrays.asList(getResources().getStringArray(R.array.min_lease_array));
-        min_lease_spinner.setItems(Util.getSpinnerValues(min_lease), "Minimum Lease", -1, new MultiSpinner.MultiSpinnerListener() {
+        Collections.sort(min_lease, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+            }
+        });
+
+        min_lease_spinner.setItems(Util.getSpinnerValues(min_lease, false), "Minimum Lease", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for (int i = 0; i < items.size(); i++) {
@@ -116,7 +139,13 @@ public class ConditionSearchActivity extends AppCompatActivity
         });
 
         final List<String> max_lease = Arrays.asList(getResources().getStringArray(R.array.max_lease_array));
-        max_lease_spinner.setItems(Util.getSpinnerValues(max_lease), "Maximum Lease", -1, new MultiSpinner.MultiSpinnerListener() {
+        Collections.sort(max_lease, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.valueOf(o2).compareTo(Integer.valueOf(o1));
+            }
+        });
+        max_lease_spinner.setItems(Util.getSpinnerValues(max_lease, false), "Maximum Lease", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for (int i = 0; i < items.size(); i++) {
@@ -133,7 +162,13 @@ public class ConditionSearchActivity extends AppCompatActivity
 
 
         final List<String> max_mileage = Arrays.asList(getResources().getStringArray(R.array.max_mileage_array));
-        max_mileage_spinner.setItems(Util.getSpinnerValues(max_mileage), "Maximum Mileage", -1, new MultiSpinner.MultiSpinnerListener() {
+        Collections.sort(max_mileage, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.valueOf(o2).compareTo(Integer.valueOf(o1));
+            }
+        });
+        max_mileage_spinner.setItems(Util.getSpinnerValues(max_mileage, false), "Maximum Mileage", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(List<KeyPairBoolData> items) {
                 for (int i = 0; i < items.size(); i++) {

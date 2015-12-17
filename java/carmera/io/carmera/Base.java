@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.commonsware.cwac.cam2.CameraActivity;
+import com.commonsware.cwac.cam2.FlashMode;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.InputStream;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
@@ -47,7 +49,8 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 6/3/15.
  */
-public class Base extends AppCompatActivity implements SearchContainer.OnSearchVehiclesListener {
+public class Base extends AppCompatActivity implements  SearchContainer.OnSearchVehiclesListener,
+                                                        CaptureFragment.OnCameraResultListener {
 
     private final String TAG = getClass().getCanonicalName();
 
@@ -82,6 +85,7 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
+                        .addToBackStack("listings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -98,6 +102,7 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         listingsFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, listingsFragment)
+                .addToBackStack("listings_fragment")
                 .commitAllowingStateLoss();
     }
 
@@ -153,19 +158,11 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         carmera.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-            try {
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, CaptureFragment.newInstance())
+                        .addToBackStack("capture_fragment")
+                        .commit();
                 guillotineAnimation.close();
-                String file_name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(5), ".jpg");
-                Intent i= new CameraActivity.IntentBuilder(Base.this)
-                        .skipConfirm()
-                        .facing(CameraActivity.Facing.BACK)
-                        .to (new File (root_dir, file_name))
-                        .build();
-                startActivityForResult(i, Constants.IMAGE_RESULT);
-            } catch (Exception e) {
-                Log.i (TAG, e.getMessage());
-            }
                 return false;
             }
         });
@@ -193,14 +190,10 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
         switch (item.getItemId()) {
             case R.id.carmera_capture:
                 try {
-                    String file_name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(5), "jpg");
-                    Intent i=new CameraActivity.IntentBuilder(Base.this)
-                            .skipConfirm()
-                            .facing(CameraActivity.Facing.BACK)
-                            .to(new File(root_dir, file_name))
-                            .updateMediaStore()
-                            .build();
-                    startActivityForResult(i, Constants.IMAGE_RESULT);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, CaptureFragment.newInstance())
+                            .addToBackStack("capture_fragment")
+                            .commit();
                 } catch (Exception e) {
                     Log.i (TAG, e.getMessage());
                 }
@@ -233,31 +226,31 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
     @Override
     public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case Constants.IMAGE_RESULT:
-                try {
-                    System.gc();
-                    if (resultCode == RESULT_OK) {
-                        try {
-                            InputStream is = getContentResolver().openInputStream(data.getData());
-                            Bitmap bitmap = BitmapFactory.decodeStream(is);
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
-                            ImageQuery imageQuery = new ImageQuery(ParseUser.getCurrentUser().getUsername(),
-                                            Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT));
-                            spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
-                            is.close();
-                        } catch (Exception e) {
-                            Log.e (TAG, e.getMessage());
-                        }
-                    } else {
-                        Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Log.e (TAG, e.getMessage());
-                }
-                break;
-        }
+//        switch (requestCode) {
+//            case Constants.IMAGE_RESULT:
+//                try {
+//                    System.gc();
+//                    if (resultCode == RESULT_OK) {
+//                        try {
+//                            InputStream is = getContentResolver().openInputStream(data.getData());
+//                            Bitmap bitmap = BitmapFactory.decodeStream(is);
+//                            is.close();
+//                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                            bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
+//                            ImageQuery imageQuery = new ImageQuery(ParseUser.getCurrentUser().getUsername(),
+//                                            Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT));
+//                            spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
+//                        } catch (Exception e) {
+//                            Log.e (TAG, e.getMessage());
+//                        }
+//                    } else {
+//                        Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (Exception e) {
+//                    Log.e (TAG, e.getMessage());
+//                }
+//                break;
+//        }
     }
 
     @Override
@@ -266,6 +259,12 @@ public class Base extends AppCompatActivity implements SearchContainer.OnSearchV
 
         if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
         }
+
+    }
+
+    @Override
+    public void OnCameraResult (ImageQuery imageQuery) {
+        spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
     }
 }
 

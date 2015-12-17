@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import butterknife.Bind;
@@ -32,10 +35,10 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
     @Override
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
-        Listing listing = getItem(i);
-        viewHolder.car_info.setText(String.format("%d %s %s",   listing.getYear().getYear(),
-                                                                listing.getMake().getName(),
-                                                                listing.getModel().getName()));
+        final Listing listing = getItem(i);
+        viewHolder.car_info.setText(String.format("%d %s %s", listing.getYear().getYear(),
+                listing.getMake().getName(),
+                listing.getModel().getName()));
 
         viewHolder.trim_info.setText(listing.getStyle().getTrim());
         if (listing.getPrices() != null)
@@ -43,6 +46,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         else
             viewHolder.price.setVisibility(View.GONE);
         viewHolder.mileage.setText(String.format("%d Miles", listing.getMileage()));
+
 
         try {
             List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
@@ -57,6 +61,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         @Bind(R.id.car_info) public TextView car_info;
         @Bind(R.id.trim_info) public TextView trim_info;
         @Bind(R.id.listing_photo) public ImageView listingImage;

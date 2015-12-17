@@ -7,16 +7,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.gc.materialdesign.views.ButtonFloat;
 import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -26,22 +30,29 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.parceler.Parcels;
 import org.parceler.guava.collect.Collections2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.cards.CarInfoCard;
 import carmera.io.carmera.cards.CompositeHeader;
+import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.models.ResponseMessage;
 import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.models.listings_subdocuments.Address;
 import carmera.io.carmera.models.listings_subdocuments.ContactInfo;
 import carmera.io.carmera.models.listings_subdocuments.Link;
+import carmera.io.carmera.models.queries.LeadQuery;
 import carmera.io.carmera.predicates.CostsPredicate;
 import carmera.io.carmera.predicates.PerformancePredicate;
 import carmera.io.carmera.predicates.RatingsPredicate;
 import carmera.io.carmera.predicates.ReliabilityPredicate;
+import carmera.io.carmera.requests.LeadRequest;
 import carmera.io.carmera.requests.StyleDataRequest;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
@@ -55,6 +66,8 @@ import it.gmariotti.cardslib.library.view.CardView;
 public class ListingDetails extends AppCompatActivity
                             implements  BaseSliderView.OnSliderClickListener,
                                         ViewPagerEx.OnPageChangeListener {
+
+    @Bind(R.id.save_listing) public ButtonFloat save_listing;
 
     @Bind (R.id.loading_view) View loading_view;
 
@@ -80,6 +93,7 @@ public class ListingDetails extends AppCompatActivity
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
 
+    private SharedPreferences sharedPreferences;
 
     public class ListingsBasicInfoCard extends Card {
         protected SliderLayout photos;
@@ -173,6 +187,20 @@ public class ListingDetails extends AppCompatActivity
         }
     }
 
+    private final class LeadRequestListener implements RequestListener<ResponseMessage> {
+        @Override
+        public void onRequestFailure (SpiceException spiceException) {
+
+        }
+        @Override
+        public void onRequestSuccess (final ResponseMessage msg) {
+            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                    .content("Your request is recorded, your dealership will reach out to you shortly!")
+                    .positiveText("Got It!")
+                    .show();
+        }
+    }
+
     private final class StyleDataRequestListener implements RequestListener<StyleData> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
@@ -195,6 +223,7 @@ public class ListingDetails extends AppCompatActivity
             basic_info_header.setButtonExpandVisible(true);
             basic_info_card.addCardHeader(basic_info_header);
             basic_info_card.addCardExpand(basic_info_expand);
+            basic_info_card.setExpanded(true);
             basic_info_card.setBackgroundResourceId(R.drawable.card_select0);
             listing_info_card.setCard(basic_info_card);
 
@@ -345,6 +374,78 @@ public class ListingDetails extends AppCompatActivity
 
 
 
+            save_listing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(ListingDetails.this)
+                            .title(R.string.save_and_drive)
+                            .content(String.format("Do you want to save and schedule a test drive for %d %s %s",
+                                    listing.getYear().year, listing.getMake().name, listing.getModel().name))
+                            .positiveText(R.string.schedule_test_drive)
+                            .negativeText(R.string.dismiss)
+                            .neutralText(R.string.save_for_later)
+                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                    MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                                            .content("Saved!")
+                                            .positiveText("Got It!")
+                                            .show();
+                                }
+                            })
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                    String contact_name = sharedPreferences.getString("pref_key_name", ""),
+                                            contact_number = sharedPreferences.getString("pref_key_phone", "").trim(),
+                                            contact_email = sharedPreferences.getString("pref_key_email", "").trim();
+
+                                    if (contact_name.length() < 1 && (contact_email.length() < 1 || contact_number.length() < 1)) {
+
+                                        MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                                                .content("Please set your name and email/phone to allow dealership contacts!")
+                                                .positiveText("Agree")
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                                        getSupportFragmentManager().beginTransaction()
+                                                                .replace(R.id.content_frame, new SettingsFragment())
+                                                                .addToBackStack("settings_fragment")
+                                                                .commitAllowingStateLoss();
+                                                    }
+                                                })
+                                                .show();
+                                    } else {
+                                        SimpleDateFormat iso_8601_fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
+                                        String currentDateandTime = iso_8601_fmt.format(new Date());
+                                        LeadQuery leadQuery = new LeadQuery();
+                                        leadQuery.contact_name = contact_name;
+                                        leadQuery.phone = contact_number;
+                                        leadQuery.email = contact_email;
+                                        leadQuery.make = listing.getMake().name;
+                                        leadQuery.model = listing.getModel().name;
+                                        leadQuery.year = listing.getYear().year.toString();
+                                        leadQuery.vin = listing.vin;
+                                        leadQuery.stock = listing.stockNumber;
+                                        leadQuery.date = currentDateandTime;
+                                        leadQuery.dealerName = listing.dealer.name;
+                                        leadQuery.dealerId = listing.dealer.dealerId;
+                                        leadQuery.franchiseId = listing.dealer.franchiseId;
+                                        spiceManager.execute(new LeadRequest(leadQuery, server_address), new LeadRequestListener());
+                                    }
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                    /* save to listings */
+                                }
+                            });
+                    MaterialDialog dialog = builder.build();
+                    dialog.show();
+                }
+            });
+
 
 
 
@@ -420,13 +521,12 @@ public class ListingDetails extends AppCompatActivity
         Log.i(getClass().getCanonicalName(), new Gson().toJson(listing));
 
 
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
         StyleDataRequest styleDataRequest = new StyleDataRequest(listing.style.id, server_address);
 
         spiceManager.execute(styleDataRequest, listing.style.id, DurationInMillis.ALWAYS_RETURNED,
-                                                                 new StyleDataRequestListener());
+                new StyleDataRequestListener());
 
     }
 

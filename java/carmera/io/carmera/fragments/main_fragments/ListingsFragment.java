@@ -71,6 +71,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Bind(R.id.filter_btn) public FloatingActionButton filter_btn;
 
     @Bind(R.id.more_cars) public ButtonRectangle more_cars;
+
     @OnClick (R.id.more_cars)
     public void search_more_cars () {
         filter_sort_btn.setVisibility(View.INVISIBLE);
@@ -297,6 +298,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         }
         super.onStop();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
