@@ -1,19 +1,12 @@
 package carmera.io.carmera;
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,19 +15,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import com.commonsware.cwac.cam2.CameraActivity;
-import com.commonsware.cwac.cam2.FlashMode;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.parse.ParseUser;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import org.parceler.Parcels;
-import org.parceler.apache.commons.lang.RandomStringUtils;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
@@ -63,6 +51,8 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     @Bind (R.id.loading) View loading;
 
+    @Bind (R.id.text_search_view) MaterialSearchView searchView;
+
     private ListingsFragment listingsFragment;
 
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -84,7 +74,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
-                        .addToBackStack("listings_fragment")
+//                        .addToBackStack("listings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -108,7 +98,7 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
-            loading.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.GONE);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
         } else {
             getSupportFragmentManager().beginTransaction()
@@ -172,23 +162,25 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.carmera_capture:
-                try {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, CaptureFragment.newInstance())
-                            .addToBackStack("capture_fragment")
-                            .commit();
-                } catch (Exception e) {
-                    Log.i (TAG, e.getMessage());
-                }
-
-        }
+//        switch (item.getItemId()) {
+//            case R.id.carmera_capture:
+//                try {
+//                    getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.content_frame, CaptureFragment.newInstance())
+//                            .addToBackStack("capture_fragment")
+//                            .commit();
+//                } catch (Exception e) {
+//                    Log.i (TAG, e.getMessage());
+//                }
+//
+//        }
         return super.onOptionsItemSelected(item);
     }
 

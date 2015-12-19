@@ -45,6 +45,8 @@ public class ModelsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.makes_search);
         ButterKnife.bind(this);
+        loading_container.setVisibility(View.GONE);
+        makes_recycler.setVisibility(View.VISIBLE);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         makes_recycler.setLayoutManager(new LinearLayoutManager(this));
         List<ModelQuery> models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));

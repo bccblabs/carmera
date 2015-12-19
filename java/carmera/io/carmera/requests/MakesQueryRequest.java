@@ -31,17 +31,19 @@ public class MakesQueryRequest extends OkHttpSpiceRequest<MakeQueries> {
         super(MakeQueries.class);
         this.vehicleQuery = query;
         this.server_addr = server_addr_;
-        client.setConnectTimeout(200, TimeUnit.SECONDS);
-        client.setReadTimeout(200, TimeUnit.SECONDS);
-        client.setWriteTimeout(200, TimeUnit.SECONDS);
+
+        client.setConnectTimeout(30, TimeUnit.SECONDS);
+        client.setReadTimeout(30, TimeUnit.SECONDS);
+        client.setWriteTimeout(30, TimeUnit.SECONDS);
         client.setRetryOnConnectionFailure(false);
     }
 
     @Override
     public MakeQueries loadDataFromNetwork () throws Exception {
+        Log.i("MAKES_REQUEST", this.server_addr +  ": Request Json" +  gson.toJson(vehicleQuery));
         RequestBody body = RequestBody.create(JSON, gson.toJson(vehicleQuery));
         Request request = new Request.Builder()
-                .url(server_addr + Constants.MakesEndPoint)
+                .url(this.server_addr + Constants.MakesEndPoint)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
