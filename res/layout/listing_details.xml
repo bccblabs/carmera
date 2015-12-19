@@ -97,6 +97,7 @@
         </RelativeLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
     <com.gc.materialdesign.views.ButtonFloat
+        android:visibility="gone"
         android:id="@+id/save_listing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

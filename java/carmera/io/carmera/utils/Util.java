@@ -67,7 +67,7 @@ public class Util {
     }
 
     public static void setText (TextView textview, String text) {
-        if (text != null)
+        if (text != null && text.length() > 1)
             textview.setText(text);
         else
             textview.setVisibility(View.GONE);

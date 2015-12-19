@@ -21,7 +21,6 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 12/1/15.
  */
 public class FranchiseListings extends OkHttpSpiceRequest<Listings> {
-    private static final String TAG = "LISTINGS_REQUEST";
     private String server_addr;
     private ListingsQuery vehicleQuery;
     private OkHttpClient client = new OkHttpClient();
@@ -33,26 +32,18 @@ public class FranchiseListings extends OkHttpSpiceRequest<Listings> {
         super(Listings.class);
         this.vehicleQuery = listingQuery;
         this.server_addr = server_addr_;
-        RetryPolicy retryPolicy = getRetryPolicy();
-        client.setConnectTimeout(120, TimeUnit.SECONDS);
-        client.setReadTimeout(120, TimeUnit.SECONDS);
         client.setRetryOnConnectionFailure(false);
-        client.setWriteTimeout(120, TimeUnit.SECONDS);
-        Log.i(TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
 
     @Override
     public Listings loadDataFromNetwork () throws Exception {
-        String req_json = gson.toJson(vehicleQuery);
-        Log.i(TAG, "Request Json" + req_json);
-        RequestBody body = RequestBody.create(JSON, req_json);
+        RequestBody body = RequestBody.create(JSON, gson.toJson(vehicleQuery));
         Request request = new Request.Builder()
                 .url(server_addr + Constants.FranchiseEndPoint)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
-        Log.i (TAG,response.toString());
         return gson.fromJson (response.body().charStream(), Listings.class);
     }
 

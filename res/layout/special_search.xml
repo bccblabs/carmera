@@ -19,7 +19,7 @@
             android:id="@+id/search_viewpager">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/basic_container"
+                android:id="@+id/incentivized_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -34,16 +34,16 @@
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/basic_search"/>
+                            android:text="@string/incentivized_search"/>
                         <widgets.CanaroTextView
                             style="@style/search_subtitle"
-                            android:text="@string/basic_search_desc"/>
+                            android:text="@string/incentivized_desc"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/condition_container"
+                android:id="@+id/super_sport_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -58,16 +58,16 @@
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/conditions_search"/>
+                            android:text="@string/super_sport_search"/>
                         <widgets.CanaroTextView
                             style="@style/search_subtitle"
-                            android:text="@string/conditions_search_desc"/>
+                            android:text="@string/super_sport_desc"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/equipment_container"
+                android:id="@+id/green_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -82,16 +82,16 @@
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/equipments_search"/>
+                            android:text="@string/green_search"/>
                         <widgets.CanaroTextView
                             style="@style/search_subtitle"
-                            android:text="@string/equipments_search_desc"/>
+                            android:text="@string/green_desc"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/reliability_container"
+                android:id="@+id/four_wheel_drive_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -106,16 +106,13 @@
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/reliability_search"/>
-                        <widgets.CanaroTextView
-                            style="@style/search_subtitle"
-                            android:text="@string/reliability_search_desc"/>
+                            android:text="@string/four_wheel_drive_search"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/mechanical_container"
+                android:id="@+id/boosted_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -130,34 +127,62 @@
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/mechanical_search"/>
+                            android:text="@string/boosted_search"/>
                         <widgets.CanaroTextView
                             style="@style/search_subtitle"
-                            android:text="@string/mechanical_search_desc"/>
+                            android:text="@string/boosted_desc"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:layout_marginTop="5dp"
-                    android:layout_height="72dp"
-                    android:layout_width="match_parent"
-                    android:background="@color/demoextra_card_background_color6"
-                    android:id="@+id/sort_listings_base"
-                    android:text="@string/str_sort"/>
-                <com.gc.materialdesign.views.ButtonRectangle
-                    android:layout_marginTop="5dp"
-                    android:layout_height="72dp"
-                    android:layout_width="match_parent"
-                    android:background="@color/selected_item_color"
-                    android:id="@+id/search_listings_base"
-                    android:text="@string/start_search"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/reliable_search"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/mechanical_search_image"
+                        style="@style/search_image_view"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/reliable_search"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/reliable_desc"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
-            </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:id="@+id/top_safety_search"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/mechanical_search_image"
+                        style="@style/search_image_view"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/top_safety_search"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/top_safety_desc"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 </RelativeLayout>

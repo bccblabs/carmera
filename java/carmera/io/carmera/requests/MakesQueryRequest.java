@@ -12,16 +12,14 @@ import com.squareup.okhttp.Response;
 
 import java.util.concurrent.TimeUnit;
 
-import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.utils.Constants;
 
 /**
- * Created by bski on 12/12/15.
+ * Created by bski on 12/18/15.
  */
-public class SearchRequest extends OkHttpSpiceRequest<ListingsQuery> {
-
-    private static final String TAG = "SEARCH_REQUEST";
+public class MakesQueryRequest extends OkHttpSpiceRequest<MakeQueries> {
     private String server_addr;
     private OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
@@ -29,31 +27,24 @@ public class SearchRequest extends OkHttpSpiceRequest<ListingsQuery> {
             com.squareup.okhttp.MediaType.parse("application/json; charset=utf-8");
     private ListingsQuery vehicleQuery;
 
-    public SearchRequest (ListingsQuery query, String server_addr_) {
-        super(ListingsQuery.class);
+    public MakesQueryRequest(ListingsQuery query, String server_addr_) {
+        super(MakeQueries.class);
         this.vehicleQuery = query;
         this.server_addr = server_addr_;
-        RetryPolicy retryPolicy = getRetryPolicy();
-        client.setConnectTimeout(120, TimeUnit.SECONDS);
-        client.setReadTimeout(120, TimeUnit.SECONDS);
+        client.setConnectTimeout(200, TimeUnit.SECONDS);
+        client.setReadTimeout(200, TimeUnit.SECONDS);
+        client.setWriteTimeout(200, TimeUnit.SECONDS);
         client.setRetryOnConnectionFailure(false);
-        client.setWriteTimeout(120, TimeUnit.SECONDS);
-        Log.i(TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
     @Override
-    public ListingsQuery loadDataFromNetwork () throws Exception {
-        String req_json = gson.toJson(vehicleQuery);
-        Log.i(TAG, "Request Json" + req_json);
-        RequestBody body = RequestBody.create(JSON, req_json);
+    public MakeQueries loadDataFromNetwork () throws Exception {
+        RequestBody body = RequestBody.create(JSON, gson.toJson(vehicleQuery));
         Request request = new Request.Builder()
-                .url(server_addr + Constants.NarrowSearchEndPoint)
+                .url(server_addr + Constants.MakesEndPoint)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
-        Log.i (TAG,response.toString());
-        return gson.fromJson (response.body().charStream(), ListingsQuery.class);
+        return gson.fromJson (response.body().charStream(), MakeQueries.class);
     }
-
-
 }

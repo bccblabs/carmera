@@ -17,7 +17,6 @@ import carmera.io.carmera.utils.Constants;
  */
 public class LeadRequest extends OkHttpSpiceRequest<ResponseMessage> {
 
-    private static final String TAG = "LISTINGS_REQUEST";
     private String server_addr;
     private LeadQuery leadQuery;
     private OkHttpClient client = new OkHttpClient();
@@ -29,26 +28,18 @@ public class LeadRequest extends OkHttpSpiceRequest<ResponseMessage> {
         super(ResponseMessage.class);
         this.leadQuery = leadQuery;
         this.server_addr = server_addr_;
-        RetryPolicy retryPolicy = getRetryPolicy();
-        client.setConnectTimeout(120, TimeUnit.SECONDS);
-        client.setReadTimeout(120, TimeUnit.SECONDS);
         client.setRetryOnConnectionFailure(false);
-        client.setWriteTimeout(120, TimeUnit.SECONDS);
-        Log.i(TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
 
     @Override
     public ResponseMessage loadDataFromNetwork () throws Exception {
-        String req_json = gson.toJson(leadQuery);
-        Log.i(TAG, "Request Json" + req_json);
-        RequestBody body = RequestBody.create(JSON, req_json);
+        RequestBody body = RequestBody.create(JSON, gson.toJson(leadQuery));
         Request request = new Request.Builder()
                 .url(server_addr + Constants.LeadEndPoint)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
-        Log.i (TAG,response.toString());
         return gson.fromJson (response.body().charStream(), ResponseMessage.class);
     }
 

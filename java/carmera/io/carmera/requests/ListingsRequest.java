@@ -18,7 +18,6 @@ import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
 public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
-    private static final String TAG = "LISTINGS_REQUEST";
     private String server_addr;
     private OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
@@ -30,26 +29,17 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
         super(Listings.class);
         this.vehicleQuery = query;
         this.server_addr = server_addr_;
-        RetryPolicy retryPolicy = getRetryPolicy();
-        client.setConnectTimeout(120, TimeUnit.SECONDS);
-        client.setReadTimeout(120, TimeUnit.SECONDS);
         client.setRetryOnConnectionFailure(false);
-        client.setWriteTimeout(120, TimeUnit.SECONDS);
-        Log.i (TAG, "" + retryPolicy.getDelayBeforeRetry() + " " + retryPolicy.getRetryCount());
     }
 
     @Override
     public Listings loadDataFromNetwork () throws Exception {
-//        try {
-            String req_json = gson.toJson(vehicleQuery);
-            Log.i(TAG, "Request Json" +  req_json);
-            RequestBody body = RequestBody.create(JSON, req_json);
-            Request request = new Request.Builder()
-                    .url(server_addr + Constants.ListingsEndPoint)
-                    .post(body)
-                    .build();
-            Response response = client.newCall(request).execute();
-            Log.i (TAG,response.toString());
-            return gson.fromJson (response.body().charStream(), Listings.class);
+        RequestBody body = RequestBody.create(JSON, gson.toJson(vehicleQuery));
+        Request request = new Request.Builder()
+                .url(server_addr + Constants.ListingsEndPoint)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return gson.fromJson (response.body().charStream(), Listings.class);
     }
 }

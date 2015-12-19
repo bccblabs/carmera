@@ -18,7 +18,6 @@ import carmera.io.carmera.utils.Constants;
  */
 public class DealerReviewsRequest extends OkHttpSpiceRequest<DealerReviews> {
 
-    private static final String TAG = "DEALERSHIP_REVIEW";
     public String dealerId;
     private final Gson gson = new Gson();
     private final OkHttpClient client = new OkHttpClient();
@@ -33,27 +32,18 @@ public class DealerReviewsRequest extends OkHttpSpiceRequest<DealerReviews> {
 
     @Override
     public DealerReviews loadDataFromNetwork () throws Exception {
-        try {
+        String url = Constants.DealerReviewsEndPoint +
+                        "?dealerid="+ this.dealerId +
+                        "&limit=0%2C100&fmt=json" +
+                        "&api_key=" + Constants.EDMUNDS_API_KEY;
 
-            Log.i(TAG, this.dealerId);
-            String url = Constants.DealerReviewsEndPoint +
-                            "?dealerid="+ this.dealerId +
-                            "&limit=0%2C100&fmt=json" +
-                            "&api_key=" + Constants.EDMUNDS_API_KEY;
+        Request req = new Request.Builder().url(url)
+                .get()
+                .build();
 
-            Log.i (TAG, "url: " +  url);
-            Request req = new Request.Builder().url(url)
-                    .get()
-                    .build();
-
-            Response response = client.newCall(req).execute();
-            if (!response.isSuccessful())
-                throw new IOException(response.message());
-            return gson.fromJson (response.body().charStream(), DealerReviews.class);
-
-        } catch (IOException ie) {
-            Log.e (TAG, ie.getMessage());
-            return null;
-        }
+        Response response = client.newCall(req).execute();
+        if (!response.isSuccessful())
+            throw new IOException(response.message());
+        return gson.fromJson (response.body().charStream(), DealerReviews.class);
     }
 }

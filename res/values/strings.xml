@@ -160,7 +160,7 @@
 
 
 
-    <string name="basic_search">Basics</string>
+    <string name="basic_search">Body Type</string>
     <string name="basic_search_desc">Year, Make, Model &amp; BodyType</string>
 
     <string name="conditions_search">Conditions</string>
@@ -186,4 +186,46 @@
     <string name="pref_key_email">E-Mail</string>
     <string name="pref_key_phone">Contact Number</string>
     <string name="pref_key_name">First Name</string>
+    <string name="call">Call</string>
+
+
+
+
+    <string name="special_search">Special Search</string>
+
+    <string name="incentivized_search">Special Offers</string>
+    <string name="incentivized_desc">Find Cars With Ongoing Incentives</string>
+
+    <string name="super_sport_search">Super Sport</string>
+    <string name="super_sport_desc">Cars With 400+ Horsepower</string>
+
+    <string name="green_search">Efficiency-Minded</string>
+    <string name="green_desc">Cars With 40+ MPG</string>
+
+    <string name="four_wheel_drive_search">All Wheel Drive</string>
+
+    <string name="boosted_search">Boosted</string>
+    <string name="boosted_desc">Turbo &amp; Supercharged</string>
+
+    <string name="reliable_search">Fault Proof</string>
+    <string name="reliable_desc">No Recalls &amp; No Major Component Complaints</string>
+
+    <string name="top_safety_search">Top Safety</string>
+    <string name="top_safety_desc">Highest Rated Safety</string>
+
+    <string name="coupe_search">Coupe</string>
+
+    <string name="convertible_search">Convertible</string>
+
+    <string name="sedan_search">Sedan</string>
+
+    <string name="suv_search">SUV</string>
+
+    <string name="truck_search">Truck</string>
+
+    <string name="van_search">Van</string>
+
+    <string name="models_search">Models</string>
+
+    <string name="listings">Listings</string>
 </resources>

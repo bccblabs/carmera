@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,7 +44,6 @@ import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.ResponseMessage;
 import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.models.listings_subdocuments.Address;
-import carmera.io.carmera.models.listings_subdocuments.ContactInfo;
 import carmera.io.carmera.models.listings_subdocuments.Link;
 import carmera.io.carmera.models.queries.LeadQuery;
 import carmera.io.carmera.predicates.CostsPredicate;
@@ -137,7 +135,7 @@ public class ListingDetails extends AppCompatActivity
     }
 
     public class ListingBasicInfoExpand extends CardExpand {
-        protected TextView name, address, phone, email;
+        protected TextView name, address;
         protected View expand_container;
         protected String dealerId, franchiseId;
         public ListingBasicInfoExpand (Context cxt, String dealerId, String franchiseId) {
@@ -151,8 +149,6 @@ public class ListingDetails extends AppCompatActivity
                 return;
             name = (TextView) view.findViewById(R.id.dealership_name);
             address = (TextView) view.findViewById(R.id.dealership_address);
-            phone = (TextView) view.findViewById(R.id.dealership_phone);
-            email = (TextView) view.findViewById(R.id.dealership_email);
             expand_container = view.findViewById(R.id.expand_container);
             Util.setText(name, listing.getDealer().getName());
             Address addr = listing.getDealer().getAddress();
@@ -163,12 +159,6 @@ public class ListingDetails extends AppCompatActivity
                                                                         addr.zipcode));
             else
                 address.setVisibility(View.GONE);
-
-            ContactInfo contact = listing.dealer.contactInfo;
-            if (contact != null) {
-                Util.setText(phone, contact.phone);
-                Util.setText(email, contact.website);
-            }
 
             expand_container.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -508,7 +498,7 @@ public class ListingDetails extends AppCompatActivity
 
             loading_view.setVisibility(View.GONE);
             content_container.setVisibility(View.VISIBLE);
-
+            save_listing.setVisibility(View.VISIBLE);
         }
     }
 

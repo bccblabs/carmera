@@ -201,9 +201,9 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         }
     }
 
-//    public static ListingsFragment newInstance () {
-//        return new ListingsFragment();
-//    }
+    public static ListingsFragment newInstance () {
+        return new ListingsFragment();
+    }
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
@@ -273,7 +273,8 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Override
     public void onStart () {
         super.onStart();
-        spiceManager.start(getActivity());
+        if (!spiceManager.isStarted())
+            spiceManager.start(getActivity());
         Parcelable query_data = getArguments().getParcelable(Constants.EXTRA_LISTING_QUERY);
         if (query_data != null) {
             listingsQuery = Parcels.unwrap(query_data);
@@ -305,13 +306,5 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            Activity a = getActivity();
-            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-    }
 
 }

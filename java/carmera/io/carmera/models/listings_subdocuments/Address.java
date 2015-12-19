@@ -19,9 +19,9 @@ public class Address {
     @JsonProperty
     public String zipcode;
     @JsonProperty
-    public double latitude;
+    public Float latitude;
     @JsonProperty
-    public double longitude;
+    public Float longitude;
 
     public Address() {
     }
@@ -58,19 +58,19 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public double getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 }

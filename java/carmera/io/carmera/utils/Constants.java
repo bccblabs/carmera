@@ -13,7 +13,7 @@ public class Constants {
     public final static String FranchiseEndPoint = "/dealerListings";
     public final static String NarrowSearchEndPoint = "/narrowSearch";
     public final static String LeadEndPoint = "/lead";
-
+    public final static String MakesEndPoint = "/makes";
     public final static String EdmundsMedia = "http://media.ed.edmunds-media.com";
 
     public final static String ZIPCODE_DEFAULT = "92612";
@@ -21,6 +21,9 @@ public class Constants {
     public final static String PAGESIZE_DEFAULT = "20";
     public final static String FRANCHISE_PAGESIZE = "50";
     public final static String PAGENUM_DEFAULT = "1";
+
+
+    public final static String EXTRA_MODELS_INFO = "extra_models_info";
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";

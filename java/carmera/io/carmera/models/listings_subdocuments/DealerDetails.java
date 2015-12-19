@@ -4,6 +4,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.parceler.Parcel;
 
+import java.util.List;
+
 /**
  * Created by bski on 11/30/15.
  */
@@ -26,6 +28,9 @@ public class DealerDetails {
 
     @JsonProperty
     public Operations operations;
+
+    @JsonProperty
+    public List<String> states;
 
     public DealerDetails() {
     }
@@ -69,4 +74,13 @@ public class DealerDetails {
     public void setOperations(Operations operations) {
         this.operations = operations;
     }
+
+    public List<String> getStates() {
+        return states;
+    }
+
+    public void setStates(List<String> states) {
+        this.states = states;
+    }
+
 }

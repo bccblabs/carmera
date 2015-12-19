@@ -42,15 +42,16 @@ import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.models.Listings;
+import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.requests.ClassifyRequest;
+import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.Constants;
 
 /**
  * Created by bski on 6/3/15.
  */
-public class Base extends AppCompatActivity implements  SearchContainer.OnSearchVehiclesListener,
-                                                        CaptureFragment.OnCameraResultListener {
+public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener {
 
     private final String TAG = getClass().getCanonicalName();
 
@@ -61,8 +62,6 @@ public class Base extends AppCompatActivity implements  SearchContainer.OnSearch
     @Bind(R.id.content_hamburger) View contentHamburger;
 
     @Bind (R.id.loading) View loading;
-
-    private File root_dir;
 
     private ListingsFragment listingsFragment;
 
@@ -95,18 +94,6 @@ public class Base extends AppCompatActivity implements  SearchContainer.OnSearch
     }
 
     @Override
-    public void OnSearchListings (Parcelable query) {
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, query);
-        listingsFragment = new ListingsFragment();
-        listingsFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, listingsFragment)
-                .addToBackStack("listings_fragment")
-                .commitAllowingStateLoss();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View search, carmera, saved, settings;
@@ -115,16 +102,19 @@ public class Base extends AppCompatActivity implements  SearchContainer.OnSearch
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
         }
 
-        root_dir = new File(Environment.getExternalStorageDirectory(), "MaterialCamera");
-        root_dir.mkdirs();
-
         setContentView(R.layout.base);
         ButterKnife.bind(this);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, SearchContainer.newInstance())
-                .commit();
-
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
+
+        ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
+        if (listingsQuery != null) {
+            loading.setVisibility(View.VISIBLE);
+            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, SearchContainer.newInstance())
+                    .commit();
+        }
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -211,55 +201,16 @@ public class Base extends AppCompatActivity implements  SearchContainer.OnSearch
     @Override
     public void onStop () {
         if (spiceManager.isStarted()) {
+            spiceManager.cancelAllRequests();
             spiceManager.shouldStop();
         }
         super.onStop();
     }
 
-
     @Override
     public void onDestroy () {
         super.onDestroy();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case Constants.IMAGE_RESULT:
-//                try {
-//                    System.gc();
-//                    if (resultCode == RESULT_OK) {
-//                        try {
-//                            InputStream is = getContentResolver().openInputStream(data.getData());
-//                            Bitmap bitmap = BitmapFactory.decodeStream(is);
-//                            is.close();
-//                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                            bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.BITMAP_QUALITY, baos); //bm is the bitmap object
-//                            ImageQuery imageQuery = new ImageQuery(ParseUser.getCurrentUser().getUsername(),
-//                                            Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT));
-//                            spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
-//                        } catch (Exception e) {
-//                            Log.e (TAG, e.getMessage());
-//                        }
-//                    } else {
-//                        Toast.makeText(this, "Something happened", Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (Exception e) {
-//                    Log.e (TAG, e.getMessage());
-//                }
-//                break;
-//        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-        }
-
     }
 
     @Override

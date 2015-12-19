@@ -136,7 +136,8 @@ public class DealerReviews extends Fragment {
     @Override
     public void onStart () {
         super.onStart();
-        spiceManager.start(cxt);
+        if (!spiceManager.isStarted())
+            spiceManager.start(cxt);
         String query_data = getArguments().getString(Constants.EXTRA_DEALERID);
         if (query_data != null) {
             spiceManager.execute(new DealerReviewsRequest(query_data),

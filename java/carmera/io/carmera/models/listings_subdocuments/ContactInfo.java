@@ -18,6 +18,8 @@ public class ContactInfo {
     public String phone;
     @JsonProperty
     public String website;
+    @JsonProperty
+    public String gpContactEmail;
 
     public String getPhone() {
         return phone;
@@ -33,5 +35,13 @@ public class ContactInfo {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getGpContactEmail() {
+        return gpContactEmail;
+    }
+
+    public void setGpContactEmail(String gpContactEmail) {
+        this.gpContactEmail = gpContactEmail;
     }
 }

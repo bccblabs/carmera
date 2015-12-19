@@ -14,7 +14,6 @@ import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.utils.Constants;
 
 public class StyleDataRequest extends OkHttpSpiceRequest<StyleData> {
-    private static final String TAG = "STYLE_DATA_REQUEST";
     public String styleId;
     private final Gson gson = new Gson();
     private final OkHttpClient client = new OkHttpClient();
@@ -27,19 +26,12 @@ public class StyleDataRequest extends OkHttpSpiceRequest<StyleData> {
     }
     @Override
     public StyleData loadDataFromNetwork () throws Exception {
-        try {
-
-            Log.i(StyleData.class.getSimpleName(), this.styleId);
-            String url = String.format (this.server_addr + Constants.VehicleInfoEndPoint + "?styleId=%s",
-                    this.styleId);
-            Request req = new Request.Builder().url(url).get().build();
-            Response response = client.newCall(req).execute();
-            if (!response.isSuccessful())
-                throw new IOException(response.message());
-            return gson.fromJson (response.body().charStream(), StyleData.class);
-        } catch (IOException ie) {
-            Log.e (TAG, ie.getMessage());
-            return null;
-        }
+        String url = String.format (this.server_addr + Constants.VehicleInfoEndPoint + "?styleId=%s",
+                this.styleId);
+        Request req = new Request.Builder().url(url).get().build();
+        Response response = client.newCall(req).execute();
+        if (!response.isSuccessful())
+            throw new IOException(response.message());
+        return gson.fromJson (response.body().charStream(), StyleData.class);
     }
 }
