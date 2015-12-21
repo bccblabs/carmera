@@ -274,10 +274,11 @@
         <item name="android:layout_height">@dimen/ed_img_lg_h</item>
     </style>
     <style name="search_container">
+        <item name="android:background">@color/black_20</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
     <style name="search_title" parent="price_title">
         <item name="android:layout_gravity">center</item>

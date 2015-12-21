@@ -53,7 +53,6 @@ public class SpecialSearchFragment extends Fragment {
                 listingsQuery.car.bodyTypes.add("Coupe");
                 listingsQuery.car.bodyTypes.add("Convertible");
                 listingsQuery.car.bodyTypes.add("Sedan");
-                listingsQuery.car.bodyTypes.add("Suv");
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }

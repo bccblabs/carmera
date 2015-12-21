@@ -29,7 +29,7 @@ public class BasicSearchFragment extends Fragment {
     @Bind(R.id.suv_search) View suv_search;
     @Bind(R.id.truck_search) View truck_search;
     @Bind(R.id.van_search) View van_search;
-
+    @Bind(R.id.wagon_search) View wagon_search;
     public static BasicSearchFragment newInstance () {
         return new BasicSearchFragment();
     }
@@ -98,6 +98,17 @@ public class BasicSearchFragment extends Fragment {
                 Intent i = new Intent(getActivity(), MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
                 listingsQuery.car.bodyTypes.add("Van");
+                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                startActivityForResult(i, 1);
+            }
+        });
+
+        wagon_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MakesSearchActivity.class);
+                ListingsQuery listingsQuery = new ListingsQuery();
+                listingsQuery.car.bodyTypes.add("Wagon");
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
