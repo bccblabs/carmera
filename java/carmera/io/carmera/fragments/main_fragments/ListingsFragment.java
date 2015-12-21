@@ -1,8 +1,6 @@
 package carmera.io.carmera.fragments.main_fragments;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -15,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gc.materialdesign.views.ButtonRectangle;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.bowyer.app.fabtransitionlayout.FooterLayout;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -50,7 +50,8 @@ import carmera.io.carmera.utils.ScrollingLinearLayoutManager;
 /**
  * Created by bski on 7/13/15.
  */
-public class ListingsFragment extends Fragment implements OnResearchListener {
+public class ListingsFragment extends Fragment
+                              implements ObservableScrollViewCallbacks, OnResearchListener {
 
 
     private ListingsAdapter listingsAdapter;
@@ -59,31 +60,17 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     private ListingsQuery listingsQuery;
     private String server_address;
 
-
-    @Bind (R.id.filter_sort_btn) public View filter_sort_btn;
-
     @Bind(R.id.loading_container) public View loading_container;
-
     @Bind(R.id.listings_recylcer) public RecyclerView listings_recycler;
 
-    @Bind(R.id.sort_btn) public FloatingActionButton sort_btn;
+    @Bind (R.id.sort_filter_search) android.support.design.widget.FloatingActionButton sort_filter_search;
+    @Bind (R.id.fab_toolbar) FooterLayout fab_toolbar;
 
-    @Bind(R.id.filter_btn) public FloatingActionButton filter_btn;
+    @Bind(R.id.ic_filter) public TextView ic_sort;
+    @Bind(R.id.ic_sort) public TextView ic_filter;
+    @Bind(R.id.search) public View search;
 
-    @Bind(R.id.more_cars) public ButtonRectangle more_cars;
-
-    @OnClick (R.id.more_cars)
-    public void search_more_cars () {
-        filter_sort_btn.setVisibility(View.INVISIBLE);
-        listings_recycler.setVisibility(View.INVISIBLE);
-        more_cars.setVisibility(View.INVISIBLE);
-        loading_container.setVisibility(View.VISIBLE);
-        spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
-    }
-
-
-
-    @OnClick(R.id.sort_btn)
+    @OnClick(R.id.ic_sort)
     public void onSort () {
         SortFragment sortFragment = SortFragment.newInstance();
         Bundle args = new Bundle();
@@ -97,9 +84,9 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         sortFragment.show(getChildFragmentManager(), "sort_dialog");
     }
 
-    @OnClick(R.id.filter_btn)
+    @OnClick(R.id.ic_filter)
     public void onFilter () {
-        FilterFragment filterFragment = new FilterFragment();
+        FilterFragment filterFragment = FilterFragment.newInstance();
         Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         Bundle args = new Bundle();
         if (listingsQuery.car != null) {
@@ -119,9 +106,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onResearchCallback (ListingsQuery listingsQuery) {
         listingsAdapter.clear();
         listingsAdapter.notifyDataSetChanged();
-        filter_sort_btn.setVisibility(View.INVISIBLE);
         listings_recycler.setVisibility(View.INVISIBLE);
-        more_cars.setVisibility(View.INVISIBLE);
         loading_container.setVisibility(View.VISIBLE);
         if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
             listingsQuery.car.remaining_ids = new ArrayList<>();
@@ -141,15 +126,10 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             try {
                 if (ListingsFragment.this.isAdded()) {
                     loading_container.setVisibility(View.INVISIBLE);
-                    filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
                     listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
                         @Override
                         public void onLoadMore(int current_page) {
-                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
-                                more_cars.setVisibility(View.VISIBLE);
-                            else
-                                more_cars.setVisibility(View.INVISIBLE);
                         }
                     });
 
@@ -176,16 +156,13 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             try {
                 if (ListingsFragment.this.isAdded()) {
                     loading_container.setVisibility(View.INVISIBLE);
-                    filter_sort_btn.setVisibility(View.VISIBLE);
                     listings_recycler.setVisibility(View.VISIBLE);
                     listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
                         @Override
                         public void onLoadMore(int current_page) {
-                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
-                                more_cars.setVisibility(View.VISIBLE);
-                            else
-                                more_cars.setVisibility(View.INVISIBLE);
+                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0){
 
+                            }
                         }
                     });
                     listingsQuery = result.getListingsQuery();
@@ -225,6 +202,8 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
+        fab_toolbar.setFab(sort_filter_search);
+        search.setVisibility(View.GONE);
         listings_recycler.setLayoutManager(scrollingLinearLayoutManager);
         listingsAdapter = new ListingsAdapter();
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
@@ -244,20 +223,15 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
-                if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
-                    more_cars.setVisibility(View.VISIBLE);
-                else
-                    more_cars.setVisibility(View.INVISIBLE);
+                if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0) {
+
+                }
 
             }
         });
-        sort_btn.setIcon(R.drawable.ic_sort_white_24dp);
-        filter_btn.setIcon(R.drawable.ic_filter_list_white_24dp);
-
         Listings listings = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTINGS_DATA));
         if (listings != null) {
             Toast.makeText(getActivity(), "listings parcelable received", Toast.LENGTH_SHORT).show();
-            filter_sort_btn.setVisibility(View.VISIBLE);
             loading_container.setVisibility(View.INVISIBLE);
             listings_recycler.setVisibility(View.VISIBLE);
             listingsQuery = listings.getListingsQuery();
@@ -304,6 +278,25 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        if (scrollState == ScrollState.UP) {
+            fab_toolbar.slideOutFab();
+        } else if (scrollState == ScrollState.DOWN) {
+            fab_toolbar.slideInFab();
+        }
+    }
+
+    @Override
+    public void onScrollChanged(int i, boolean b, boolean b1) {}
+
+    @Override
+    public void onDownMotionEvent() {}
+
+    @OnClick (R.id.sort_filter_search) void show() {
+        fab_toolbar.expandFab();
     }
 
 

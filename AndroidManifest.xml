@@ -76,10 +76,6 @@
         <activity android:name=".ModelsActivity"
             android:label="@string/models_search">
         </activity>
-
-        <activity android:name=".ListingsActivity"
-            android:label="@string/listings">
-        </activity>
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false"/>

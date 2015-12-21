@@ -24,6 +24,7 @@ public class Constants {
 
 
     public final static String EXTRA_MODELS_INFO = "extra_models_info";
+    public final static String EXTRA_MAKE_STR = "extra_make_str";
 
     public static final String EXTRA_LISTING_QUERY = "extra_listing_query";
     public static final String EXTRA_LISTING_DATA = "extra_listing_data";

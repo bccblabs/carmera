@@ -119,9 +119,6 @@
     <string name="defect_consequence">Consequence</string>
     <string name="defect_description">Description</string>
 
-    <string name="str_sort">Sort</string>
-    <string name="str_filter">Filter</string>
-
     <string name="pref_key_server_addr">Server Address</string>
     <string name="pref_ip_addr_default">http://52.32.245.43:8080</string>
 
@@ -191,7 +188,7 @@
 
 
 
-    <string name="special_search">Special Search</string>
+    <string name="fast_search">Fast Search</string>
 
     <string name="incentivized_search">Special Offers</string>
     <string name="incentivized_desc">Find Cars With Ongoing Incentives</string>
@@ -225,7 +222,14 @@
 
     <string name="van_search">Van</string>
 
+    <string name="wagon_search">Wagon</string>
+
     <string name="models_search">Models</string>
 
     <string name="listings">Listings</string>
+
+
+    <string name="str_sort">Sort</string>
+    <string name="str_filter">Filter</string>
+    <string name="str_search_all">Search All</string>
 </resources>

@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/basic_search_image"/>
+                        android:src="@drawable/incentives"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/condition_search_image"/>
+                        android:src="@drawable/mechanical_search_image"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/equipment_search_image"/>
+                        android:src="@drawable/efficient"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/reliability_search_image"
+                        android:src="@drawable/all_wheel_drive"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/mechanical_search_image"
+                        android:src="@drawable/turbo"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/mechanical_search_image"
+                        android:src="@drawable/reliable"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/mechanical_search_image"
+                        android:src="@drawable/reliability_search_image"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">

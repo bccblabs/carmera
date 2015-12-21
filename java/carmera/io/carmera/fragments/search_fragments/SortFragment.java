@@ -35,6 +35,8 @@ public class SortFragment extends DialogFragment {
 
     private ListingsQuery listingsQuery;
 
+    private OnResearchListener callback = null;
+
     @Bind(R.id.sort_btn) ButtonRectangle sort_btn;
 
     @Bind (R.id.price_sort_spinner)
@@ -63,7 +65,6 @@ public class SortFragment extends DialogFragment {
 
     @OnClick(R.id.sort_btn)
     void onSort () {
-        OnResearchListener callback = (OnResearchListener) getTargetFragment();
         callback.onResearchCallback(listingsQuery);
         SortFragment.this.dismiss();
     }
@@ -75,6 +76,10 @@ public class SortFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        callback = (OnResearchListener) getTargetFragment();
+        if (callback == null) {
+            callback = (OnResearchListener) getActivity();
+        }
     }
 
     @Override

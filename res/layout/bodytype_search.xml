@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/basic_search_image"/>
+                        android:src="@drawable/coupe"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/condition_search_image"/>
+                        android:src="@drawable/convertible"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/equipment_search_image"/>
+                        android:src="@drawable/sedan"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/reliability_search_image"
+                        android:src="@drawable/suv"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">
@@ -103,6 +103,26 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/wagon"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/wagon"
+                        style="@style/search_image_view"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/wagon_search"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
                 android:id="@+id/truck_search"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
@@ -112,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/mechanical_search_image"
+                        android:src="@drawable/truck"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">
@@ -133,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/mechanical_search_image"
+                        android:src="@drawable/vw_van"
                         style="@style/search_image_view"/>
                     <LinearLayout
                         style="@style/search_container">

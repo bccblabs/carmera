@@ -6,6 +6,8 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
+import carmera.io.carmera.models.ListingsQuery;
+
 /**
  * Created by bski on 12/18/15.
  */
@@ -17,6 +19,9 @@ public class MakeQueries {
 
     @JsonProperty
     public Integer makesCount;
+
+    @JsonProperty
+    public ListingsQuery query;
 
     public MakeQueries() {
     }
@@ -35,5 +40,13 @@ public class MakeQueries {
 
     public void setMakesCount(Integer makesCount) {
         this.makesCount = makesCount;
+    }
+
+    public ListingsQuery getQuery() {
+        return query;
+    }
+
+    public void setQuery(ListingsQuery listingsQuery) {
+        this.query = listingsQuery;
     }
 }
