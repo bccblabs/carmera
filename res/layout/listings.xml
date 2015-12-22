@@ -9,6 +9,7 @@
         android:layout_gravity="center"
         android:id="@+id/loading_container"
         android:layout_width="50dp"
+        android:gravity="center"
         android:background="@color/card_pressed"
         android:layout_height="50dp"/>
     <android.support.v7.widget.RecyclerView

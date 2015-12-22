@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:layout_marginBottom="56dp"
     android:background="@color/background_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -36,6 +37,11 @@
                             style="@style/search_title"
                             android:text="@string/coupe_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_coupe"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -57,6 +63,11 @@
                             style="@style/search_title"
                             android:text="@string/convertible_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_convertible"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -78,6 +89,11 @@
                             style="@style/search_title"
                             android:text="@string/sedan_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_sedan"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -99,6 +115,11 @@
                             style="@style/search_title"
                             android:text="@string/suv_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_suv"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -120,6 +141,11 @@
                             style="@style/search_title"
                             android:text="@string/wagon_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_wagon"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -140,6 +166,11 @@
                             style="@style/search_title"
                             android:text="@string/truck_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_truck"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -161,6 +192,11 @@
                             style="@style/search_title"
                             android:text="@string/van_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_van"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

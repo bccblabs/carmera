@@ -44,6 +44,96 @@
             android:layout_height="match_parent"
             android:orientation="vertical"/>
     </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sort_filter_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/selected_item_color"
+        />
+    <com.bowyer.app.fabtransitionlayout.FooterLayout
+        android:id="@+id/fab_toolbar"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:ft_container_gravity="center"
+        app:ft_color="@color/selected_item_color">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height">
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/clear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <widgets.CanaroTextView
+                        android:clickable="true"
+                        android:textColor="@android:color/background_light"
+                        android:id="@+id/ic_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/selected_item_color"
+                        android:scaleType="center"
+                        android:text="@string/str_clear"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/filter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <widgets.CanaroTextView
+                        android:clickable="true"
+                        android:textColor="@android:color/background_light"
+                        android:id="@+id/ic_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/selected_item_color"
+                        android:scaleType="center"
+                        android:text="@string/str_filter"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <widgets.CanaroTextView
+                        android:clickable="true"
+                        android:textColor="@android:color/background_light"
+                        android:id="@+id/ic_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/selected_item_color"
+                        android:scaleType="center"
+                        android:text="@string/str_search_all"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.bowyer.app.fabtransitionlayout.FooterLayout>
+
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/text_search_view"
         android:layout_width="match_parent"

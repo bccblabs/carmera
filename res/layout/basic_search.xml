@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/parallax_image_height"
                 android:scaleType="centerCrop"
-                android:src="@drawable/basic_search_image" />
+                android:src="@drawable/low_depreciation" />
 
             <View
                 android:id="@+id/anchor"

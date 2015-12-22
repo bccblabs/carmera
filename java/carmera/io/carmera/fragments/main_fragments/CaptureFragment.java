@@ -222,7 +222,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
     @Override
     public void onDestroy() {
-        Log.i (TAG, "on destroy");
         super.onDestroy();
     }
 

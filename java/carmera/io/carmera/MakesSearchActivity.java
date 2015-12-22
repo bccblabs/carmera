@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.MakesAdapter;
+import carmera.io.carmera.comparator.MakeComparator;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.ListingsQuery;
@@ -94,6 +95,7 @@ public class MakesSearchActivity extends AppCompatActivity
                 makesAdapter.clear();
                 makes_recycler.setVisibility(View.VISIBLE);
                 makesAdapter.addAll(result.makes);
+                makesAdapter.sort(new MakeComparator());
                 makesAdapter.notifyDataSetChanged();
                 MakesSearchActivity.this.listingsQuery = result.query;
                 MakesSearchActivity.this.listingsQuery.car.models = new ArrayList<>();
@@ -135,7 +137,7 @@ public class MakesSearchActivity extends AppCompatActivity
         super.onStart();
         if (!spiceManager.isStarted())
             spiceManager.start(this);
-        if (listingsQuery != null) {
+        if (listingsQuery != null && makesAdapter.getItemCount() < 1) {
             spiceManager.execute(new MakesQueryRequest(listingsQuery, server_address), new MakesQueryListener());
         } else {
             Toast.makeText(this, "Make Query Null, Wharrrrt THEFUCK!", Toast.LENGTH_SHORT).show();
@@ -153,8 +155,8 @@ public class MakesSearchActivity extends AppCompatActivity
 
     @Override
     public void onDestroy () {
-        super.onDestroy();
         ButterKnife.unbind(this);
+        super.onDestroy();
     }
 
     @Override

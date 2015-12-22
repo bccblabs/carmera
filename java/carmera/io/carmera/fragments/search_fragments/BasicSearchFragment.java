@@ -1,9 +1,12 @@
 package carmera.io.carmera.fragments.search_fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,10 @@ import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.MakesSearchActivity;
 import carmera.io.carmera.R;
+import carmera.io.carmera.listeners.OnEditBodyTypes;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
@@ -23,6 +28,9 @@ import carmera.io.carmera.utils.Constants;
 public class BasicSearchFragment extends Fragment {
 
     public String TAG = getClass().getCanonicalName();
+    private Context cxt;
+    private OnEditBodyTypes onEditBodyTypes;
+
     @Bind(R.id.coupe_search) View coupe_search;
     @Bind(R.id.convertible_search) View convertible_search;
     @Bind(R.id.sedan_search) View sedan_search;
@@ -30,6 +38,43 @@ public class BasicSearchFragment extends Fragment {
     @Bind(R.id.truck_search) View truck_search;
     @Bind(R.id.van_search) View van_search;
     @Bind(R.id.wagon_search) View wagon_search;
+
+    @OnClick(R.id.add_coupe)
+    void addCoupe () {
+        onEditBodyTypes.OnEditBodyTypeCallback("coupe");
+    }
+
+    @OnClick(R.id.add_convertible)
+    void addConvertible () {
+        onEditBodyTypes.OnEditBodyTypeCallback("convertible");
+    }
+
+    @OnClick(R.id.add_sedan)
+    void addSedan () {
+        onEditBodyTypes.OnEditBodyTypeCallback("sedan");
+    }
+
+    @OnClick(R.id.add_suv)
+    void addSuv () {
+        onEditBodyTypes.OnEditBodyTypeCallback("suv");
+    }
+
+    @OnClick(R.id.add_truck)
+    void addTruck () {
+        onEditBodyTypes.OnEditBodyTypeCallback("truck");
+    }
+
+    @OnClick(R.id.add_van)
+    void addVan () {
+        onEditBodyTypes.OnEditBodyTypeCallback("van");
+    }
+
+    @OnClick(R.id.add_wagon)
+    void addWagon () {
+        onEditBodyTypes.OnEditBodyTypeCallback("wagon");
+    }
+
+
     public static BasicSearchFragment newInstance () {
         return new BasicSearchFragment();
     }
@@ -119,7 +164,19 @@ public class BasicSearchFragment extends Fragment {
     }
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         ButterKnife.unbind(this);
+        super.onDestroyView();
+    }
+
+
+    @Override
+    public void onAttach (Activity activity) {
+        super.onAttach(activity);
+        try {
+            cxt = getContext();
+            onEditBodyTypes = (OnEditBodyTypes) activity;
+        } catch (Exception e) {
+            Log.i(TAG, e.getMessage());
+        }
     }
 }

@@ -51,7 +51,7 @@ import carmera.io.carmera.utils.ScrollingLinearLayoutManager;
  * Created by bski on 7/13/15.
  */
 public class ListingsFragment extends Fragment
-                              implements ObservableScrollViewCallbacks, OnResearchListener {
+        implements ObservableScrollViewCallbacks, OnResearchListener {
 
 
     private ListingsAdapter listingsAdapter;
@@ -72,6 +72,7 @@ public class ListingsFragment extends Fragment
 
     @OnClick(R.id.ic_sort)
     public void onSort () {
+        Log.i (TAG, "Sort Clicked");
         SortFragment sortFragment = SortFragment.newInstance();
         Bundle args = new Bundle();
         if (listingsQuery.car != null) {
@@ -86,6 +87,7 @@ public class ListingsFragment extends Fragment
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
+        Log.i (TAG, "Filter Clicked");
         FilterFragment filterFragment = FilterFragment.newInstance();
         Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         Bundle args = new Bundle();

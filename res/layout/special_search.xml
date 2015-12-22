@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_marginBottom="56dp"
     android:orientation="vertical"
     android:background="@color/background_material_light"
     android:layout_width="match_parent"
@@ -39,11 +40,17 @@
                             style="@style/search_subtitle"
                             android:text="@string/incentivized_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_incentives"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
+
             <android.support.v7.widget.CardView
-                android:id="@+id/super_sport_search"
+                android:id="@+id/low_repairs"
                 style="@style/search_card_view"
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
@@ -53,16 +60,166 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         style="@style/search_image_view"
-                        android:src="@drawable/mechanical_search_image"/>
+                        android:src="@drawable/low_repairs"/>
                     <LinearLayout
                         style="@style/search_container">
                         <widgets.CanaroTextView
                             style="@style/search_title"
-                            android:text="@string/super_sport_search"/>
+                            android:text="@string/low_repairs"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/low_repairs_desc"/>
+                    </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_low_repairs"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/low_depreciation"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        style="@style/search_image_view"
+                        android:src="@drawable/low_depreciation"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/low_depreciation"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/low_depreciation_desc"/>
+                    </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_low_depreciation"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/low_insurance"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        style="@style/search_image_view"
+                        android:src="@drawable/low_insurance"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/low_insurance"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/low_insurance_desc"/>
+                    </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_low_insurance"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/european_search"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        style="@style/search_image_view"
+                        android:src="@drawable/european"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/european"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/european_desc"/>
+                    </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_european"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/decent_power"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        style="@style/search_image_view"
+                        android:src="@drawable/equipment_search_image"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/decent_power"/>
+                        <widgets.CanaroTextView
+                            style="@style/search_subtitle"
+                            android:text="@string/decent_power_desc"/>
+                    </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_decent_power"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/super_sport"
+                style="@style/search_card_view"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="3dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        style="@style/search_image_view"
+                        android:src="@drawable/super_sport"/>
+                    <LinearLayout
+                        style="@style/search_container">
+                        <widgets.CanaroTextView
+                            style="@style/search_title"
+                            android:text="@string/super_sport"/>
                         <widgets.CanaroTextView
                             style="@style/search_subtitle"
                             android:text="@string/super_sport_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_super_sport"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -87,6 +244,11 @@
                             style="@style/search_subtitle"
                             android:text="@string/green_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_green"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -108,6 +270,11 @@
                             style="@style/search_title"
                             android:text="@string/four_wheel_drive_search"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/add_four_wheel_drive"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -132,6 +299,11 @@
                             style="@style/search_subtitle"
                             android:text="@string/boosted_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        android:background="@android:color/background_light"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:id="@+id/add_boosted"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -156,6 +328,11 @@
                             style="@style/search_subtitle"
                             android:text="@string/reliable_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        android:background="@android:color/background_light"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:id="@+id/add_reliable"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
@@ -180,6 +357,11 @@
                             style="@style/search_subtitle"
                             android:text="@string/top_safety_desc"/>
                     </LinearLayout>
+                    <com.gc.materialdesign.views.ButtonFloatSmall
+                        style="@style/add_to_search_btn"
+                        android:background="@android:color/background_light"
+                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
+                        android:id="@+id/add_safety"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 

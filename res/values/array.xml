@@ -688,8 +688,6 @@
     </string-array>
     <string-array name="compressor_array">
         <item>Naturally Aspirated</item>
-        <item>Turbo</item>
-        <item>Supercharger</item>
     </string-array>
     <string-array name="drivetrain_array">
         <item>All Wheel Drive</item>
@@ -824,23 +822,53 @@
         <item>Night Vision</item>
     </string-array>
 
-    <string-array name="tags_array">
-        <item>German</item>
-        <item>Italian</item>
-        <item>Muscle</item>
-        <item>Has Incentives</item>
-        <item>Affordable Luxury</item>
-        <item>Hot Hatchback</item>
+    <string-array name="european_makes">
+        <item>audi</item>
+        <item>aston</item>
+        <item>bmw</item>
+        <item>ferrari</item>
+        <item>fisker</item>
+        <item>jaguar</item>
+        <item>rover</item>
+        <item>mercedes</item>
+        <item>lamborghini</item>
+        <item>lotus</item>
+        <item>maserati</item>
+        <item>mini</item>
+        <item>saab</item>
+        <item>porsche</item>
+        <item>volvo</item>
+        <item>volkswagen</item>
+    </string-array>
+    <string-array name="sport_bodytypes">
+        <item>coupe</item>
+        <item>sedan</item>
+        <item>suv</item>
+        <item>convertible</item>
+        <item>crossover</item>
+    </string-array>
+    <string-array name="force_induction">
+        <item>Turbo</item>
+        <item>Supercharger</item>
+    </string-array>
+    <string-array name="reliable_tags">
+        <item>no recalls</item>
+        <item>no major complaints</item>
+        <item>no complaints</item>
+    </string-array>
+    <string-array name="cheap_repairs_tags">
+        <item>cheap repairs</item>
+        <!--<item>acceptable repairs</item>-->
+        <item>cheap maintenance</item>
+        <!--<item>acceptable maintenance</item>-->
+    </string-array>
+    <string-array name="cheap_depreciation_tags">
+        <item>cheap depreciation</item>
+        <!--<item>acceptable depreciation</item>-->
     </string-array>
 
-    <string-array name="complaints_array">
-        <item>No Complaints</item>
-        <item>No Major Complaints</item>
+    <string-array name="cheap_insurance_tags">
+        <item>cheap insurance</item>
+        <!--<item>acceptable insurance</item>-->
     </string-array>
-
-    <string-array name="recalls_array">
-        <item>No Recalls</item>
-        <item>No Major Recalls</item>
-    </string-array>
-
 </resources>
