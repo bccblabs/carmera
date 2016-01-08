@@ -27,7 +27,7 @@
     <string name="bodyType_title">Body Type</string>
     <string name="type_to_search">Type to Search</string>
     <string name="back_to_camera">Back to Camera</string>
-    <string name="powertrain_desc">Powertrain</string>
+    <string name="powertrain_search">Powertrain</string>
     <string name="hp_desc">Horsepower</string>
     <string name="tq_desc">Torque</string>
     <string name="fuel_consumption_desc">Fuel Consumption</string>
@@ -163,7 +163,7 @@
     <string name="conditions_search">Conditions</string>
     <string name="conditions_search_desc">Used, New, and Mileage</string>
 
-    <string name="mechanical_search">Specs &amp; Performance</string>
+    <string name="mechanical_search">Powertrain</string>
     <string name="mechanical_search_desc">For Petrol-Heads</string>
 
 

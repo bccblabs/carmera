@@ -1,12 +1,8 @@
 package carmera.io.carmera;
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,11 +12,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bowyer.app.fabtransitionlayout.FooterLayout;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -30,9 +24,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 import org.parceler.Parcels;
-
 import java.util.Arrays;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,7 +56,6 @@ import carmera.io.carmera.utils.Constants;
 public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
                                                         OnSearchFragmentVisible,
                                                         OnResearchListener,
-                                                        ObservableScrollViewCallbacks,
                                                         OnEditBodyTypes,
                                                         OnEditDriveTrain,
                                                         OnEditHp,
@@ -77,9 +68,9 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     private final String TAG = getClass().getCanonicalName();
     private ListingsQuery listingsQuery = new ListingsQuery();
 
-    @Bind (R.id.ic_filter) View ic_filter;
-    @Bind (R.id.ic_clear) View ic_clear;
-
+    @Bind (R.id.ic_filter) ButtonFlat ic_filter;
+    @Bind (R.id.ic_clear) ButtonFlat ic_clear;
+    @Bind (R.id.ic_search) ButtonFlat ic_search;
 
     @Bind (R.id.fab_toolbar) View fab_toolbar;
 
@@ -156,11 +147,6 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View search, saved, settings;
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
-        }
-
         setContentView(R.layout.base);
         ButterKnife.bind(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -225,11 +211,6 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -320,29 +301,6 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
         this.listingsQuery.car.compressors.add(val);
     }
 
-    private void setFabVisibility () {
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-//        if (scrollState == ScrollState.UP) {
-//            fab_toolbar.slideOutFab();
-//        } else if (scrollState == ScrollState.DOWN) {
-//            fab_toolbar.slideInFab();
-//        }
-    }
-
-    @Override
-    public void onScrollChanged(int i, boolean b, boolean b1) {}
-
-    @Override
-    public void onDownMotionEvent() {}
-
-//    @OnClick(R.id.sort_filter_search) void show() {
-//        fab_toolbar.expandFab();
-//    }
-
-
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
@@ -375,37 +333,12 @@ public class Base extends AppCompatActivity implements CaptureFragment.OnCameraR
 
     @Override
     public void SetFabInvisible () {
-        if (fab_toolbar.getVisibility() == View.INVISIBLE)
-            Log.i (TAG, "(invisible) Toolbar Invisible");
-        if (fab_toolbar.getVisibility() == View.GONE)
-            Log.i (TAG, "(invisible)Toolbar Gone");
-        if (fab_toolbar.getVisibility() == View.VISIBLE)
-            Log.i (TAG, "(invisible)Toolbar Visible");
         fab_toolbar.setVisibility(View.INVISIBLE);
-        if (fab_toolbar.getVisibility() == View.INVISIBLE)
-            Log.i (TAG, "(#invisible)Toolbar Invisible");
-        if (fab_toolbar.getVisibility() == View.GONE)
-            Log.i (TAG, "(#invisible)Toolbar Gone");
-        if (fab_toolbar.getVisibility() == View.VISIBLE)
-            Log.i (TAG, "(#invisible)Toolbar Visible");
-
     }
 
     @Override
     public void SetFabVisible () {
-        if (fab_toolbar.getVisibility() == View.INVISIBLE)
-            Log.i (TAG, "(visible) Toolbar Invisible");
-        if (fab_toolbar.getVisibility() == View.GONE)
-            Log.i (TAG, "(visible)Toolbar Gone");
-        if (fab_toolbar.getVisibility() == View.VISIBLE)
-            Log.i (TAG, "(visible)Toolbar Visible");
         fab_toolbar.setVisibility(View.VISIBLE);
-        if (fab_toolbar.getVisibility() == View.INVISIBLE)
-            Log.i (TAG, "(#visible)Toolbar Invisible");
-        if (fab_toolbar.getVisibility() == View.GONE)
-            Log.i (TAG, "(#visible)Toolbar Gone");
-        if (fab_toolbar.getVisibility() == View.VISIBLE)
-            Log.i (TAG, "(#visible)Toolbar Visible");
     }
 
 }

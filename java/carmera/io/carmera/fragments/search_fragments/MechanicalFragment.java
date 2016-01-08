@@ -9,76 +9,80 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.parceler.Parcels;
+
 import java.util.Arrays;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.MakesSearchActivity;
 import carmera.io.carmera.R;
+import carmera.io.carmera.listeners.OnEditBodyTypes;
+import carmera.io.carmera.listeners.OnEditCompressors;
+import carmera.io.carmera.listeners.OnEditDriveTrain;
+import carmera.io.carmera.listeners.OnEditHp;
 import carmera.io.carmera.listeners.OnEditMakes;
+import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
 /**
- * Created by bski on 12/18/15.
+ * Created by bski on 1/8/16.
  */
-public class SpecialSearchFragment extends Fragment {
-    @Bind (R.id.see_incentives) View incentivized_search;
-    @Bind (R.id.see_low_depreciation) View low_depr_search;
-    @Bind (R.id.see_low_insurance) View low_insurance_search;
-    @Bind (R.id.see_low_repairs) View low_repairs_search;
-    @Bind (R.id.see_european) View european_search;
-    @Bind (R.id.see_reliable) View reliable_search;
-    @Bind (R.id.see_safety) View top_safety_search;
-
+public class MechanicalFragment extends Fragment {
     private Context cxt;
-    private OnEditTags onEditTagsListener;
-    private OnEditMakes onEditMakes;
+    @Bind(R.id.see_decent_power)
+    View decent_power;
+    @Bind(R.id.see_super_sport)
+    View super_sport;
+    @Bind(R.id.see_efficient)
+    View green_search;
+    @Bind(R.id.see_four_wheel_drive)
+    View four_wheel_drive_search;
+    @Bind(R.id.see_boosted)
+    View boosted_search;
+    private OnEditDriveTrain onEditDriveTrain;
+    private OnEditHp onEditHp;
+    private OnEditMpg onEditMpg;
+    private OnEditCompressors onEditCompressors;
     private OnSearchFragmentVisible onSearchFragmentVisible;
 
-    @OnClick(R.id.add_incentives)
-    void addIncentives () {
+    @OnClick(R.id.add_decent_power)
+    void addDecentPower() {
         showDialog();
-        onEditTagsListener.OnEditTagCallback("Has Incentives");
+        onEditHp.OnEditHpCallback(300);
     }
 
-    @OnClick(R.id.add_low_repairs)
-    void addRepairs () {
+    @OnClick(R.id.add_super_sport)
+    void addSuperSport() {
         showDialog();
-        onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_repairs_tags));
+        onEditHp.OnEditHpCallback(500);
     }
 
-    @OnClick(R.id.add_low_depreciation)
-    void addDepreciation () {
+    @OnClick(R.id.add_efficient)
+    void addMpg() {
         showDialog();
-        onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_depreciation_tags));
+        onEditMpg.OnEditMpgCallback(40);
     }
 
-    @OnClick(R.id.add_low_insurance)
-    void addInsurance () {
+    @OnClick(R.id.add_four_wheel_drive)
+    void addAllWheel() {
         showDialog();
-        onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_insurance_tags));
+        onEditDriveTrain.OnEditDriveTrainCallback("all wheel drive");
     }
 
-    @OnClick(R.id.add_european)
-    void addEuropean () {
+    @OnClick(R.id.add_boosted)
+    void addBoosted() {
         showDialog();
-        String[] europeanMakes = cxt.getResources().getStringArray(R.array.european_makes);
-        onEditMakes.OnEditMakesCallback(europeanMakes);
+        String[] compressors = cxt.getResources().getStringArray(R.array.force_induction);
+        onEditCompressors.OnEditCompressorsCallback(compressors);
     }
-
-
-    @OnClick(R.id.add_reliable)
-    void addReliable() {
-        showDialog();
-        String [] reliableTags = cxt.getResources().getStringArray(R.array.reliable_tags);
-        onEditTagsListener.OnEditTagsCallback(reliableTags);
-    }
-
 
 
     @Override
@@ -91,89 +95,68 @@ public class SpecialSearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate (R.layout.special_search, container, false);
+        View v = inflater.inflate(R.layout.mechanical_search, container, false);
         ButterKnife.bind(this, v);
-        incentivized_search.setOnClickListener(new View.OnClickListener() {
+
+        decent_power.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(cxt, MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.add("Has Incentives");
+                listingsQuery.car.minHp = 300;
+                listingsQuery.car.bodyTypes.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.sport_bodytypes)));
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
         });
-        low_depr_search.setOnClickListener(new View.OnClickListener() {
+        super_sport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(cxt, MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.cheap_depreciation_tags)));
+                listingsQuery.car.minHp = 500;
+                listingsQuery.car.bodyTypes.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.sport_bodytypes)));
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
         });
-        low_insurance_search.setOnClickListener(new View.OnClickListener() {
+        green_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(cxt, MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.cheap_insurance_tags)));
+                listingsQuery.car.minMpg = 40;
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
         });
-        low_repairs_search.setOnClickListener(new View.OnClickListener() {
+        four_wheel_drive_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(cxt, MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.cheap_repairs_tags)));
-                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-                startActivityForResult(i, 1);
-            }
-        });
-        european_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(cxt, MakesSearchActivity.class);
-                ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.makes.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.european_makes)));
+                listingsQuery.car.drivenWheels.add("all wheel drive");
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
         });
 
-        reliable_search.setOnClickListener(new View.OnClickListener() {
+        boosted_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(cxt, MakesSearchActivity.class);
                 ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.addAll (Arrays.asList(cxt.getResources().getStringArray(R.array.reliable_tags)));
+                listingsQuery.car.compressors.addAll(Arrays.asList(cxt.getResources().getStringArray(R.array.force_induction)));
                 i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
                 startActivityForResult(i, 1);
             }
         });
-
-
-        top_safety_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(cxt, MakesSearchActivity.class);
-                ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.tags.add("Top Safety");
-                i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-                startActivityForResult(i, 1);
-            }
-        });
-
         return v;
     }
 
-    public static SpecialSearchFragment newInstance () {
-        return new SpecialSearchFragment();
+    public static MechanicalFragment newInstance () {
+        return new MechanicalFragment();
     }
-
 
     private void showDialog () {
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
@@ -194,12 +177,16 @@ public class SpecialSearchFragment extends Fragment {
         try {
             cxt = getContext();
             onSearchFragmentVisible = (OnSearchFragmentVisible) activity;
-            onEditMakes = (OnEditMakes) activity;
-            onEditTagsListener = (OnEditTags) activity;
+            onEditDriveTrain = (OnEditDriveTrain) activity;
+            onEditHp = (OnEditHp) activity;
+            onEditMpg = (OnEditMpg) activity;
+            onEditCompressors = (OnEditCompressors) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() +
                     ": needs to implement CameraResultListener" );
         }
     }
+
+
 
 }
