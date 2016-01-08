@@ -252,4 +252,5 @@
 
     <string name="add_to_search">Add To Search</string>
     <string name="see_all">See All</string>
+    <string name="search_hint">Enter Car Name Here</string>
 </resources>

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.parceler.Parcels;
 
 import butterknife.Bind;
@@ -43,42 +45,57 @@ public class BasicSearchFragment extends Fragment {
 
     @OnClick(R.id.add_coupe)
     void addCoupe () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("coupe");
     }
 
     @OnClick(R.id.add_convertible)
     void addConvertible () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("convertible");
     }
 
     @OnClick(R.id.add_sedan)
     void addSedan () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("sedan");
     }
 
     @OnClick(R.id.add_suv)
     void addSuv () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("suv");
     }
 
     @OnClick(R.id.add_truck)
     void addTruck () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("truck");
     }
 
     @OnClick(R.id.add_van)
     void addVan () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("van");
     }
 
     @OnClick(R.id.add_wagon)
     void addWagon () {
+        showDialog();
         onEditBodyTypes.OnEditBodyTypeCallback("wagon");
     }
 
 
     public static BasicSearchFragment newInstance () {
         return new BasicSearchFragment();
+    }
+
+
+    private void showDialog () {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .content("New Criteria Added!")
+                .positiveText("Got It")
+                .show();
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.parceler.Parcels;
 
 import java.util.Arrays;
@@ -61,61 +63,71 @@ public class SpecialSearchFragment extends Fragment {
 
     @OnClick(R.id.add_incentives)
     void addIncentives () {
+        showDialog();
         onEditTagsListener.OnEditTagCallback("Has Incentives");
     }
 
     @OnClick(R.id.add_low_repairs)
     void addRepairs () {
+        showDialog();
         onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_repairs_tags));
     }
 
     @OnClick(R.id.add_low_depreciation)
     void addDepreciation () {
+        showDialog();
         onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_depreciation_tags));
     }
 
     @OnClick(R.id.add_low_insurance)
     void addInsurance () {
+        showDialog();
         onEditTagsListener.OnEditTagsCallback(cxt.getResources().getStringArray(R.array.cheap_insurance_tags));
     }
 
     @OnClick(R.id.add_european)
     void addEuropean () {
+        showDialog();
         String[] europeanMakes = cxt.getResources().getStringArray(R.array.european_makes);
         onEditMakes.OnEditMakesCallback(europeanMakes);
     }
 
     @OnClick(R.id.add_decent_power)
     void addDecentPower () {
+        showDialog();
         onEditHp.OnEditHpCallback(300);
     }
 
     @OnClick(R.id.add_super_sport)
     void addSuperSport () {
+        showDialog();
         onEditHp.OnEditHpCallback(500);
     }
 
     @OnClick(R.id.add_efficient)
     void addMpg () {
+        showDialog();
         onEditMpg.OnEditMpgCallback(40);
     }
 
     @OnClick(R.id.add_four_wheel_drive)
     void addAllWheel() {
+        showDialog();
         onEditDriveTrain.OnEditDriveTrainCallback("all wheel drive");
     }
 
     @OnClick(R.id.add_boosted)
     void addBoosted() {
+        showDialog();
         String [] compressors = cxt.getResources().getStringArray(R.array.force_induction);
         onEditCompressors.OnEditCompressorsCallback(compressors);
     }
 
     @OnClick(R.id.add_reliable)
     void addReliable() {
+        showDialog();
         String [] reliableTags = cxt.getResources().getStringArray(R.array.reliable_tags);
         onEditTagsListener.OnEditTagsCallback(reliableTags);
-
     }
 
 
@@ -264,6 +276,14 @@ public class SpecialSearchFragment extends Fragment {
 
     public static SpecialSearchFragment newInstance () {
         return new SpecialSearchFragment();
+    }
+
+
+    private void showDialog () {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .content("New Criteria Added!")
+                .positiveText("Got It")
+                .show();
     }
 
     @Override
