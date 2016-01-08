@@ -26,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
+import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.listeners.OnEditBodyTypes;
 import carmera.io.carmera.listeners.OnEditDriveTrain;
 import carmera.io.carmera.listeners.OnEditHp;
@@ -34,6 +35,7 @@ import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnEditTorque;
 import carmera.io.carmera.listeners.OnResearchListener;
+import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
 import carmera.io.carmera.utils.Constants;
@@ -44,6 +46,7 @@ import carmera.io.carmera.utils.Constants;
 public class SearchContainer extends Fragment {
 
     public String TAG = getClass().getCanonicalName();
+    private OnSearchFragmentVisible onSearchFragmentVisible;
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
@@ -60,8 +63,9 @@ public class SearchContainer extends Fragment {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getChildFragmentManager(),
                 FragmentPagerItems.with (getContext())
-                        .add(R.string.fast_search, SpecialSearchFragment.class)
-                        .add (R.string.basic_search, BasicSearchFragment.class)
+                        .add(R.string.str_image_search, CaptureFragment.class)
+                        .add(R.string.basic_search, BasicSearchFragment.class)
+                        .add(R.string.categories, SpecialSearchFragment.class)
                         .create()
         );
         viewPager.setAdapter(adapter);
@@ -75,4 +79,8 @@ public class SearchContainer extends Fragment {
         super.onDestroyView();
     }
 
+    @Override
+    public void onAttach (Activity activity) {
+        super.onAttach(activity);
+    }
 }

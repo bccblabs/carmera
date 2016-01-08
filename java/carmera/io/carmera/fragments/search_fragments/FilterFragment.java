@@ -282,4 +282,6 @@ public class FilterFragment extends DialogFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }

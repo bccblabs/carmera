@@ -15,17 +15,6 @@
             android:src="@drawable/ic_menu_black" />
     </android.support.v7.widget.Toolbar>
     <LinearLayout
-        android:id="@+id/check_results"
-        style="@style/LinearLayout.GuillotineItem">
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_carmera_small_light" />
-        <widgets.CanaroTextView
-            android:id="@+id/carmera"
-            style="@style/TextView.GuillotineItem"
-            android:text="@string/carmera" />
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/start_verification"
         style="@style/LinearLayout.GuillotineItem">
         <ImageView

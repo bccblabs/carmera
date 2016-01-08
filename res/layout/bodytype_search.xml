@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_marginBottom="56dp"
     android:background="@color/background_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,24 +24,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        style="@style/search_image_view"
-                        android:src="@drawable/coupe"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            style="@style/search_image_view"
+                            android:src="@drawable/coupe"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/coupe_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_coupe"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_coupe"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_coupe"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -51,24 +67,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        style="@style/search_image_view"
-                        android:src="@drawable/convertible"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            style="@style/search_image_view"
+                            android:src="@drawable/convertible"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/convertible_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_convertible"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_convertible"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_convertible"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -77,24 +110,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        style="@style/search_image_view"
-                        android:src="@drawable/sedan"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            style="@style/search_image_view"
+                            android:src="@drawable/sedan"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/sedan_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_sedan"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_sedan"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_sedan"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -103,24 +153,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/suv"
-                        style="@style/search_image_view"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/suv"
+                            style="@style/search_image_view"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/suv_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_suv"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_suv"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_suv"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -129,24 +196,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/wagon"
-                        style="@style/search_image_view"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/wagon"
+                            style="@style/search_image_view"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/wagon_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_wagon"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_wagon"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_wagon"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:id="@+id/truck_search"
@@ -154,24 +238,41 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/truck"
-                        style="@style/search_image_view"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/truck"
+                            style="@style/search_image_view"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/truck_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_truck"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_truck"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_truck"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -180,25 +281,45 @@
                 card_view:cardUseCompatPadding="true"
                 card_view:cardElevation="4dp"
                 card_view:cardCornerRadius="3dp">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/vw_van"
-                        style="@style/search_image_view"/>
-                    <LinearLayout
-                        style="@style/search_container">
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/vw_van"
+                            style="@style/search_image_view"/>
+                        <View
+                            style="@style/search_container">
+                        </View>
                         <widgets.CanaroTextView
                             style="@style/search_title"
                             android:text="@string/van_search"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/add_to_search"
+                            android:background="@android:color/background_dark"
+                            android:id="@+id/add_van"/>
+                        <com.gc.materialdesign.views.ButtonFlat
+                            style="@style/card.native.header_button_base.expand"
+                            android:text="@string/see_all"
+                            android:background="@color/selected_item_color"
+                            android:id="@+id/see_van"/>
                     </LinearLayout>
-                    <com.gc.materialdesign.views.ButtonFloatSmall
-                        style="@style/add_to_search_btn"
-                        materialdesign:iconDrawable="@drawable/ic_add_black_24dp"
-                        android:background="@android:color/background_light"
-                        android:id="@+id/add_van"/>
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="56dp"/>
         </LinearLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
-</RelativeLayout>
+</LinearLayout>

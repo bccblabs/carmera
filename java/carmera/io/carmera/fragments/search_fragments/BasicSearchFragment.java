@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import carmera.io.carmera.MakesSearchActivity;
 import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnEditBodyTypes;
+import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
@@ -30,14 +31,15 @@ public class BasicSearchFragment extends Fragment {
     public String TAG = getClass().getCanonicalName();
     private Context cxt;
     private OnEditBodyTypes onEditBodyTypes;
+    private OnSearchFragmentVisible baseFabVisibleCallback;
 
-    @Bind(R.id.coupe_search) View coupe_search;
-    @Bind(R.id.convertible_search) View convertible_search;
-    @Bind(R.id.sedan_search) View sedan_search;
-    @Bind(R.id.suv_search) View suv_search;
-    @Bind(R.id.truck_search) View truck_search;
-    @Bind(R.id.van_search) View van_search;
-    @Bind(R.id.wagon_search) View wagon_search;
+    @Bind(R.id.see_coupe) View coupe_search;
+    @Bind(R.id.see_convertible) View convertible_search;
+    @Bind(R.id.see_sedan) View sedan_search;
+    @Bind(R.id.see_suv) View suv_search;
+    @Bind(R.id.see_truck) View truck_search;
+    @Bind(R.id.see_van) View van_search;
+    @Bind(R.id.see_wagon) View wagon_search;
 
     @OnClick(R.id.add_coupe)
     void addCoupe () {
@@ -78,6 +80,15 @@ public class BasicSearchFragment extends Fragment {
     public static BasicSearchFragment newInstance () {
         return new BasicSearchFragment();
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            baseFabVisibleCallback.SetFabVisible();
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -175,6 +186,7 @@ public class BasicSearchFragment extends Fragment {
         try {
             cxt = getContext();
             onEditBodyTypes = (OnEditBodyTypes) activity;
+            baseFabVisibleCallback = (OnSearchFragmentVisible) activity;
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
         }

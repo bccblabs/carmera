@@ -188,7 +188,7 @@
 
 
 
-    <string name="fast_search">Fast Search</string>
+    <string name="categories">Categories</string>
 
     <string name="incentivized_search">Special Offers</string>
     <string name="incentivized_desc">Find Cars With Ongoing Incentives</string>
@@ -208,7 +208,7 @@
     <string name="boosted_desc">Turbo &amp; Supercharged</string>
 
     <string name="reliable_search">Fault Proof</string>
-    <string name="reliable_desc">No Recalls &amp; No Major Component Complaints</string>
+    <string name="reliable_desc">No Recalls &amp; Major Component Complaints</string>
 
     <string name="top_safety_search">Top Safety</string>
     <string name="top_safety_desc">Highest Rated Safety</string>
@@ -232,8 +232,8 @@
     <string name="low_insurance">Cheap-To-Insure</string>
     <string name="low_insurance_desc">Cars with Low Insurance Costs</string>
 
-    <string name="low_repairs">Cheap Repairs Or Maintenance</string>
-    <string name="low_repairs_desc">Cars with Low Repairs Or Maintenance Costs</string>
+    <string name="low_repairs">Cheap-To-Run</string>
+    <string name="low_repairs_desc">Cars with Low Repairs &amp; Maintenance</string>
 
     <string name="low_depreciation">Value Holder</string>
     <string name="low_depreciation_desc">Cars with Low Depreciation</string>
@@ -247,7 +247,9 @@
     <string name="str_sort">Sort</string>
     <string name="str_filter">Filter</string>
     <string name="str_search_all">Search All</string>
+    <string name="str_image_search">Image Search</string>
 
 
-
+    <string name="add_to_search">Add To Search</string>
+    <string name="see_all">See All</string>
 </resources>

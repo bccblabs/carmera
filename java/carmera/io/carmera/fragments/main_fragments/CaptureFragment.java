@@ -33,6 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
+import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.utils.Constants;
 
@@ -45,15 +46,11 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
 
     String flashMode = null;
-
     boolean isFlashMode = false;
 
     private Activity activity;
 
-    private OnCameraResultListener camera_result_callback = null;
-
     public final String TAG = getClass().getCanonicalName();
-
     private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
 
     private SeekBar zoom = null;
@@ -70,6 +67,10 @@ public class CaptureFragment extends MySupportCameraFragment implements
     @Bind (R.id.loading) public View loading;
 
 
+
+    private OnCameraResultListener camera_result_callback = null;
+    private OnSearchFragmentVisible baseFabVisibleCallback = null;
+
     public interface OnCameraResultListener {
         void OnCameraResult (ImageQuery query);
     }
@@ -85,6 +86,7 @@ public class CaptureFragment extends MySupportCameraFragment implements
         super.onAttach(activity);
         try {
             camera_result_callback = (OnCameraResultListener) activity;
+            baseFabVisibleCallback = (OnSearchFragmentVisible) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() +
                     ": needs to implement CameraResultListener" );
@@ -95,9 +97,18 @@ public class CaptureFragment extends MySupportCameraFragment implements
     public void onCreate (Bundle savedBundleInst) {
         super.onCreate(savedBundleInst);
         activity = getActivity();
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            baseFabVisibleCallback.SetFabInvisible();
+        }
         new Thread() {
             @Override
-            public void run () {
+            public void run() {
                 SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
                 setHost(builder.useFullBleedPreview(true).build());
             }
@@ -224,7 +235,5 @@ public class CaptureFragment extends MySupportCameraFragment implements
     public void onDestroy() {
         super.onDestroy();
     }
-
-
 
 }

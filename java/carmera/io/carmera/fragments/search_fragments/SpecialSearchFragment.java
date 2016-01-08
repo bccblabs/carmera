@@ -27,6 +27,7 @@ import carmera.io.carmera.listeners.OnEditMakes;
 import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnEditTorque;
+import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 
@@ -34,18 +35,18 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 12/18/15.
  */
 public class SpecialSearchFragment extends Fragment {
-    @Bind (R.id.incentivized_search) View incentivized_search;
-    @Bind (R.id.low_depreciation) View low_depr_search;
-    @Bind (R.id.low_insurance) View low_insurance_search;
-    @Bind (R.id.low_repairs) View low_repairs_search;
-    @Bind (R.id.european_search) View european_search;
-    @Bind (R.id.decent_power) View decent_power;
-    @Bind (R.id.super_sport) View super_sport;
-    @Bind (R.id.green_search) View green_search;
-    @Bind (R.id.four_wheel_drive_search) View four_wheel_drive_search;
-    @Bind (R.id.boosted_search) View boosted_search;
-    @Bind (R.id.reliable_search) View reliable_search;
-    @Bind (R.id.top_safety_search) View top_safety_search;
+    @Bind (R.id.see_incentives) View incentivized_search;
+    @Bind (R.id.see_low_depreciation) View low_depr_search;
+    @Bind (R.id.see_low_insurance) View low_insurance_search;
+    @Bind (R.id.see_low_repairs) View low_repairs_search;
+    @Bind (R.id.see_european) View european_search;
+    @Bind (R.id.see_decent_power) View decent_power;
+    @Bind (R.id.see_super_sport) View super_sport;
+    @Bind (R.id.see_efficient) View green_search;
+    @Bind (R.id.see_four_wheel_drive) View four_wheel_drive_search;
+    @Bind (R.id.see_boosted) View boosted_search;
+    @Bind (R.id.see_reliable) View reliable_search;
+    @Bind (R.id.see_safety) View top_safety_search;
 
     public String TAG = getClass().getCanonicalName();
     private Context cxt;
@@ -56,6 +57,7 @@ public class SpecialSearchFragment extends Fragment {
     private OnEditMakes onEditMakes;
     private OnEditMpg onEditMpg;
     private OnEditCompressors onEditCompressors;
+    private OnSearchFragmentVisible onSearchFragmentVisible;
 
     @OnClick(R.id.add_incentives)
     void addIncentives () {
@@ -93,7 +95,7 @@ public class SpecialSearchFragment extends Fragment {
         onEditHp.OnEditHpCallback(500);
     }
 
-    @OnClick(R.id.add_green)
+    @OnClick(R.id.add_efficient)
     void addMpg () {
         onEditMpg.OnEditMpgCallback(40);
     }
@@ -114,6 +116,16 @@ public class SpecialSearchFragment extends Fragment {
         String [] reliableTags = cxt.getResources().getStringArray(R.array.reliable_tags);
         onEditTagsListener.OnEditTagsCallback(reliableTags);
 
+    }
+
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            onSearchFragmentVisible.SetFabVisible();
+        }
     }
 
     @Override
@@ -270,6 +282,7 @@ public class SpecialSearchFragment extends Fragment {
         super.onAttach(activity);
         try {
             cxt = getContext();
+            onSearchFragmentVisible = (OnSearchFragmentVisible) activity;
             onEditBodyTypes = (OnEditBodyTypes) activity;
             onEditDriveTrain = (OnEditDriveTrain) activity;
             onEditHp = (OnEditHp) activity;
