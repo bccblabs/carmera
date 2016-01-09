@@ -695,21 +695,21 @@
         <item>Rear Wheel Drive</item>
     </string-array>
     <string-array name="output_array">
-        <item>100+</item>
-        <item>200+</item>
-        <item>300+</item>
-        <item>400+</item>
-        <item>500+</item>
-        <item>600+</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
     </string-array>
     <string-array name="mpg_array">
-        <item>10+</item>
-        <item>15+</item>
-        <item>20+</item>
-        <item>25+</item>
-        <item>30+</item>
-        <item>35+</item>
-        <item>40+</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
     </string-array>
     <string-array name="min_msrp_array">
         <item>5000</item>

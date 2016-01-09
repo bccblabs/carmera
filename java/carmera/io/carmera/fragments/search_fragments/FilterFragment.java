@@ -4,26 +4,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
-import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
+import com.rey.material.widget.Spinner;
 
 import org.parceler.Parcels;
-
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnResearchListener;
-import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.KeyPairBoolData;
@@ -39,7 +36,7 @@ public class FilterFragment extends DialogFragment {
 
     private OnResearchListener callback = null;
 
-    @Bind(R.id.filter_btn) ButtonRectangle filter_btn;
+    @Bind(R.id.filter_btn) ButtonFlat filter_btn;
 
     @Bind (R.id.makes_spinner)
     MultiSpinner makes_spnr;
@@ -68,9 +65,19 @@ public class FilterFragment extends DialogFragment {
     @Bind (R.id.tags_spinner)
     MultiSpinner tags_spnr;
 
+
+    @Bind (R.id.mpg_spinner) Spinner mpg_spinner;
+    @Bind (R.id.hp_spinner) Spinner hp_spinner;
+    @Bind (R.id.tq_spinner) Spinner tq_spinner;
+
     @OnClick (R.id.filter_btn)
     void onFilter () {
         callback.onResearchCallback(listingsQuery);
+        FilterFragment.this.dismiss();
+    }
+
+    @OnClick (R.id.cancel_button)
+    void onCancel () {
         FilterFragment.this.dismiss();
     }
 
@@ -107,6 +114,38 @@ public class FilterFragment extends DialogFragment {
 
 
     private void init_spinners() {
+        final ArrayAdapter<String> mpg_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.mpg_array));
+
+        final ArrayAdapter<String> output_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.output_array));
+
+        mpg_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        output_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+
+        mpg_spinner.setAdapter(mpg_adapter);
+        hp_spinner.setAdapter(output_adapter);
+        tq_spinner.setAdapter(output_adapter);
+
+        mpg_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.car.minMpg = Integer.parseInt(mpg_adapter.getItem(position));
+            }
+        });
+        hp_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.car.minHp = Integer.parseInt(output_adapter.getItem(position));
+            }
+        });
+        tq_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.car.minTq = Integer.parseInt(output_adapter.getItem(position));
+            }
+        });
+
         if (listingsQuery.car.makes.size() > 0) {
             makes_spnr.setItems(Util.getSelectedValues(listingsQuery.car.makes), "Filter Makes", -1, new MultiSpinner.MultiSpinnerListener() {
                 @Override

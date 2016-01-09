@@ -15,7 +15,7 @@
     <string name="drawer_close">Close</string>
     <string name="context_menu">Select</string>
     <string name="done">Done</string>
-    <string name="cancel_upload">Cancel Upload</string>
+    <string name="cancel">Cancel</string>
     <string name="edmunds_baseurl">http://media.ed.edmunds-media.com</string>
     <string name="aws_server">http://52.27.126.141:3000</string>
     <string name="loading_listings">Loading Listings...</string>
@@ -253,4 +253,8 @@
     <string name="add_to_search">Add To Search</string>
     <string name="see_all">See All</string>
     <string name="search_hint">Enter Car Name Here</string>
+
+    <string name="min_mpg">Mininum MPG</string>
+    <string name="min_hp">Mininum Horsepower</string>
+    <string name="min_tq">Mininum Torque</string>
 </resources>

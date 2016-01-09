@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/basic_container"
     android:orientation="vertical"
     android:background="@color/background_material_light"
@@ -56,12 +57,100 @@
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <com.gc.materialdesign.views.ButtonRectangle
-            android:layout_margin="28dp"
-            android:layout_height="50dp"
+
+        <RelativeLayout
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:background="@color/selected_item_color"
-            android:id="@+id/filter_btn"
-            android:text="@string/str_filter"/>
+            android:layout_height="wrap_content">
+            <widgets.CanaroTextView
+                android:textColor="@android:color/background_dark"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_mpg"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/mpg_spinner"
+                style="@style/Material.Widget.Spinner"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="64dp"
+                android:padding="8dp"
+                android:gravity="end"
+                app:v_styleId="@array/spinner_no_arrow"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <widgets.CanaroTextView
+                android:textColor="@android:color/background_dark"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_hp"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/hp_spinner"
+                style="@style/Material.Widget.Spinner"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="64dp"
+                android:padding="8dp"
+                android:gravity="end"
+                app:v_styleId="@array/spinner_no_arrow"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <widgets.CanaroTextView
+                android:textColor="@android:color/background_dark"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_tq"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/tq_spinner"
+                style="@style/Material.Widget.Spinner"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="64dp"
+                android:padding="8dp"
+                android:gravity="end"
+                app:v_styleId="@array/spinner_no_arrow"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp">
+            <com.gc.materialdesign.views.ButtonFlat
+                style="@style/card.header_button_base.expand"
+                android:background="@android:color/background_dark"
+                android:id="@+id/cancel_button"
+                android:text="@string/cancel"/>
+            <com.gc.materialdesign.views.ButtonFlat
+                style="@style/card.header_button_base.expand"
+                android:background="@color/selected_item_color"
+                android:id="@+id/filter_btn"
+                android:text="@string/str_filter"/>
+
+        </LinearLayout>
     </LinearLayout>
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

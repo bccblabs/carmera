@@ -45,11 +45,21 @@
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:layout_margin="28dp"
-        android:layout_height="50dp"
-        android:layout_width="match_parent"
-        android:background="@color/selected_item_color"
-        android:id="@+id/sort_btn"
-        android:text="@string/str_sort"/>
+    <LinearLayout
+        android:layout_gravity="end"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp">
+        <com.gc.materialdesign.views.ButtonFlat
+            style="@style/card.header_button_base.expand"
+            android:background="@android:color/background_dark"
+            android:id="@+id/cancel_button"
+            android:text="@string/cancel"/>
+        <com.gc.materialdesign.views.ButtonFlat
+            style="@style/card.header_button_base.expand"
+            android:background="@color/selected_item_color"
+            android:id="@+id/sort_btn"
+            android:text="@string/str_sort"/>
+    </LinearLayout>
 </LinearLayout>
