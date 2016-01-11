@@ -7,10 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.bowyer.app.fabtransitionlayout.FooterLayout;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -22,6 +25,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,10 +34,13 @@ import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.MakesAdapter;
 import carmera.io.carmera.comparator.MakeComparator;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
+import carmera.io.carmera.listeners.OnMakeSelectedListener;
 import carmera.io.carmera.listeners.OnResearchListener;
+import carmera.io.carmera.listeners.OnSeeAllModelsListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
+import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
 import carmera.io.carmera.utils.Constants;
 
@@ -41,7 +48,10 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 12/18/15.
  */
 public class MakesSearchActivity extends AppCompatActivity
-                                 implements ObservableScrollViewCallbacks, OnResearchListener {
+                                 implements ObservableScrollViewCallbacks,
+                                            OnResearchListener,
+                                            OnMakeSelectedListener,
+                                            OnSeeAllModelsListener {
 
     private ListingsQuery listingsQuery;
     private String server_address;
@@ -60,13 +70,30 @@ public class MakesSearchActivity extends AppCompatActivity
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        filterFragment.setArguments(args);
-        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
     }
 
+    @Override
+    public void OnSeeAllModelsCallback (String name, List<ModelQuery> models) {
+        Intent i = new Intent(MakesSearchActivity.this, ModelsActivity.class);
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRA_MODELS_INFO, Parcels.wrap(models));
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
+        args.putParcelable(Constants.EXTRA_MAKE_STR, Parcels.wrap(name));
+        i.putExtras(args);
+        startActivity(i);
+
+    }
+
+    @Override
+    public void OnMakeSelected (String name) {
+        new MaterialDialog.Builder(this)
+                .title("Search Filters")
+                .content(name + " addeded")
+                .positiveText("OK")
+                .theme(Theme.LIGHT)
+                .show();
+        this.listingsQuery.car.makes.add(name);
+    }
 
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
@@ -110,25 +137,27 @@ public class MakesSearchActivity extends AppCompatActivity
         ButterKnife.bind(this);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
+        listingsQuery.car.makes = new ArrayList<>();
+        listingsQuery.car.years = new ArrayList<>();
         fab_toolbar.setFab(sort_filter_search);
         makes_recycler.setLayoutManager(new LinearLayoutManager(this));
-        makesAdapter = new MakesAdapter();
-        makesAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<MakeQuery>() {
-            @Override
-            public void onItemClick(View v, MakeQuery item, int position) {
-                Intent i = new Intent(MakesSearchActivity.this, ModelsActivity.class);
-                Bundle args = new Bundle();
-                args.putParcelable(Constants.EXTRA_MODELS_INFO, Parcels.wrap(item.models));
-                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
-                args.putParcelable(Constants.EXTRA_MAKE_STR, Parcels.wrap(item.make));
-                i.putExtras(args);
-                startActivity(i);
-            }
-        });
+        makesAdapter = new MakesAdapter(MakesSearchActivity.this, MakesSearchActivity.this);
         makes_recycler.setAdapter(makesAdapter);
         makes_recycler.setHasFixedSize(false);
         sort.setVisibility(View.GONE);
         search.setVisibility(View.GONE);
+
+        ic_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterFragment filterFragment = FilterFragment.newInstance();
+                Bundle args = new Bundle();
+                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                filterFragment.setArguments(args);
+                filterFragment.show(getSupportFragmentManager(), "filter_dialog");
+            }
+        });
+
     }
 
 

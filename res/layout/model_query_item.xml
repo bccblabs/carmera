@@ -10,31 +10,61 @@
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="4dp"
         card_view:cardCornerRadius="3dp">
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                style="@style/search_image_view"
-                android:id="@+id/model_image_holder"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    style="@style/search_image_view"
+                    android:id="@+id/model_image_holder"/>
+                <LinearLayout
+                    style="@style/search_container">
+                    <widgets.CanaroTextView
+                        style="@style/search_title"
+                        android:id="@+id/model_desc"/>
+                    <widgets.CanaroTextView
+                        style="@style/search_subtitle"
+                        android:id="@+id/years_desc"/>
+                    <widgets.CanaroTextView
+                        style="@style/search_subtitle"
+                        android:id="@+id/make_subtitle"/>
+                    <widgets.CanaroTextView
+                        style="@style/search_subtitle"
+                        android:id="@+id/perf_desc"/>
+                    <widgets.CanaroTextView
+                        style="@style/search_subtitle"
+                        android:id="@+id/mpg_desc"/>
+                </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
-                style="@style/search_container">
-                <widgets.CanaroTextView
-                    style="@style/search_title"
-                    android:id="@+id/model_desc"/>
-                <widgets.CanaroTextView
-                    style="@style/search_subtitle"
-                    android:id="@+id/years_desc"/>
-                <widgets.CanaroTextView
-                    style="@style/search_subtitle"
-                    android:id="@+id/make_subtitle"/>
-                <widgets.CanaroTextView
-                    style="@style/search_subtitle"
-                    android:id="@+id/perf_desc"/>
-                <widgets.CanaroTextView
-                    style="@style/search_subtitle"
-                    android:id="@+id/mpg_desc"/>
+                android:layout_marginStart="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+                <com.gc.materialdesign.views.ButtonFlat
+                    style="@style/card.native.header_button_base.expand"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:text="@string/add_to_search"
+                    android:background="@android:color/background_dark"
+                    android:id="@+id/add_model"/>
+                <com.gc.materialdesign.views.ButtonFlat
+                    style="@style/card.native.header_button_base.expand"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:text="@string/see_listings"
+                    android:background="@color/selected_item_color"
+                    android:id="@+id/see_model_listings"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"/>
             </LinearLayout>
-        </RelativeLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

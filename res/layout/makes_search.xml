@@ -11,13 +11,21 @@
         android:layout_gravity="center"
         android:background="@color/card_pressed"
         android:layout_height="50dp"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/makes_recycler"
-        android:layout_alignParentTop="true"
-        android:visibility="gone"
-        android:background="@android:color/transparent"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/makes_recycler"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="56dp"/>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/sort_filter_search"
@@ -39,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:ft_container_gravity="center"
-        app:ft_color="@color/selected_item_color">
+        app:ft_color="@android:color/background_light">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -60,12 +68,12 @@
 
                     <widgets.CanaroTextView
                         android:clickable="true"
-                        android:textColor="@android:color/background_light"
+                        android:textColor="@android:color/background_dark"
                         android:id="@+id/ic_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
+                        android:background="@android:color/background_light"
                         android:scaleType="center"
                         android:text="@string/str_sort"/>
                 </RelativeLayout>
@@ -78,12 +86,12 @@
 
                     <widgets.CanaroTextView
                         android:clickable="true"
-                        android:textColor="@android:color/background_light"
+                        android:textColor="@android:color/background_dark"
                         android:id="@+id/ic_filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
+                        android:background="@android:color/background_light"
                         android:scaleType="center"
                         android:text="@string/str_filter"/>
                 </RelativeLayout>
@@ -96,12 +104,12 @@
 
                     <widgets.CanaroTextView
                         android:clickable="true"
-                        android:textColor="@android:color/background_light"
+                        android:textColor="@android:color/background_dark"
                         android:id="@+id/ic_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
+                        android:background="@android:color/background_light"
                         android:scaleType="center"
                         android:text="@string/str_search_all"/>
                 </RelativeLayout>

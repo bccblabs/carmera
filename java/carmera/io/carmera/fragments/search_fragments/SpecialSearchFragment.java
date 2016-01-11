@@ -177,8 +177,9 @@ public class SpecialSearchFragment extends Fragment {
 
     private void showDialog () {
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .title("Search Filters")
                 .content("New Criteria Added!")
-                .positiveText("Got It")
+                .positiveText("OK")
                 .show();
     }
 

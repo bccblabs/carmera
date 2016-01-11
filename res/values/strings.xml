@@ -245,16 +245,18 @@
 
     <string name="str_clear">Clear</string>
     <string name="str_sort">Sort</string>
-    <string name="str_filter">Filter</string>
-    <string name="str_search_all">Search All</string>
+    <string name="str_filter">Edit Search</string>
+    <string name="str_search_all">See Cars</string>
     <string name="str_image_search">Image Search</string>
 
 
-    <string name="add_to_search">Add To Search</string>
+    <string name="add_to_search">Select</string>
     <string name="see_all">See All</string>
     <string name="search_hint">Enter Car Name Here</string>
 
     <string name="min_mpg">Mininum MPG</string>
     <string name="min_hp">Mininum Horsepower</string>
     <string name="min_tq">Mininum Torque</string>
+    <string name="see_listings">See Listings</string>
+    <string name="ok">Ok</string>
 </resources>

@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 
+import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import org.parceler.Parcels;
@@ -37,7 +38,7 @@ public class SortFragment extends DialogFragment {
 
     private OnResearchListener callback = null;
 
-    @Bind(R.id.sort_btn) ButtonRectangle sort_btn;
+    @Bind(R.id.sort_btn) ButtonFlat sort_btn;
 
     @Bind (R.id.price_sort_spinner)
     MultiSpinner price_sort_spinner;

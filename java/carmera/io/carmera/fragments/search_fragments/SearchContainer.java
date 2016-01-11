@@ -70,6 +70,7 @@ public class SearchContainer extends Fragment {
                         .create()
         );
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(4);
         viewPagerTab.setViewPager(viewPager);
         return v;
     }

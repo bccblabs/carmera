@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.bowyer.app.fabtransitionlayout.FooterLayout;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -25,6 +27,8 @@ import butterknife.OnClick;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ModelsAdapter;
 import carmera.io.carmera.comparator.ModelComparator;
+import carmera.io.carmera.listeners.OnAddModelListener;
+import carmera.io.carmera.listeners.OnSeeModelListingsListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.utils.Constants;
@@ -32,11 +36,14 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 12/18/15.
  */
-public class ModelsActivity extends AppCompatActivity implements ObservableScrollViewCallbacks {
+public class ModelsActivity extends AppCompatActivity implements ObservableScrollViewCallbacks,
+                                                                 OnAddModelListener,
+                                                                 OnSeeModelListingsListener {
 
     private List<ModelQuery> models;
     private ModelsAdapter modelsAdapter;
     private SharedPreferences sharedPreferences;
+    private ListingsQuery listingsQuery;
     @Bind(R.id.makes_recycler) RecyclerView makes_recycler;
     @Bind(R.id.loading_container) public View loading_container;
 
@@ -45,6 +52,33 @@ public class ModelsActivity extends AppCompatActivity implements ObservableScrol
 
     @Bind (R.id.filter) View filter;
     @Bind (R.id.sort) View sort;
+
+
+    @Override
+    public void OnSeeModels (List<Integer> styleIds) {
+        Intent i = new Intent(ModelsActivity.this, Base.class);
+        Bundle args = new Bundle();
+        ListingsQuery listingsQuery = new ListingsQuery();
+        listingsQuery.car.remaining_ids = styleIds;
+        listingsQuery.api.pagenum = 1;
+        listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+        listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
+        listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
+        i.putExtras(args);
+        startActivity(i);
+    }
+
+    @Override
+    public void onModelAddedCallback (String name) {
+        new MaterialDialog.Builder(this)
+                .title("Search Filters")
+                .content(name + " addeded")
+                .theme(Theme.LIGHT)
+                .positiveText("OK")
+                .show();
+        listingsQuery.car.models.add (name);
+    }
 
     @OnClick(R.id.ic_search)
     public void onSearch () {
@@ -76,29 +110,15 @@ public class ModelsActivity extends AppCompatActivity implements ObservableScrol
         makes_recycler.setLayoutManager(new LinearLayoutManager(this));
         models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        modelsAdapter = new ModelsAdapter();
-        modelsAdapter.addAll (models);
+        modelsAdapter = new ModelsAdapter(ModelsActivity.this, ModelsActivity.this);
+        modelsAdapter.addAll(models);
         modelsAdapter.sort(new ModelComparator());
-        modelsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<ModelQuery>() {
-            @Override
-            public void onItemClick(View v, ModelQuery item, int position) {
-                Intent i = new Intent(ModelsActivity.this, Base.class);
-                Bundle args = new Bundle();
-                ListingsQuery listingsQuery = new ListingsQuery();
-                listingsQuery.car.remaining_ids = item.styleIds;
-                listingsQuery.api.pagenum = 1;
-                listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-                listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-                listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
-                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
-                i.putExtras(args);
-                startActivity(i);
-            }
-        });
 
         makes_recycler.setAdapter(modelsAdapter);
         makes_recycler.setHasFixedSize(false);
         fab_toolbar.setFab(sort_filter_search);
+
+        listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
     }
 
     @Override
