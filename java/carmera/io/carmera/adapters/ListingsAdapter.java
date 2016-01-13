@@ -55,7 +55,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         }
 
         if (listing.getListedSince() != null) {
-            String desc = "listed since " + listing.listedSince;
+            String desc = "Listed Since " + listing.listedSince;
             viewHolder.listed_since.setText(desc);
         }
         else

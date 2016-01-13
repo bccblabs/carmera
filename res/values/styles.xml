@@ -272,6 +272,12 @@
         <item name="android:layout_width">@dimen/ed_img_lg_w</item>
         <item name="android:layout_height">@dimen/ed_img_lg_h</item>
     </style>
+    <style name="search_image_view_staggered">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_width">@dimen/ed_img_sm_w</item>
+        <item name="android:layout_height">@dimen/ed_img_sm_h</item>
+    </style>
+
     <style name="search_container">
         <item name="android:background">@color/black_20</item>
         <item name="android:layout_centerInParent">true</item>

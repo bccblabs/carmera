@@ -36,5 +36,4 @@ public class StaggeredCardTwoLines extends Card {
         Util.setText(title, this.title_str);
         Util.setText(subtitle, this.subtitle_str);
     }
-
 }
