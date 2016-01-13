@@ -47,17 +47,7 @@ public class Equipments extends Fragment {
         List<Equipment> equipments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_EQUIPMENTS));
         for (int i = 0; i < equipments.size(); i++) {
             Equipment equipment = equipments.get(i);
-            if (i % 5 == 0) {
-                cards.add(new CarInfoCard(cxt, null, equipment.getName(), equipment.getDescription(), R.drawable.card_select0));
-            } else if (i % 5 == 1) {
-                cards.add(new CarInfoCard(cxt, null, equipment.getName(), equipment.getDescription(), R.drawable.card_select1));
-            } else if (i % 5 == 2) {
-                cards.add(new CarInfoCard(cxt, null, equipment.getName(), equipment.getDescription(), R.drawable.card_select2));
-            } else if (i % 5 == 3) {
-                cards.add(new CarInfoCard(cxt, null, equipment.getName(), equipment.getDescription(), R.drawable.card_select3));
-            } else if (i % 5 == 4) {
-                cards.add(new CarInfoCard(cxt, null, equipment.getName(), equipment.getDescription(), R.drawable.card_select4));
-            }
+            cards.add(new CarInfoCard(cxt, equipment.getName(), equipment.getDescription(), R.drawable.card_select0));
         }
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;

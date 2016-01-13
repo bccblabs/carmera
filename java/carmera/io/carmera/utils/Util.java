@@ -25,9 +25,12 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class Util {
 
@@ -126,4 +129,8 @@ public class Util {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
+    public static String formatCurrency (Number i) {
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        return fmt.format(i.intValue());
+    }
 }

@@ -47,17 +47,7 @@ public class Dimensions extends Fragment {
         List<DataEntryFloat> dimensions = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_DIMENSIONS));
         for (int i = 0; i < dimensions.size(); i++) {
             DataEntryFloat dimension = dimensions.get(i);
-            if (i % 5 == 0) {
-                cards.add(new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select0));
-            } else if (i % 5 == 1) {
-                cards.add(new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select1));
-            } else if (i % 5 == 2) {
-                cards.add(new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select2));
-            } else if (i % 5 == 3) {
-                cards.add(new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select3));
-            } else if (i % 5 == 4) {
-                cards.add(new CarInfoCard(cxt, null, dimension.getName(), String.format("%.1f", dimension.getValue()), R.drawable.card_select4));
-            }
+            cards.add(new CarInfoCard(cxt, dimension.getName(), String.format("%.1f cubic inches", dimension.getValue()), R.drawable.card_select0));
         }
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;

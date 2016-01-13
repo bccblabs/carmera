@@ -19,7 +19,12 @@ import java.util.ArrayList;
 
 import carmera.io.carmera.CarmeraApp;
 import carmera.io.carmera.R;
+import carmera.io.carmera.cards.StaggeredCardTwoLines;
 import carmera.io.carmera.utils.Constants;
+import carmera.io.carmera.utils.Util;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
+import it.gmariotti.cardslib.library.internal.Card;
 
 /**
  * Created by bski on 11/11/15.
@@ -36,47 +41,33 @@ public class Costs extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.pie_chart, container, false);
-        PieChart pie_chart = (PieChart) v.findViewById(R.id.chartview);
-        ArrayList<String> xVals = new ArrayList<>();
-        ArrayList<Entry> entries = new ArrayList<>();
+        View v = inflater.inflate(R.layout.staggered_cards_fragment, container, false);
         carmera.io.carmera.models.car_data_subdocuments.Costs src_data = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_COSTS));
+        ArrayList <Card> cards = new ArrayList<>();
 
         if (src_data.depreciation != null && src_data.depreciation > 0) {
-            xVals.add("Depreciation");
-            entries.add (new Entry(src_data.depreciation, 0));
+            StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), getString(R.string.depreciation), Util.formatCurrency(src_data.depreciation) , R.drawable.card_bgd0);
+            cards.add(StaggeredCardTwoLines);
         }
         if (src_data.repairs != null && src_data.repairs > 0) {
-            xVals.add("Repairs");
-            entries.add (new Entry(src_data.repairs, 1));
+            StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), getString(R.string.repairs), Util.formatCurrency(src_data.repairs) , R.drawable.card_bgd0);
+            cards.add(StaggeredCardTwoLines);
         }
         if (src_data.maintenance != null && src_data.maintenance > 0) {
-            xVals.add("Maintenance");
-            entries.add (new Entry(src_data.maintenance, 2));
+            StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), getString(R.string.maintenance), Util.formatCurrency(src_data.maintenance) , R.drawable.card_bgd0);
+            cards.add(StaggeredCardTwoLines);
         }
         if (src_data.insurance != null && src_data.insurance > 0) {
-            xVals.add("Insurance");
-            entries.add (new Entry(src_data.insurance, 3));
+            StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), getString(R.string.insurance), Util.formatCurrency(src_data.insurance) , R.drawable.card_bgd0);
+            cards.add(StaggeredCardTwoLines);
         }
 
-        PieDataSet pie_data_set = new PieDataSet(entries, "Complaints");
-        pie_data_set.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        pie_data_set.setSliceSpace(2f);
-        pie_data_set.setValueTextColor(R.color.card_pressed);
-        pie_data_set.setValueTextSize(12f);
-        PieData pie_data = new PieData(xVals, pie_data_set);
-        Typeface canaro = CarmeraApp.canaroExtraBold;
-        pie_data.setValueTypeface(canaro);
-
-
-        pie_chart.setCenterTextTypeface(canaro);
-        pie_chart.setCenterTextSize(10f);
-        pie_chart.setCenterTextTypeface(canaro);
-        pie_chart.getLegend().setEnabled(false);
-        pie_chart.setHoleRadius(20f);
-        pie_chart.setTransparentCircleRadius(25f);
-        pie_chart.setDescription("");
-        pie_chart.setData(pie_data);
+        CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);
+        CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) v.findViewById(R.id.data_staggered_grid_view);
+        cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+        if (cardGridStaggeredView != null) {
+            cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
+        }
         return v;
     }
 }

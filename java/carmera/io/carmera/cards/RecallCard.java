@@ -39,25 +39,11 @@ public class RecallCard extends Card {
             view.findViewById(R.id.recall_num_row).setVisibility(View.GONE);
         }
 
-        if (recall.numberOfVehiclesAffected != null) {
-            TextView tv = (TextView) view.findViewById(R.id.num_effected);
-            tv.setText(recall.numberOfVehiclesAffected.toString());
-        } else {
-            view.findViewById(R.id.num_effected_row).setVisibility(View.GONE);
-        }
-
         if (recall.ownerNotificationDate != null) {
             TextView tv = (TextView) view.findViewById(R.id.notification_date);
             tv.setText(recall.ownerNotificationDate);
         } else {
             view.findViewById(R.id.notification_row).setVisibility(View.GONE);
-        }
-
-        if (recall.component != null) {
-            TextView tv = (TextView) view.findViewById(R.id.recall_component);
-            tv.setText(recall.component);
-        } else {
-            view.findViewById(R.id.component_row).setVisibility(View.GONE);
         }
         if (recall.subcomponent != null) {
             TextView tv = (TextView) view.findViewById(R.id.recall_subcomponent);

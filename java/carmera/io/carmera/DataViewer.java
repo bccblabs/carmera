@@ -83,10 +83,10 @@ public class DataViewer extends FragmentActivity {
         ButterKnife.bind(this);
         FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
 
+        add_page(R.string.recalls, Constants.EXTRA_RECALLS, Recalls.class, page_creator);
         add_page(R.string.complaints, Constants.EXTRA_CMPL, Complaints.class, page_creator);
         add_page(R.string.safety, Constants.EXTRA_SAFETY, Safety.class, page_creator);
         add_page(R.string.safety_equipments, Constants.EXTRA_SAFETY, SafetyEquipments.class, page_creator);
-        add_page(R.string.recalls, Constants.EXTRA_RECALLS, Recalls.class, page_creator);
 
         add_page(R.string.performance, Constants.EXTRA_POWERTRAIN, Performance.class, page_creator);
         add_page(R.string.dimensions, Constants.EXTRA_DIMENSIONS, Dimensions.class, page_creator);

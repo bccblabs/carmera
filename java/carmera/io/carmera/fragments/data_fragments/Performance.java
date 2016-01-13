@@ -1,10 +1,8 @@
 package carmera.io.carmera.fragments.data_fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +10,14 @@ import android.view.ViewGroup;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.CompositeHeader;
-import carmera.io.carmera.cards.EngineCard;
-import carmera.io.carmera.cards.PowertrainMetrics;
-import carmera.io.carmera.cards.TransmissionCard;
+import carmera.io.carmera.cards.StaggeredCardTwoLines;
 import carmera.io.carmera.models.car_data_subdocuments.Powertrain;
 import carmera.io.carmera.utils.Constants;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
-import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
-
 /**
  * Created by bski on 11/11/15.
  */
@@ -35,50 +28,79 @@ public class Performance extends Fragment {
     }
 
     @Override
-    public void onCreate (Bundle savedBundle) {
-        super.onCreate(savedBundle);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate (R.layout.cards_recycler, container, false);
-        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
-        Context cxt = getActivity();
-        cardRecyclerView.setHasFixedSize(true);
-        cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
+        View v = inflater.inflate (R.layout.staggered_cards_fragment, container, false);
+        ArrayList <Card> cards = new ArrayList<>();
 
-        List<Card> cards = new ArrayList<>();
         Powertrain powertrain = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_POWERTRAIN));
         if (powertrain.engine != null) {
-            EngineCard engineCard = new EngineCard(cxt, powertrain.engine, R.drawable.card_bgd1);
-            CompositeHeader hdr = new CompositeHeader (cxt, powertrain.engine.desc,
-                                                            null,  "Engine Parameters");
-            engineCard.addCardHeader(hdr);
-            cards.add(engineCard);
+            StaggeredCardTwoLines descCard = new StaggeredCardTwoLines(getActivity(), "Engine" ,powertrain.engine.desc , R.drawable.card_bgd0);
+            cards.add(descCard);
+
+            if (powertrain.engine.displacement != null) {
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Displacement", String.format("%.0f", powertrain.engine.displacement) , R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+            if (powertrain.engine.compressorType != null) {
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Compressor", powertrain.engine.compressorType, R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+            if (powertrain.engine.horsepower != null) {
+                String desc = String.format("%d", powertrain.engine.horsepower);
+                if (powertrain.engine.rpm != null && powertrain.engine.rpm.horsepower != null)
+                    desc = String.format("%s @ %d rpm", desc, powertrain.engine.rpm.horsepower);
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Horsepower", desc, R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+            if (powertrain.engine.torque != null) {
+                String desc = String.format("%d", powertrain.engine.torque);
+                if (powertrain.engine.rpm != null && powertrain.engine.rpm.torque != null)
+                    desc = String.format("%s @ %d rpm", desc, powertrain.engine.rpm.torque);
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Torque", desc , R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+            if (powertrain.engine.totalValves != null) {
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Values Count", Integer.toString(powertrain.engine.totalValves) , R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+
         }
         if (powertrain.transmission != null) {
-            TransmissionCard transmissionCard = new TransmissionCard(cxt,
-                                                                    powertrain.transmission,
-                                                                    powertrain.drivenWheels,
-                                                                    R.drawable.card_bgd2);
-            CompositeHeader hdr = new CompositeHeader (cxt, null, null,  "Drivetrain");
-            transmissionCard.addCardHeader(hdr);
-            cards.add(transmissionCard);
+            if (powertrain.transmission.numberOfSpeeds != null &&
+                    powertrain.transmission.transmissionType != null) {
+                String txn_desc = String.format("%s-speed %s", powertrain.transmission.numberOfSpeeds, powertrain.transmission.transmissionType);
+                StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Transmission", txn_desc, R.drawable.card_bgd0);
+                cards.add(staggeredCardTwoLines);
+            }
+        }
+        if (powertrain.drivenWheels != null) {
+            StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Drivetrain", powertrain.drivenWheels , R.drawable.card_bgd0);
+            cards.add(staggeredCardTwoLines);
         }
 
-        if ((powertrain.mpg != null && powertrain.mpg.desc != null) || powertrain.zero_sixty != null ||
-                powertrain.turning_diameter != null || powertrain.fuel_capacity != null) {
-            String mpg_desc = "";
-            if (powertrain.mpg != null)
-                mpg_desc = powertrain.mpg.desc;
-            PowertrainMetrics card = new PowertrainMetrics(cxt, mpg_desc,
-                    powertrain.zero_sixty, powertrain.fuel_capacity, powertrain.turning_diameter, R.drawable.card_bgd3);
-            CompositeHeader hdr = new CompositeHeader (cxt, null, null,  "More Specs");
-            card.addCardHeader(hdr);
-            cards.add(card);
+        if (powertrain.mpg != null) {
+            StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "MPG", powertrain.mpg.desc , R.drawable.card_bgd0);
+            cards.add(staggeredCardTwoLines);
         }
-        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
+        if (powertrain.zero_sixty != null) {
+            StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Zero-To-Sixty", String.format("%.1f", powertrain.zero_sixty) , R.drawable.card_bgd0);
+            cards.add(staggeredCardTwoLines);
+        }
+        if (powertrain.fuel_capacity != null) {
+            StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Fuel Capacity", String.format("%.1f", powertrain.fuel_capacity) , R.drawable.card_bgd0);
+            cards.add(staggeredCardTwoLines);
+        }
+        if (powertrain.turning_diameter != null) {
+            StaggeredCardTwoLines staggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "Turning Diameter", String.format("%.1f", powertrain.turning_diameter) , R.drawable.card_bgd0);
+            cards.add(staggeredCardTwoLines);
+        }
+        CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);
+        CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) v.findViewById(R.id.data_staggered_grid_view);
+        cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+        if (cardGridStaggeredView != null) {
+            cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
+        }
         return v;
 
     }

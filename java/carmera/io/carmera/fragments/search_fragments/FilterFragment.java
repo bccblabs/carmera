@@ -111,7 +111,14 @@ public class FilterFragment extends DialogFragment {
 
         return builder.create();
     }
-
+    private int findPos (ArrayAdapter<String> adapter, String item) {
+        for (Integer i = 0; i < adapter.getCount(); i++) {
+            Log.i (getClass().getCanonicalName(), "arrayadapter item " +  adapter.getItem(i));
+            if (item.equals(adapter.getItem(i)))
+                return i;
+        }
+        return -1;
+    }
 
     private void init_spinners() {
         final ArrayAdapter<String> mpg_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
@@ -126,6 +133,10 @@ public class FilterFragment extends DialogFragment {
         mpg_spinner.setAdapter(mpg_adapter);
         hp_spinner.setAdapter(output_adapter);
         tq_spinner.setAdapter(output_adapter);
+        Log.i(getClass().getCanonicalName(), "min mpg " + listingsQuery.car.minMpg);
+        mpg_spinner.setSelection(findPos(mpg_adapter, Integer.toString(listingsQuery.car.minMpg)));
+        hp_spinner.setSelection(findPos(output_adapter, Integer.toString(listingsQuery.car.minHp)));
+        tq_spinner.setSelection(findPos(output_adapter, Integer.toString(listingsQuery.car.minTq)));
 
         mpg_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override

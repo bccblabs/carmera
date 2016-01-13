@@ -63,7 +63,6 @@ public class DealerInfoFragment extends Fragment {
                             dealerInfo.getAsJsonObject("address").get("zipcode").getAsString()
                     );
                     CarInfoCard contactCard = new CarInfoCard(cxt,
-                            null,
                             dealerInfo.get("name").getAsString(),
                             address,
                             R.drawable.card_bgd1
@@ -81,7 +80,7 @@ public class DealerInfoFragment extends Fragment {
                             dealerInfo.getAsJsonObject("operations").get("Sunday").getAsString()
                     );
 
-                    CarInfoCard operationsCard = new CarInfoCard(cxt, null, null, operations, R.drawable.card_bgd2);
+                    CarInfoCard operationsCard = new CarInfoCard(cxt, operations, null, R.drawable.card_bgd2);
 
                     dealer_ops_card.setCard(operationsCard);
 

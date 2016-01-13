@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.CarInfoCard;
+import carmera.io.carmera.cards.StaggeredCardSingleLine;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
@@ -51,17 +51,7 @@ public class Comments extends Fragment {
 
         for (int i = 0; i < comments.size(); i++) {
             String txt = comments.get(i);
-            if (i % 5 == 0) {
-                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select0));
-            } else if (i % 5 == 1) {
-                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select1));
-            } else if (i % 5 == 2) {
-                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select2));
-            } else if (i % 5 == 3) {
-                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select3));
-            } else if (i % 5 == 4) {
-                cards.add(new CarInfoCard(cxt, null, txt, null, R.drawable.card_select4));
-            }
+            cards.add(new StaggeredCardSingleLine(cxt, txt, R.drawable.card_select0));
         }
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;

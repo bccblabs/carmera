@@ -18,8 +18,14 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
 import carmera.io.carmera.cards.IIHSCard;
 import carmera.io.carmera.cards.NHTSA;
+import carmera.io.carmera.cards.StaggeredCardTwoLines;
 import carmera.io.carmera.models.car_data_subdocuments.CategoryValue;
+import carmera.io.carmera.models.car_data_subdocuments.CategoryValuePair;
+import carmera.io.carmera.models.car_data_subdocuments.DataEntry;
 import carmera.io.carmera.utils.Constants;
+import carmera.io.carmera.utils.Util;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
+import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
@@ -36,41 +42,56 @@ public class Safety extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cards_recycler, container, false);
-        CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
-        Context cxt = getActivity();
-        cardRecyclerView.setHasFixedSize(true);
-        cardRecyclerView.setLayoutManager(new LinearLayoutManager(cxt));
-        List<Card> cards = new ArrayList<>();
+        View v = inflater.inflate(R.layout.staggered_cards_fragment, container, false);
+        ArrayList <Card> cards = new ArrayList<>();
         carmera.io.carmera.models.car_data_subdocuments.Safety safety = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_SAFETY));
 
         if (safety.iihs != null && safety.iihs.size() > 0) {
-            IIHSCard iihs = new IIHSCard(cxt, null, null, "IIHS Ratings", safety.iihs);
-            iihs.init();
-            iihs.setBackgroundColorResourceId(R.color.selected_item_color);
-            cards.add(iihs);
+            for (CategoryValuePair entry: safety.iihs) {
+                StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "IIHS " + entry.getCategory(), entry.getValue() , R.drawable.card_bgd0);
+                cards.add(StaggeredCardTwoLines);
+            }
         }
 
         if (safety.nhtsa != null && safety.nhtsa.overall != null) {
-            String overall = String.format("Overall: %s / 5", safety.nhtsa.overall);
+            String overall = String.format("%s / 5", safety.nhtsa.overall);
             if (overall != null) {
-                cards.add(new CarInfoCard(cxt, null, overall, null, R.drawable.card_bgd1));
+                StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "NHTSA Overall Rating", overall , R.drawable.card_bgd0);
+                cards.add(StaggeredCardTwoLines);
             }
         }
         if (safety.nhtsa != null && safety.nhtsa.categories.size() > 0) {
             for (CategoryValue categoryValue : safety.nhtsa.categories) {
                 if (categoryValue.options.size() < 1)
                     continue;
-                String overall = null;
-                if (categoryValue.overall != null)
-                    overall = String.format("Overall: %s / 5", categoryValue.overall);
-                NHTSA nhtsa = new NHTSA(cxt, null, overall, categoryValue.category, categoryValue.options);
-                nhtsa.init();
-                nhtsa.setBackgroundColorResourceId(R.color.selected_item_color);
-                cards.add(nhtsa);
+                if (categoryValue.overall != null) {
+                    StaggeredCardTwoLines StaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "NHTSA " + categoryValue.category , String.format("Overall: %s / 5", categoryValue.overall) , R.drawable.card_bgd0);
+                    cards.add(StaggeredCardTwoLines);
+                }
+                for (DataEntry entry : categoryValue.options) {
+                    if (entry.name != null && entry.value != null) {
+                        if (entry.name.toLowerCase().contains("risk of rollover")) {
+                            StaggeredCardTwoLines entryStaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "NHTSA " + entry.name , entry.value + " %" , R.drawable.card_bgd0);
+                            cards.add(entryStaggeredCardTwoLines);
+                        } else if (entry.value.toLowerCase().contains("not tested") || entry.value.toLowerCase().contains("tip")) {
+                            StaggeredCardTwoLines entryStaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "NHTSA " + entry.name , entry.value, R.drawable.card_bgd0);
+                            cards.add(entryStaggeredCardTwoLines);
+                        } else {
+                            StaggeredCardTwoLines entryStaggeredCardTwoLines = new StaggeredCardTwoLines(getActivity(), "NHTSA " + entry.name , entry.value + " / 5" , R.drawable.card_bgd0);
+                            cards.add(entryStaggeredCardTwoLines);
+                        }
+                    }
+                }
             }
         }
-        cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
+
+        CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);
+        CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) v.findViewById(R.id.data_staggered_grid_view);
+        cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+        if (cardGridStaggeredView != null) {
+            cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
+        }
+
         return v;
     }
 }

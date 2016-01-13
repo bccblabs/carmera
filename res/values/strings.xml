@@ -80,18 +80,24 @@
 
 
     <string name="msrp">MSRP</string>
-    <string name="private_party">Private</string>
+    <string name="private_party">Private Party</string>
     <string name="invoice">Invoice</string>
-    <string name="tmv">Used</string>
-    <string name="trade_in">Trade-In</string>
+    <string name="tmv">Used True Market Value</string>
+    <string name="trade_in">Used Trade-In</string>
 
-    <string name="rating_fun_to_drive">Fun</string>
-    <string name="rating_build_quality">Build</string>
-    <string name="rating_reliability">Reliable</string>
+    <string name="rating_fun_to_drive">Fun-To-Drive</string>
+    <string name="rating_build_quality">Build Quality</string>
+    <string name="rating_reliability">Reliability</string>
     <string name="rating_comfort">Comfort</string>
-    <string name="rating_performance">Fast</string>
-    <string name="rating_int">Int.</string>
-    <string name="rating_ext">Ext.</string>
+    <string name="rating_performance">Performance</string>
+    <string name="rating_int">Interior</string>
+    <string name="rating_ext">Exterior</string>
+
+
+    <string name="insurance">Insurance</string>
+    <string name="depreciation">Depreciation</string>
+    <string name="repairs">Repairs</string>
+    <string name="maintenance">Maintenance</string>
 
 
     <string name="compressor">Compressor</string>
@@ -109,7 +115,7 @@
     <string name="fuel_capacity">Fuel Capacity</string>
     <string name="turning_diameter">Turning Diameter</string>
 
-    <string name="recall_num">Total Recalled</string>
+    <string name="recall_num">Recall Number</string>
     <string name="num_effected">Total Effected</string>
     <string name="notification_date">Notification Date</string>
     <string name="recall_component">Component</string>
@@ -183,7 +189,6 @@
     <string name="pref_key_email">E-Mail</string>
     <string name="pref_key_phone">Contact Number</string>
     <string name="pref_key_name">First Name</string>
-    <string name="call">Call</string>
 
 
 
@@ -259,4 +264,8 @@
     <string name="min_tq">Mininum Torque</string>
     <string name="see_listings">See Listings</string>
     <string name="ok">Ok</string>
+
+    <string name="dealership">Dealership</string>
+    <string name="call">Call</string>
+    <string name="save">Save</string>
 </resources>

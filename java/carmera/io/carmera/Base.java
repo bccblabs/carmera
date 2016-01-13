@@ -1,9 +1,10 @@
 package carmera.io.carmera;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -53,7 +52,7 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 6/3/15.
  */
-public class Base extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
+public class Base extends ActionBarActivity implements CaptureFragment.OnCameraResultListener,
                                                         OnSearchFragmentVisible,
                                                         OnResearchListener,
                                                         OnEditBodyTypes,

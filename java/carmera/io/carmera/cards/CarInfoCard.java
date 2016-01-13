@@ -17,14 +17,12 @@ import me.gujun.android.taggroup.TagGroup;
  * Created by bski on 11/12/15.
  */
 public class CarInfoCard extends Card {
-    protected List<String> tags;
     protected int BgdResId;
     protected String desc0, desc1;
     protected TextView desc0_tv, desc1_tv;
 
-    public CarInfoCard (Context cxt, @Nullable List<String> tags, String desc0, @Nullable String desc1, int background) {
+    public CarInfoCard (Context cxt, String desc0, @Nullable String desc1, int background) {
         super (cxt, R.layout.tags_card_content);
-        this.tags = tags;
         this.BgdResId = background;
         this.desc0 = desc0;
         this.desc1 = desc1;
@@ -34,11 +32,6 @@ public class CarInfoCard extends Card {
         if (view == null)
             return;
         this.setBackgroundResourceId(BgdResId);
-        TagGroup tagGroup = (TagGroup) view.findViewById(R.id.tags);
-        if (this.tags != null && this.tags.size() > 0)
-            tagGroup.setTags(this.tags);
-        else
-            tagGroup.setVisibility(View.GONE);
         desc0_tv = (TextView) view.findViewById(R.id.desc_line0);
         desc1_tv = (TextView) view.findViewById(R.id.desc_line1);
         Util.setText(desc0_tv, this.desc0);

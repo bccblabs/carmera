@@ -12,12 +12,17 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.squareup.picasso.Picasso;
+
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.listings_subdocuments.Link;
+import carmera.io.carmera.utils.Util;
 
 /**
  * Created by bski on 7/15/15.
@@ -36,18 +41,25 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
     public void onBindViewHolder (ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         final Listing listing = getItem(i);
-        viewHolder.car_info.setText(String.format("%d %s %s", listing.getYear().getYear(),
+        NumberFormat milefmt = NumberFormat.getIntegerInstance(Locale.US);
+        viewHolder.car_info.setText(String.format("%d %s %s %s", listing.getYear().getYear(),
                 listing.getMake().getName(),
-                listing.getModel().getName()));
+                listing.getModel().getName(),
+                listing.getStyle().getTrim()));
 
-        viewHolder.trim_info.setText(listing.getStyle().getTrim());
-        if (listing.getPrices() != null)
-            viewHolder.price.setText(String.format("$%.0f", listing.getMin_price()));
+        if (listing.getPrices() != null) {
+            Util.setText(viewHolder.price, Util.formatCurrency(listing.getMin_price()));
+        }
+        if (listing.getMileage() > 0) {
+            Util.setText(viewHolder.mileage, String.format("%s miles", milefmt.format(listing.getMileage())));
+        }
+
+        if (listing.getListedSince() != null) {
+            String desc = "listed since " + listing.listedSince;
+            viewHolder.listed_since.setText(desc);
+        }
         else
-            viewHolder.price.setVisibility(View.GONE);
-        viewHolder.mileage.setText(String.format("%d Miles", listing.getMileage()));
-
-
+            viewHolder.listed_since.setVisibility(View.GONE);
         try {
             List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
             if (links.size() > 0) {
@@ -62,11 +74,11 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.car_info) public TextView car_info;
-        @Bind(R.id.trim_info) public TextView trim_info;
+        @Bind(R.id.listed_since) public TextView listed_since;
+        @Bind(R.id.car_info_trim) public TextView car_info;
         @Bind(R.id.listing_photo) public ImageView listingImage;
-        @Bind(R.id.price) public TextView price;
-        @Bind(R.id.mileage) public TextView mileage;
+        @Bind(R.id.listing_price) public TextView price;
+        @Bind(R.id.listing_mileage) public TextView mileage;
         public ViewHolder (View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

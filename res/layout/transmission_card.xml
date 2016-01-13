@@ -3,32 +3,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TableLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow
             android:id="@+id/txn_speeds_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/txn_speeds"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/txn_speeds"/>
         </TableRow>
         <TableRow
             android:id="@+id/txn_type_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/txn_type"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/txn_type"/>
         </TableRow>
         <TableRow
             android:id="@+id/drivetrain_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/drivetrain"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/drivetrain"/>
         </TableRow>

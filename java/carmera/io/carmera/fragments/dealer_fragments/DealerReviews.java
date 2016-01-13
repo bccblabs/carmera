@@ -67,37 +67,11 @@ public class DealerReviews extends Fragment {
                                     String.format("Rating %.1f/5", txt.totalRating),
                                     null, txt.date);
 
-                            if (i % 5 == 0) {
-                                CarInfoCard card = new CarInfoCard(cxt, null, txt.title,
+                                CarInfoCard card = new CarInfoCard(cxt, txt.title,
                                                                         txt.reviewBody,
                                                                         R.drawable.card_select0);
                                 card.addCardHeader(hdr);
                                 cards.add(card);
-                            } else if (i % 5 == 1) {
-                                CarInfoCard card = new CarInfoCard(cxt, null, txt.title,
-                                                                        txt.reviewBody,
-                                                                        R.drawable.card_select1);
-                                card.addCardHeader(hdr);
-                                cards.add(card);
-                            } else if (i % 5 == 2) {
-                                CarInfoCard card = new CarInfoCard(cxt, null, txt.title,
-                                                                        txt.reviewBody,
-                                                                        R.drawable.card_select2);
-                                card.addCardHeader(hdr);
-                                cards.add(card);
-                            } else if (i % 5 == 3) {
-                                CarInfoCard card = new CarInfoCard(cxt, null, txt.title,
-                                                                        txt.reviewBody,
-                                                                        R.drawable.card_select3);
-                                card.addCardHeader(hdr);
-                                cards.add(card);
-                            } else if (i % 5 == 4) {
-                                CarInfoCard card = new CarInfoCard(cxt, null, txt.title,
-                                                                        txt.reviewBody,
-                                                                        R.drawable.card_select4);
-                                card.addCardHeader(hdr);
-                                cards.add(card);
-                            }
                         }
 
                     }

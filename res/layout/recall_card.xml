@@ -3,76 +3,65 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TableLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow
             android:id="@+id/recall_num_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/recall_num"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/recall_num"/>
         </TableRow>
         <TableRow
-            android:id="@+id/num_effected_row">
-            <widgets.CanaroTextView
-                style="@style/entry_title"
-                android:text="@string/num_effected"/>
-            <widgets.CanaroTextView
-                style="@style/entry_title"
-                android:id="@+id/num_effected"/>
-        </TableRow>
-        <TableRow
             android:id="@+id/notification_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/notification_date"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/notification_date"/>
         </TableRow>
         <TableRow
-            android:id="@+id/component_row">
-            <widgets.CanaroTextView
-                style="@style/entry_title"
-                android:text="@string/recall_component"/>
-            <widgets.CanaroTextView
-                style="@style/entry_title"
-                android:id="@+id/recall_component"/>
-        </TableRow>
-        <TableRow
             android:id="@+id/subcomponent_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/recall_subcomponent"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/recall_subcomponent"/>
         </TableRow>
         <TableRow
             android:id="@+id/manu_from_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/manu_from"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/manu_from"/>
         </TableRow>
         <TableRow
             android:id="@+id/manu_to_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/manu_to"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/manu_to"/>
         </TableRow>
     </TableLayout>
-    <widgets.CanaroTextView
+    <TextView
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         style="@style/entry_title"
         android:id="@+id/defect_consequence"/>
-    <widgets.CanaroTextView
+    <TextView
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="16dp"
         style="@style/entry_title"
         android:id="@+id/defect_description"/>
 </LinearLayout>

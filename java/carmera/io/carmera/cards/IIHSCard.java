@@ -23,19 +23,15 @@ public class IIHSCard extends CardWithList {
     private String text0, text1, title;
     private List<CategoryValuePair> values;
     private Context context;
-    public IIHSCard (Context cxt, String txt0, String txt1, String title,
-                     List<CategoryValuePair> values) {
+    public IIHSCard (Context cxt, List<CategoryValuePair> values) {
         super (cxt);
         this.context = cxt;
-        this.text0 = txt0;
-        this.text1 = txt1;
-        this.title = title;
         this.values = values;
     }
 
     @Override
     protected CardHeader initCardHeader() {
-        CompositeHeader hdr = new CompositeHeader (context, text0, text1, title);
+        CompositeHeader hdr = new CompositeHeader (context, null, null, "IIHS Ratings");
         return hdr;
     }
 

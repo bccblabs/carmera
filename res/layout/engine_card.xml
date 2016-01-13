@@ -3,50 +3,51 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TableLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow
             android:id="@+id/hp_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/horsepower"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/horsepower"/>
         </TableRow>
         <TableRow
             android:id="@+id/tq_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/torque"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/torque"/>
         </TableRow>
         <TableRow
             android:id="@+id/displacement_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/displacement"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/displacement"/>
         </TableRow>
         <TableRow
             android:id="@+id/compressor_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/compressor"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/compressor"/>
         </TableRow>
         <TableRow
             android:id="@+id/valves_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/valves"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/valves"/>
         </TableRow>

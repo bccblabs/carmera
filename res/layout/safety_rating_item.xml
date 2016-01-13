@@ -7,31 +7,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:minHeight="55dp">
-
-        <widgets.CanaroTextView
-            style="@style/entry_title"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:textColor="@android:color/primary_text_dark"
+            android:textAllCaps="true"
             android:id="@+id/key"
-            android:layout_centerInParent="true"
+            />
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:layout_alignParentLeft="true"/>
-
-
-        <widgets.CanaroTextView
-            style="@style/entry_title"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/primary_text_dark"
             android:id="@+id/value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textSize="10sp"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+            />
+
+    </LinearLayout>
 </LinearLayout>

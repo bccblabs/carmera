@@ -3,41 +3,42 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TableLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow
             android:id="@+id/mpg_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/mpg"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/mpg"/>
         </TableRow>
         <TableRow
             android:id="@+id/zs_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/zero_sixty"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/zero_sixty"/>
         </TableRow>
         <TableRow
             android:id="@+id/fc_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/fuel_capacity"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/fuel_capacity"/>
         </TableRow>
         <TableRow
             android:id="@+id/td_row">
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:text="@string/turning_diameter"/>
-            <widgets.CanaroTextView
+            <TextView
                 style="@style/entry_title"
                 android:id="@+id/turning_diameter"/>
         </TableRow>

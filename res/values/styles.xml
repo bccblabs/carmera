@@ -1,8 +1,8 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="android:textColor">@color/card_pressed</item>
-        <item name="android:textColorPrimary">@color/card_pressed</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -30,7 +30,7 @@
     <style name="EntryStyle" parent="DescStyle">
         <item name="android:layout_column">1</item>
         <item name="android:layout_gravity">end</item>
-        <item name="android:layout_margin">3dp</item>
+        <item name="android:paddingTop">4dp</item>
         <item name="android:textColor">@android:color/background_light</item>
     </style>
     <style name="SmallDescStyle" parent="DescStyle">
@@ -113,7 +113,6 @@
     </style>
     <style name="listing_title_small" parent="listing_title">
         <item name="android:layout_gravity">top|start</item>
-        <item name="android:layout_margin">5dp</item>
     </style>
     <style name="entry_title" parent="listing_title">
         <item name="android:layout_gravity">top|start</item>
@@ -260,11 +259,11 @@
     </style>
 
 
-    <style name="search_card_view" parent="@style/card.native">
-        <item name="android:layout_width">match_parent</item>
+    <style name="search_card_view" parent="@style/grid_card">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <!--<item name="android:layout_marginLeft">5dp</item>-->
-        <!--<item name="android:layout_marginRight">5dp</item>-->
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
@@ -277,7 +276,7 @@
         <item name="android:background">@color/black_20</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">56dp</item>
     </style>
     <style name="search_title" parent="price_title">
