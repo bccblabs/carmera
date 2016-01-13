@@ -338,6 +338,11 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void SetFabVisible () {
         fab_toolbar.setVisibility(View.VISIBLE);
+        FilterFragment filterFragment = FilterFragment.newInstance();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        filterFragment.setArguments(args);
+        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
     }
 
 }

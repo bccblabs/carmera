@@ -64,9 +64,7 @@ public class SearchContainer extends Fragment {
                 getChildFragmentManager(),
                 FragmentPagerItems.with (getContext())
                         .add(R.string.str_image_search, CaptureFragment.class)
-                        .add(R.string.basic_search, BasicSearchFragment.class)
-                        .add(R.string.categories, SpecialSearchFragment.class)
-                        .add(R.string.mechanical_search, MechanicalFragment.class)
+                        .add(R.string.staggered, StaggeredSearch.class)
                         .create()
         );
         viewPager.setAdapter(adapter);

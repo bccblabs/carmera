@@ -176,7 +176,7 @@
     <string name="equipments_search">Colors &amp; Equipments</string>
     <string name="equipments_search_desc">Colors, Amneties, &amp; Options</string>
 
-    <string name="reliability_search">Safety &amp; Reliabilities</string>
+    <string name="reliability_search">Reliable</string>
     <string name="reliability_search_desc">Safety Ratings, Recalls, and Reliability Complaints</string>
 
 
@@ -252,10 +252,10 @@
     <string name="str_sort">Sort</string>
     <string name="str_filter">Edit Search</string>
     <string name="str_search_all">See Cars</string>
-    <string name="str_image_search">Image Search</string>
+    <string name="str_image_search">Image</string>
+    <string name="staggered">Staggered</string>
 
-
-    <string name="add_to_search">Select</string>
+    <string name="add_to_search">Add</string>
     <string name="see_all">See All</string>
     <string name="search_hint">Enter Car Name Here</string>
 
@@ -268,4 +268,8 @@
     <string name="dealership">Dealership</string>
     <string name="call">Call</string>
     <string name="save">Save</string>
+
+    <string name="efficient">40 MPG+ HWY</string>
+    <string name="good_hp">300 hp+</string>
+    <string name="super_hp">500 hp+</string>
 </resources>

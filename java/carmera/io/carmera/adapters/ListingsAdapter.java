@@ -67,8 +67,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
                 Log.i(this.getClass().getCanonicalName(), " image url: " + links.get(0).getHref());
             }
         } catch (Exception e) {
-            Picasso.with(cxt).load (R.drawable.carmera_small).into(viewHolder.listingImage);
-            Log.e(this.getClass().getCanonicalName(), e.getMessage());
+            viewHolder.listingImage.setVisibility(View.GONE);
         }
     }
 

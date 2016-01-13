@@ -35,15 +35,15 @@
         <LinearLayout
             android:background="@drawable/card_bgd0"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@android:color/primary_text_dark"
                 android:textAllCaps="true"
                 android:text="h7"
@@ -52,10 +52,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="4dp"
+                android:paddingTop="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="16dp"
                 android:textSize="24sp"
                 android:textColor="@android:color/primary_text_dark"
                 android:textAllCaps="true"
@@ -63,19 +63,12 @@
                 android:id="@+id/staggered_card_subtitle"
                 />
                 <ImageView
+                    android:layout_gravity="center_horizontal"
                     android:src="@drawable/sedan"
                     style="@style/search_image_view_staggered"
                     android:id="@+id/staggered_image_holder"/>
         </LinearLayout>
     </it.gmariotti.cardslib.library.view.ForegroundLinearLayout>
-
-    <!-- Compound view for Shadow
-           If you want to customize this element use attr card:card_shadow_layout_resourceID -->
-    <it.gmariotti.cardslib.library.view.component.CardShadowView
-        style="@style/card.shadow_outer_layout"
-        android:id="@+id/card_shadow_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>
