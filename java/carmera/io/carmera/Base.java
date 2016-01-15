@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
+import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -302,10 +303,10 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
+        Log.i (TAG, new Gson().toJson(listingsQuery));
         Intent i = new Intent(this, MakesSearchActivity.class);
         i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         startActivityForResult(i, 1);
-
     }
 
     @OnClick (R.id.ic_search)

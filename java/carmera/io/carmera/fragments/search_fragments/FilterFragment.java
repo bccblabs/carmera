@@ -247,7 +247,7 @@ public class FilterFragment extends DialogFragment {
         years_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                FilterFragment.this.listingsQuery.car.minMpg = Integer.parseInt(year_adapter.getItem(position));
+                FilterFragment.this.listingsQuery.car.years.add (Integer.parseInt(year_adapter.getItem(position)));
             }
         });
         price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {

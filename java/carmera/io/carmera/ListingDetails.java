@@ -221,18 +221,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                         photos.addSlider(sliderView);
                     }
                 } catch (Exception e) {
-                    Log.e(getClass().getCanonicalName(), e.getMessage());
-                    if (stock_images == null) {
-                        DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
-                        sliderView.image(R.drawable.carmera_small).setOnSliderClickListener(ListingDetails.this);
-                        photos.addSlider(sliderView);
-                    } else {
-                        for (String url : stock_images) {
-                            DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
-                            sliderView.image(Constants.EdmundsMedia + url.replace("_150.", "_300.")).setOnSliderClickListener(ListingDetails.this);
-                            photos.addSlider(sliderView);
-                        }
-                    }
+                    photos.setVisibility(View.GONE);
                 }
             }
 

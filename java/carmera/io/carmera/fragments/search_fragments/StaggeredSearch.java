@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -53,11 +54,12 @@ public class StaggeredSearch extends Fragment {
     }
 
     private void showDialog () {
-        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .title("Search Filters")
-                .content("New Criteria Added!")
-                .positiveText("OK")
-                .show();
+        Toast.makeText(getActivity(), "New Search Criteria Added!", Toast.LENGTH_SHORT).show();
+//        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+//                .title("Search Filters")
+//                .content("New Criteria Added!")
+//                .positiveText("OK")
+//                .show();
     }
 
     @Override
