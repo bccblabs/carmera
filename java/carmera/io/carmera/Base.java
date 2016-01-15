@@ -68,7 +68,6 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     private ListingsQuery listingsQuery = new ListingsQuery();
 
     @Bind (R.id.ic_filter) ButtonFlat ic_filter;
-    @Bind (R.id.ic_clear) ButtonFlat ic_clear;
     @Bind (R.id.ic_search) ButtonFlat ic_search;
 
     @Bind (R.id.fab_toolbar) View fab_toolbar;
@@ -303,6 +302,10 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
+        Intent i = new Intent(this, MakesSearchActivity.class);
+        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        startActivityForResult(i, 1);
+
     }
 
     @OnClick (R.id.ic_search)
@@ -321,14 +324,16 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
         filterFragment.show(getSupportFragmentManager(), "filter_dialog");
     }
 
-    @OnClick(R.id.ic_clear)
-    public void onSort () {
+
+    @OnClick (R.id.clear_btn)
+    void onClear () {
         this.listingsQuery = new ListingsQuery();
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .content("Search Cleared!")
                 .positiveText("Got It!")
                 .show();
     }
+
 
     @Override
     public void SetFabInvisible () {

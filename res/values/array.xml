@@ -96,6 +96,13 @@
         <item>200</item>
         <item>500</item>
     </string-array>
+    <string-array name="saab">
+        <item>9-3</item>
+        <item>9-5</item>
+        <item>9-7</item>
+        <item>900</item>
+        <item>9000</item>
+    </string-array>
     <string-array name="maserati">
         <item>QuattroPorte</item>
         <item>GranTurismo</item>
@@ -684,10 +691,12 @@
         <item>8</item>
         <item>10</item>
         <item>12</item>
-        <item>12+</item>
+        <item>no max</item>
     </string-array>
     <string-array name="compressor_array">
         <item>Naturally Aspirated</item>
+        <item>Turbo</item>
+        <item>Supercharger</item>
     </string-array>
     <string-array name="drivetrain_array">
         <item>All Wheel Drive</item>
@@ -770,17 +779,18 @@
         <item>1500</item>
     </string-array>
     <string-array name="max_mileage_array">
-        <item>5000</item>
-        <item>10000</item>
-        <item>20000</item>
-        <item>30000</item>
-        <item>40000</item>
-        <item>50000</item>
-        <item>60000</item>
-        <item>70000</item>
-        <item>80000</item>
-        <item>90000</item>
+        <item>No Max</item>
         <item>100000</item>
+        <item>90000</item>
+        <item>80000</item>
+        <item>70000</item>
+        <item>60000</item>
+        <item>50000</item>
+        <item>40000</item>
+        <item>30000</item>
+        <item>20000</item>
+        <item>10000</item>
+        <item>5000</item>
     </string-array>
     <string-array name="color_array">
         <item>black</item>
@@ -824,21 +834,21 @@
 
     <string-array name="european_makes">
         <item>audi</item>
-        <item>aston</item>
+        <item>aston martin</item>
         <item>bmw</item>
         <item>ferrari</item>
         <item>fisker</item>
         <item>jaguar</item>
-        <item>rover</item>
-        <item>mercedes</item>
+        <item>land rover</item>
+        <item>mercedes-benz</item>
         <item>lamborghini</item>
         <item>lotus</item>
         <item>maserati</item>
         <item>mini</item>
         <item>saab</item>
         <item>porsche</item>
-        <item>volvo</item>
         <item>volkswagen</item>
+        <item>volvo</item>
     </string-array>
     <string-array name="sport_bodytypes">
         <item>coupe</item>
@@ -848,8 +858,8 @@
         <item>crossover</item>
     </string-array>
     <string-array name="force_induction">
-        <item>Turbo</item>
-        <item>Supercharger</item>
+        <item>turbo</item>
+        <item>supercharger</item>
     </string-array>
     <string-array name="reliable_tags">
         <item>no recalls</item>
@@ -858,17 +868,37 @@
     </string-array>
     <string-array name="cheap_repairs_tags">
         <item>cheap repairs</item>
-        <!--<item>acceptable repairs</item>-->
         <item>cheap maintenance</item>
-        <!--<item>acceptable maintenance</item>-->
     </string-array>
     <string-array name="cheap_depreciation_tags">
         <item>cheap depreciation</item>
-        <!--<item>acceptable depreciation</item>-->
     </string-array>
 
     <string-array name="cheap_insurance_tags">
         <item>cheap insurance</item>
-        <!--<item>acceptable insurance</item>-->
+    </string-array>
+    <string-array name="all_tags">
+        <item>cheap insurance cost</item>
+        <item>cheap depreciation cost</item>
+        <item>cheap maintenance cost</item>
+        <item>cheap repairs cost</item>
+        <item>has incentives</item>
+        <item>no complaints</item>
+        <item>no recalls</item>
+        <item>no major complaints</item>
+        <item>top safety</item>
+    </string-array>
+
+    <string-array name="sort_criteria">
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+        <item>Mileage: Low to High</item>
+        <item>Mileage: High to Low</item>
+        <item>Horsepower: Low to High</item>
+        <item>Horsepower: High to Low</item>
+        <item>Torque: Low to High</item>
+        <item>Torque: High to Low</item>
+        <item>MPG: Low to High</item>
+        <item>MPG: High to Low</item>
     </string-array>
 </resources>

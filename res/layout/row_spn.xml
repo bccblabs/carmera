@@ -6,9 +6,11 @@
     android:id="@+id/row_spn_tv"
     android:layout_width="wrap_content"
     android:layout_height="32dp"
-    android:gravity="center_vertical"
+    android:layout_gravity="end"
+    android:gravity="center_vertical|end"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:textDirection="locale"
+    android:textColor="@color/selected_item_color"
     app:v_styleId="@array/spinner_item"/>
 

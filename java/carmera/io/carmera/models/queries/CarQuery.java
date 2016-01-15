@@ -23,7 +23,7 @@ public class CarQuery {
     @JsonProperty
     public List<String> transmissionTypes = new ArrayList<>();
     @JsonProperty
-    public List<Integer> cylinders = new ArrayList<>();
+    public List<String> cylinders = new ArrayList<>();
     @JsonProperty
     public List<String> compressors = new ArrayList<>();
     @JsonProperty
@@ -100,11 +100,11 @@ public class CarQuery {
         this.transmissionTypes = transmissionTypes;
     }
 
-    public List<Integer> getCylinders() {
+    public List<String> getCylinders() {
         return cylinders;
     }
 
-    public void setCylinders(List<Integer> cylinders) {
+    public void setCylinders(List<String> cylinders) {
         this.cylinders = cylinders;
     }
 

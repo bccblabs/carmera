@@ -16,21 +16,12 @@ package carmera.io.carmera.utils;
  * limitations under the License.
  */
 
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Point;
-import android.os.Build;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class Util {
 
@@ -42,28 +33,18 @@ public class Util {
         return result.substring(0, result.length()-2);
     }
 
-    public static List<KeyPairBoolData> getSpinnerValues (List<String> values, boolean sort) {
+    public static List<KeyPairBoolData> getSpinnerValues (List<String> values, boolean sort, List<String> selectedValues) {
         if (sort)
             Collections.sort(values);
         final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
         for(int i=0; i<values.size(); i++) {
             KeyPairBoolData h = new KeyPairBoolData();
-            h.setId(i+1);
+            h.setId(i + 1);
             h.setName(values.get(i));
-            h.setSelected(false);
-            kv_list.add(h);
-        }
-        return kv_list;
-    }
-
-    public static List<KeyPairBoolData> getIntegerSpinnerValues (List<Integer> values) {
-        Collections.sort(values);
-        final List<KeyPairBoolData> kv_list = new ArrayList<KeyPairBoolData>();
-        for(int i=0; i<values.size(); i++) {
-            KeyPairBoolData h = new KeyPairBoolData();
-            h.setId(i+1);
-            h.setName(values.get(i).toString());
-            h.setSelected(false);
+            if (selectedValues.indexOf(values.get(i).toLowerCase()) > -1)
+                h.setSelected(true);
+            else
+                h.setSelected(false);
             kv_list.add(h);
         }
         return kv_list;
@@ -76,58 +57,6 @@ public class Util {
             textview.setVisibility(View.GONE);
     }
 
-
-
-    public static  List<KeyPairBoolData> getSelectedValues (List<String> values) {
-        List<KeyPairBoolData> items = Util.getSpinnerValues(values, true);
-        for (KeyPairBoolData item : items) {
-            item.setSelected(true);
-        }
-        return items;
-    }
-
-    public static List<KeyPairBoolData> getIntSelectedValues (List<Integer> values) {
-        List<KeyPairBoolData> items = Util.getIntegerSpinnerValues(values);
-        for (KeyPairBoolData item : items) {
-            item.setSelected(true);
-        }
-        return items;
-    }
-
-    private static int screenWidth = 0;
-    private static int screenHeight = 0;
-
-    public static int dpToPx(int dp) {
-        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
-    }
-
-    public static int getScreenHeight(Context c) {
-        if (screenHeight == 0) {
-            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-            Display display = wm.getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            screenHeight = size.y;
-        }
-
-        return screenHeight;
-    }
-
-    public static int getScreenWidth(Context c) {
-        if (screenWidth == 0) {
-            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-            Display display = wm.getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            screenWidth = size.x;
-        }
-
-        return screenWidth;
-    }
-
-    public static boolean isAndroid5() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-    }
 
     public static String formatCurrency (Number i) {
         NumberFormat fmt = NumberFormat.getCurrencyInstance();

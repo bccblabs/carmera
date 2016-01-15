@@ -8,14 +8,23 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
 import com.rey.material.widget.Spinner;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,7 +45,12 @@ public class FilterFragment extends DialogFragment {
 
     private OnResearchListener callback = null;
 
-    @Bind(R.id.filter_btn) ButtonFlat filter_btn;
+    private SortedMap<String, Integer> make_resid_map = new TreeMap<>();
+
+    private List<String> selected_models = new ArrayList<>();
+
+    @Bind(R.id.dismiss_btn)
+    ButtonFlat filter_btn;
 
     @Bind (R.id.makes_spinner)
     MultiSpinner makes_spnr;
@@ -45,7 +59,10 @@ public class FilterFragment extends DialogFragment {
     MultiSpinner models_spnr;
 
     @Bind (R.id.years_spinner)
-    MultiSpinner years_spnr;
+    Spinner years_spinner;
+
+    @Bind (R.id.sort_spinner)
+    Spinner sort_spinner;
 
     @Bind (R.id.bodytype_spinner)
     MultiSpinner bodytypes_spnr;
@@ -69,15 +86,17 @@ public class FilterFragment extends DialogFragment {
     @Bind (R.id.mpg_spinner) Spinner mpg_spinner;
     @Bind (R.id.hp_spinner) Spinner hp_spinner;
     @Bind (R.id.tq_spinner) Spinner tq_spinner;
+    @Bind (R.id.price_spinner) Spinner price_spinner;
+    @Bind (R.id.mileage_spinner) Spinner mileage_spinner;
 
-    @OnClick (R.id.filter_btn)
+    @OnClick (R.id.dismiss_btn)
     void onFilter () {
-        callback.onResearchCallback(listingsQuery);
         FilterFragment.this.dismiss();
     }
 
-    @OnClick (R.id.cancel_button)
-    void onCancel () {
+    @OnClick (R.id.search_btn)
+    void onSearch () {
+        callback.onResearchCallback(listingsQuery);
         FilterFragment.this.dismiss();
     }
 
@@ -97,6 +116,47 @@ public class FilterFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        make_resid_map.put("acura", R.array.acura);
+        make_resid_map.put("audi", R.array.audi);
+        make_resid_map.put ("aston martin", R.array.astonmartin);
+        make_resid_map.put ("bentley", R.array.bentley);
+        make_resid_map.put ("bmw", R.array.bmw);
+        make_resid_map.put ("buick", R.array.buick);
+        make_resid_map.put ("cadillac", R.array.cadillac);
+        make_resid_map.put ("chevrolet", R.array.chevrolet);
+        make_resid_map.put ("chrysler", R.array.chrysler);
+        make_resid_map.put ("dodge", R.array.dodge);
+        make_resid_map.put ("ferrari", R.array.ferrari);
+        make_resid_map.put ("fiat", R.array.fiat);
+        make_resid_map.put ("fisker", R.array.fisker);
+        make_resid_map.put ("ford", R.array.ford);
+        make_resid_map.put ("fMC", R.array.gmc);
+        make_resid_map.put ("honda", R.array.honda);
+        make_resid_map.put ("hyundai", R.array.hyundai);
+        make_resid_map.put ("infiniti", R.array.infiniti);
+        make_resid_map.put ("jaguar", R.array.jaguar);
+        make_resid_map.put ("jeep", R.array.jeep);
+        make_resid_map.put ("kia", R.array.kia);
+        make_resid_map.put ("lamborghini", R.array.lamboghini);
+        make_resid_map.put ("land rover", R.array.lr);
+        make_resid_map.put ("lexus", R.array.lexus);
+        make_resid_map.put ("lincoln", R.array.lincoln);
+        make_resid_map.put ("lotus", R.array.lotus);
+        make_resid_map.put ("mazda", R.array.mazda);
+        make_resid_map.put ("maserati", R.array.maserati);
+        make_resid_map.put ("mercedes-benz", R.array.mercedes);
+        make_resid_map.put ("mini", R.array.mini);
+        make_resid_map.put ("mitsubishi", R.array.mitsubishi);
+        make_resid_map.put ("nissan", R.array.nissan);
+        make_resid_map.put ("porsche", R.array.porsche);
+        make_resid_map.put ("saab", R.array.saab);
+        make_resid_map.put ("scion", R.array.scion);
+        make_resid_map.put ("smart", R.array.smart);
+        make_resid_map.put ("subaru", R.array.subaru);
+        make_resid_map.put ("suzuki", R.array.suzuki);
+        make_resid_map.put ("toyota", R.array.toyota);
+        make_resid_map.put("volkswagen", R.array.volkswagen);
+        make_resid_map.put("volvo", R.array.volvo);
     }
 
     @Override
@@ -127,16 +187,42 @@ public class FilterFragment extends DialogFragment {
         final ArrayAdapter<String> output_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
                 getResources().getStringArray(R.array.output_array));
 
+        final ArrayAdapter<String> year_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.years));
+
+        final ArrayAdapter<String> price_mileage_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.max_mileage_array));
+
+        final ArrayAdapter<String> sort_criteria_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.sort_criteria));
+
         mpg_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         output_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        year_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        price_mileage_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        sort_criteria_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+
 
         mpg_spinner.setAdapter(mpg_adapter);
         hp_spinner.setAdapter(output_adapter);
         tq_spinner.setAdapter(output_adapter);
-        Log.i(getClass().getCanonicalName(), "min mpg " + listingsQuery.car.minMpg);
-        mpg_spinner.setSelection(findPos(mpg_adapter, Integer.toString(listingsQuery.car.minMpg)));
-        hp_spinner.setSelection(findPos(output_adapter, Integer.toString(listingsQuery.car.minHp)));
-        tq_spinner.setSelection(findPos(output_adapter, Integer.toString(listingsQuery.car.minTq)));
+        years_spinner.setAdapter(year_adapter);
+        sort_spinner.setAdapter(sort_criteria_adapter);
+
+        price_spinner.setAdapter(price_mileage_adapter);
+        mileage_spinner.setAdapter(price_mileage_adapter);
+
+        setSingleSpinnerSelection(mpg_spinner, mpg_adapter, Integer.toString(listingsQuery.car.minMpg));
+        setSingleSpinnerSelection(hp_spinner, output_adapter, Integer.toString(listingsQuery.car.minHp));
+        setSingleSpinnerSelection(tq_spinner, output_adapter, Integer.toString(listingsQuery.car.minTq));
+        setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
+        setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
+
+        try {
+            years_spinner.setSelection(findPos(year_adapter, Integer.toString(Collections.min(listingsQuery.car.years))));
+        } catch (Exception e) {
+            years_spinner.setSelection(0);
+        }
 
         mpg_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
@@ -157,83 +243,110 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
-        if (listingsQuery.car.makes.size() > 0) {
-            makes_spnr.setItems(Util.getSelectedValues(listingsQuery.car.makes), "Filter Makes", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.makes.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
+
+        years_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.car.minMpg = Integer.parseInt(year_adapter.getItem(position));
+            }
+        });
+        price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.max_price = price_mileage_adapter.getItem(position);
+            }
+        });
+        mileage_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.max_mileage = price_mileage_adapter.getItem(position);
+            }
+        });
+
+
+        makes_spnr.setItems(Util.getSpinnerValues(
+                Arrays.asList(getActivity().getResources().getStringArray(R.array.makes_array)),
+                true,
+                listingsQuery.car.makes),
+
+                "Makes", -1, new MultiSpinner.MultiSpinnerListener() {
+                    @Override
+                    public void onItemsSelected(List<KeyPairBoolData> items) {
+                        selected_models = new ArrayList<String>();
+
+                        for (int i = 0; i < items.size(); i++) {
+                            if (!items.get(i).isSelected()) {
+                                for (Iterator<String> iter = listingsQuery.car.makes.listIterator(); iter.hasNext(); ) {
+                                    String test = iter.next();
+                                    if (test.equals(items.get(i).getName().toLowerCase()))
+                                        iter.remove();
+                                }
                             }
+                            if (items.get(i).isSelected()){
+                                if (!listingsQuery.car.makes.contains(items.get(i).getName().toLowerCase())) {
+                                    listingsQuery.car.makes.add(items.get(i).getName().toLowerCase());
+                                }
+                                selected_models.addAll(Arrays.asList(getActivity().getResources().getStringArray(make_resid_map.get(items.get(i).getName().toLowerCase()))));
+                            }
+                            Toast.makeText(FilterFragment.this.getActivity(), selected_models.size() + " models added", Toast.LENGTH_SHORT).show();
+                            models_spnr.setItems(Util.getSpinnerValues(
+                                            selected_models,
+                                            true,
+                                            listingsQuery.car.models),
+                                    "Models", -1, new MultiSpinner.MultiSpinnerListener() {
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+                                            for(int i=0; i<items.size(); i++) {
+                                                if(!items.get(i).isSelected()) {
+                                                    for (Iterator<String> iter = listingsQuery.car.main_models.listIterator(); iter.hasNext();) {
+                                                        String test = iter.next();
+                                                        if (test.equals(items.get(i).getName()))
+                                                            iter.remove();
+                                                    }
+                                                } else {
+                                                    listingsQuery.car.main_models.add(items.get(i).getName());
+                                                }
+                                            }
+                                        }
+                                    });
                         }
+                        if (selected_models.size() > 0 && models_spnr.getVisibility() == View.INVISIBLE)
+                            models_spnr.setVisibility(View.VISIBLE);
+                        if (selected_models.size() < 1)
+                            models_spnr.setVisibility(View.INVISIBLE);
+
+                    }
+                });
+
+
+
+
+        bodytypes_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.body_style_array)),
+                        true,
+                        listingsQuery.car.bodyTypes),
+                        "BodyTypes", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(!items.get(i).isSelected()) {
+                        for (Iterator<String> iter = listingsQuery.car.bodyTypes.listIterator(); iter.hasNext();) {
+                            String test = iter.next();
+                            if (test.equals(items.get(i).getName()))
+                                iter.remove();
+                        }
+                    } else {
+                        listingsQuery.car.bodyTypes.add(items.get(i).getName());
                     }
                 }
-            });
-        } else {
-            makes_spnr.setVisibility(View.GONE);
-        }
-        if (listingsQuery.car.models.size() > 0) {
-            models_spnr.setItems(Util.getSelectedValues(listingsQuery.car.main_models), "Filter Models", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.main_models.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                    }
-            });
-        } else {
-            models_spnr.setVisibility(View.GONE);
-        }
+            }
+        });
 
-        if (listingsQuery.car.years.size() > 0) {
-            years_spnr.setItems(Util.getIntSelectedValues(listingsQuery.car.years), "Filter Years", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<Integer> iter = listingsQuery.car.years.listIterator(); iter.hasNext();) {
-                                Integer test = iter.next();
-                                if (test.equals(Integer.parseInt(items.get(i).getName())))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            years_spnr.setVisibility(View.GONE);
-        }
-
-        if (listingsQuery.car.bodyTypes.size() > 0) {
-            bodytypes_spnr.setItems(Util.getSelectedValues(listingsQuery.car.bodyTypes), "Filter BodyTypes", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.bodyTypes.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            bodytypes_spnr.setVisibility(View.GONE);
-        }
-
-        if (listingsQuery.car.transmissionTypes.size() > 0) {
-            txns_spnr.setItems(Util.getSelectedValues(listingsQuery.car.transmissionTypes), "Filter Transmissions", -1, new MultiSpinner.MultiSpinnerListener() {
+        txns_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.txn_array)),
+                        true,
+                        listingsQuery.car.transmissionTypes),
+                        "Transmissions", -1, new MultiSpinner.MultiSpinnerListener() {
                 @Override
                 public void onItemsSelected(List<KeyPairBoolData> items) {
                     for(int i=0; i<items.size(); i++) {
@@ -243,89 +356,106 @@ public class FilterFragment extends DialogFragment {
                                 if (test.equals(items.get(i).getName()))
                                     iter.remove();
                             }
+                        } else {
+                            listingsQuery.car.transmissionTypes.add (items.get(i).getName());
                         }
                     }
                 }
-            });
-        } else {
-            txns_spnr.setVisibility(View.GONE);
+        });
+
+        compressors_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.compressor_array)),
+                        true,
+                        listingsQuery.car.compressors),
+                        "Compressors", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(!items.get(i).isSelected()) {
+                        for (Iterator<String> iter = listingsQuery.car.compressors.listIterator(); iter.hasNext();) {
+                            String test = iter.next();
+                            if (test.equals(items.get(i).getName()))
+                                iter.remove();
+                        }
+                    } else {
+                        listingsQuery.car.compressors.add(items.get(i).getName());
+                    }
+                }
+            }
+        });
+        cylinders_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.cylinder_array)),
+                        true,
+                        listingsQuery.car.cylinders),
+                        "Cylinders", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(!items.get(i).isSelected()) {
+                        for (Iterator<String> iter = listingsQuery.car.cylinders.listIterator(); iter.hasNext();) {
+                            String test = iter.next();
+                            if (test.equals(items.get(i).getName()))
+                                iter.remove();
+                        }
+                    } else {
+                        listingsQuery.car.cylinders.add(items.get(i).getName());
+                    }
+                }
+            }
+        });
+
+        drivetrains_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.drivetrain_array)),
+                        true,
+                        listingsQuery.car.drivenWheels),
+                        "Drivetrains", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for (int i = 0; i < items.size(); i++) {
+                    if (!items.get(i).isSelected()) {
+                        for (Iterator<String> iter = listingsQuery.car.drivenWheels.listIterator(); iter.hasNext(); ) {
+                            String test = iter.next();
+                            if (test.equals(items.get(i).getName()))
+                                iter.remove();
+                        }
+                    } else {
+                        listingsQuery.car.drivenWheels.add(items.get(i).getName());
+                    }
+                }
+            }
+        });
+
+        tags_spnr.setItems(Util.getSpinnerValues(
+                Arrays.asList(getActivity().getResources().getStringArray(R.array.all_tags)),
+                true,
+                listingsQuery.car.tags),
+                "Tags", -1, new MultiSpinner.MultiSpinnerListener() {
+            @Override
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(!items.get(i).isSelected()) {
+                        for (Iterator<String> iter = listingsQuery.car.tags.listIterator(); iter.hasNext();) {
+                            String test = iter.next();
+                            if (test.equals(items.get(i).getName()))
+                                iter.remove();
+                        }
+                    } else {
+                        listingsQuery.car.tags.add(items.get(i).getName());
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void setSingleSpinnerSelection (Spinner spinner, ArrayAdapter<String> values, String value) {
+        try {
+            int pos = findPos(values, value);
+            spinner.setSelection(pos);
+        } catch (Exception e) {
+            spinner.setSelection(0);
         }
 
-        if (listingsQuery.car.compressors.size() > 0) {
-            compressors_spnr.setItems(Util.getSelectedValues(listingsQuery.car.compressors), "Filter Compressors", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.compressors.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            compressors_spnr.setVisibility(View.GONE);
-        }
-
-        if (listingsQuery.car.cylinders.size() > 0) {
-            cylinders_spnr.setItems(Util.getIntSelectedValues(listingsQuery.car.cylinders), "Filter Cylinders", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<Integer> iter = listingsQuery.car.cylinders.listIterator(); iter.hasNext();) {
-                                Integer test = iter.next();
-                                if (test.equals(Integer.parseInt(items.get(i).getName())))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            cylinders_spnr.setVisibility(View.GONE);
-        }
-
-        if (listingsQuery.car.drivenWheels.size() > 0) {
-            drivetrains_spnr.setItems(Util.getSelectedValues(listingsQuery.car.drivenWheels), "Filter Drivetrains", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.drivenWheels.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            drivetrains_spnr.setVisibility(View.GONE);
-        }
-
-        if (listingsQuery.car.tags.size() > 0) {
-            tags_spnr.setItems(Util.getSelectedValues(listingsQuery.car.tags), "Filter Tags", -1, new MultiSpinner.MultiSpinnerListener() {
-                @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-                    for(int i=0; i<items.size(); i++) {
-                        if(!items.get(i).isSelected()) {
-                            for (Iterator<String> iter = listingsQuery.car.tags.listIterator(); iter.hasNext();) {
-                                String test = iter.next();
-                                if (test.equals(items.get(i).getName()))
-                                    iter.remove();
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            tags_spnr.setVisibility(View.GONE);
-        }
     }
 
     @Override public void onDestroyView() {

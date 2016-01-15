@@ -95,151 +95,151 @@ public class SortFragment extends DialogFragment {
         this.listingsQuery = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTING_QUERY));
         builder.setView(view);
         ButterKnife.bind(this, view);
-        init_spinners();
+//        init_spinners();
         return builder.create();
     }
 
 
-    private void init_spinners () {
-        price_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.PRICE_ASC, Constants.PRICE_DESC), true),
-                "Sort By Price",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                            for (int i = 0; i < items.size(); i++) {
-                                if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.PRICE_ASC)) {
-                                    listingsQuery.sortBy = Constants.PRICE_ASC;
-                                } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.PRICE_DESC)) {
-                                    listingsQuery.sortBy = Constants.PRICE_DESC;
-
-                                }
-                            }
-                        }
-                    });
-
-        mileage_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.MILEAGE_ASC, Constants.MILEAGE_DESC), true),
-                        "Sort By Mileage",
-                        -1,
-                        new MultiSpinner.MultiSpinnerListener() {
-                            @Override
-                            public void onItemsSelected(List<KeyPairBoolData> items) {
-                                for (int i = 0; i < items.size(); i++) {
-                                    if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MILEAGE_ASC)) {
-                                        listingsQuery.sortBy = Constants.MILEAGE_ASC;
-                                    } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MILEAGE_DESC)) {
-                                        listingsQuery.sortBy = Constants.MILEAGE_DESC;
-                                    }
-                                }
-                            }
-                        });
-
-        year_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.YEAR_ASC, Constants.YEAR_DESC), true),
-                "Sort By Year",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.YEAR_ASC)) {
-                                listingsQuery.sortBy = Constants.YEAR_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.YEAR_DESC)) {
-                                listingsQuery.sortBy = Constants.YEAR_DESC;
-                            }
-                        }
-                    }
-                });
-
-        mpg_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.MPG_ASC, Constants.MPG_DESC), true),
-                "Sort By MPG",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MPG_ASC)) {
-                                listingsQuery.sortBy = Constants.MPG_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MPG_DESC)) {
-                                listingsQuery.sortBy = Constants.MPG_DESC;
-                            }
-                        }
-                    }
-                });
-
-
-        hp_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.HP_ASC, Constants.HP_DESC), true),
-                "Sort By Horsepower",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.HP_ASC)) {
-                                listingsQuery.sortBy = Constants.HP_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.HP_DESC)) {
-                                listingsQuery.sortBy = Constants.HP_DESC;
-                            }
-                        }
-                    }
-                });
-
-        tq_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.TQ_ASC, Constants.TQ_DESC), true),
-                "Sort By Torque",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.TQ_ASC)) {
-                                listingsQuery.sortBy = Constants.TQ_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.TQ_DESC)) {
-                                listingsQuery.sortBy = Constants.TQ_DESC;
-                            }
-                        }
-                    }
-                });
-
-        complaints_sort_spinner.setItems(Util.getSpinnerValues(
-                        Lists.newArrayList(Constants.CMPL_ASC, Constants.CMPL_DESC), true),
-                "Sort By Complaints",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.CMPL_ASC)) {
-                                listingsQuery.sortBy = Constants.CMPL_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.CMPL_DESC)) {
-                                listingsQuery.sortBy = Constants.CMPL_DESC;
-                            }
-                        }
-                    }
-                });
-
-        final List<String> list = Arrays.asList(Constants.RECALLS_ASC, Constants.RECALLS_DESC);
-        Log.i(getClass().getCanonicalName(), "" + list.size());
-        recalls_sort_spinner.setItems(Util.getSpinnerValues(list, true),
-                "Sort By Recalls",
-                -1,
-                new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.RECALLS_ASC)) {
-                                listingsQuery.sortBy = Constants.RECALLS_ASC;
-                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.RECALLS_DESC)) {
-                                listingsQuery.sortBy = Constants.RECALLS_DESC;
-                            }
-                        }
-                    }
-                });
-    }
+//    private void init_spinners () {
+//        price_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.PRICE_ASC, Constants.PRICE_DESC), true),
+//                "Sort By Price",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                            for (int i = 0; i < items.size(); i++) {
+//                                if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.PRICE_ASC)) {
+//                                    listingsQuery.sortBy = Constants.PRICE_ASC;
+//                                } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.PRICE_DESC)) {
+//                                    listingsQuery.sortBy = Constants.PRICE_DESC;
+//
+//                                }
+//                            }
+//                        }
+//                    });
+//
+//        mileage_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.MILEAGE_ASC, Constants.MILEAGE_DESC), true),
+//                        "Sort By Mileage",
+//                        -1,
+//                        new MultiSpinner.MultiSpinnerListener() {
+//                            @Override
+//                            public void onItemsSelected(List<KeyPairBoolData> items) {
+//                                for (int i = 0; i < items.size(); i++) {
+//                                    if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MILEAGE_ASC)) {
+//                                        listingsQuery.sortBy = Constants.MILEAGE_ASC;
+//                                    } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MILEAGE_DESC)) {
+//                                        listingsQuery.sortBy = Constants.MILEAGE_DESC;
+//                                    }
+//                                }
+//                            }
+//                        });
+//
+//        year_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.YEAR_ASC, Constants.YEAR_DESC), true),
+//                "Sort By Year",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.YEAR_ASC)) {
+//                                listingsQuery.sortBy = Constants.YEAR_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.YEAR_DESC)) {
+//                                listingsQuery.sortBy = Constants.YEAR_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//
+//        mpg_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.MPG_ASC, Constants.MPG_DESC), true),
+//                "Sort By MPG",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MPG_ASC)) {
+//                                listingsQuery.sortBy = Constants.MPG_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.MPG_DESC)) {
+//                                listingsQuery.sortBy = Constants.MPG_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//
+//
+//        hp_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.HP_ASC, Constants.HP_DESC), true),
+//                "Sort By Horsepower",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.HP_ASC)) {
+//                                listingsQuery.sortBy = Constants.HP_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.HP_DESC)) {
+//                                listingsQuery.sortBy = Constants.HP_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//
+//        tq_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.TQ_ASC, Constants.TQ_DESC), true),
+//                "Sort By Torque",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.TQ_ASC)) {
+//                                listingsQuery.sortBy = Constants.TQ_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.TQ_DESC)) {
+//                                listingsQuery.sortBy = Constants.TQ_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//
+//        complaints_sort_spinner.setItems(Util.getSpinnerValues(
+//                        Lists.newArrayList(Constants.CMPL_ASC, Constants.CMPL_DESC), true),
+//                "Sort By Complaints",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.CMPL_ASC)) {
+//                                listingsQuery.sortBy = Constants.CMPL_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.CMPL_DESC)) {
+//                                listingsQuery.sortBy = Constants.CMPL_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//
+//        final List<String> list = Arrays.asList(Constants.RECALLS_ASC, Constants.RECALLS_DESC);
+//        Log.i(getClass().getCanonicalName(), "" + list.size());
+//        recalls_sort_spinner.setItems(Util.getSpinnerValues(list, true),
+//                "Sort By Recalls",
+//                -1,
+//                new MultiSpinner.MultiSpinnerListener() {
+//                    @Override
+//                    public void onItemsSelected(List<KeyPairBoolData> items) {
+//                        for (int i = 0; i < items.size(); i++) {
+//                            if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.RECALLS_ASC)) {
+//                                listingsQuery.sortBy = Constants.RECALLS_ASC;
+//                            } else if (items.get(i).isSelected() && items.get(i).getName().equals(Constants.RECALLS_DESC)) {
+//                                listingsQuery.sortBy = Constants.RECALLS_DESC;
+//                            }
+//                        }
+//                    }
+//                });
+//    }
 
     @Override public void onDestroyView() {
         super.onDestroyView();

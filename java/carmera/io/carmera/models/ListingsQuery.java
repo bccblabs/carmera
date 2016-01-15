@@ -25,13 +25,10 @@ public class ListingsQuery {
 
 
     @JsonProperty
-    public Integer max_price;
+    public String max_price;
 
     @JsonProperty
-    public Integer min_price;
-
-    @JsonProperty
-    public Integer max_mileage;
+    public String max_mileage;
 
     @JsonProperty
     public String sortBy;
@@ -56,27 +53,19 @@ public class ListingsQuery {
         this.submodelCount = submodelCount;
     }
 
-    public Integer getMax_price() {
+    public String getMax_price() {
         return max_price;
     }
 
-    public void setMax_price(Integer max_price) {
+    public void setMax_price(String max_price) {
         this.max_price = max_price;
     }
 
-    public Integer getMin_price() {
-        return min_price;
-    }
-
-    public void setMin_price(Integer min_price) {
-        this.min_price = min_price;
-    }
-
-    public Integer getMax_mileage() {
+    public String getMax_mileage() {
         return max_mileage;
     }
 
-    public void setMax_mileage(Integer max_mileage) {
+    public void setMax_mileage(String max_mileage) {
         this.max_mileage = max_mileage;
     }
 

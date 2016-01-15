@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:padding="15dp" >
-    <widgets.CanaroTextView
-        android:id="@+id/alertTextView"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/alertCheckbox"
-        android:text="@string/app_name"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+    android:layout_height="48dp"
+    android:padding="16dp">
     <CheckBox
         android:id="@+id/alertCheckbox"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:clickable="false" />
+    <TextView
+        android:id="@+id/alertTextView"
+        android:textColor="@android:color/primary_text_light"
+        android:paddingEnd="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/alertCheckbox"
+        android:text="@string/app_name"
+        android:textSize="13sp"/>
 </RelativeLayout>

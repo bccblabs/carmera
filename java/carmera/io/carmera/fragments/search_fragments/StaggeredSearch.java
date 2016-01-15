@@ -72,7 +72,7 @@ public class StaggeredSearch extends Fragment {
             @Override
             public void onClick(Card card, View view) {
                 showDialog();
-                onEditTagsListener.OnEditTagCallback("Has Incentives");
+                onEditTagsListener.OnEditTagCallback("has incentives");
             }
         });
         cards.add(staggeredImageButtonCard);

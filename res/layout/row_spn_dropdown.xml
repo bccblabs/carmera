@@ -9,5 +9,6 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:textDirection="locale"
+    android:textColor="@color/selected_item_color"
     app:v_styleId="@array/spinner_item"/>
 

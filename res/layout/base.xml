@@ -46,7 +46,7 @@
             android:background="@android:color/background_light"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="48dp">
 
             <LinearLayout
                 android:layout_centerVertical="true"
@@ -54,22 +54,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-
                 <RelativeLayout
                     android:id="@+id/clear"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
-
                     <com.gc.materialdesign.views.ButtonFlat
-                        android:id="@+id/ic_clear"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="36dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:background="@android:color/background_dark"
+                        android:id="@+id/clear_btn"
                         android:text="@string/str_clear"/>
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/filter"
                     android:layout_width="0dp"
@@ -78,8 +77,10 @@
 
                     <com.gc.materialdesign.views.ButtonFlat
                         android:id="@+id/ic_filter"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/background_dark"
                         android:text="@string/str_filter"/>
@@ -93,10 +94,12 @@
 
                     <com.gc.materialdesign.views.ButtonFlat
                         android:id="@+id/ic_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@android:color/background_dark"
+                        android:background="@color/selected_item_color"
                         android:text="@string/str_search_all"/>
                 </RelativeLayout>
             </LinearLayout>
