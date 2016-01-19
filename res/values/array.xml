@@ -564,33 +564,56 @@
         <item>tribute</item>
     </string-array>
     <string-array name="mercedes">
+        <item>AMG GT</item>
         <item>AMG GT-S</item>
-        <item>B</item>
-        <item>C</item>
-        <item>C AMG</item>
-        <item>E</item>
-        <item>E AMG</item>
-        <item>GLA</item>
-        <item>GLA AMG</item>
-        <item>GLK</item>
-        <item>ML</item>
-        <item>ML AMG</item>
-        <item>G</item>
-        <item>G AMG</item>
-        <item>GL</item>
-        <item>GL AMG</item>
-        <item>S</item>
-        <item>S AMG</item>
-        <item>SL</item>
-        <item>SL AMG</item>
-        <item>SLK</item>
-        <item>SLK AMG</item>
-        <item>CLA</item>
-        <item>CLA AMG</item>
-        <item>CLS</item>
-        <item>CLS AMG</item>
+        <item>B-Class</item>
+        <item>C-Class</item>
+        <item>C32 AMG</item>
+        <item>C43 AMG</item>
+        <item>C55 AMG</item>
+        <item>C63 AMG</item>
+        <item>C63 507 Edition</item>
+        <item>CL-Class</item>
+        <item>CL55 AMG</item>
+        <item>CL63 AMG</item>
+        <item>CL65 AMG</item>
+        <item>CLA-Class</item>
+        <item>CLA45 AMG</item>
+        <item>CLK-Class</item>
+        <item>CLK55 AMG</item>
+        <item>CLK63 AMG</item>
+        <item>CLK63 Black Series</item>
+        <item>CLS-Class</item>
+        <item>CLS55 AMG</item>
+        <item>CLS63 AMG</item>
+        <item>E-Class</item>
+        <item>E55 AMG</item>
+        <item>E63 AMG</item>
+        <item>GLA-Class</item>
+        <item>GLA45 AMG</item>
+        <item>GLC-Class</item>
+        <item>GLK-Class</item>
+        <item>ML-Class</item>
+        <item>ML55 AMG</item>
+        <item>ML63 AMG</item>
+        <item>G-Class</item>
+        <item>G55 AMG</item>
+        <item>G63 AMG</item>
+        <item>GL-Class</item>
+        <item>GL63 AMG</item>
+        <item>S-Class</item>
+        <item>S55 AMG</item>
+        <item>S63 AMG</item>
+        <item>S65 AMG</item>
+        <item>SL-Class</item>
+        <item>SL63 AMG</item>
+        <item>SL65 AMG</item>
+        <item>SL65 Black Series</item>
+        <item>SLK-Class</item>
+        <item>SLK55 AMG</item>
         <item>SLR</item>
         <item>SLS</item>
+        <item>SLS Black Series</item>
     </string-array>
     <string-array name="mini">
         <item>Cooper</item>
@@ -890,15 +913,17 @@
     </string-array>
 
     <string-array name="sort_criteria">
-        <item>Price: Low to High</item>
         <item>Price: High to Low</item>
-        <item>Mileage: Low to High</item>
-        <item>Mileage: High to Low</item>
-        <item>Horsepower: Low to High</item>
-        <item>Horsepower: High to Low</item>
-        <item>Torque: Low to High</item>
+        <item>Price: Low to High</item>
+        <item>Miles: High to Low</item>
+        <item>Miles: Low to High</item>
+        <item>HP: High to Low</item>
+        <item>HP: Low to High</item>
         <item>Torque: High to Low</item>
-        <item>MPG: Low to High</item>
+        <item>Torque: Low to High</item>
         <item>MPG: High to Low</item>
+        <item>MPG: Low to High</item>
+        <item>Recalls: Least to Most</item>
+        <item>Recalls: Most to Least</item>
     </string-array>
 </resources>

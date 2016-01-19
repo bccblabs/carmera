@@ -247,7 +247,7 @@ public class FilterFragment extends DialogFragment {
         years_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                FilterFragment.this.listingsQuery.car.years.add (Integer.parseInt(year_adapter.getItem(position)));
+                FilterFragment.this.listingsQuery.car.minYr = Integer.parseInt(year_adapter.getItem(position));
             }
         });
         price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
@@ -292,7 +292,7 @@ public class FilterFragment extends DialogFragment {
                             models_spnr.setItems(Util.getSpinnerValues(
                                             selected_models,
                                             true,
-                                            listingsQuery.car.models),
+                                            listingsQuery.car.main_models),
                                     "Models", -1, new MultiSpinner.MultiSpinnerListener() {
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -304,7 +304,7 @@ public class FilterFragment extends DialogFragment {
                                                             iter.remove();
                                                     }
                                                 } else {
-                                                    listingsQuery.car.main_models.add(items.get(i).getName());
+                                                    listingsQuery.car.main_models.add(items.get(i).getName().toLowerCase());
                                                 }
                                             }
                                         }
@@ -336,7 +336,7 @@ public class FilterFragment extends DialogFragment {
                                 iter.remove();
                         }
                     } else {
-                        listingsQuery.car.bodyTypes.add(items.get(i).getName());
+                        listingsQuery.car.bodyTypes.add(items.get(i).getName().toLowerCase());
                     }
                 }
             }
@@ -357,7 +357,7 @@ public class FilterFragment extends DialogFragment {
                                     iter.remove();
                             }
                         } else {
-                            listingsQuery.car.transmissionTypes.add (items.get(i).getName());
+                            listingsQuery.car.transmissionTypes.add (items.get(i).getName().toLowerCase());
                         }
                     }
                 }
@@ -378,7 +378,7 @@ public class FilterFragment extends DialogFragment {
                                 iter.remove();
                         }
                     } else {
-                        listingsQuery.car.compressors.add(items.get(i).getName());
+                        listingsQuery.car.compressors.add(items.get(i).getName().toLowerCase());
                     }
                 }
             }
@@ -419,7 +419,7 @@ public class FilterFragment extends DialogFragment {
                                 iter.remove();
                         }
                     } else {
-                        listingsQuery.car.drivenWheels.add(items.get(i).getName());
+                        listingsQuery.car.drivenWheels.add(items.get(i).getName().toLowerCase());
                     }
                 }
             }
@@ -440,7 +440,7 @@ public class FilterFragment extends DialogFragment {
                                 iter.remove();
                         }
                     } else {
-                        listingsQuery.car.tags.add(items.get(i).getName());
+                        listingsQuery.car.tags.add(items.get(i).getName().toLowerCase());
                     }
                 }
             }

@@ -2,7 +2,6 @@ package carmera.io.carmera.fragments.search_fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import carmera.io.carmera.MakesSearchActivity;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredImageButtonCard;
 import carmera.io.carmera.listeners.OnEditCompressors;
@@ -28,8 +20,6 @@ import carmera.io.carmera.listeners.OnEditMakes;
 import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
-import carmera.io.carmera.models.ListingsQuery;
-import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -55,11 +45,6 @@ public class StaggeredSearch extends Fragment {
 
     private void showDialog () {
         Toast.makeText(getActivity(), "New Search Criteria Added!", Toast.LENGTH_SHORT).show();
-//        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-//                .title("Search Filters")
-//                .content("New Criteria Added!")
-//                .positiveText("OK")
-//                .show();
     }
 
     @Override

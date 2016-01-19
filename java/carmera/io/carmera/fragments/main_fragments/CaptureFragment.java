@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,14 +16,10 @@ import android.widget.SeekBar;
 import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
-import com.dd.processbutton.iml.SubmitProcessButton;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
-
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -55,7 +49,7 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
     private SeekBar zoom = null;
 
-    @Bind (R.id.capture_btn) public SubmitProcessButton capture_btn;
+    @Bind (R.id.capture_btn) public ButtonFlat capture_btn;
 
     @OnClick (R.id.capture_btn)
     void takePhoto () {

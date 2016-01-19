@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -13,4 +13,4 @@
         card:grid_paddingLeft="1dp"
         card:list_card_layout_resourceID="@layout/staggered_card"
         android:id="@+id/data_staggered_grid_view"/>
-</LinearLayout>
+</RelativeLayout>

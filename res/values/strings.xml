@@ -277,4 +277,6 @@
 
     <string name="newer_than">Newer than</string>
     <string name="tags">Tags</string>
+
+    <string name="find_this_car">Find Car</string>
 </resources>

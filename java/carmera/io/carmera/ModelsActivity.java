@@ -4,31 +4,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.bowyer.app.fabtransitionlayout.FooterLayout;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import carmera.io.carmera.adapters.BetterRecyclerAdapter;
-import carmera.io.carmera.adapters.ModelsAdapter;
-import carmera.io.carmera.cards.StaggeredCardTwoLines;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.comparator.ModelComparator;
 import carmera.io.carmera.listeners.OnAddModelListener;
 import carmera.io.carmera.listeners.OnSeeModelListingsListener;
 import carmera.io.carmera.models.ListingsQuery;
@@ -110,8 +98,6 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
         if (cardGridStaggeredView != null) {
             cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
         }
-
-//        fab_toolbar.setFab(sort_filter_search);
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
     }
 
@@ -120,22 +106,4 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
         super.onDestroy();
         ButterKnife.unbind(this);
     }
-//    @Override
-//    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-//        if (scrollState == ScrollState.UP) {
-//            fab_toolbar.slideOutFab();
-//        } else if (scrollState == ScrollState.DOWN) {
-//            fab_toolbar.slideInFab();
-//        }
-//    }
-//
-//    @Override
-//    public void onScrollChanged(int i, boolean b, boolean b1) {}
-//
-//    @Override
-//    public void onDownMotionEvent() {}
-//
-//    @OnClick (R.id.sort_filter_search) void show() {
-//        fab_toolbar.expandFab();
-//    }
 }

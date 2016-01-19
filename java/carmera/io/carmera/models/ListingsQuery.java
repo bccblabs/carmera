@@ -16,13 +16,11 @@ import carmera.io.carmera.models.queries.CarQuery;
 @Parcel
 public class ListingsQuery {
 
-
     @JsonProperty
     public String userId;
 
     @JsonProperty
     public String time_stamp;
-
 
     @JsonProperty
     public String max_price;

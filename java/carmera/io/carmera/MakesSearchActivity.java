@@ -3,20 +3,10 @@ package carmera.io.carmera;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
-import com.bowyer.app.fabtransitionlayout.FooterLayout;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -25,23 +15,12 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import carmera.io.carmera.adapters.BetterRecyclerAdapter;
-import carmera.io.carmera.adapters.MakesAdapter;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.comparator.MakeComparator;
-import carmera.io.carmera.fragments.search_fragments.FilterFragment;
-import carmera.io.carmera.listeners.OnMakeSelectedListener;
-import carmera.io.carmera.listeners.OnResearchListener;
-import carmera.io.carmera.listeners.OnSeeAllModelsListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
-import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
@@ -108,8 +87,6 @@ public class MakesSearchActivity extends AppCompatActivity {
         cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, this.cards);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
-        listingsQuery.car.makes = new ArrayList<>();
-        listingsQuery.car.years = new ArrayList<>();
         CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) findViewById(R.id.data_staggered_grid_view);
         if (cardGridStaggeredView != null) {
             cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
@@ -128,16 +105,16 @@ public class MakesSearchActivity extends AppCompatActivity {
 
     @Override
     public void onStop () {
-        if (spiceManager.isStarted()) {
-            spiceManager.cancelAllRequests();
-            spiceManager.shouldStop();
-        }
         super.onStop();
     }
 
     @Override
     public void onDestroy () {
         ButterKnife.unbind(this);
+        if (spiceManager.isStarted()) {
+            spiceManager.cancelAllRequests();
+            spiceManager.shouldStop();
+        }
         super.onDestroy();
     }
 

@@ -1,18 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--<item-->
-        <!--android:id="@+id/carmera_capture"-->
-        <!--android:background="@color/background_material_light"-->
-        <!--android:title="@string/capture"-->
-        <!--android:icon="@drawable/carmera_small"-->
-        <!--android:orderInCategory="100"-->
-        <!--app:showAsAction="always" />-->
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:orderInCategory="100"
-        android:title="Enter Car Names"
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:orderInCategory="90"
+        android:title="@string/favorites"
         app:showAsAction="always" />
-
 </menu>

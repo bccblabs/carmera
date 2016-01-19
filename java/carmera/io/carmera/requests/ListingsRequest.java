@@ -29,6 +29,7 @@ public class ListingsRequest extends OkHttpSpiceRequest<Listings> {
         super(Listings.class);
         this.vehicleQuery = query;
         this.server_addr = server_addr_;
+        Log.i (getClass().getCanonicalName(), "listings query: " + new Gson().toJson(this.vehicleQuery));
         client.setRetryOnConnectionFailure(false);
     }
 

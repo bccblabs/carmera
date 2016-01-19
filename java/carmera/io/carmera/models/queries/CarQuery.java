@@ -43,6 +43,8 @@ public class CarQuery {
     @JsonProperty
     public Integer minMpg = 0;
     @JsonProperty
+    public Integer minYr = 1990;
+    @JsonProperty
     public List<String> main_models = new ArrayList<>();
     @JsonProperty
     public List<List<String>> sortBy;
@@ -50,6 +52,14 @@ public class CarQuery {
     public List<Integer> remaining_ids;
 
     public CarQuery() {
+    }
+
+    public List<String> getDrivenWheels() {
+        return drivenWheels;
+    }
+
+    public void setDrivenWheels(List<String> drivenWheels) {
+        this.drivenWheels = drivenWheels;
     }
 
     public List<String> getMain_models() {
@@ -187,5 +197,13 @@ public class CarQuery {
 
     public void setRemaining_ids(List<Integer> remaining_ids) {
         this.remaining_ids = remaining_ids;
+    }
+
+    public Integer getMinYr() {
+        return minYr;
+    }
+
+    public void setMinYr(Integer minYr) {
+        this.minYr = minYr;
     }
 }

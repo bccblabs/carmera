@@ -1,5 +1,4 @@
 package carmera.io.carmera;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,22 +6,22 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.yalantis.guillotine.animation.GuillotineAnimation;
 import org.parceler.Parcels;
 import java.util.Arrays;
 import butterknife.Bind;
@@ -75,13 +74,7 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
 
     @Bind(R.id.toolbar) Toolbar toolbar;
 
-    @Bind(R.id.root) FrameLayout root;
-
-    @Bind(R.id.content_hamburger) View contentHamburger;
-
     @Bind (R.id.loading) View loading;
-
-    @Bind (R.id.text_search_view) MaterialSearchView searchView;
 
     private ListingsFragment listingsFragment;
 
@@ -90,6 +83,10 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     private String server_address;
 
     private SharedPreferences sharedPreferences;
+
+
+    private Drawer result = null;
+
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
@@ -145,16 +142,50 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View search, saved, settings;
         setContentView(R.layout.base);
         ButterKnife.bind(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
 
+        setSupportActionBar(toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
         }
+
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withHasStableIds(true)
+                .withTranslucentStatusBar(false)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.search).withIcon(getResources().getDrawable(R.drawable.ic_search_black_24dp)).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.favorites).withIcon(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp)).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.settings).withIcon(getResources().getDrawable(R.drawable.ic_settings_black_24dp)).withIdentifier(3)
+                ) // add the items we want to use with our Drawer
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            if (drawerItem.getIdentifier() == 1) {
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.content_frame, SearchContainer.newInstance())
+                                        .commitAllowingStateLoss();
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.content_frame, new SettingsFragment())
+                                        .commitAllowingStateLoss();
+                            } else if (drawerItem.getIdentifier() == 2) {
+
+                            }
+                        }
+                        return false;
+                    }
+                })
+                .withSavedInstance(savedInstanceState)
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
+
 
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
@@ -164,52 +195,8 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, SearchContainer.newInstance())
                     .commit();
-
         }
 
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        root.addView(guillotineMenu);
-        search = guillotineMenu.findViewById(R.id.car_search);
-        saved = guillotineMenu.findViewById(R.id.saved_listings);
-        settings = guillotineMenu.findViewById(R.id.settings);
-
-        final GuillotineAnimation guillotineAnimation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu,
-                guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(Constants.GUILLOTINE_ANIMATION_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .build();
-        guillotineAnimation.close();
-
-        search.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, SearchContainer.newInstance())
-                        .commitAllowingStateLoss();
-                guillotineAnimation.close();
-                return false;
-            }
-        });
-
-        settings.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                guillotineAnimation.close();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new SettingsFragment())
-                        .commitAllowingStateLoss();
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-        return true;
     }
 
     @Override
@@ -257,6 +244,7 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void OnEditMakesCallback (String[] val) {
         this.listingsQuery.car.makes.addAll(Arrays.asList(val));
+        Log.i(TAG, "On Edit Makes: " + new Gson().toJson(this.listingsQuery.car));
     }
 
     @Override
@@ -303,9 +291,9 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
-        Log.i (TAG, new Gson().toJson(listingsQuery));
+        Log.i (TAG, "On Research Callback: " + new Gson().toJson(this.listingsQuery.car));
         Intent i = new Intent(this, MakesSearchActivity.class);
-        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, this.listingsQuery));
         startActivityForResult(i, 1);
     }
 
@@ -344,12 +332,6 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void SetFabVisible () {
         fab_toolbar.setVisibility(View.VISIBLE);
-        FilterFragment filterFragment = FilterFragment.newInstance();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        filterFragment.setArguments(args);
-        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
     }
-
 }
 

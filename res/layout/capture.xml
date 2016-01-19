@@ -23,21 +23,21 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="300dp"/>
-    <com.dd.processbutton.iml.SubmitProcessButton
-        android:id="@+id/capture_btn"
+    <View
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_centerInParent="true"
+        android:background="@color/black40"
+    />
+    <com.gc.materialdesign.views.ButtonFlat
         android:layout_alignParentBottom="true"
-        android:text="@string/capture"
-        custom:pb_textComplete="@string/success"
-        custom:pb_textProgress="@string/uploading"
-        custom:pb_textError="@string/error"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        custom:pb_colorComplete="@color/green_complete"
-        custom:pb_colorNormal="@color/blue_normal"
-        custom:pb_colorPressed="@color/blue_pressed"
-        custom:pb_colorProgress="@color/purple_progress"/>
-
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="36dp"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginBottom="6dp"
+        android:background="@android:color/background_light"
+        android:text="@string/find_this_car"
+        android:id="@+id/capture_btn"/>
 </RelativeLayout>
