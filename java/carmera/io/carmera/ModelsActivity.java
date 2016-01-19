@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -15,9 +17,13 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
+import carmera.io.carmera.fragments.search_fragments.FilterFragment;
 import carmera.io.carmera.listeners.OnAddModelListener;
+import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.listeners.OnSeeModelListingsListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ModelQuery;
@@ -30,12 +36,35 @@ import it.gmariotti.cardslib.library.internal.Card;
  * Created by bski on 12/18/15.
  */
 public class ModelsActivity extends AppCompatActivity implements OnAddModelListener,
-                                                                 OnSeeModelListingsListener {
+                                                                 OnSeeModelListingsListener,
+                                                                 OnResearchListener {
 
     private List<ModelQuery> models;
+
     private SharedPreferences sharedPreferences;
+
     private ListingsQuery listingsQuery;
 
+    @Bind (R.id.makes_title_tv) TextView title_text;
+
+    @Bind(R.id.makes_search_toolbar) Toolbar toolbar;
+
+    @OnClick(R.id.ic_filter)
+    public void onFilter () {
+        FilterFragment filterFragment = FilterFragment.newInstance();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class,
+                ModelsActivity.this.listingsQuery));
+        filterFragment.setArguments(args);
+        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
+    }
+
+    @Override
+    public void onResearchCallback (ListingsQuery listingsQuery) {
+        Intent i = new Intent(this, MakesSearchActivity.class);
+        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        startActivityForResult(i, 1);
+    }
 
     @Override
     public void OnSeeModels (List<Integer> styleIds) {
@@ -69,7 +98,20 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_search_image_grid);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));
+
+        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().show();
+            String make_string = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MAKE_STR));
+            if (make_string != null) {
+                title_text.setText(make_string);
+                getSupportActionBar().setTitle("");
+                getSupportActionBar().show();
+            }
+        }
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ArrayList <Card> cards = new ArrayList<>();
         for (final ModelQuery model: models) {

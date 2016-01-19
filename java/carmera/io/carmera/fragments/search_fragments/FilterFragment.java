@@ -217,6 +217,8 @@ public class FilterFragment extends DialogFragment {
         setSingleSpinnerSelection(tq_spinner, output_adapter, Integer.toString(listingsQuery.car.minTq));
         setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
         setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
+        setSingleSpinnerSelection(years_spinner, year_adapter, Integer.toString(listingsQuery.car.minYr));
+        setSingleSpinnerSelection(sort_spinner, sort_criteria_adapter, listingsQuery.sortBy);
 
         try {
             years_spinner.setSelection(findPos(year_adapter, Integer.toString(Collections.min(listingsQuery.car.years))));
@@ -453,6 +455,7 @@ public class FilterFragment extends DialogFragment {
             int pos = findPos(values, value);
             spinner.setSelection(pos);
         } catch (Exception e) {
+            Log.e (getClass().getCanonicalName(), "error setting single spinner: " + e.getMessage());
             spinner.setSelection(0);
         }
 

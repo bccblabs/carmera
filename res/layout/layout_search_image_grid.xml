@@ -1,9 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/makes_search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/background_light"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <widgets.CanaroTextView
+            android:textSize="16sp"
+            android:textColor="@color/selected_item_color"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:text="@string/carmera"
+            android:id="@+id/makes_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.Toolbar>
     <it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="56dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card:item_margin="8dp"
@@ -13,4 +34,62 @@
         card:grid_paddingLeft="1dp"
         card:list_card_layout_resourceID="@layout/staggered_card"
         android:id="@+id/data_staggered_grid_view"/>
+    <RelativeLayout
+        android:id="@+id/fab_toolbar"
+        android:background="@android:color/background_light"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+                android:id="@+id/clear"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/filter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.gc.materialdesign.views.ButtonFlat
+                    android:id="@+id/ic_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/background_dark"
+                    android:text="@string/str_filter"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

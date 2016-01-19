@@ -50,8 +50,7 @@ import carmera.io.carmera.utils.ScrollingLinearLayoutManager;
 /**
  * Created by bski on 7/13/15.
  */
-public class ListingsFragment extends Fragment
-        implements ObservableScrollViewCallbacks, OnResearchListener {
+public class ListingsFragment extends Fragment implements OnResearchListener {
 
 
     private ListingsAdapter listingsAdapter;
@@ -63,38 +62,13 @@ public class ListingsFragment extends Fragment
     @Bind(R.id.loading_container) public View loading_container;
     @Bind(R.id.listings_recylcer) public RecyclerView listings_recycler;
 
-    @Bind (R.id.sort_filter_search) android.support.design.widget.FloatingActionButton sort_filter_search;
-    @Bind (R.id.fab_toolbar) FooterLayout fab_toolbar;
-
-    @Bind(R.id.ic_filter) public TextView ic_sort;
-    @Bind(R.id.ic_sort) public TextView ic_filter;
-    @Bind(R.id.search) public View search;
-
-    @OnClick(R.id.ic_sort)
-    public void onSort () {
-        Log.i (TAG, "Sort Clicked");
-        SortFragment sortFragment = SortFragment.newInstance();
-        Bundle args = new Bundle();
-        if (listingsQuery.car != null) {
-            listingsQuery.car.remaining_ids = new ArrayList<>();
-            listingsQuery.car.tags = new ArrayList<>();
-        }
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        sortFragment.setArguments(args);
-        sortFragment.setTargetFragment(this, 1);
-        sortFragment.show(getChildFragmentManager(), "sort_dialog");
-    }
+    @Bind (R.id.fab_toolbar) View fab_toolbar;
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
-        Log.i (TAG, "Filter Clicked");
         FilterFragment filterFragment = FilterFragment.newInstance();
         Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         Bundle args = new Bundle();
-        if (listingsQuery.car != null) {
-            listingsQuery.car.tags = new ArrayList<>();
-            listingsQuery.car.remaining_ids = new ArrayList<>();
-        }
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         filterFragment.setArguments(args);
         filterFragment.setTargetFragment(this, 0);
@@ -110,8 +84,6 @@ public class ListingsFragment extends Fragment
         listingsAdapter.notifyDataSetChanged();
         listings_recycler.setVisibility(View.INVISIBLE);
         loading_container.setVisibility(View.VISIBLE);
-        if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0)
-            listingsQuery.car.remaining_ids = new ArrayList<>();
         if (listingsQuery.api.franchiseId == null)
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
         else
@@ -204,8 +176,6 @@ public class ListingsFragment extends Fragment
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
-        fab_toolbar.setFab(sort_filter_search);
-        search.setVisibility(View.GONE);
         listings_recycler.setLayoutManager(scrollingLinearLayoutManager);
         listingsAdapter = new ListingsAdapter();
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
@@ -225,10 +195,6 @@ public class ListingsFragment extends Fragment
         listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(scrollingLinearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
-                if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0) {
-
-                }
-
             }
         });
         Listings listings = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTINGS_DATA));
@@ -281,25 +247,5 @@ public class ListingsFragment extends Fragment
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        if (scrollState == ScrollState.UP) {
-            fab_toolbar.slideOutFab();
-        } else if (scrollState == ScrollState.DOWN) {
-            fab_toolbar.slideInFab();
-        }
-    }
-
-    @Override
-    public void onScrollChanged(int i, boolean b, boolean b1) {}
-
-    @Override
-    public void onDownMotionEvent() {}
-
-    @OnClick (R.id.sort_filter_search) void show() {
-        fab_toolbar.expandFab();
-    }
-
 
 }

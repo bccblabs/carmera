@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -16,8 +20,12 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
+import carmera.io.carmera.fragments.search_fragments.FilterFragment;
+import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
@@ -30,7 +38,8 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class MakesSearchActivity extends AppCompatActivity {
+public class MakesSearchActivity extends AppCompatActivity
+    implements OnResearchListener {
 
     private String server_address;
     private ListingsQuery listingsQuery;
@@ -38,18 +47,57 @@ public class MakesSearchActivity extends AppCompatActivity {
     private ArrayList <Card> cards = new ArrayList<>();
     private CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter;
 
+    @Bind (R.id.makes_title_tv) TextView title_text;
+
+    @Bind(R.id.makes_search_toolbar) Toolbar toolbar;
+
+    @OnClick(R.id.ic_filter)
+    public void onFilter () {
+        FilterFragment filterFragment = FilterFragment.newInstance();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class,
+                MakesSearchActivity.this.listingsQuery));
+        filterFragment.setArguments(args);
+        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
+    }
+
+    @Override
+    public void onResearchCallback (ListingsQuery listingsQuery) {
+        Intent i = new Intent(this, MakesSearchActivity.class);
+        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+        startActivityForResult(i, 1);
+    }
+
+
     private final class MakesQueryListener implements RequestListener<MakeQueries> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(MakesSearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().show();
+            title_text.setText("FOUND 0 MAKES");
+            FilterFragment filterFragment = FilterFragment.newInstance();
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+            filterFragment.setArguments(args);
+            filterFragment.show(getSupportFragmentManager(), "filter_dialog");
         }
 
         @Override
         public void onRequestSuccess(MakeQueries result) {
+            cardGridStaggeredArrayAdapter.clear();
+            cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().show();
+            title_text.setText("FOUND " + result.makesCount + " MAKES");
             if (result.makesCount < 1) {
-                Toast.makeText(MakesSearchActivity.this, "No cars matching your criteria :( please change your search!", Toast.LENGTH_SHORT).show();
+                FilterFragment filterFragment = FilterFragment.newInstance();
+                Bundle args = new Bundle();
+                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
+                filterFragment.setArguments(args);
+                filterFragment.show(getSupportFragmentManager(), "filter_dialog");
+
+
             } else {
-                Toast.makeText(MakesSearchActivity.this, "Found " + result.makesCount + " makes matching your criteria", Toast.LENGTH_SHORT).show();
                 MakesSearchActivity.this.listingsQuery = result.query;
                 MakesSearchActivity.this.listingsQuery.car.models = new ArrayList<>();
 
@@ -84,6 +132,12 @@ public class MakesSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_search_image_grid);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().show();
+        }
         cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, this.cards);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));

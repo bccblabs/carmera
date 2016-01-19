@@ -189,6 +189,7 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
 
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
+            fab_toolbar.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new NoHistListingsRequestListener());
         } else {

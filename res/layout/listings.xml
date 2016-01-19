@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/tools"
     android:background="@color/background_floating_material_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,97 +11,67 @@
         android:background="@color/card_pressed"
         android:layout_height="50dp"/>
     <android.support.v7.widget.RecyclerView
+        android:paddingBottom="48dp"
         android:id="@+id/listings_recylcer"
         android:visibility="gone"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/sort_filter_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/ic_add_white_24dp"
-        app:borderWidth="0dp"
-        app:fabSize="normal"
-        app:rippleColor="@color/selected_item_color"
-        />
-    <com.bowyer.app.fabtransitionlayout.FooterLayout
+    <RelativeLayout
         android:id="@+id/fab_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
         android:layout_gravity="bottom"
-        app:ft_container_gravity="center"
-        android:clickable="true"
-        app:ft_color="@color/selected_item_color">
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
 
-        <RelativeLayout
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+                android:id="@+id/clear"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/filter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <LinearLayout
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                <com.gc.materialdesign.views.ButtonFlat
+                    android:id="@+id/ic_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/background_dark"
+                    android:text="@string/str_filter"/>
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/sort"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+            <RelativeLayout
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                    <widgets.CanaroTextView
-                        android:clickable="true"
-                        android:textColor="@android:color/background_light"
-                        android:id="@+id/ic_sort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
-                        android:scaleType="center"
-                        android:text="@string/str_sort"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/filter"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <widgets.CanaroTextView
-                        android:clickable="true"
-                        android:textColor="@android:color/background_light"
-                        android:id="@+id/ic_filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
-                        android:scaleType="center"
-                        android:text="@string/str_filter"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <widgets.CanaroTextView
-                        android:clickable="true"
-                        android:textColor="@android:color/background_light"
-                        android:id="@+id/ic_search"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
-                        android:scaleType="center"
-                        android:text="@string/str_search_all"/>
-                </RelativeLayout>
-            </LinearLayout>
-        </RelativeLayout>
-    </com.bowyer.app.fabtransitionlayout.FooterLayout>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="36dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

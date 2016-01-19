@@ -88,8 +88,8 @@ public class CaptureFragment extends MySupportCameraFragment implements
     }
 
     @Override
-    public void onCreate (Bundle savedBundleInst) {
-        super.onCreate(savedBundleInst);
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated (savedInstanceState);
         activity = getActivity();
     }
 
@@ -103,8 +103,10 @@ public class CaptureFragment extends MySupportCameraFragment implements
         new Thread() {
             @Override
             public void run() {
-                SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
-                setHost(builder.useFullBleedPreview(true).build());
+                if (activity != null) {
+                    SimpleCameraHost.Builder builder = new SimpleCameraHost.Builder(new CaptureHost(activity));
+                    setHost(builder.useFullBleedPreview(true).build());
+                }
             }
         }.start();
     }

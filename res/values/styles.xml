@@ -1,21 +1,19 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="CarmeraTheme.PreferenceStyle" parent="@style/PreferenceThemeOverlay">
-        <item name="android:textColorPrimary">@color/selected_item_color</item>
-        <item name="android:textColorSecondary">@color/selected_item_color</item>
-        <item name="android:textColorTertiary">@color/selected_item_color</item>
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
     </style>
     <style name="CarmeraTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:titleTextStyle">@style/CarmeraTheme.ActionBar.TitleTextStyle</item>
     </style>
     <style name="CarmeraTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:textColor">@color/selected_item_color</item>
     </style>
     <style name="DescStyle">
         <item name="android:layout_column">0</item>
@@ -192,41 +190,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/background_light</item>
     </style>
-    <style name="ImageView" />
-    <style name="ImageView.ContentItem">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginLeft">@dimen/guillotine_small_margin</item>
-    </style>
-    <style name="ImageView.Hamburger" parent="Widget.AppCompat.ActionButton">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/abc_action_bar_overflow_padding_start_material</item>
-    </style>
-    <style name="ImageView.GuillotineItem">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">@dimen/guillotine_medium_margin</item>
-    </style>
-    <style name="TagGroup.LargeBlue" parent="TagGroup">
-        <item name="atg_borderColor">@color/default_blue</item>
-        <item name="atg_textColor">#FFFFFF</item>
-        <item name="atg_backgroundColor">@color/default_blue</item>
-        <item name="atg_inputHintColor">@color/default_blue</item>
-        <item name="atg_inputTextColor">@color/default_blue</item>
-        <item name="atg_checkedBorderColor">@color/default_blue</item>
-        <item name="atg_checkedTextColor">@color/default_blue</item>
-        <item name="atg_checkedMarkerColor">@color/default_blue</item>
-        <item name="atg_checkedBackgroundColor">#FFFFFF</item>
-        <item name="atg_pressedBackgroundColor">@color/default_blue</item>
-        <item name="atg_borderStrokeWidth">0.7dp</item>
-        <item name="atg_textSize">15sp</item>
-        <item name="atg_horizontalSpacing">9dp</item>
-        <item name="atg_verticalSpacing">5dp</item>
-        <item name="atg_horizontalPadding">14dp</item>
-        <item name="atg_verticalPadding">4dp</item>
-    </style>
     <style name="card.content_outer_layout.staggered">
         <item name="android:minHeight">20dp</item>
     </style>
@@ -239,18 +202,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/default_blue</item>
-    </style>
-
-    <style name="TagGroup.CarTags" parent="TagGroup.Small">
-        <item name="atg_textSize">13sp</item>
-        <item name="atg_borderStrokeWidth">0.8dp</item>
-        <item name="atg_horizontalSpacing">8dp</item>
-        <item name="atg_verticalSpacing">3dp</item>
-        <item name="atg_horizontalPadding">12dp</item>
-        <item name="atg_verticalPadding">3dp</item>
-        <item name="atg_textColor">#49C120</item>
-        <item name="atg_borderColor">#49C120</item>
-
     </style>
 
     <style name="menu_labels_style">
@@ -350,7 +301,7 @@
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minWidth">56dp</item>
+        <item name="android:minWidth">100dp</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
     </style>
