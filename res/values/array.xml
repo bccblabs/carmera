@@ -63,6 +63,7 @@
         <item>Mitsubishi</item>
         <item>Nissan</item>
         <item>Porsche</item>
+        <item>Rolls-Royce</item>
         <item>Scion</item>
         <item>Smart</item>
         <item>Subaru</item>
@@ -563,6 +564,14 @@
         <item>RX 8</item>
         <item>tribute</item>
     </string-array>
+    <string-array name="rolls">
+        <item>Ghost</item>
+        <item>Phantom</item>
+        <item>Phantom Coupe</item>
+        <item>Phantom Drophead Coupe</item>
+        <item>Silver Seraph</item>
+        <item>Wraith</item>
+    </string-array>
     <string-array name="mercedes">
         <item>AMG GT</item>
         <item>AMG GT-S</item>
@@ -714,7 +723,7 @@
         <item>8</item>
         <item>10</item>
         <item>12</item>
-        <item>no max</item>
+        <item>16</item>
     </string-array>
     <string-array name="compressor_array">
         <item>Naturally Aspirated</item>
@@ -855,23 +864,27 @@
         <item>Night Vision</item>
     </string-array>
 
-    <string-array name="european_makes">
+    <string-array name="german_makes">
         <item>audi</item>
-        <item>aston martin</item>
         <item>bmw</item>
-        <item>ferrari</item>
-        <item>fisker</item>
+        <item>mercedes-benz</item>
+        <item>porsche</item>
+        <item>smart</item>
+        <item>volkswagen</item>
+    </string-array>
+    <string-array name="british_makes">
+        <item>aston martin</item>
+        <item>bentley</item>
         <item>jaguar</item>
         <item>land rover</item>
-        <item>mercedes-benz</item>
-        <item>lamborghini</item>
         <item>lotus</item>
-        <item>maserati</item>
         <item>mini</item>
-        <item>saab</item>
-        <item>porsche</item>
-        <item>volkswagen</item>
-        <item>volvo</item>
+        <item>rolls-royce</item>
+    </string-array>
+    <string-array name="italian_makes">
+        <item>ferrari</item>
+        <item>lamborghini</item>
+        <item>maserati</item>
     </string-array>
     <string-array name="sport_bodytypes">
         <item>coupe</item>
@@ -880,12 +893,16 @@
         <item>convertible</item>
         <item>crossover</item>
     </string-array>
-    <string-array name="force_induction">
-        <item>turbo</item>
+    <string-array name="turbo">
         <item>supercharger</item>
     </string-array>
-    <string-array name="reliable_tags">
+    <string-array name="supercharger">
+        <item>supercharger</item>
+    </string-array>
+    <string-array name="no_recalls_tags">
         <item>no recalls</item>
+    </string-array>
+    <string-array name="no_complaints_tags">
         <item>no major complaints</item>
         <item>no complaints</item>
     </string-array>

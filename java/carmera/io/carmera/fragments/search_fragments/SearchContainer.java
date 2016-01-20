@@ -63,8 +63,8 @@ public class SearchContainer extends Fragment {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getChildFragmentManager(),
                 FragmentPagerItems.with (getContext())
-                        .add(R.string.str_image_search, CaptureFragment.class)
                         .add(R.string.staggered, StaggeredSearch.class)
+                        .add(R.string.str_image_search, CaptureFragment.class)
                         .create()
         );
         viewPager.setAdapter(adapter);

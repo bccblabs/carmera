@@ -64,7 +64,6 @@
                 />
                 <ImageView
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/sedan"
                     style="@style/search_image_view_staggered"
                     android:id="@+id/staggered_image_holder"/>
         </LinearLayout>

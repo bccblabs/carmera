@@ -157,6 +157,8 @@ public class FilterFragment extends DialogFragment {
         make_resid_map.put ("toyota", R.array.toyota);
         make_resid_map.put("volkswagen", R.array.volkswagen);
         make_resid_map.put("volvo", R.array.volvo);
+        make_resid_map.put ("rolls-royce", R.array.rolls);
+
     }
 
     @Override
@@ -290,7 +292,6 @@ public class FilterFragment extends DialogFragment {
                                 }
                                 selected_models.addAll(Arrays.asList(getActivity().getResources().getStringArray(make_resid_map.get(items.get(i).getName().toLowerCase()))));
                             }
-                            Toast.makeText(FilterFragment.this.getActivity(), selected_models.size() + " models added", Toast.LENGTH_SHORT).show();
                             models_spnr.setItems(Util.getSpinnerValues(
                                             selected_models,
                                             true,
@@ -386,8 +387,8 @@ public class FilterFragment extends DialogFragment {
             }
         });
         cylinders_spnr.setItems(Util.getSpinnerValues(
-                        Arrays.asList(getActivity().getResources().getStringArray(R.array.cylinder_array)),
-                        true,
+                        new ArrayList<String>(Arrays.asList("2","4","5","6","8","10","12","12+")),
+                        false,
                         listingsQuery.car.cylinders),
                         "Cylinders", -1, new MultiSpinner.MultiSpinnerListener() {
             @Override

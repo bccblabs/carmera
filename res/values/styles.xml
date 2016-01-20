@@ -1,8 +1,8 @@
 <resources>
     <style name="CarmeraTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -275,7 +275,7 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="filter_spinner_select">
         <item name="android:layout_marginStart">24dp</item>
@@ -283,7 +283,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="filter_single_spinner_textview">
@@ -294,7 +294,7 @@
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="filter_single_spinner">
         <item name="android:layout_gravity">center_vertical</item>
@@ -310,7 +310,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>

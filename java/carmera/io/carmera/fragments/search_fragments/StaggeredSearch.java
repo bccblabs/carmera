@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredImageButtonCard;
 import carmera.io.carmera.listeners.OnEditCompressors;
+import carmera.io.carmera.listeners.OnEditCylinders;
 import carmera.io.carmera.listeners.OnEditDriveTrain;
 import carmera.io.carmera.listeners.OnEditHp;
 import carmera.io.carmera.listeners.OnEditMakes;
 import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
+import carmera.io.carmera.listeners.OnEditTransmission;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
@@ -38,6 +40,8 @@ public class StaggeredSearch extends Fragment {
     private OnEditHp onEditHp;
     private OnEditMpg onEditMpg;
     private OnEditCompressors onEditCompressors;
+    private OnEditTransmission onEditTransmission;
+    private OnEditCylinders onEditCylinders;
 
     public static StaggeredSearch newInstance () {
         return new StaggeredSearch();
@@ -64,14 +68,59 @@ public class StaggeredSearch extends Fragment {
         });
         cards.add(staggeredImageButtonCard);
 
-        /* european */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.european), R.drawable.european);
+        /* 40+ mpg */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.efficient), R.drawable.efficient);
         staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
                 showDialog();
-                String[] europeanMakes = cxt.getResources().getStringArray(R.array.european_makes);
-                onEditMakes.OnEditMakesCallback(europeanMakes);
+                onEditMpg.OnEditMpgCallback(40);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
+
+
+        /* low insurance */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.low_insurance), R.drawable.low_insurance);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] tags = cxt.getResources().getStringArray(R.array.cheap_insurance_tags);
+                onEditTagsListener.OnEditTagsCallback(tags);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+        /* hybrid */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.hybrid), R.drawable.hybrid);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                onEditTagsListener.OnEditTagCallback("hybrid");
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
+
+
+
+        /* low depreciation */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.low_depreciation), R.drawable.equipment_search_image);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] tags = cxt.getResources().getStringArray(R.array.cheap_depreciation_tags);
+                onEditTagsListener.OnEditTagsCallback(tags);
             }
         });
         cards.add(staggeredImageButtonCard);
@@ -88,8 +137,37 @@ public class StaggeredSearch extends Fragment {
         cards.add(staggeredImageButtonCard);
 
 
+
+
+        /* no recalls */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.no_recalls_search), R.drawable.recalls);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String [] reliableTags = cxt.getResources().getStringArray(R.array.no_recalls_tags);
+                onEditTagsListener.OnEditTagsCallback(reliableTags);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+        /* rear wheel drive */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.rear_wheel_drive_search), R.drawable.wagon);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                onEditDriveTrain.OnEditDriveTrainCallback("rear wheel drive");
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
         /* 300+ hp */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.good_hp), R.drawable.equipment_search_image);
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.good_hp), R.drawable.mechanical_search_image);
         staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
@@ -110,47 +188,11 @@ public class StaggeredSearch extends Fragment {
         });
         cards.add(staggeredImageButtonCard);
 
-        /* boosted */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.boosted_search), R.drawable.turbo);
-        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                showDialog();
-                String[] compressors = cxt.getResources().getStringArray(R.array.force_induction);
-                onEditCompressors.OnEditCompressorsCallback(compressors);
-            }
-        });
-        cards.add(staggeredImageButtonCard);
-
-        /* 40+ mpg */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.efficient), R.drawable.efficient);
-        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                showDialog();
-                onEditMpg.OnEditMpgCallback(40);
-            }
-        });
-        cards.add(staggeredImageButtonCard);
-
-
-
-        /* top reliable */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.reliability_search), R.drawable.reliable);
-        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                showDialog();
-                String [] reliableTags = cxt.getResources().getStringArray(R.array.reliable_tags);
-                onEditTagsListener.OnEditTagsCallback(reliableTags);
-            }
-        });
-        cards.add(staggeredImageButtonCard);
 
 
 
         /* top safety */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.top_safety_search), R.drawable.reliability_search_image);
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.top_safety_search), R.drawable.safety);
         staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
@@ -159,6 +201,102 @@ public class StaggeredSearch extends Fragment {
             }
         });
         cards.add(staggeredImageButtonCard);
+
+        /* turbo */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.turbo_search), R.drawable.turbo);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] compressors = cxt.getResources().getStringArray(R.array.turbo);
+                onEditCompressors.OnEditCompressorsCallback(compressors);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
+        /* british */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.british_search), R.drawable.convertible);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] europeanMakes = cxt.getResources().getStringArray(R.array.british_makes);
+                onEditMakes.OnEditMakesCallback(europeanMakes);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+        /* supercharger */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.supercharger_search), R.drawable.supercharged);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] compressors = cxt.getResources().getStringArray(R.array.supercharger);
+                onEditCompressors.OnEditCompressorsCallback(compressors);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
+        /* german */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.german_search), R.drawable.coupe);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] europeanMakes = cxt.getResources().getStringArray(R.array.german_makes);
+                onEditMakes.OnEditMakesCallback(europeanMakes);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+        /* manual */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.manual), R.drawable.manual);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                onEditTransmission.addTransmissionType("manual");
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+
+
+
+        /* italian */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.italian_search), R.drawable.low_depreciation);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String[] europeanMakes = cxt.getResources().getStringArray(R.array.italian_makes);
+                onEditMakes.OnEditMakesCallback(europeanMakes);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+        /* cylinders */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.many_cylinders), R.drawable.v10);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                onEditCylinders.addCylinders(8);
+                onEditCylinders.addCylinders(10);
+                onEditCylinders.addCylinders(12);
+                onEditCylinders.addCylinders(16);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
 
 
 
@@ -178,6 +316,7 @@ public class StaggeredSearch extends Fragment {
         if (isVisibleToUser) {
             onSearchFragmentVisible.SetFabVisible();
         }
+
     }
 
     @Override
@@ -192,6 +331,8 @@ public class StaggeredSearch extends Fragment {
             onEditHp = (OnEditHp) activity;
             onEditMpg = (OnEditMpg) activity;
             onEditCompressors = (OnEditCompressors) activity;
+            onEditTransmission = (OnEditTransmission) activity;
+            onEditCylinders = (OnEditCylinders) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() +
                     ": needs to implement CameraResultListener" );

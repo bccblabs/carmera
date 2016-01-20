@@ -34,12 +34,14 @@ import carmera.io.carmera.fragments.search_fragments.FilterFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.listeners.OnEditBodyTypes;
 import carmera.io.carmera.listeners.OnEditCompressors;
+import carmera.io.carmera.listeners.OnEditCylinders;
 import carmera.io.carmera.listeners.OnEditDriveTrain;
 import carmera.io.carmera.listeners.OnEditHp;
 import carmera.io.carmera.listeners.OnEditMakes;
 import carmera.io.carmera.listeners.OnEditMpg;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnEditTorque;
+import carmera.io.carmera.listeners.OnEditTransmission;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.Listings;
@@ -62,7 +64,9 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
                                                         OnEditMpg,
                                                         OnEditTags,
                                                         OnEditTorque,
-                                                        OnEditCompressors {
+                                                        OnEditCompressors,
+                                                        OnEditCylinders,
+                                                        OnEditTransmission {
 
     private final String TAG = getClass().getCanonicalName();
     private ListingsQuery listingsQuery = new ListingsQuery();
@@ -226,6 +230,15 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
         spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
     }
 
+    @Override
+    public void addCylinders (Integer cylinder) {
+        this.listingsQuery.car.cylinders.add(Integer.toString(cylinder));
+    }
+
+    @Override
+    public void addTransmissionType (String transmissionType) {
+        this.listingsQuery.car.transmissionTypes.add(transmissionType);
+    }
 
     @Override
     public void OnEditBodyTypeCallback (String bt) {
