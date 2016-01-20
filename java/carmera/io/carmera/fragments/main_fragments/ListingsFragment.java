@@ -63,6 +63,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Bind(R.id.listings_recylcer) public RecyclerView listings_recycler;
 
     @Bind (R.id.fab_toolbar) View fab_toolbar;
+    @Bind (R.id.emptyview) View emptyView;
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
@@ -85,7 +86,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         listings_recycler.setVisibility(View.INVISIBLE);
         loading_container.setVisibility(View.VISIBLE);
         if (listingsQuery.api.franchiseId == null)
-            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ResearchListener());
+            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
         else
             spiceManager.execute(new FranchiseListings(listingsQuery, server_address), new ListingsRequestListener());
     }
@@ -93,13 +94,19 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            loading_container.setVisibility(View.INVISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
+            fab_toolbar.setVisibility(View.GONE);
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
                     loading_container.setVisibility(View.INVISIBLE);
+                    if (result == null || result.listings.size() < 1) {
+                        emptyView.setVisibility(View.VISIBLE);
+                        fab_toolbar.setVisibility(View.GONE);
+                    }
                     listings_recycler.setVisibility(View.VISIBLE);
                     listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
                         @Override
@@ -117,38 +124,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                 Log.e(TAG, e.getMessage());
             }
             Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private final class ResearchListener implements RequestListener<Listings> {
-        @Override
-        public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(getActivity(), "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        @Override
-        public void onRequestSuccess (Listings result) {
-            try {
-                if (ListingsFragment.this.isAdded()) {
-                    loading_container.setVisibility(View.INVISIBLE);
-                    listings_recycler.setVisibility(View.VISIBLE);
-                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
-                        @Override
-                        public void onLoadMore(int current_page) {
-                            if (listingsQuery.car != null && listingsQuery.car.remaining_ids != null && listingsQuery.car.remaining_ids.size() > 0){
-
-                            }
-                        }
-                    });
-                    listingsQuery = result.getListingsQuery();
-                    if (result.listings == null ||  result.listings.size() < 1)
-                        return;
-                    listingsAdapter.addAll(result.getListings());
-                    listingsAdapter.notifyDataSetChanged();
-                    listings_recycler.smoothScrollToPosition(0);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
         }
     }
 
@@ -199,14 +174,15 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
         });
         Listings listings = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_LISTINGS_DATA));
         if (listings != null) {
-            Toast.makeText(getActivity(), "listings parcelable received", Toast.LENGTH_SHORT).show();
             loading_container.setVisibility(View.INVISIBLE);
-            listings_recycler.setVisibility(View.VISIBLE);
             listingsQuery = listings.getListingsQuery();
             listingsQuery.car.remaining_ids = new ArrayList<>();
-
-            if (listings.listings == null ||  listings.listings.size() < 1)
+            if (listings.listings == null ||  listings.listings.size() < 1) {
+                fab_toolbar.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
                 return;
+            }
+            listings_recycler.setVisibility(View.VISIBLE);
             listingsAdapter.addAll(listings.getListings());
             listingsAdapter.notifyDataSetChanged();
         }

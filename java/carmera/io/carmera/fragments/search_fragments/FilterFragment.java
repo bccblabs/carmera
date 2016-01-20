@@ -171,6 +171,11 @@ public class FilterFragment extends DialogFragment {
         ButterKnife.bind(this, view);
         init_spinners();
 
+        if (this.listingsQuery.car.models.size() > 0) {
+            makes_spnr.setVisibility(View.GONE);
+            models_spnr.setVisibility(View.GONE);
+        }
+
         return builder.create();
     }
     private int findPos (ArrayAdapter<String> adapter, String item) {
@@ -267,60 +272,84 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
+        if (FilterFragment.this.listingsQuery.car.models.size() > 0 ) {
+            makes_spnr.setItems(Util.getSpinnerValues(
+                            Arrays.asList(getActivity().getResources().getStringArray(R.array.makes_array)),
+                            true,
+                            listingsQuery.car.makes),
 
-        makes_spnr.setItems(Util.getSpinnerValues(
-                Arrays.asList(getActivity().getResources().getStringArray(R.array.makes_array)),
-                true,
-                listingsQuery.car.makes),
+                    "Makes", -1, new MultiSpinner.MultiSpinnerListener() {
+                        @Override
+                        public void onItemsSelected(List<KeyPairBoolData> items) {
+                            selected_models = new ArrayList<String>();
 
-                "Makes", -1, new MultiSpinner.MultiSpinnerListener() {
-                    @Override
-                    public void onItemsSelected(List<KeyPairBoolData> items) {
-                        selected_models = new ArrayList<String>();
-
-                        for (int i = 0; i < items.size(); i++) {
-                            if (!items.get(i).isSelected()) {
-                                for (Iterator<String> iter = listingsQuery.car.makes.listIterator(); iter.hasNext(); ) {
-                                    String test = iter.next();
-                                    if (test.equals(items.get(i).getName().toLowerCase()))
-                                        iter.remove();
+                            for (int i = 0; i < items.size(); i++) {
+                                if (!items.get(i).isSelected()) {
+                                    for (Iterator<String> iter = listingsQuery.car.makes.listIterator(); iter.hasNext(); ) {
+                                        String test = iter.next();
+                                        if (test.equals(items.get(i).getName().toLowerCase()))
+                                            iter.remove();
+                                    }
                                 }
-                            }
-                            if (items.get(i).isSelected()){
-                                if (!listingsQuery.car.makes.contains(items.get(i).getName().toLowerCase())) {
-                                    listingsQuery.car.makes.add(items.get(i).getName().toLowerCase());
+                                if (items.get(i).isSelected()){
+                                    if (!listingsQuery.car.makes.contains(items.get(i).getName().toLowerCase())) {
+                                        listingsQuery.car.makes.add(items.get(i).getName().toLowerCase());
+                                    }
+                                    selected_models.addAll(Arrays.asList(getActivity().getResources().getStringArray(make_resid_map.get(items.get(i).getName().toLowerCase()))));
                                 }
-                                selected_models.addAll(Arrays.asList(getActivity().getResources().getStringArray(make_resid_map.get(items.get(i).getName().toLowerCase()))));
-                            }
-                            models_spnr.setItems(Util.getSpinnerValues(
-                                            selected_models,
-                                            true,
-                                            listingsQuery.car.main_models),
-                                    "Models", -1, new MultiSpinner.MultiSpinnerListener() {
-                                        @Override
-                                        public void onItemsSelected(List<KeyPairBoolData> items) {
-                                            for(int i=0; i<items.size(); i++) {
-                                                if(!items.get(i).isSelected()) {
-                                                    for (Iterator<String> iter = listingsQuery.car.main_models.listIterator(); iter.hasNext();) {
-                                                        String test = iter.next();
-                                                        if (test.equals(items.get(i).getName()))
-                                                            iter.remove();
+                                models_spnr.setItems(Util.getSpinnerValues(
+                                                selected_models,
+                                                true,
+                                                listingsQuery.car.main_models),
+                                        "Models", -1, new MultiSpinner.MultiSpinnerListener() {
+                                            @Override
+                                            public void onItemsSelected(List<KeyPairBoolData> items) {
+                                                for(int i=0; i<items.size(); i++) {
+                                                    if(!items.get(i).isSelected()) {
+                                                        for (Iterator<String> iter = listingsQuery.car.main_models.listIterator(); iter.hasNext();) {
+                                                            String test = iter.next();
+                                                            if (test.equals(items.get(i).getName()))
+                                                                iter.remove();
+                                                        }
+                                                    } else {
+                                                        listingsQuery.car.main_models.add(items.get(i).getName().toLowerCase());
                                                     }
-                                                } else {
-                                                    listingsQuery.car.main_models.add(items.get(i).getName().toLowerCase());
                                                 }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
+                            if (selected_models.size() > 0 && models_spnr.getVisibility() == View.INVISIBLE)
+                                models_spnr.setVisibility(View.VISIBLE);
+                            if (selected_models.size() < 1)
+                                models_spnr.setVisibility(View.INVISIBLE);
+
                         }
-                        if (selected_models.size() > 0 && models_spnr.getVisibility() == View.INVISIBLE)
-                            models_spnr.setVisibility(View.VISIBLE);
-                        if (selected_models.size() < 1)
-                            models_spnr.setVisibility(View.INVISIBLE);
+                    });
 
-                    }
-                });
+        } else {
+            models_spnr.setItems (Util.getSpinnerValues(
+                    FilterFragment.this.listingsQuery.car.models,
+                    true,
+                    FilterFragment.this.listingsQuery.car.models)
+                    ,
+                    "Submodels and Trims", -1, new MultiSpinner.MultiSpinnerListener() {
+                        @Override
+                        public void onItemsSelected(List<KeyPairBoolData> items) {
+                            for(int i=0; i<items.size(); i++) {
+                                if(!items.get(i).isSelected()) {
+                                    for (Iterator<String> iter = listingsQuery.car.models.listIterator(); iter.hasNext();) {
+                                        String test = iter.next();
+                                        if (test.equals(items.get(i).getName()))
+                                            iter.remove();
+                                    }
+                                } else {
+                                    listingsQuery.car.models.add(items.get(i).getName().toLowerCase());
+                                }
+                            }
+                        }
 
+                    });
+        }
 
 
 

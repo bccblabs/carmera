@@ -30,6 +30,7 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.utils.Constants;
+import carmera.io.carmera.widgets.VerticalSeekBar;
 
 /**
  * Created by bski on 6/2/15.
@@ -47,8 +48,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
     public final String TAG = getClass().getCanonicalName();
     private static final String KEY_USE_FFC = "com.commonsware.cwac.camera.demo.USE_FFC";
 
-    private SeekBar zoom = null;
-
     @Bind (R.id.capture_btn) public ButtonFlat capture_btn;
 
     @OnClick (R.id.capture_btn)
@@ -60,6 +59,7 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
     @Bind (R.id.loading) public View loading;
 
+    VerticalSeekBar zoom;
 
 
     private OnCameraResultListener camera_result_callback = null;
@@ -89,7 +89,7 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
     @Override
     public void onActivityCreated (Bundle savedInstanceState) {
-        super.onActivityCreated (savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
         activity = getActivity();
     }
 
@@ -121,12 +121,11 @@ public class CaptureFragment extends MySupportCameraFragment implements
         View cameraView = super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.capture, container, false);
         ButterKnife.bind(this, v);
-        zoom = (SeekBar) v.findViewById(R.id.zoombar);
+        zoom = (VerticalSeekBar) v.findViewById(R.id.zoombar);
         zoom.setKeepScreenOn(true);
         camera_preview.addView(cameraView);
         loading.setVisibility(View.INVISIBLE);
         camera_preview.setOnTouchListener(this);
-
         return v;
     }
 
@@ -231,5 +230,4 @@ public class CaptureFragment extends MySupportCameraFragment implements
     public void onDestroy() {
         super.onDestroy();
     }
-
 }

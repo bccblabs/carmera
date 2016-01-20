@@ -247,7 +247,7 @@
     <string name="many_cylinders">8+ Cylinders</string>
 
     <string name="low_depreciation_desc">Cars with Low Depreciation</string>
-
+    <string name="no_cars_found">No Cars Found, Please Modify Your Search</string>
     <string name="european">European</string>
     <string name="german_search">German</string>
     <string name="british_search">British</string>

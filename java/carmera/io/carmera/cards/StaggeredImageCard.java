@@ -22,10 +22,11 @@ public class StaggeredImageCard extends Card {
     private Context cxt;
     protected String title_str, subtitle_str, image_url;
     protected ImageView image_holder;
-    protected TextView title, subtitle;
+    protected TextView title;
+//    , subtitle;
 
     public StaggeredImageCard (Context cxt_, @Nullable String title, @Nullable String subtitle, String imageUrl) {
-        super (cxt_, R.layout.staggered_card_image);
+        super (cxt_, R.layout.staggered_card_image_with_btn);
         this.cxt = cxt_;
         this.title_str = title;
         this.subtitle_str = subtitle;
@@ -35,7 +36,7 @@ public class StaggeredImageCard extends Card {
     @Override
     public void setupInnerViewElements (ViewGroup parent, View view) {
         title = (TextView) view.findViewById(R.id.staggered_card_title);
-        subtitle = (TextView) view.findViewById(R.id.staggered_card_subtitle);
+//        subtitle = (TextView) view.findViewById(R.id.staggered_card_subtitle);
         image_holder = (ImageView) view.findViewById(R.id.staggered_image_holder);
         try {
             Picasso.with(cxt)
@@ -45,7 +46,7 @@ public class StaggeredImageCard extends Card {
             image_holder.setVisibility(View.GONE);
         }
 
-        Util.setText(title, this.title_str);
-        Util.setText(subtitle, this.subtitle_str);
+        Util.setText(title, this.title_str + "\n" + this.subtitle_str);
+//        Util.setText(subtitle, this.subtitle_str);
     }
 }

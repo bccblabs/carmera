@@ -24,6 +24,7 @@
     android:layout_height="match_parent">
 
     <it.gmariotti.cardslib.library.view.ForegroundLinearLayout
+        android:background="@color/black_20"
         android:id="@+id/card_main_layout"
         style="@style/card.main_layout_foreground"
         android:orientation="vertical"

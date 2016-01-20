@@ -6,9 +6,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -109,7 +106,6 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
-                        .addToBackStack("listings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -199,13 +195,14 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
         } else {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, SearchContainer.newInstance())
+                    .addToBackStack("content_fragment")
                     .commit();
         }
 
     }
 
     @Override
-    public void onStart () {
+    public void onStart() {
         super.onStart();
         spiceManager.start(Base.this);
     }

@@ -35,9 +35,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class ModelsActivity extends AppCompatActivity implements OnAddModelListener,
-                                                                 OnSeeModelListingsListener,
-                                                                 OnResearchListener {
+public class ModelsActivity extends AppCompatActivity {
 
     private List<ModelQuery> models;
 
@@ -47,51 +45,14 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
 
     @Bind (R.id.makes_title_tv) TextView title_text;
 
-    @Bind(R.id.makes_search_toolbar) Toolbar toolbar;
+    @Bind (R.id.makes_search_toolbar) Toolbar toolbar;
 
-    @OnClick(R.id.ic_filter)
-    public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class,
-                ModelsActivity.this.listingsQuery));
-        filterFragment.setArguments(args);
-        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
-    }
+    @Bind (R.id.fab_toolbar) View fab_toolbar;
 
-    @Override
-    public void onResearchCallback (ListingsQuery listingsQuery) {
-        Intent i = new Intent(this, MakesSearchActivity.class);
-        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        startActivityForResult(i, 1);
-    }
 
-    @Override
-    public void OnSeeModels (List<Integer> styleIds) {
-        Intent i = new Intent(ModelsActivity.this, Base.class);
-        Bundle args = new Bundle();
-        ListingsQuery listingsQuery = new ListingsQuery();
-        listingsQuery.car.remaining_ids = styleIds;
-        listingsQuery.api.pagenum = 1;
-        listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-        listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-        listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
-        i.putExtras(args);
-        startActivity(i);
-    }
+    @Bind(R.id.loading_sign) View loading;
 
-    @Override
-    public void onModelAddedCallback (String name) {
-        new MaterialDialog.Builder(this)
-                .title("Search Filters")
-                .content(name + " addeded")
-                .theme(Theme.LIGHT)
-                .positiveText("OK")
-                .show();
-        listingsQuery.car.models.add (name);
-    }
-
+    @Bind (R.id.data_staggered_grid_view) View staggered_grid_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +61,7 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));
+        fab_toolbar.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
         if (toolbar != null) {
@@ -115,7 +77,7 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ArrayList <Card> cards = new ArrayList<>();
         for (final ModelQuery model: models) {
-            StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this,model.yearDesc,  model.model, model.imageUrl);
+            StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this, model.model + "\n\n", model.yearDesc, model.imageUrl);
             staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
@@ -134,6 +96,9 @@ public class ModelsActivity extends AppCompatActivity implements OnAddModelListe
             });
             cards.add(staggeredImageCard);
         }
+        loading.setVisibility(View.GONE);
+        staggered_grid_view.setVisibility(View.VISIBLE);
+
         CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, cards);
         CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) findViewById(R.id.data_staggered_grid_view);
         cardGridStaggeredArrayAdapter.notifyDataSetChanged();

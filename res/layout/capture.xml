@@ -18,6 +18,8 @@
 
     <carmera.io.carmera.widgets.VerticalSeekBar
         android:id="@+id/zoombar"
+        android:thumbTint="@android:color/background_light"
+        android:progressTint="@color/selected_item_color"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"

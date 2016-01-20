@@ -49,7 +49,15 @@ public class MakesSearchActivity extends AppCompatActivity
 
     @Bind (R.id.makes_title_tv) TextView title_text;
 
-    @Bind(R.id.makes_search_toolbar) Toolbar toolbar;
+    @Bind (R.id.makes_search_toolbar) Toolbar toolbar;
+
+    @Bind (R.id.loading_sign) View loading;
+
+    @Bind (R.id.data_staggered_grid_view) View staggered_grid_view;
+
+    @Bind (R.id.emptyview) View emptyView;
+
+    @Bind (R.id.fab_toolbar) View edit_search_bar;
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
@@ -72,6 +80,9 @@ public class MakesSearchActivity extends AppCompatActivity
     private final class MakesQueryListener implements RequestListener<MakeQueries> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            edit_search_bar.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
             getSupportActionBar().setTitle("");
             getSupportActionBar().show();
             title_text.setText("FOUND 0 MAKES");
@@ -84,6 +95,13 @@ public class MakesSearchActivity extends AppCompatActivity
 
         @Override
         public void onRequestSuccess(MakeQueries result) {
+            loading.setVisibility(View.GONE);
+            edit_search_bar.setVisibility(View.VISIBLE);
+            if (result == null || result.makesCount < 1) {
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                staggered_grid_view.setVisibility(View.VISIBLE);
+            }
             cardGridStaggeredArrayAdapter.clear();
             cardGridStaggeredArrayAdapter.notifyDataSetChanged();
             getSupportActionBar().setTitle("");
@@ -103,8 +121,8 @@ public class MakesSearchActivity extends AppCompatActivity
 
                 for (final MakeQuery make : result.makes) {
                     StaggeredImageCard staggeredImageCard = new StaggeredImageCard(MakesSearchActivity.this,
-                            make.numModels + " models found",
-                            make.make,
+                            make.make + "\n\n",
+                            make.numModels + " models",
                             make.imageUrl);
 
                     staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
@@ -138,6 +156,8 @@ public class MakesSearchActivity extends AppCompatActivity
             getSupportActionBar().setTitle("");
             getSupportActionBar().show();
         }
+
+
         cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, this.cards);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));

@@ -39,8 +39,6 @@ public class DealerViewer extends FragmentActivity {
 
         add_page(R.string.dealer_info, Constants.EXTRA_DEALERID, DealerInfoFragment.class, page_creator);
         add_page(R.string.reviews, Constants.EXTRA_DEALERID, DealerReviews.class, page_creator);
-        add_page(R.string.franchise_listings, Constants.EXTRA_FRANCHISEID, ListingsFragment.class, page_creator);
-//        add_page(R.string.start_chat, Constants.EXTRA_LISTINGS_CHAT_INFO, DealerChatFragment.class, page_creator);
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
