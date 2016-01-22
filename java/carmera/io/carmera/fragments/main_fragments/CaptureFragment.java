@@ -36,7 +36,6 @@ import carmera.io.carmera.widgets.VerticalSeekBar;
  * Created by bski on 6/2/15.
  */
 public class CaptureFragment extends MySupportCameraFragment implements
-        SeekBar.OnSeekBarChangeListener,
         View.OnTouchListener {
 
 
@@ -59,7 +58,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
 
     @Bind (R.id.loading) public View loading;
 
-    VerticalSeekBar zoom;
 
 
     private OnCameraResultListener camera_result_callback = null;
@@ -121,8 +119,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
         View cameraView = super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.capture, container, false);
         ButterKnife.bind(this, v);
-        zoom = (VerticalSeekBar) v.findViewById(R.id.zoombar);
-        zoom.setKeepScreenOn(true);
         camera_preview.addView(cameraView);
         loading.setVisibility(View.INVISIBLE);
         camera_preview.setOnTouchListener(this);
@@ -135,18 +131,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
         return true;
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (fromUser) {
-            zoom.setEnabled(false);
-            zoomTo(zoom.getProgress()).onComplete(new Runnable() {
-                @Override
-                public void run() {
-                    zoom.setEnabled(true);
-                }
-            }).go();
-        }
-    }
 
     class CaptureHost extends SimpleCameraHost {
         public CaptureHost (Context cxt) {
@@ -181,7 +165,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
                 public void run() {
                     capture_btn.setVisibility(View.INVISIBLE);
                     loading.setVisibility(View.VISIBLE);
-                    zoom.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -191,17 +174,8 @@ public class CaptureFragment extends MySupportCameraFragment implements
         public Camera.Parameters adjustPreviewParameters(Camera.Parameters parameters) {
             flashMode=
                     CameraUtils.findBestFlashModeMatch(parameters,
-                            Camera.Parameters.FLASH_MODE_RED_EYE,
-                            Camera.Parameters.FLASH_MODE_AUTO,
-                            Camera.Parameters.FLASH_MODE_ON);
+                            Camera.Parameters.FLASH_MODE_AUTO);
 
-            if (doesZoomReallyWork() && parameters.getMaxZoom() > 0) {
-                zoom.setMax(parameters.getMaxZoom());
-                zoom.setOnSeekBarChangeListener(CaptureFragment.this);
-            }
-            else {
-                zoom.setEnabled(false);
-            }
             return(super.adjustPreviewParameters(parameters));
         }
     }
@@ -219,12 +193,6 @@ public class CaptureFragment extends MySupportCameraFragment implements
         }
         takePicture(xact);
     }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
 
     @Override
     public void onDestroy() {

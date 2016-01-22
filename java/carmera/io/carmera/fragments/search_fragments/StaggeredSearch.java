@@ -2,6 +2,7 @@ package carmera.io.carmera.fragments.search_fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredImageButtonCard;
 import carmera.io.carmera.listeners.OnEditCompressors;
@@ -43,6 +45,8 @@ public class StaggeredSearch extends Fragment {
     private OnEditTransmission onEditTransmission;
     private OnEditCylinders onEditCylinders;
 
+
+
     public static StaggeredSearch newInstance () {
         return new StaggeredSearch();
     }
@@ -53,7 +57,7 @@ public class StaggeredSearch extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate (R.layout.layout_search_btn_card_grid, container, false);
+        View v = inflater.inflate (R.layout.fragment_initial_search_grid, container, false);
         cxt = getActivity();
         ArrayList<Card> cards = new ArrayList<>();
 
@@ -91,6 +95,31 @@ public class StaggeredSearch extends Fragment {
             public void onClick(Card card, View view) {
                 showDialog();
                 String[] tags = cxt.getResources().getStringArray(R.array.cheap_insurance_tags);
+                onEditTagsListener.OnEditTagsCallback(tags);
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+        /* electric */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.electric_search), R.drawable.electric);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                onEditTagsListener.OnEditTagCallback("electric");
+            }
+        });
+        cards.add(staggeredImageButtonCard);
+
+
+        /* low repairs */
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.low_repairs_search), R.drawable.low_repairs);
+        staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                showDialog();
+                String [] tags = getResources().getStringArray(R.array.cheap_repairs_tags);
                 onEditTagsListener.OnEditTagsCallback(tags);
             }
         });
@@ -140,7 +169,7 @@ public class StaggeredSearch extends Fragment {
 
 
         /* no recalls */
-        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.no_recalls_search), R.drawable.recalls);
+        staggeredImageButtonCard = new StaggeredImageButtonCard(cxt, cxt.getResources().getString(R.string.no_recalls_search), R.drawable.recalls_free);
         staggeredImageButtonCard.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
@@ -289,10 +318,7 @@ public class StaggeredSearch extends Fragment {
             @Override
             public void onClick(Card card, View view) {
                 showDialog();
-                onEditCylinders.addCylinders(8);
-                onEditCylinders.addCylinders(10);
-                onEditCylinders.addCylinders(12);
-                onEditCylinders.addCylinders(16);
+                onEditCylinders.onSetMinCylinders(8);
             }
         });
         cards.add(staggeredImageButtonCard);
@@ -303,6 +329,7 @@ public class StaggeredSearch extends Fragment {
         CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);
         CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) v.findViewById(R.id.data_staggered_grid_view);
         cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+
         if (cardGridStaggeredView != null) {
             cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
         }

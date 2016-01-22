@@ -23,7 +23,7 @@ public class CarQuery {
     @JsonProperty
     public List<String> transmissionTypes = new ArrayList<>();
     @JsonProperty
-    public List<String> cylinders = new ArrayList<>();
+    public Integer minCylinders = 0;
     @JsonProperty
     public List<String> compressors = new ArrayList<>();
     @JsonProperty
@@ -110,12 +110,12 @@ public class CarQuery {
         this.transmissionTypes = transmissionTypes;
     }
 
-    public List<String> getCylinders() {
-        return cylinders;
+    public Integer getMinCylinders() {
+        return minCylinders;
     }
 
-    public void setCylinders(List<String> cylinders) {
-        this.cylinders = cylinders;
+    public void setMinCylinders(Integer minCylinders) {
+        this.minCylinders = minCylinders;
     }
 
     public List<String> getCompressors() {

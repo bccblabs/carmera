@@ -212,7 +212,7 @@
     <string name="four_wheel_drive_search">All Wheel Drive</string>
 
     <string name="turbo_search">Turbo</string>
-    <string name="supercharger_search">Super Charger</string>
+    <string name="supercharger_search">Supercharged</string>
     <string name="boosted_desc">Turbo &amp; Supercharged</string>
 
     <string name="reliable_search">Fault Proof</string>
@@ -240,8 +240,7 @@
     <string name="low_insurance">Low Insurance</string>
     <string name="low_insurance_desc">Cars with Low Insurance Costs</string>
 
-    <string name="low_repairs">Cheap-To-Run</string>
-    <string name="low_repairs_desc">Cars with Low Repairs &amp; Maintenance</string>
+    <string name="low_repairs_search">Low Repairs &amp; Maintenance</string>
 
     <string name="low_depreciation">Low Depreciation</string>
     <string name="many_cylinders">8+ Cylinders</string>
@@ -263,17 +262,21 @@
     <string name="str_filter">Edit Search</string>
     <string name="str_search_all">See Cars</string>
     <string name="str_image_search">Image</string>
-    <string name="staggered">Staggered</string>
+    <string name="staggered">Cars</string>
 
     <string name="add_to_search">Add</string>
     <string name="see_all">See All</string>
     <string name="search_hint">Enter Car Name Here</string>
 
-    <string name="min_mpg">Mininum MPG</string>
-    <string name="min_hp">Mininum Horsepower</string>
-    <string name="min_tq">Mininum Torque</string>
+    <string name="min_mpg">Min MPG</string>
+    <string name="min_hp">Min Horsepower</string>
+    <string name="min_tq">Min Torque</string>
+    <string name="min_cylinders">Min Cylinders</string>
     <string name="see_listings">See Listings</string>
     <string name="ok">Ok</string>
+    <string name="search_history">Search History</string>
+    <string name="models">Models</string>
+
 
     <string name="dealership">Dealership</string>
     <string name="call">Call</string>
@@ -290,6 +293,12 @@
 
     <string name="newer_than">Newer than</string>
     <string name="tags">Tags</string>
-
+    <string name="electric_search">Electric</string>
     <string name="find_this_car">Find Car</string>
+
+    <string name="listings_seen">SEEN</string>
+    <string name="listings_fav">FAV</string>
+
+    <string name="home">Home</string>
+
 </resources>

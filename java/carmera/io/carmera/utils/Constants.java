@@ -23,6 +23,9 @@ public class Constants {
     public final static String PAGENUM_DEFAULT = "1";
 
 
+    public final static String EXTRAS_LISTINGS_SEEN = "extras_listings_seen";
+    public final static String EXTRAS_LISTINGS_FAV = "extras_listings_fav";
+
     public final static String EXTRA_MODELS_INFO = "extra_models_info";
     public final static String EXTRA_MAKE_STR = "extra_make_str";
 

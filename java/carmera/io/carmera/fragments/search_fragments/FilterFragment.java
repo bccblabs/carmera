@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -73,14 +74,18 @@ public class FilterFragment extends DialogFragment {
     @Bind (R.id.compressor_spinner)
     MultiSpinner compressors_spnr;
 
-    @Bind (R.id.cylinders_spinner)
-    MultiSpinner cylinders_spnr;
-
     @Bind (R.id.drivetrain_spinner)
     MultiSpinner drivetrains_spnr;
 
     @Bind (R.id.tags_spinner)
     MultiSpinner tags_spnr;
+
+    @Bind (R.id.conditions_spinner)
+    MultiSpinner conditions_spnr;
+
+    @Bind (R.id.mileage_view) View mileage_view;
+
+    @Bind (R.id.price_view) View price_view;
 
 
     @Bind (R.id.mpg_spinner) Spinner mpg_spinner;
@@ -88,6 +93,7 @@ public class FilterFragment extends DialogFragment {
     @Bind (R.id.tq_spinner) Spinner tq_spinner;
     @Bind (R.id.price_spinner) Spinner price_spinner;
     @Bind (R.id.mileage_spinner) Spinner mileage_spinner;
+    @Bind (R.id.cylinders_spinner) Spinner cylinders_spnr;
 
     @OnClick (R.id.dismiss_btn)
     void onFilter () {
@@ -173,7 +179,6 @@ public class FilterFragment extends DialogFragment {
 
         if (this.listingsQuery.car.models.size() > 0) {
             makes_spnr.setVisibility(View.GONE);
-            models_spnr.setVisibility(View.GONE);
         }
 
         return builder.create();
@@ -197,17 +202,17 @@ public class FilterFragment extends DialogFragment {
         final ArrayAdapter<String> year_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
                 getResources().getStringArray(R.array.years));
 
-        final ArrayAdapter<String> price_mileage_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
-                getResources().getStringArray(R.array.max_mileage_array));
-
         final ArrayAdapter<String> sort_criteria_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
                 getResources().getStringArray(R.array.sort_criteria));
+
+        final ArrayAdapter<String> cylinder_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.cylinder_array));
 
         mpg_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         output_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         year_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
-        price_mileage_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         sort_criteria_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        cylinder_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
 
 
         mpg_spinner.setAdapter(mpg_adapter);
@@ -215,17 +220,14 @@ public class FilterFragment extends DialogFragment {
         tq_spinner.setAdapter(output_adapter);
         years_spinner.setAdapter(year_adapter);
         sort_spinner.setAdapter(sort_criteria_adapter);
-
-        price_spinner.setAdapter(price_mileage_adapter);
-        mileage_spinner.setAdapter(price_mileage_adapter);
+        cylinders_spnr.setAdapter(cylinder_adapter);
 
         setSingleSpinnerSelection(mpg_spinner, mpg_adapter, Integer.toString(listingsQuery.car.minMpg));
         setSingleSpinnerSelection(hp_spinner, output_adapter, Integer.toString(listingsQuery.car.minHp));
         setSingleSpinnerSelection(tq_spinner, output_adapter, Integer.toString(listingsQuery.car.minTq));
-        setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
-        setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
         setSingleSpinnerSelection(years_spinner, year_adapter, Integer.toString(listingsQuery.car.minYr));
         setSingleSpinnerSelection(sort_spinner, sort_criteria_adapter, listingsQuery.sortBy);
+        setSingleSpinnerSelection(cylinders_spnr, cylinder_adapter, Integer.toString(listingsQuery.car.minCylinders));
 
         try {
             years_spinner.setSelection(findPos(year_adapter, Integer.toString(Collections.min(listingsQuery.car.years))));
@@ -252,27 +254,57 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
-
         years_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 FilterFragment.this.listingsQuery.car.minYr = Integer.parseInt(year_adapter.getItem(position));
             }
         });
-        price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+        cylinders_spnr.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                FilterFragment.this.listingsQuery.max_price = price_mileage_adapter.getItem(position);
-            }
-        });
-        mileage_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(Spinner parent, View view, int position, long id) {
-                FilterFragment.this.listingsQuery.max_mileage = price_mileage_adapter.getItem(position);
+                FilterFragment.this.listingsQuery.car.minCylinders = Integer.parseInt(cylinder_adapter.getItem(position));
             }
         });
 
-        if (FilterFragment.this.listingsQuery.car.models.size() > 0 ) {
+        sort_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                String selected_sort = sort_criteria_adapter.getItem(position);
+                if (selected_sort.equals("Price: High to Low"))
+                    selected_sort = Constants.PRICE_DESC;
+                else if (selected_sort.equals("Price: Low to High"))
+                    selected_sort = Constants.PRICE_ASC;
+                else if (selected_sort.equals("Miles: High to Low"))
+                    selected_sort = Constants.MILEAGE_DESC;
+                else if (selected_sort.equals("Miles: Low to High"))
+                    selected_sort = Constants.MILEAGE_ASC;
+                else if (selected_sort.equals("HP: High to Low"))
+                    selected_sort = Constants.HP_DESC;
+                else if (selected_sort.equals("HP: Low to High"))
+                    selected_sort = Constants.HP_ASC;
+                else if (selected_sort.equals("Torque: High to Low"))
+                    selected_sort = Constants.TQ_DESC;
+                else if (selected_sort.equals("Torque: Low to High"))
+                    selected_sort = Constants.TQ_ASC;
+                else if (selected_sort.equals("MPG: High to Low"))
+                    selected_sort = Constants.MPG_DESC;
+                else if (selected_sort.equals("MPG: Low to High"))
+                    selected_sort = Constants.MPG_ASC;
+                else if (selected_sort.equals("Recalls: Least to Most"))
+                    selected_sort = Constants.RECALLS_ASC;
+                else if (selected_sort.equals("Recalls: Most to Least"))
+                    selected_sort = Constants.RECALLS_DESC;
+                else selected_sort = "";
+
+                FilterFragment.this.listingsQuery.sortBy = selected_sort;
+            }
+        });
+
+        if (FilterFragment.this.listingsQuery.car.models == null || FilterFragment.this.listingsQuery.car.models.size() < 1) {
+            price_view.setVisibility(View.GONE);
+            mileage_view.setVisibility(View.GONE);
             makes_spnr.setItems(Util.getSpinnerValues(
                             Arrays.asList(getActivity().getResources().getStringArray(R.array.makes_array)),
                             true,
@@ -327,6 +359,28 @@ public class FilterFragment extends DialogFragment {
                     });
 
         } else {
+
+            final ArrayAdapter<String> price_mileage_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                    getResources().getStringArray(R.array.max_mileage_array));
+            price_mileage_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+            setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
+            setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
+            price_spinner.setAdapter(price_mileage_adapter);
+            mileage_spinner.setAdapter(price_mileage_adapter);
+
+            price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(Spinner parent, View view, int position, long id) {
+                    FilterFragment.this.listingsQuery.max_price = price_mileage_adapter.getItem(position);
+                }
+            });
+            mileage_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(Spinner parent, View view, int position, long id) {
+                    FilterFragment.this.listingsQuery.max_mileage = price_mileage_adapter.getItem(position);
+                }
+            });
+
             models_spnr.setItems (Util.getSpinnerValues(
                     FilterFragment.this.listingsQuery.car.models,
                     true,
@@ -351,6 +405,28 @@ public class FilterFragment extends DialogFragment {
                     });
         }
 
+
+
+        conditions_spnr.setItems(Util.getSpinnerValues(
+                        Arrays.asList(getActivity().getResources().getStringArray(R.array.conditions_array)),
+                        true,
+                        listingsQuery.api.conditions),
+                "Conditions", -1, new MultiSpinner.MultiSpinnerListener() {
+                    @Override
+                    public void onItemsSelected(List<KeyPairBoolData> items) {
+                        for (int i = 0; i < items.size(); i++) {
+                            if (!items.get(i).isSelected()) {
+                                for (Iterator<String> iter = listingsQuery.api.conditions.listIterator(); iter.hasNext(); ) {
+                                    String test = iter.next();
+                                    if (test.equals(items.get(i).getName()))
+                                        iter.remove();
+                                }
+                            } else {
+                                listingsQuery.api.conditions.add(items.get(i).getName().toLowerCase());
+                            }
+                        }
+                    }
+                });
 
 
         bodytypes_spnr.setItems(Util.getSpinnerValues(
@@ -411,26 +487,6 @@ public class FilterFragment extends DialogFragment {
                         }
                     } else {
                         listingsQuery.car.compressors.add(items.get(i).getName().toLowerCase());
-                    }
-                }
-            }
-        });
-        cylinders_spnr.setItems(Util.getSpinnerValues(
-                        new ArrayList<String>(Arrays.asList("2","4","5","6","8","10","12","12+")),
-                        false,
-                        listingsQuery.car.cylinders),
-                        "Cylinders", -1, new MultiSpinner.MultiSpinnerListener() {
-            @Override
-            public void onItemsSelected(List<KeyPairBoolData> items) {
-                for(int i=0; i<items.size(); i++) {
-                    if(!items.get(i).isSelected()) {
-                        for (Iterator<String> iter = listingsQuery.car.cylinders.listIterator(); iter.hasNext();) {
-                            String test = iter.next();
-                            if (test.equals(items.get(i).getName()))
-                                iter.remove();
-                        }
-                    } else {
-                        listingsQuery.car.cylinders.add(items.get(i).getName());
                     }
                 }
             }

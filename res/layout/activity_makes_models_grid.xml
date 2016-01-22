@@ -15,6 +15,7 @@
             android:background="@android:color/background_light"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/makes_search_toolbar"
                 android:layout_width="match_parent"
@@ -115,7 +116,7 @@
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@id/loading"
+            android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
@@ -125,5 +126,19 @@
                 android:background="@color/selected_item_color"
                 android:layout_height="50dp"/>
         </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_favorites_btn"
+            android:src="@drawable/ic_favorite_white_24dp"
+            app:borderWidth="@dimen/border_width"
+            app:backgroundTint="@color/selected_item_color"
+            app:rippleColor="@color/selected_item_color"
+            android:layout_gravity="bottom|start"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="56dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
+
 </RelativeLayout>

@@ -3,43 +3,19 @@ package carmera.io.carmera.fragments.search_fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.bowyer.app.fabtransitionlayout.FooterLayout;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-
-import org.parceler.Parcels;
-
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import carmera.io.carmera.R;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
-import carmera.io.carmera.listeners.OnEditBodyTypes;
-import carmera.io.carmera.listeners.OnEditDriveTrain;
-import carmera.io.carmera.listeners.OnEditHp;
-import carmera.io.carmera.listeners.OnEditMakes;
-import carmera.io.carmera.listeners.OnEditMpg;
-import carmera.io.carmera.listeners.OnEditTags;
-import carmera.io.carmera.listeners.OnEditTorque;
-import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
-import carmera.io.carmera.models.ListingsQuery;
-import carmera.io.carmera.requests.MakesQueryRequest;
-import carmera.io.carmera.utils.Constants;
-
 /**
  * Created by bski on 7/20/15.
  */

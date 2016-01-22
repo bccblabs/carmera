@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 
 import org.parceler.Parcels;
 
@@ -19,12 +17,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.fragments.search_fragments.FilterFragment;
-import carmera.io.carmera.listeners.OnAddModelListener;
-import carmera.io.carmera.listeners.OnResearchListener;
-import carmera.io.carmera.listeners.OnSeeModelListingsListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.utils.Constants;
@@ -43,6 +36,8 @@ public class ModelsActivity extends AppCompatActivity {
 
     private ListingsQuery listingsQuery;
 
+    @Bind (R.id.fab_favorites) FloatingActionButton favorites;
+
     @Bind (R.id.makes_title_tv) TextView title_text;
 
     @Bind (R.id.makes_search_toolbar) Toolbar toolbar;
@@ -57,11 +52,20 @@ public class ModelsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_search_image_grid);
+        setContentView(R.layout.activity_makes_models_grid);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));
         fab_toolbar.setVisibility(View.GONE);
+
+
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ModelsActivity.this, FavoritesActivity.class);
+                startActivity(i);
+            }
+        });
 
         setSupportActionBar(toolbar);
         if (toolbar != null) {
@@ -81,7 +85,7 @@ public class ModelsActivity extends AppCompatActivity {
             staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-                    Intent i = new Intent(ModelsActivity.this, Base.class);
+                    Intent i = new Intent(ModelsActivity.this, SearchActivity.class);
                     Bundle args = new Bundle();
                     ListingsQuery listingsQuery = new ListingsQuery();
                     listingsQuery.car.remaining_ids = model.styleIds;

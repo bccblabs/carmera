@@ -44,7 +44,7 @@
                     android:layout_height="@dimen/ed_img_sm_h"
                     android:id="@+id/staggered_image_holder"/>
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
                     android:background="@color/black_20"
                     android:orientation="vertical"
                     android:layout_width="match_parent"

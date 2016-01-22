@@ -3,14 +3,12 @@ package carmera.io.carmera;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -46,6 +44,8 @@ public class MakesSearchActivity extends AppCompatActivity
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private ArrayList <Card> cards = new ArrayList<>();
     private CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter;
+
+    private FloatingActionButton favorites;
 
     @Bind (R.id.makes_title_tv) TextView title_text;
 
@@ -148,7 +148,7 @@ public class MakesSearchActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_search_image_grid);
+        setContentView(R.layout.activity_makes_models_grid);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (toolbar != null) {
@@ -156,6 +156,15 @@ public class MakesSearchActivity extends AppCompatActivity
             getSupportActionBar().setTitle("");
             getSupportActionBar().show();
         }
+
+        favorites = (FloatingActionButton) findViewById(R.id.fab_favorites_btn);
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MakesSearchActivity.this, FavoritesActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, this.cards);

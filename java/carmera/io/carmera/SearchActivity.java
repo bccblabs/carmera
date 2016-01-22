@@ -3,18 +3,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -51,7 +50,7 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 6/3/15.
  */
-public class Base extends ActionBarActivity implements CaptureFragment.OnCameraResultListener,
+public class SearchActivity extends ActionBarActivity implements CaptureFragment.OnCameraResultListener,
                                                         OnSearchFragmentVisible,
                                                         OnResearchListener,
                                                         OnEditBodyTypes,
@@ -67,6 +66,9 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
 
     private final String TAG = getClass().getCanonicalName();
     private ListingsQuery listingsQuery = new ListingsQuery();
+
+    @Bind (R.id.fab_favorites) FloatingActionButton favorites;
+
 
     @Bind (R.id.ic_filter) ButtonFlat ic_filter;
     @Bind (R.id.ic_search) ButtonFlat ic_search;
@@ -86,19 +88,16 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     private SharedPreferences sharedPreferences;
 
 
-    private Drawer result = null;
-
-
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             listingsQuery = new ListingsQuery();
-            Toast.makeText(Base.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
-                Base.this.fab_toolbar.setVisibility(View.GONE);
+                SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
                 listingsQuery = new ListingsQuery();
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
@@ -106,6 +105,7 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
+                        .addToBackStack("lisings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -118,19 +118,20 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             listingsQuery = new ListingsQuery();
-            Toast.makeText(Base.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
                 listingsQuery = new ListingsQuery();
-                Base.this.fab_toolbar.setVisibility(View.GONE);
+                SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
+                        .addToBackStack("lisings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -153,39 +154,13 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
             getSupportActionBar().setTitle(null);
         }
 
-        result = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withHasStableIds(true)
-                .withTranslucentStatusBar(false)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.search).withIcon(getResources().getDrawable(R.drawable.ic_search_black_24dp)).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.favorites).withIcon(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp)).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.settings).withIcon(getResources().getDrawable(R.drawable.ic_settings_black_24dp)).withIdentifier(3)
-                ) // add the items we want to use with our Drawer
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            if (drawerItem.getIdentifier() == 1) {
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.content_frame, SearchContainer.newInstance())
-                                        .commitAllowingStateLoss();
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.content_frame, new SettingsFragment())
-                                        .commitAllowingStateLoss();
-                            } else if (drawerItem.getIdentifier() == 2) {
-
-                            }
-                        }
-                        return false;
-                    }
-                })
-                .withSavedInstance(savedInstanceState)
-                .withShowDrawerOnFirstLaunch(true)
-                .build();
-
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SearchActivity.this, FavoritesActivity.class);
+                startActivity(i);
+            }
+        });
 
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
@@ -193,9 +168,9 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
             loading.setVisibility(View.VISIBLE);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new NoHistListingsRequestListener());
         } else {
+            this.listingsQuery = new ListingsQuery();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, SearchContainer.newInstance())
-                    .addToBackStack("content_fragment")
                     .commit();
         }
 
@@ -204,7 +179,7 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void onStart() {
         super.onStart();
-        spiceManager.start(Base.this);
+        spiceManager.start(SearchActivity.this);
     }
 
     @Override
@@ -225,11 +200,6 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void OnCameraResult (ImageQuery imageQuery) {
         spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
-    }
-
-    @Override
-    public void addCylinders (Integer cylinder) {
-        this.listingsQuery.car.cylinders.add(Integer.toString(cylinder));
     }
 
     @Override
@@ -300,6 +270,11 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     }
 
     @Override
+    public void onSetMinCylinders (Integer minCylinders) {
+        this.listingsQuery.car.minCylinders = minCylinders;
+    }
+
+    @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
         Log.i (TAG, "On Research Callback: " + new Gson().toJson(this.listingsQuery.car));
@@ -343,6 +318,25 @@ public class Base extends ActionBarActivity implements CaptureFragment.OnCameraR
     @Override
     public void SetFabVisible () {
         fab_toolbar.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, new SettingsFragment())
+                    .addToBackStack("settings_fragment")
+                    .commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

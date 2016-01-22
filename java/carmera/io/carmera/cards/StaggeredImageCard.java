@@ -2,7 +2,6 @@ package carmera.io.carmera.cards;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ public class StaggeredImageCard extends Card {
 //    , subtitle;
 
     public StaggeredImageCard (Context cxt_, @Nullable String title, @Nullable String subtitle, String imageUrl) {
-        super (cxt_, R.layout.staggered_card_image_with_btn);
+        super (cxt_, R.layout.card_initial_search_item);
         this.cxt = cxt_;
         this.title_str = title;
         this.subtitle_str = subtitle;

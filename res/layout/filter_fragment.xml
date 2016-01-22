@@ -49,7 +49,12 @@
                     app:v_styleId="@array/spinner_no_arrow"
                     app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
             </LinearLayout>
+            <carmera.io.carmera.utils.MultiSpinner
+                android:id="@+id/conditions_spinner"
+                style="@style/filter_spinner_select"/>
+
             <LinearLayout
+                android:id="@+id/price_view"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
@@ -63,6 +68,7 @@
                     app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/mileage_view"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
@@ -141,14 +147,24 @@
                     app:v_styleId="@array/spinner_no_arrow"
                     app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    style="@style/filter_single_spinner_textview"
+                    android:text="@string/min_cylinders"/>
+                <com.rey.material.widget.Spinner
+                    style="@style/filter_single_spinner"
+                    android:id="@+id/cylinders_spinner"
+                    app:v_styleId="@array/spinner_no_arrow"
+                    app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
+            </LinearLayout>
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/txn_spinner"
                 style="@style/filter_spinner_select"/>
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/compressor_spinner"
-                style="@style/filter_spinner_select"/>
-            <carmera.io.carmera.utils.MultiSpinner
-                android:id="@+id/cylinders_spinner"
                 style="@style/filter_spinner_select"/>
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/drivetrain_spinner"

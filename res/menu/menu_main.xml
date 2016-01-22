@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorites"
-        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_applications_black_24dp"
         android:orderInCategory="90"
-        android:title="@string/favorites"
+        android:title="@string/settings"
         app:showAsAction="always" />
 </menu>

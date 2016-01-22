@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<PreferenceCategory-->
+        <!--android:title="@string/listings_search_title">-->
+        <EditTextPreference
+            android:key="pref_key_server_addr"
+            android:title="@string/pref_key_server_addr"
+            android:defaultValue="@string/pref_ip_addr_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ListPreference
+            android:key="pref_key_radius"
+            android:title="@string/pref_key_radius"
+            android:entries="@array/range_array"
+            android:entryValues="@array/range_array"
+            android:defaultValue="@string/pref_radius_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <!--</PreferenceCategory>-->
+    <!--<PreferenceCategory-->
+        <!--android:title="@string/contact_info">-->
+        <EditTextPreference
+            android:key="pref_key_zipcode"
+            android:title="@string/pref_key_zipcode"
+            android:defaultValue="@string/pref_zipcode_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditTextPreference
+            android:key="pref_key_name"
+            android:title="@string/pref_key_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditTextPreference
+            android:key="pref_key_phone"
+            android:title="@string/pref_key_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditTextPreference
+            android:key="pref_key_email"
+            android:title="@string/pref_key_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <!--</PreferenceCategory>-->
+</LinearLayout>

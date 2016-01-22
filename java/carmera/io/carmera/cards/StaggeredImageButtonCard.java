@@ -8,11 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonFlat;
-import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.squareup.picasso.Picasso;
 
 import carmera.io.carmera.R;
-import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
 
@@ -28,7 +26,7 @@ public class StaggeredImageButtonCard extends Card {
     protected ButtonFlat add_to_search_btn;
 
     public StaggeredImageButtonCard (Context cxt_, @Nullable String title, int BgdResId) {
-        super (cxt_, R.layout.staggered_card_image_with_btn);
+        super (cxt_, R.layout.card_initial_search_item);
         this.cxt = cxt_;
         this.title_str = title;
         this.bgd_res_id = BgdResId;

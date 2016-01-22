@@ -36,13 +36,13 @@ import carmera.io.carmera.utils.Constants;
  * Created by bski on 11/11/15.
  */
 public class DataViewer extends FragmentActivity {
-    public String TAG = getClass().getCanonicalName();
+    private String TAG = getClass().getCanonicalName();
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;
 
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
 
-    private void add_page (@StringRes int StringResId, String extras_id, Class<? extends Fragment> clzz, FragmentPagerItems.Creator page_creator) {
+    public void add_page (@StringRes int StringResId, String extras_id, Class<? extends Fragment> clzz, FragmentPagerItems.Creator page_creator) {
         Parcelable data = getIntent().getParcelableExtra(extras_id);
 
         if (data != null) {
