@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -29,16 +29,21 @@ import carmera.io.carmera.utils.Constants;
  */
 public class FavoritesActivity extends AppCompatActivity {
 
+    @Bind (R.id.toolbar) Toolbar toolbar;
     @Bind (R.id.data_viewpager) public ViewPager viewPager;
-
     @Bind (R.id.viewpagertab) public SmartTabLayout viewPagerTab;
-
     @Bind (R.id.data_viewer_model_text) public TextView toolbar_title_text;
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
         setContentView(R.layout.data_viewer_layout);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(null);
+        }
 
         toolbar_title_text.setText("Favorites");
 
@@ -78,13 +83,9 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_favorites:
+            case R.id.action_search:
                 Intent i = new Intent(FavoritesActivity.this, SearchActivity.class);
                 startActivity(i);
-                break;
-            case R.id.action_search:
-                Intent pref = new Intent(FavoritesActivity.this, AppPreference.class);
-                startActivity(pref);
                 break;
         }
         return super.onOptionsItemSelected(item);

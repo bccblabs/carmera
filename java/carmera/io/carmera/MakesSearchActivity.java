@@ -175,7 +175,7 @@ public class MakesSearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_makes_models, menu);
         return true;
     }
 
@@ -185,10 +185,6 @@ public class MakesSearchActivity extends AppCompatActivity {
             case R.id.action_favorites:
                 Intent fav = new Intent(MakesSearchActivity.this, FavoritesActivity.class);
                 startActivity(fav);
-                break;
-            case R.id.action_settings:
-                Intent pref = new Intent(MakesSearchActivity.this, AppPreference.class);
-                startActivity(pref);
                 break;
         }
         return super.onOptionsItemSelected(item);
