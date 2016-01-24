@@ -19,55 +19,117 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Card visible layout -->
     <it.gmariotti.cardslib.library.view.ForegroundLinearLayout
+        android:background="@color/black_20"
         android:id="@+id/card_main_layout"
         style="@style/card.main_layout_foreground"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/ed_img_sm_w"
+        android:layout_height="wrap_content"
         >
-        <LinearLayout
-            android:background="@drawable/card_bgd0"
+        <FrameLayout
+            android:background="@android:color/background_light"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@android:color/darker_gray"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:textSize="16sp"
-                android:textColor="@android:color/primary_text_dark"
-                android:textAllCaps="true"
-                android:text="h7"
-                android:id="@+id/staggered_card_title"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
-                android:textSize="24sp"
-                android:textColor="@android:color/primary_text_dark"
-                android:textAllCaps="true"
-                android:text="h7"
-                android:id="@+id/staggered_card_subtitle"
-                />
-                <ImageView
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <widgets.CanaroTextView
+                        android:id="@+id/staggered_card_title"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:layout_gravity="center_horizontal"
+                        android:textAllCaps="true"
+                        android:paddingTop="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="16dp"
+                        android:textSize="16sp"
+                        android:text="Lkasd Rolve;"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <widgets.CanaroTextView
+                        android:id="@+id/staggered_card_subtitle"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingTop="4dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="16dp"
+                        android:textSize="14sp"
+                        android:text="1241-2151"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:background="@color/black_20"
                     android:layout_gravity="center_horizontal"
-                    style="@style/search_image_view_staggered"
-                    android:id="@+id/staggered_image_holder"/>
-        </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/ed_img_sm_w"
+                        android:layout_height="@dimen/ed_img_sm_h"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/staggered_image_holder"/>
+                    <LinearLayout
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/black_20"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <widgets.CanaroTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="16dp"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/primary_text_dark"
+                            android:textAllCaps="true"
+                            android:text="caoep"
+                            android:id="@+id/staggered_card_desc0"
+                            />
+                        <widgets.CanaroTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="4dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="16dp"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/primary_text_dark"
+                            android:textAllCaps="true"
+                            android:text="caoep"
+                            android:id="@+id/staggered_card_desc1"
+                            />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            <com.gc.materialdesign.views.ButtonFloatSmall
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_gravity="bottom|end"
+                android:background="@android:color/holo_red_light"
+                materialdesign:iconDrawable="@drawable/ic_favorite_white_24dp"
+                android:id="@+id/add_to_search"
+                android:text="@string/add_to_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </FrameLayout>
     </it.gmariotti.cardslib.library.view.ForegroundLinearLayout>
-
-
 </LinearLayout>

@@ -1,115 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/content_frame"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/tools">
-    <RelativeLayout
+    android:layout_height="match_parent"
+    android:background="@color/guillotine_background"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/russo"
+        android:elevation="4dp"
+        tools:ignore="UnusedAttribute">
+        <widgets.CanaroTextView
+            android:textSize="16sp"
+            android:textColor="@android:color/background_light"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:text="@string/listings"
+            android:id="@+id/listing_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card="http://schemas.android.com/tools">
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/loading_view"
             android:layout_width="match_parent"
-            android:layout_height="620dp"
-            android:background="@color/cardview_light_background">
-            <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-                android:layout_centerInParent="true"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/card_pressed"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ScrollView
-            android:id="@+id/card_scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="vertical"
-                android:padding="16dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="56dp"
+            android:baselineAligned="false">
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/loading_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <it.gmariotti.cardslib.library.view.CardView
-                    android:id="@+id/listing_info_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:layout_height="620dp"
+                android:background="@color/cardview_light_background">
+                <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+                    android:layout_centerInParent="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/selected_item_color"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ScrollView
+                android:id="@+id/card_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 <LinearLayout
-                    android:layout_marginTop="6dp"
+                    android:orientation="vertical"
+                    android:padding="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                    android:layout_height="wrap_content">
                     <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/specs_card"
+                        android:id="@+id/listing_info_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_marginTop="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
+                        android:orientation="horizontal">
 
-                    <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/costs_card"
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/specs_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/costs_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
+                        android:orientation="horizontal">
 
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/reviews_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/issues_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/prices_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                        <it.gmariotti.cardslib.library.view.CardView
+                            android:id="@+id/equipments_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+                    </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/reviews_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
-
-                    <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/issues_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/prices_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
-
-                    <it.gmariotti.cardslib.library.view.CardView
-                        android:id="@+id/equipments_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="6dp"
-                        card:card_layout_resourceID="@layout/card_car_info_details"/>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
-</FrameLayout>
+        <RelativeLayout
+            android:id="@+id/fab_toolbar"
+            android:background="@color/russo"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <RelativeLayout
+                    android:id="@+id/save"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <com.gc.materialdesign.views.ButtonFlat
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="36dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/background_light"
+                        android:id="@+id/save_listing_btn"
+                        android:text="@string/save"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/dealer_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <com.gc.materialdesign.views.ButtonFlat
+                        android:id="@+id/dealer_info_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/background_light"
+                        android:text="@string/dealer_info"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</RelativeLayout>

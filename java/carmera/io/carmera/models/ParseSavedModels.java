@@ -2,12 +2,17 @@ package carmera.io.carmera.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by bski on 1/22/16.
  */
 @ParseClassName("ParseSavedModels")
 public class ParseSavedModels extends ParseObject{
+
+    public ParseQuery<ParseSavedModels> getQuery () {
+        return ParseQuery.getQuery(ParseSavedModels.class);
+    }
 
     public void setUserId (String userId) {
         put ("userId", userId);
@@ -74,13 +79,12 @@ public class ParseSavedModels extends ParseObject{
         return getInt("hwy");
     }
 
-    public void setMatchingListings (Integer endYr) {
-        put("matching_listings", endYr);
+    public void setMatchingListingsCnt (Integer endYr) {
+        put("matchingListingsCnt", endYr);
     }
-    public Integer getMatchingListings () {
-        return getInt("matching_listings");
+    public Integer getMatchingListingsCnt () {
+        return getInt("matchingListingsCnt");
     }
-
 
     public void setBodyType (String model) {
         put("bodytype", model);

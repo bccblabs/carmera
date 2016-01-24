@@ -3,13 +3,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
@@ -25,7 +26,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
-import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
 import carmera.io.carmera.fragments.search_fragments.SearchContainer;
 import carmera.io.carmera.listeners.OnEditBodyTypes;
@@ -50,7 +50,7 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 6/3/15.
  */
-public class SearchActivity extends ActionBarActivity implements CaptureFragment.OnCameraResultListener,
+public class SearchActivity extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
                                                         OnSearchFragmentVisible,
                                                         OnResearchListener,
                                                         OnEditBodyTypes,
@@ -67,17 +67,12 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
     private final String TAG = getClass().getCanonicalName();
     private ListingsQuery listingsQuery = new ListingsQuery();
 
-    @Bind (R.id.fab_favorites) FloatingActionButton favorites;
-
-
     @Bind (R.id.ic_filter) ButtonFlat ic_filter;
     @Bind (R.id.ic_search) ButtonFlat ic_search;
-
     @Bind (R.id.fab_toolbar) View fab_toolbar;
-
     @Bind(R.id.toolbar) Toolbar toolbar;
-
     @Bind (R.id.loading) View loading;
+    @Bind (R.id.search_title) TextView search_title;
 
     private ListingsFragment listingsFragment;
 
@@ -91,14 +86,12 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            listingsQuery = new ListingsQuery();
             Toast.makeText(SearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
                 SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
-                listingsQuery = new ListingsQuery();
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));
@@ -107,7 +100,6 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
                         .replace(R.id.content_frame, listingsFragment)
                         .addToBackStack("lisings_fragment")
                         .commitAllowingStateLoss();
-
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -123,7 +115,6 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
         @Override
         public void onRequestSuccess (Listings result) {
             try {
-                listingsQuery = new ListingsQuery();
                 SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
@@ -131,7 +122,6 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
-                        .addToBackStack("lisings_fragment")
                         .commitAllowingStateLoss();
 
             } catch (Exception e) {
@@ -154,20 +144,15 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
             getSupportActionBar().setTitle(null);
         }
 
-        favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(SearchActivity.this, FavoritesActivity.class);
-                startActivity(i);
-            }
-        });
-
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
+            String model_name = getIntent().getExtras().getString(Constants.EXTRA_MODEL_NAME);
+            search_title.setText(model_name);
             fab_toolbar.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new NoHistListingsRequestListener());
         } else {
+            search_title.setText(getResources().getString(R.string.search));
             this.listingsQuery = new ListingsQuery();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, SearchContainer.newInstance())
@@ -199,6 +184,7 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
 
     @Override
     public void OnCameraResult (ImageQuery imageQuery) {
+
         spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
     }
 
@@ -294,6 +280,8 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
     public void onFilter () {
         FilterFragment filterFragment = FilterFragment.newInstance();
         Bundle args = new Bundle();
+        listingsQuery.num_matching_models = 10;
+        listingsQuery.num_matching_listings = 10;
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         filterFragment.setArguments(args);
         filterFragment.show(getSupportFragmentManager(), "filter_dialog");
@@ -330,11 +318,14 @@ public class SearchActivity extends ActionBarActivity implements CaptureFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_favorites:
+                Intent i = new Intent(SearchActivity.this, FavoritesActivity.class);
+                startActivity(i);
+                break;
             case R.id.action_settings:
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new SettingsFragment())
-                    .addToBackStack("settings_fragment")
-                    .commit();
+                Intent pref = new Intent(SearchActivity.this, AppPreference.class);
+                startActivity(pref);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

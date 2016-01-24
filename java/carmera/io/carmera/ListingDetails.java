@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,7 +22,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -38,8 +40,8 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.cards.CarInfoDetailsCard;
-import carmera.io.carmera.fragments.main_fragments.SettingsFragment;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.ResponseMessage;
 import carmera.io.carmera.models.StyleData;
@@ -52,28 +54,26 @@ import carmera.io.carmera.requests.LeadRequest;
 import carmera.io.carmera.requests.StyleDataRequest;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
-import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 
 /**
  * Created by bski on 11/9/15.
  */
-public class ListingDetails extends AppCompatActivity  implements  BaseSliderView.OnSliderClickListener,
+public class ListingDetails extends AppCompatActivity implements BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener {
 
     @Bind (R.id.loading_view) View loading_view;
-
     @Bind (R.id.content) View content_container;
-
     @Bind (R.id.listing_info_card) CardView listing_info_card;
-
     @Bind (R.id.specs_card) CardView specs_card;
     @Bind (R.id.issues_card) CardView issues_card;
     @Bind (R.id.reviews_card) CardView reviews_card;
     @Bind (R.id.costs_card) CardView costs_card;
     @Bind (R.id.prices_card) CardView prices_card;
     @Bind (R.id.equipments_card) CardView equipments_card;
+    @Bind (R.id.toolbar) Toolbar toolbar;
+    @Bind (R.id.listing_details_title) TextView listing_details_title;
 
     private Listing listing;
 
@@ -87,12 +87,9 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
         protected TextView yr_mk_md;
         protected TextView price;
         protected TextView mileage;
+        protected TextView dealer_address, dealer_info;
         protected SliderLayout photos;
         protected List<String> stock_images;
-        protected ButtonFlat see_dealer;
-        protected ButtonFlat call;
-        protected ButtonFlat save;
-        protected View layout_background_button;
 
         public ListingsBasicInfoCard (Context context, List<String> stock_photos) {
            super(context, R.layout.listings_basic_info_card_content);
@@ -102,12 +99,20 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
         @Override
         public void setupInnerViewElements (ViewGroup parent, View view) {
             photos = (SliderLayout) parent.findViewById(R.id.listing_photos);
-            save = (ButtonFlat) parent.findViewById(R.id.save_listing);
-            see_dealer = (ButtonFlat) parent.findViewById(R.id.see_dealership);
-            call = (ButtonFlat) parent.findViewById(R.id.call_dealership);
-            layout_background_button = parent.findViewById(R.id.button_layout);
-            layout_background_button.setBackgroundColor(R.color.cardview_light_background);
-
+            dealer_address = (TextView) parent.findViewById(R.id.dealer_address);
+            dealer_info = (TextView) parent.findViewById(R.id.dealer_name);
+            if (listing.dealer.name != null ) {
+                Util.setText(dealer_info, listing.dealer.name);
+            }
+            if (listing.dealer.getAddress() != null) {
+                Util.setText(dealer_address,
+                        String.format("%s\n%s, %s",
+                                listing.dealer.getAddress().getStreet(),
+                                listing.dealer.getAddress().getCity(),
+                                listing.dealer.getAddress().getStateName()
+                        )
+                );
+            }
             yr_mk_md = (TextView) parent.findViewById(R.id.year_make_model_trim);
             price = (TextView) parent.findViewById(R.id.price);
             mileage = (TextView) parent.findViewById(R.id.mileage);
@@ -118,96 +123,6 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
             Util.setText(price, Util.formatCurrency(listing.getMin_price()));
             NumberFormat milefmt = NumberFormat.getIntegerInstance(Locale.US);
             Util.setText(mileage, String.format("%s miles", milefmt.format(listing.getMileage())));
-
-            see_dealer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(ListingDetails.this, DealerViewer.class);
-                    i.putExtra(Constants.EXTRA_DEALERID, listing.dealer.dealerId);
-                    i.putExtra(Constants.EXTRA_FRANCHISEID, listing.dealer.franchiseId);
-
-                    String car_desc = String.format("%d %s %s\n%s\nStock Id %s\nVIN %s",
-                            listing.year.year, listing.make.name, listing.model.name, listing.style.name,
-                            listing.stockNumber,
-                            listing.vin);
-                    i.putExtra(Constants.EXTRA_LISTINGS_CHAT_INFO, car_desc);
-                    startActivity(i);
-                }
-            });
-
-            save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MaterialDialog.Builder builder = new MaterialDialog.Builder(ListingDetails.this)
-                            .title(R.string.save_and_drive)
-                            .content(String.format("Do you want to save and schedule a test drive for %d %s %s",
-                                    listing.getYear().year, listing.getMake().name, listing.getModel().name))
-                            .positiveText(R.string.schedule_test_drive)
-                            .negativeText(R.string.dismiss)
-                            .neutralText(R.string.save_for_later)
-                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                    MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
-                                            .content("Saved!")
-                                            .positiveText("Got It!")
-                                            .show();
-                                }
-                            })
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                    String contact_name = sharedPreferences.getString("pref_key_name", ""),
-                                            contact_number = sharedPreferences.getString("pref_key_phone", "").trim(),
-                                            contact_email = sharedPreferences.getString("pref_key_email", "").trim();
-
-                                    if (contact_name.length() < 1 && (contact_email.length() < 1 || contact_number.length() < 1)) {
-
-                                        MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
-                                                .content("Please set your name and email/phone to allow dealership contacts!")
-                                                .positiveText("Agree")
-                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.content_frame, new SettingsFragment())
-                                                                .addToBackStack("settings_fragment")
-                                                                .commitAllowingStateLoss();
-                                                    }
-                                                })
-                                                .show();
-                                    } else {
-                                        SimpleDateFormat iso_8601_fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
-                                        String currentDateandTime = iso_8601_fmt.format(new Date());
-                                        LeadQuery leadQuery = new LeadQuery();
-                                        leadQuery.contact_name = contact_name;
-                                        leadQuery.phone = contact_number;
-                                        leadQuery.email = contact_email;
-                                        leadQuery.make = listing.getMake().name;
-                                        leadQuery.model = listing.getModel().name;
-                                        leadQuery.year = listing.getYear().year.toString();
-                                        leadQuery.vin = listing.vin;
-                                        leadQuery.stock = listing.stockNumber;
-                                        leadQuery.date = currentDateandTime;
-                                        leadQuery.dealerName = listing.dealer.name;
-                                        leadQuery.dealerId = listing.dealer.dealerId;
-                                        leadQuery.franchiseId = listing.dealer.franchiseId;
-                                        spiceManager.execute(new LeadRequest(leadQuery, server_address), new LeadRequestListener());
-                                    }
-                                }
-                            })
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                    /* save to listings */
-                                }
-                            });
-                    MaterialDialog dialog = builder.build();
-                    dialog.show();
-                }
-            });
-
-
             photos.setPresetTransformer(SliderLayout.Transformer.Default);
             photos.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
             photos.setCustomAnimation(new DescriptionAnimation());
@@ -280,6 +195,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                     @Override
                     public void onClick(Card card, View view) {
                         Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (styleData.powertrain != null)
                             viewer.putExtra(Constants.EXTRA_POWERTRAIN, Parcels.wrap(styleData.powertrain));
                         if (styleData.dimensions != null)
@@ -306,6 +222,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                         @Override
                         public void onClick(Card card, View view) {
                             Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                             if (styleData.safety != null)
                                 viewer.putExtra(Constants.EXTRA_SAFETY, Parcels.wrap(styleData.safety));
                             if (styleData.recalls != null)
@@ -330,6 +247,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                         @Override
                         public void onClick(Card card, View view) {
                             Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                             if (styleData.reviews != null)
                                 viewer.putExtra(Constants.EXTRA_REVIEW, Parcels.wrap(styleData.reviews));
                             if (styleData.ratings != null)
@@ -356,6 +274,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                         @Override
                         public void onClick(Card card, View view) {
                             Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                             if (styleData.costs != null)
                                 viewer.putExtra(Constants.EXTRA_COSTS, Parcels.wrap(styleData.costs));
                             startActivity(viewer);
@@ -371,6 +290,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                         @Override
                         public void onClick(Card card, View view) {
                             Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                             if (styleData.prices != null)
                                 viewer.putExtra(Constants.EXTRA_PRICES, Parcels.wrap(styleData.prices));
                             startActivity(viewer);
@@ -396,6 +316,7 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
                     @Override
                     public void onClick(Card card, View view) {
                         Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (listing.options != null && listing.options.size() > 0)
                             viewer.putExtra(Constants.EXTRA_OPTIONS, Parcels.wrap(listing.options));
                         if (listing.features != null && listing.features.size() > 0)
@@ -439,8 +360,17 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listing_details);
         ButterKnife.bind(this);
+
+
+        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().show();
+        }
+
         listing = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_DATA));
-        Log.i(getClass().getCanonicalName(), new Gson().toJson(listing));
+        listing_details_title.setText(String.format("%d %s", listing.getYear().getYear(), listing.getModel().getName()));
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -485,4 +415,111 @@ public class ListingDetails extends AppCompatActivity  implements  BaseSliderVie
     @Override
     public void onSliderClick(BaseSliderView slider) {
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorites:
+                Intent i = new Intent(ListingDetails.this, FavoritesActivity.class);
+                startActivity(i);
+                break;
+            case R.id.action_settings:
+                Intent pref = new Intent(ListingDetails.this, AppPreference.class);
+                startActivity(pref);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    @OnClick (R.id.dealer_info_btn)
+    public void onDealer(View v) {
+            Intent i = new Intent(ListingDetails.this, DealerViewer.class);
+            i.putExtra(Constants.EXTRA_DEALERID, listing.dealer.dealerId);
+            i.putExtra(Constants.EXTRA_FRANCHISEID, listing.dealer.franchiseId);
+            i.putExtra(Constants.EXTRA_DEALER_NAME, listing.dealer.name);
+            String car_desc = String.format("%d %s %s\n%s\nStock Id %s\nVIN %s",
+                    listing.year.year, listing.make.name, listing.model.name, listing.style.name,
+                    listing.stockNumber,
+                    listing.vin);
+            i.putExtra(Constants.EXTRA_LISTINGS_CHAT_INFO, car_desc);
+            startActivity(i);
+    }
+
+    @OnClick(R.id.save_listing_btn)
+    void onSave() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(ListingDetails.this)
+                .title(R.string.save_and_drive)
+                .content(String.format("Do you want to save and schedule a test drive for %d %s %s",
+                        listing.getYear().year, listing.getMake().name, listing.getModel().name))
+                .positiveText(R.string.schedule_test_drive)
+                .negativeText(R.string.dismiss)
+                .neutralText(R.string.save_for_later)
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                                .content("Saved!")
+                                .positiveText("Got It!")
+                                .show();
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        String contact_name = sharedPreferences.getString("pref_key_name", ""),
+                                contact_number = sharedPreferences.getString("pref_key_phone", "").trim(),
+                                contact_email = sharedPreferences.getString("pref_key_email", "").trim();
+
+                        if (contact_name.length() < 1 && (contact_email.length() < 1 || contact_number.length() < 1)) {
+
+                            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                                    .content("Please set your name and email/phone to allow dealership contacts!")
+                                    .positiveText("Agree")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                            Intent pref = new Intent (ListingDetails.this, AppPreference.class);
+                                            ListingDetails.this.startActivity(pref)
+                                        ;}
+                                    })
+                                    .show();
+                        } else {
+                            SimpleDateFormat iso_8601_fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
+                            String currentDateandTime = iso_8601_fmt.format(new Date());
+                            LeadQuery leadQuery = new LeadQuery();
+                            leadQuery.contact_name = contact_name;
+                            leadQuery.phone = contact_number;
+                            leadQuery.email = contact_email;
+                            leadQuery.make = listing.getMake().name;
+                            leadQuery.model = listing.getModel().name;
+                            leadQuery.year = listing.getYear().year.toString();
+                            leadQuery.vin = listing.vin;
+                            leadQuery.stock = listing.stockNumber;
+                            leadQuery.date = currentDateandTime;
+                            leadQuery.dealerName = listing.dealer.name;
+                            leadQuery.dealerId = listing.dealer.dealerId;
+                            leadQuery.franchiseId = listing.dealer.franchiseId;
+                            spiceManager.execute(new LeadRequest(leadQuery, server_address), new LeadRequestListener());
+                        }
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                /* save to listings */
+                    }
+                });
+        MaterialDialog dialog = builder.build();
+        dialog.show();
+    }
+
 }

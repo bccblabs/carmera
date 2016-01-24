@@ -13,18 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bowyer.app.fabtransitionlayout.FooterLayout;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
 import org.parceler.Parcels;
 import java.util.ArrayList;
 import butterknife.Bind;
@@ -35,7 +29,6 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
-import carmera.io.carmera.fragments.search_fragments.SortFragment;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
@@ -106,6 +99,9 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                     if (result == null || result.listings.size() < 1) {
                         emptyView.setVisibility(View.VISIBLE);
                         fab_toolbar.setVisibility(View.GONE);
+                    } else {
+                        emptyView.setVisibility(View.GONE);
+                        fab_toolbar.setVisibility(View.VISIBLE);
                     }
                     listings_recycler.setVisibility(View.VISIBLE);
                     listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
@@ -123,7 +119,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
-            Toast.makeText(getActivity(), "Listings Adapter length: " + listingsAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -134,8 +129,6 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         server_address = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_server_addr", Constants.ServerAddr).trim();
 
     }

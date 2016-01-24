@@ -91,6 +91,37 @@
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/bodytype_spinner"
                 style="@style/filter_spinner_select"/>
+            <View
+                android:background="@color/black15"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:text="@string/str_sort"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="24dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/darker_gray"
+                android:textAllCaps="true"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <TextView
+                    style="@style/filter_single_spinner_textview"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sort_by"/>
+                <com.rey.material.widget.Spinner
+                    style="@style/filter_single_spinner"
+                    android:layout_width="wrap_content"
+                    android:minWidth="200dp"
+                    android:id="@+id/sort_spinner"
+                    app:v_styleId="@array/spinner_no_arrow"
+                    app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
+            </LinearLayout>
 
             <View
                 android:background="@color/black15"
@@ -188,41 +219,6 @@
             <carmera.io.carmera.utils.MultiSpinner
                 android:id="@+id/tags_spinner"
                 style="@style/filter_spinner_select"/>
-
-
-            <View
-                android:background="@color/black15"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <TextView
-                android:text="@string/str_sort"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="24dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/darker_gray"
-                android:textAllCaps="true"
-                android:textSize="13sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="48dp">
-                <TextView
-                    style="@style/filter_single_spinner_textview"
-                    android:layout_width="wrap_content"
-                    android:text="@string/sort_by"/>
-                <com.rey.material.widget.Spinner
-                    style="@style/filter_single_spinner"
-                    android:layout_width="wrap_content"
-                    android:minWidth="200dp"
-                    android:id="@+id/sort_spinner"
-                    app:v_styleId="@array/spinner_no_arrow"
-                    app:rd_style="@style/Material.Drawable.Ripple.Wave"/>
-            </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
     <LinearLayout
@@ -230,6 +226,15 @@
         android:layout_gravity="end"
         android:layout_width="wrap_content"
         android:layout_height="52dp">
+        <com.gc.materialdesign.views.ButtonFlat
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@color/selected_item_color"
+            android:id="@+id/save_btn"
+            android:text="@string/save"/>
         <com.gc.materialdesign.views.ButtonFlat
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"

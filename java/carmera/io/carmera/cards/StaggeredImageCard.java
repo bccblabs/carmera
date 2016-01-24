@@ -19,23 +19,28 @@ import it.gmariotti.cardslib.library.internal.Card;
  */
 public class StaggeredImageCard extends Card {
     private Context cxt;
-    protected String title_str, subtitle_str, image_url;
+    protected String title_str, subtitle_str, image_url, desc0, desc1;
     protected ImageView image_holder;
-    protected TextView title;
-//    , subtitle;
+    protected TextView title, subtitle, desc_0, desc_1;
 
-    public StaggeredImageCard (Context cxt_, @Nullable String title, @Nullable String subtitle, String imageUrl) {
-        super (cxt_, R.layout.card_initial_search_item);
+    public StaggeredImageCard (Context cxt_,    @Nullable String title, @Nullable String subtitle,
+                                                @Nullable String desc_0_str, @Nullable String desc_1_str,
+                                                String imageUrl) {
+        super (cxt_, R.layout.staggered_card_image);
         this.cxt = cxt_;
         this.title_str = title;
         this.subtitle_str = subtitle;
         this.image_url = imageUrl;
+        this.desc0 = desc_0_str;
+        this.desc1 = desc_1_str;
     }
 
     @Override
     public void setupInnerViewElements (ViewGroup parent, View view) {
         title = (TextView) view.findViewById(R.id.staggered_card_title);
-//        subtitle = (TextView) view.findViewById(R.id.staggered_card_subtitle);
+        subtitle = (TextView) view.findViewById(R.id.staggered_card_subtitle);
+        desc_0 = (TextView) view.findViewById(R.id.staggered_card_desc0);
+        desc_1 = (TextView) view.findViewById(R.id.staggered_card_desc1);
         image_holder = (ImageView) view.findViewById(R.id.staggered_image_holder);
         try {
             Picasso.with(cxt)
@@ -45,7 +50,9 @@ public class StaggeredImageCard extends Card {
             image_holder.setVisibility(View.GONE);
         }
 
-        Util.setText(title, this.title_str + "\n" + this.subtitle_str);
-//        Util.setText(subtitle, this.subtitle_str);
+        Util.setText(title, this.title_str);
+        Util.setText(subtitle, this.subtitle_str);
+        Util.setText(desc_0, this.desc0);
+        Util.setText(desc_1, this.desc1);
     }
 }

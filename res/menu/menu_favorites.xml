@@ -7,9 +7,9 @@
         android:title="@string/settings"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_favorites"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="90"
-        android:title="@string/settings"
+        android:title="@string/search"
         app:showAsAction="always" />
 </menu>

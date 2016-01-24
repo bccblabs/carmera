@@ -5,6 +5,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -21,13 +23,12 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 11/30/15.
  */
-public class DealerViewer extends FragmentActivity {
+public class DealerViewer extends AppCompatActivity {
     public String TAG = getClass().getCanonicalName();
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;
-
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
-
+    @Bind (R.id.data_viewer_model_text) public TextView data_viewer_model_text;
 
     @Override
     public void onCreate (Bundle savedBundle) {
@@ -35,7 +36,7 @@ public class DealerViewer extends FragmentActivity {
         setContentView(R.layout.data_viewer_layout);
         ButterKnife.bind(this);
         FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
-
+        data_viewer_model_text.setText(getIntent().getStringExtra(Constants.EXTRA_DEALER_NAME));
 
         add_page(R.string.dealer_info, Constants.EXTRA_DEALERID, DealerInfoFragment.class, page_creator);
         add_page(R.string.reviews, Constants.EXTRA_DEALERID, DealerReviews.class, page_creator);

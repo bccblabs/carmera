@@ -79,7 +79,8 @@
         <activity android:name=".FavoritesActivity"
             android:label="@string/home">
         </activity>
-
+        <activity android:name=".AppPreference"
+            android:label="@string/settings"/>
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false"/>

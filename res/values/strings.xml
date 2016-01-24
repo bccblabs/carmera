@@ -1,5 +1,3 @@
-
-
 <resources>
     <string name="app_name">Carmera</string>
     <string name="capture">Capture</string>
@@ -135,7 +133,7 @@
     <string name="more_cars">More Cars</string>
 
 
-    <string name="dealer_info">Info</string>
+    <string name="dealer_info">Dealership</string>
     <string name="franchise_listings">Franchise Listings</string>
     <string name="start_chat">Chat!</string>
 
@@ -251,11 +249,11 @@
     <string name="german_search">German</string>
     <string name="british_search">British</string>
     <string name="italian_search">Italian</string>
-    <string name="rear_wheel_drive_search">RWD</string>
+    <string name="rear_wheel_drive_search">Rear Wheel Drive</string>
     <string name="manual_search">manual</string>
     <string name="european_desc">Deutsch, English &amp; Italiano</string>
 
-    <string name="listings">Listings</string>
+    <string name="listings">Listings</string>l
 
     <string name="str_clear">Clear</string>
     <string name="str_sort">Sort</string>
@@ -274,31 +272,22 @@
     <string name="min_cylinders">Min Cylinders</string>
     <string name="see_listings">See Listings</string>
     <string name="ok">Ok</string>
-    <string name="search_history">Search History</string>
+    <string name="search_history">Saved Search</string>
     <string name="models">Models</string>
-
-
     <string name="dealership">Dealership</string>
     <string name="call">Call</string>
     <string name="save">Save</string>
-
     <string name="sort_by">Sort By</string>
-
     <string name="efficient">40 MPG+ HWY</string>
     <string name="hybrid">Hybrid</string>
     <string name="manual">Manual</string>
-
     <string name="good_hp">300 hp+</string>
     <string name="super_hp">500 hp+</string>
-
     <string name="newer_than">Newer than</string>
     <string name="tags">Tags</string>
     <string name="electric_search">Electric</string>
     <string name="find_this_car">Find Car</string>
-
     <string name="listings_seen">SEEN</string>
     <string name="listings_fav">FAV</string>
-
     <string name="home">Home</string>
-
 </resources>

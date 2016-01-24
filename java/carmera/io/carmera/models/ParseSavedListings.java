@@ -2,6 +2,7 @@ package carmera.io.carmera.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by bski on 1/22/16.
@@ -9,6 +10,11 @@ import com.parse.ParseObject;
 
 @ParseClassName("ParseSavedListings")
 public class ParseSavedListings extends ParseObject {
+
+
+    public static ParseQuery<ParseSavedListings> getQuery() {
+        return ParseQuery.getQuery(ParseSavedListings.class);
+    }
 
     public void setUserId (String userId) {
         put ("userId", userId);

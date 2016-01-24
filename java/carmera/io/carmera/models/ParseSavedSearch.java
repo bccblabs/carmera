@@ -2,6 +2,8 @@ package carmera.io.carmera.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -11,20 +13,25 @@ import java.util.List;
 @ParseClassName("ParseSavedSearch")
 public class ParseSavedSearch extends ParseObject {
 
-    public void setUserId (String val) {
-        put ("userId", val);
+
+    public static ParseQuery<ParseSavedSearch> getQuery() {
+        return ParseQuery.getQuery(ParseSavedSearch.class);
     }
 
-    public String getUserId () {
-        return getString("userId");
+    public void setSavedName (String name) {
+        put ("saved_name", name);
     }
 
-    public void setTimestamp (String val) {
-        put ("timestamp", val);
+    public String getSavedName () {
+        return getString("saved_name");
     }
 
-    public String getTimestamp () {
-        return getString("timestamp");
+    public void setUser (ParseUser val) {
+        put ("user", val);
+    }
+
+    public ParseUser getUserId () {
+        return getParseUser("user");
     }
 
     public void setMaxPrice (Integer val) {
@@ -83,7 +90,6 @@ public class ParseSavedSearch extends ParseObject {
         return getInt("minYr");
     }
 
-
     public void setMakes(List<String> val) {
         put ("makes", val);
     }
@@ -116,7 +122,6 @@ public class ParseSavedSearch extends ParseObject {
         return getString("zipcode");
     }
 
-
     public void setBodyTypes(List<String> val) {
         put("bodytypes", val);
     }
@@ -125,7 +130,6 @@ public class ParseSavedSearch extends ParseObject {
         return getList("bodytypes");
     }
 
-
     public void setCompressors(List<String> val) {
         put("compressors", val);
     }
@@ -133,7 +137,6 @@ public class ParseSavedSearch extends ParseObject {
     public List<String> getCompressors () {
         return getList("compressors");
     }
-
 
     public void setDrivetrains(List<String> val) {
         put("drivetrains", val);
@@ -151,20 +154,22 @@ public class ParseSavedSearch extends ParseObject {
         return getList("conditions");
     }
 
-    public void setMatchingListings (Integer val) {
-        put ("matching_listings", val);
+    public void setMatchingListingsCnt (Integer val) {
+        put ("matchingListingsCnt", val);
     }
 
-    public Integer getMatchingListings () {
-        return getInt("matching_listings");
+    public Integer getMatchingListingsCnt () {
+        return getInt("matchingListingsCnt");
+    }
+
+    public void setMatchingModelsCnt (Integer val) {
+        put ("matchingModelsCnt", val);
+    }
+
+    public Integer getMatchingModelsCnt () {
+        return getInt("matchingModelsCnt");
     }
 
 
-    public void setMatchingModels (Integer val) {
-        put ("matching_models", val);
-    }
-
-    public Integer getMatchingModels () {
-        return getInt("matching_models");
-    }
 }
+

@@ -7,6 +7,8 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import carmera.io.carmera.utils.Constants;
+
 /**
  * Created by bski on 11/7/15.
  */
@@ -15,7 +17,7 @@ import java.util.List;
 @Parcel
 public class ApiQuery {
     @JsonProperty
-    public String zipcode;
+    public String zipcode = Constants.ZIPCODE_DEFAULT;
     @JsonProperty
     public Integer pagenum;
     @JsonProperty

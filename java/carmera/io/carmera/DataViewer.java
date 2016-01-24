@@ -6,6 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -35,12 +37,14 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 11/11/15.
  */
-public class DataViewer extends FragmentActivity {
+public class DataViewer extends AppCompatActivity {
     private String TAG = getClass().getCanonicalName();
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;
 
     @Bind(R.id.viewpagertab) public SmartTabLayout viewPagerTab;
+
+    @Bind (R.id.data_viewer_model_text) TextView model_name;
 
     public void add_page (@StringRes int StringResId, String extras_id, Class<? extends Fragment> clzz, FragmentPagerItems.Creator page_creator) {
         Parcelable data = getIntent().getParcelableExtra(extras_id);
@@ -81,6 +85,8 @@ public class DataViewer extends FragmentActivity {
         super.onCreate(savedBundle);
         setContentView(R.layout.data_viewer_layout);
         ButterKnife.bind(this);
+        model_name.setText(getIntent().getStringExtra(Constants.EXTRA_MODEL_NAME));
+
         FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
 
         add_page(R.string.recalls, Constants.EXTRA_RECALLS, Recalls.class, page_creator);

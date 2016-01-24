@@ -8,6 +8,7 @@ import java.util.List;
 
 import carmera.io.carmera.models.queries.ApiQuery;
 import carmera.io.carmera.models.queries.CarQuery;
+import carmera.io.carmera.utils.Constants;
 
 /**
  * Created by bski on 11/7/15.
@@ -16,20 +17,21 @@ import carmera.io.carmera.models.queries.CarQuery;
 @Parcel
 public class ListingsQuery {
 
-    @JsonProperty
-    public String userId;
 
     @JsonProperty
-    public String time_stamp;
+    public Integer num_matching_models;
 
     @JsonProperty
-    public String max_price;
+    public Integer num_matching_listings;
 
     @JsonProperty
-    public String max_mileage;
+    public String max_price = "100000";
 
     @JsonProperty
-    public String sortBy;
+    public String max_mileage = "100000";
+
+    @JsonProperty
+    public String sortBy = Constants.PRICE_ASC;
 
     @JsonProperty
     public ApiQuery api = new ApiQuery() ;
@@ -91,20 +93,20 @@ public class ListingsQuery {
         this.car = car;
     }
 
-    public String getUserId() {
-        return userId;
+
+    public Integer getNum_matching_models() {
+        return num_matching_models;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setNum_matching_models(Integer num_matching_models) {
+        this.num_matching_models = num_matching_models;
     }
 
-    public String getTime_stamp() {
-        return time_stamp;
+    public Integer getNum_matching_listings() {
+        return num_matching_listings;
     }
 
-    public void setTime_stamp(String time_stamp) {
-        this.time_stamp = time_stamp;
+    public void setNum_matching_listings(Integer num_matching_listings) {
+        this.num_matching_listings = num_matching_listings;
     }
-
 }

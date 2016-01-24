@@ -14,6 +14,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.google.gson.Gson;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.rey.material.widget.Spinner;
 
 import org.parceler.Parcels;
@@ -32,6 +37,7 @@ import butterknife.OnClick;
 import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.ParseSavedSearch;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.KeyPairBoolData;
 import carmera.io.carmera.utils.MultiSpinner;
@@ -49,6 +55,9 @@ public class FilterFragment extends DialogFragment {
     private SortedMap<String, Integer> make_resid_map = new TreeMap<>();
 
     private List<String> selected_models = new ArrayList<>();
+
+    @Bind (R.id.save_btn)
+    ButtonFlat save_btn;
 
     @Bind(R.id.dismiss_btn)
     ButtonFlat filter_btn;
@@ -181,6 +190,8 @@ public class FilterFragment extends DialogFragment {
             makes_spnr.setVisibility(View.GONE);
         }
 
+        if (this.listingsQuery.num_matching_models != null && this.listingsQuery.num_matching_models < 1)
+            save_btn.setVisibility (View.GONE);
         return builder.create();
     }
     private int findPos (ArrayAdapter<String> adapter, String item) {
@@ -207,6 +218,29 @@ public class FilterFragment extends DialogFragment {
 
         final ArrayAdapter<String> cylinder_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
                 getResources().getStringArray(R.array.cylinder_array));
+
+        final ArrayAdapter<String> price_mileage_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
+                getResources().getStringArray(R.array.max_mileage_array));
+
+        price_mileage_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
+        setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
+        price_spinner.setAdapter(price_mileage_adapter);
+        mileage_spinner.setAdapter(price_mileage_adapter);
+
+        price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.max_price = price_mileage_adapter.getItem(position);
+            }
+        });
+        mileage_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                FilterFragment.this.listingsQuery.max_mileage = price_mileage_adapter.getItem(position);
+            }
+        });
+
 
         mpg_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         output_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
@@ -303,8 +337,6 @@ public class FilterFragment extends DialogFragment {
         });
 
         if (FilterFragment.this.listingsQuery.car.models == null || FilterFragment.this.listingsQuery.car.models.size() < 1) {
-            price_view.setVisibility(View.GONE);
-            mileage_view.setVisibility(View.GONE);
             makes_spnr.setItems(Util.getSpinnerValues(
                             Arrays.asList(getActivity().getResources().getStringArray(R.array.makes_array)),
                             true,
@@ -360,26 +392,6 @@ public class FilterFragment extends DialogFragment {
 
         } else {
 
-            final ArrayAdapter<String> price_mileage_adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_spn,
-                    getResources().getStringArray(R.array.max_mileage_array));
-            price_mileage_adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
-            setSingleSpinnerSelection(price_spinner, price_mileage_adapter, listingsQuery.max_price);
-            setSingleSpinnerSelection(mileage_spinner, price_mileage_adapter, listingsQuery.max_mileage);
-            price_spinner.setAdapter(price_mileage_adapter);
-            mileage_spinner.setAdapter(price_mileage_adapter);
-
-            price_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(Spinner parent, View view, int position, long id) {
-                    FilterFragment.this.listingsQuery.max_price = price_mileage_adapter.getItem(position);
-                }
-            });
-            mileage_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(Spinner parent, View view, int position, long id) {
-                    FilterFragment.this.listingsQuery.max_mileage = price_mileage_adapter.getItem(position);
-                }
-            });
 
             models_spnr.setItems (Util.getSpinnerValues(
                     FilterFragment.this.listingsQuery.car.models,
@@ -552,5 +564,38 @@ public class FilterFragment extends DialogFragment {
         ButterKnife.unbind(this);
     }
 
+
+    @OnClick (R.id.save_btn)
+    void saveSearch () {
+        ParseSavedSearch parseSavedSearch = new ParseSavedSearch();
+        parseSavedSearch.setBodyTypes(listingsQuery.car.bodyTypes);
+        parseSavedSearch.setCompressors(listingsQuery.car.compressors);
+        parseSavedSearch.setConditions(listingsQuery.api.conditions);
+        parseSavedSearch.setDrivetrains(listingsQuery.car.drivenWheels);
+        parseSavedSearch.setMakes(listingsQuery.car.makes);
+        parseSavedSearch.setMatchingListingsCnt(listingsQuery.num_matching_listings);
+        parseSavedSearch.setMatchingModelsCnt(listingsQuery.num_matching_models);
+        parseSavedSearch.setMaxMileage(Integer.parseInt(listingsQuery.max_mileage));
+        parseSavedSearch.setMaxPrice(Integer.parseInt(listingsQuery.max_price));
+        parseSavedSearch.setMinHp(listingsQuery.car.minHp);
+        parseSavedSearch.setMinMpg(listingsQuery.car.minMpg);
+        parseSavedSearch.setMinTq(listingsQuery.car.minTq);
+        parseSavedSearch.setModels(listingsQuery.car.main_models);
+        parseSavedSearch.setMinYr(listingsQuery.car.minYr);
+        parseSavedSearch.setSortBy(listingsQuery.sortBy);
+        parseSavedSearch.setTags(listingsQuery.car.tags);
+        parseSavedSearch.setZip(listingsQuery.api.zipcode);
+        parseSavedSearch.setUser(ParseUser.getCurrentUser());
+        parseSavedSearch.setSavedName(String.format("%d found", listingsQuery.num_matching_models));
+        parseSavedSearch.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                MaterialDialog dialog = new MaterialDialog.Builder(getContext())
+                        .content("Search Saved!")
+                        .positiveText("Got It!")
+                        .show();
+            }
+        });
+    }
 
 }

@@ -5,21 +5,21 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/guillotine_background"
+    android:background="@android:color/background_light"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        android:elevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
+        android:background="@color/russo"
         tools:ignore="UnusedAttribute">
         <widgets.CanaroTextView
+            android:id="@+id/search_title"
             android:textSize="16sp"
-            android:textColor="@color/selected_item_color"
+            android:textColor="@android:color/primary_text_dark"
             android:textAllCaps="true"
             android:layout_gravity="center"
-            android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.v7.widget.Toolbar>
@@ -34,7 +34,7 @@
             android:id="@+id/loading"
             android:layout_width="50dp"
             android:gravity="center"
-            android:background="@color/card_pressed"
+            android:background="@color/selected_item_color"
             android:layout_height="50dp"/>
         <LinearLayout
             android:id="@+id/content_frame"
@@ -43,7 +43,7 @@
             android:orientation="vertical"/>
         <RelativeLayout
             android:id="@+id/fab_toolbar"
-            android:background="@android:color/background_light"
+            android:background="@color/russo"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="48dp">
@@ -65,7 +65,7 @@
                         android:layout_height="36dp"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:background="@android:color/background_dark"
+                        android:background="@android:color/background_light"
                         android:id="@+id/clear_btn"
                         android:text="@string/str_clear"/>
                 </RelativeLayout>
@@ -82,7 +82,7 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@android:color/background_dark"
+                        android:background="@android:color/background_light"
                         android:text="@string/str_filter"/>
                 </RelativeLayout>
 
@@ -99,25 +99,10 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/selected_item_color"
+                        android:background="@android:color/background_light"
                         android:text="@string/str_search_all"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_favorites"
-            android:src="@drawable/ic_favorite_white_24dp"
-            app:borderWidth="@dimen/border_width"
-            app:backgroundTint="@color/selected_item_color"
-            app:rippleColor="@color/selected_item_color"
-            android:layout_gravity="bottom|start"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="56dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </FrameLayout>
-
 </RelativeLayout>

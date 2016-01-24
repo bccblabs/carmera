@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,10 +22,8 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
-import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
@@ -36,8 +36,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class MakesSearchActivity extends AppCompatActivity
-    implements OnResearchListener {
+public class MakesSearchActivity extends AppCompatActivity {
 
     private String server_address;
     private ListingsQuery listingsQuery;
@@ -57,30 +56,9 @@ public class MakesSearchActivity extends AppCompatActivity
 
     @Bind (R.id.emptyview) View emptyView;
 
-    @Bind (R.id.fab_toolbar) View edit_search_bar;
-
-    @OnClick(R.id.ic_filter)
-    public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class,
-                MakesSearchActivity.this.listingsQuery));
-        filterFragment.setArguments(args);
-        filterFragment.show(getSupportFragmentManager(), "filter_dialog");
-    }
-
-    @Override
-    public void onResearchCallback (ListingsQuery listingsQuery) {
-        Intent i = new Intent(this, MakesSearchActivity.class);
-        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-        startActivityForResult(i, 1);
-    }
-
-
     private final class MakesQueryListener implements RequestListener<MakeQueries> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            edit_search_bar.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
             getSupportActionBar().setTitle("");
@@ -96,8 +74,10 @@ public class MakesSearchActivity extends AppCompatActivity
         @Override
         public void onRequestSuccess(MakeQueries result) {
             loading.setVisibility(View.GONE);
-            edit_search_bar.setVisibility(View.VISIBLE);
-            if (result == null || result.makesCount < 1) {
+            if (result == null) {
+                emptyView.setVisibility(View.VISIBLE);
+            }
+            else if (result.makesCount < 1) {
                 emptyView.setVisibility(View.VISIBLE);
             } else {
                 staggered_grid_view.setVisibility(View.VISIBLE);
@@ -121,8 +101,10 @@ public class MakesSearchActivity extends AppCompatActivity
 
                 for (final MakeQuery make : result.makes) {
                     StaggeredImageCard staggeredImageCard = new StaggeredImageCard(MakesSearchActivity.this,
-                            make.make + "\n\n",
+                            make.make,
+                            null,
                             make.numModels + " models",
+                            null,
                             make.imageUrl);
 
                     staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
@@ -157,16 +139,6 @@ public class MakesSearchActivity extends AppCompatActivity
             getSupportActionBar().show();
         }
 
-        favorites = (FloatingActionButton) findViewById(R.id.fab_favorites_btn);
-        favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MakesSearchActivity.this, FavoritesActivity.class);
-                startActivity(i);
-            }
-        });
-
-
         cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(this, this.cards);
         server_address = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_server_addr", Constants.ServerAddr).trim();
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
@@ -199,6 +171,27 @@ public class MakesSearchActivity extends AppCompatActivity
             spiceManager.shouldStop();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorites:
+                Intent fav = new Intent(MakesSearchActivity.this, FavoritesActivity.class);
+                startActivity(fav);
+                break;
+            case R.id.action_settings:
+                Intent pref = new Intent(MakesSearchActivity.this, AppPreference.class);
+                startActivity(pref);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

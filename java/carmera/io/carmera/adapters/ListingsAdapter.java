@@ -60,6 +60,24 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         }
         else
             viewHolder.listed_since.setVisibility(View.GONE);
+
+
+
+        if (listing.dealer != null) {
+            if (listing.dealer.name != null ) {
+                Util.setText(viewHolder.dealer_name, listing.dealer.name);
+            }
+            if (listing.dealer.getAddress() != null) {
+                Util.setText(viewHolder.dealer_address,
+                        String.format("%s\n%s, %s",
+                                listing.dealer.getAddress().getStreet(),
+                                listing.dealer.getAddress().getCity(),
+                                listing.dealer.getAddress().getStateName()
+                        )
+                );
+            }
+        }
+
         try {
             List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
             if (links.size() > 0) {
@@ -78,6 +96,8 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         @Bind(R.id.listing_photo) public ImageView listingImage;
         @Bind(R.id.listing_price) public TextView price;
         @Bind(R.id.listing_mileage) public TextView mileage;
+        @Bind(R.id.dealer_name) public TextView dealer_name;
+        @Bind(R.id.dealer_address) public TextView dealer_address;
         public ViewHolder (View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

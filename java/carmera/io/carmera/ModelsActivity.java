@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -36,14 +37,9 @@ public class ModelsActivity extends AppCompatActivity {
 
     private ListingsQuery listingsQuery;
 
-    @Bind (R.id.fab_favorites) FloatingActionButton favorites;
-
     @Bind (R.id.makes_title_tv) TextView title_text;
 
     @Bind (R.id.makes_search_toolbar) Toolbar toolbar;
-
-    @Bind (R.id.fab_toolbar) View fab_toolbar;
-
 
     @Bind(R.id.loading_sign) View loading;
 
@@ -56,17 +52,6 @@ public class ModelsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         models = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_MODELS_INFO));
-        fab_toolbar.setVisibility(View.GONE);
-
-
-        favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ModelsActivity.this, FavoritesActivity.class);
-                startActivity(i);
-            }
-        });
-
         setSupportActionBar(toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -81,7 +66,12 @@ public class ModelsActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ArrayList <Card> cards = new ArrayList<>();
         for (final ModelQuery model: models) {
-            StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this, model.model + "\n\n", model.yearDesc, model.imageUrl);
+            StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this,
+                    model.model+ "\n" + model.yearDesc,
+                    "10 recalls",
+                    model.powerDesc.replace("hp ", "hp\n"),
+                    model.mpgDesc.replace("/", "\n"),
+                    model.imageUrl);
             staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
@@ -94,6 +84,7 @@ public class ModelsActivity extends AppCompatActivity {
                     listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
                     listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
                     args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
+                    args.putString(Constants.EXTRA_MODEL_NAME, model.model);
                     i.putExtras(args);
                     startActivity(i);
                 }
@@ -110,6 +101,27 @@ public class ModelsActivity extends AppCompatActivity {
             cardGridStaggeredView.setAdapter(cardGridStaggeredArrayAdapter);
         }
         listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorites:
+                Intent fav = new Intent(ModelsActivity.this, FavoritesActivity.class);
+                startActivity(fav);
+                break;
+            case R.id.action_settings:
+                Intent pref = new Intent(ModelsActivity.this, AppPreference.class);
+                startActivity(pref);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -41,6 +41,7 @@ public class Constants {
     public static final String EXTRA_POWERTRAIN = "extra_powertrain";
     public static final String EXTRA_IMAGES = "extra_images";
     public static final String EXTRA_DIMENSIONS = "extra_dimensions";
+    public static final String EXTRA_MODEL_NAME = "extra_model_name";
 
     public static final String EXTRA_REVIEW = "extra_review";
     public static final String EXTRA_IMPR = "extra_impr";
@@ -50,7 +51,7 @@ public class Constants {
     public static final String EXTRA_FRANCHISEID = "extra_franchiseId";
     public static final String EXTRA_LISTINGS_CHAT_INFO = "extra_listings_chat_info";
 
-
+    public static final String EXTRA_DEALER_NAME = "extra_dealer_name";
     public static final String EXTRA_SAFETY = "extra_safety";
     public static final String EXTRA_CMPL = "extra_complaints";
     public static final String EXTRA_RECALLS = "extra_recalls";
