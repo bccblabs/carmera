@@ -36,10 +36,18 @@ public class TagsCard extends Card {
             return;
         this.setBackgroundResourceId(BgdResId);
         TagGroup tagGroup = (TagGroup) view.findViewById(R.id.tags);
-        if (this.tags != null && this.tags.size() > 0)
-            tagGroup.setTags(this.tags);
-        else
+        if (this.tags != null && this.tags.size() > 0) {
+            if (this.tags.size() < 10)
+                tagGroup.setTags(this.tags);
+            else {
+                int tags_len = this.tags.size();
+                this.tags = this.tags.subList(0,10);
+                this.tags.add ("... and " + (tags_len - 10) + " more");
+                tagGroup.setTags(this.tags);
+            }
+        } else {
             tagGroup.setVisibility(View.GONE);
+        }
         desc0_tv = (TextView) view.findViewById(R.id.desc_line0);
         desc1_tv = (TextView) view.findViewById(R.id.desc_line1);
         Util.setText(desc0_tv, this.desc0);
