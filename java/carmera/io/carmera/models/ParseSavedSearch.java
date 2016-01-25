@@ -170,6 +170,13 @@ public class ParseSavedSearch extends ParseObject {
         return getInt("matchingModelsCnt");
     }
 
+    public void setMinCylinders (Integer val) {
+        put ("minCylinders", val);
+    }
+
+    public Integer getMinCylinders () {
+        return getInt("minCylinders");
+    }
 
 }
 

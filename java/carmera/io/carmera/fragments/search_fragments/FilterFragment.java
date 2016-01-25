@@ -56,9 +56,6 @@ public class FilterFragment extends DialogFragment {
 
     private List<String> selected_models = new ArrayList<>();
 
-    @Bind (R.id.save_btn)
-    ButtonFlat save_btn;
-
     @Bind(R.id.dismiss_btn)
     ButtonFlat filter_btn;
 
@@ -189,9 +186,6 @@ public class FilterFragment extends DialogFragment {
         if (this.listingsQuery.car.models.size() > 0) {
             makes_spnr.setVisibility(View.GONE);
         }
-
-        if (this.listingsQuery.num_matching_models != null && this.listingsQuery.num_matching_models < 1)
-            save_btn.setVisibility (View.GONE);
         return builder.create();
     }
     private int findPos (ArrayAdapter<String> adapter, String item) {
@@ -562,40 +556,6 @@ public class FilterFragment extends DialogFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-
-    @OnClick (R.id.save_btn)
-    void saveSearch () {
-        ParseSavedSearch parseSavedSearch = new ParseSavedSearch();
-        parseSavedSearch.setBodyTypes(listingsQuery.car.bodyTypes);
-        parseSavedSearch.setCompressors(listingsQuery.car.compressors);
-        parseSavedSearch.setConditions(listingsQuery.api.conditions);
-        parseSavedSearch.setDrivetrains(listingsQuery.car.drivenWheels);
-        parseSavedSearch.setMakes(listingsQuery.car.makes);
-        parseSavedSearch.setMatchingListingsCnt(listingsQuery.num_matching_listings);
-        parseSavedSearch.setMatchingModelsCnt(listingsQuery.num_matching_models);
-        parseSavedSearch.setMaxMileage(Integer.parseInt(listingsQuery.max_mileage));
-        parseSavedSearch.setMaxPrice(Integer.parseInt(listingsQuery.max_price));
-        parseSavedSearch.setMinHp(listingsQuery.car.minHp);
-        parseSavedSearch.setMinMpg(listingsQuery.car.minMpg);
-        parseSavedSearch.setMinTq(listingsQuery.car.minTq);
-        parseSavedSearch.setModels(listingsQuery.car.main_models);
-        parseSavedSearch.setMinYr(listingsQuery.car.minYr);
-        parseSavedSearch.setSortBy(listingsQuery.sortBy);
-        parseSavedSearch.setTags(listingsQuery.car.tags);
-        parseSavedSearch.setZip(listingsQuery.api.zipcode);
-        parseSavedSearch.setUser(ParseUser.getCurrentUser());
-        parseSavedSearch.setSavedName(String.format("%d found", listingsQuery.num_matching_models));
-        parseSavedSearch.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                MaterialDialog dialog = new MaterialDialog.Builder(getContext())
-                        .content("Search Saved!")
-                        .positiveText("Got It!")
-                        .show();
-            }
-        });
     }
 
 }

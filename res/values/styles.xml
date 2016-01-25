@@ -5,7 +5,7 @@
         <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
+    </style>tags
     <style name="CarmeraTheme.PreferenceStyle" parent="@style/PreferenceThemeOverlay">
         <item name="android:textColorPrimary">@android:color/darker_gray</item>
     </style>
@@ -313,5 +313,18 @@
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+
+    <style name="TagGroup.CarTags" parent="TagGroup.Small">
+        <item name="atg_textSize">13sp</item>
+        <item name="atg_borderStrokeWidth">0.8dp</item>
+        <item name="atg_horizontalSpacing">8dp</item>
+        <item name="atg_verticalSpacing">3dp</item>
+        <item name="atg_horizontalPadding">12dp</item>
+        <item name="atg_verticalPadding">3dp</item>
+        <item name="atg_textColor">@color/russo</item>
+        <item name="atg_borderColor">@color/selected_item_color</item>
+
     </style>
 </resources>

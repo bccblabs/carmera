@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,4 +63,16 @@ public class Util {
         NumberFormat fmt = NumberFormat.getCurrencyInstance();
         return fmt.format(i.intValue());
     }
+
+    public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
+        if (c != null) {
+            list.addAll(c);
+        }
+    }
+
+    public static void addIfNotZero (List<String> list, Integer value, String unit) {
+        if (value > 0)
+            list.add(value.toString() + "+" + unit);
+    }
+
 }

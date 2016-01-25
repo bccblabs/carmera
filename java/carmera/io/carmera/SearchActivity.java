@@ -147,7 +147,10 @@ public class SearchActivity extends AppCompatActivity implements CaptureFragment
         ListingsQuery listingsQuery = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_LISTING_QUERY));
         if (listingsQuery != null) {
             String model_name = getIntent().getExtras().getString(Constants.EXTRA_MODEL_NAME);
-            search_title.setText(model_name);
+            if (model_name == null)
+                search_title.setText("Search");
+            else
+                search_title.setText(model_name);
             fab_toolbar.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new NoHistListingsRequestListener());

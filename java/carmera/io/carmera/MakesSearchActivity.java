@@ -11,10 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -22,9 +26,11 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
 import carmera.io.carmera.fragments.search_fragments.FilterFragment;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.ParseSavedSearch;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
@@ -43,12 +49,14 @@ public class MakesSearchActivity extends AppCompatActivity {
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private ArrayList <Card> cards = new ArrayList<>();
     private CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter;
-
+    private int matching_models_count = 0;
     private FloatingActionButton favorites;
 
     @Bind (R.id.makes_title_tv) TextView title_text;
 
     @Bind (R.id.makes_search_toolbar) Toolbar toolbar;
+
+    @Bind (R.id.fab_toolbar) View fab_toolbar;
 
     @Bind (R.id.loading_sign) View loading;
 
@@ -94,7 +102,6 @@ public class MakesSearchActivity extends AppCompatActivity {
                 filterFragment.setArguments(args);
                 filterFragment.show(getSupportFragmentManager(), "filter_dialog");
 
-
             } else {
                 MakesSearchActivity.this.listingsQuery = result.query;
                 MakesSearchActivity.this.listingsQuery.car.models = new ArrayList<>();
@@ -106,7 +113,7 @@ public class MakesSearchActivity extends AppCompatActivity {
                             make.numModels + " models",
                             null,
                             make.imageUrl);
-
+                    matching_models_count += make.numModels;
                     staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
                         public void onClick(Card card, View view) {
@@ -122,6 +129,7 @@ public class MakesSearchActivity extends AppCompatActivity {
                     cards.add(staggeredImageCard);
                 }
                 cardGridStaggeredArrayAdapter.notifyDataSetChanged();
+                fab_toolbar.setVisibility(View.VISIBLE);
 
             }
         }
@@ -130,7 +138,7 @@ public class MakesSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_makes_models_grid);
+        setContentView(R.layout.activity_makes_grid);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (toolbar != null) {
@@ -190,4 +198,36 @@ public class MakesSearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick(R.id.save_btn)
+    void saveSearch () {
+        ParseSavedSearch parseSavedSearch = new ParseSavedSearch();
+        parseSavedSearch.setBodyTypes(listingsQuery.car.bodyTypes);
+        parseSavedSearch.setCompressors(listingsQuery.car.compressors);
+        parseSavedSearch.setConditions(listingsQuery.api.conditions);
+        parseSavedSearch.setDrivetrains(listingsQuery.car.drivenWheels);
+        parseSavedSearch.setMakes(listingsQuery.car.makes);
+        parseSavedSearch.setMatchingModelsCnt(MakesSearchActivity.this.matching_models_count);
+        parseSavedSearch.setMaxMileage(Integer.parseInt(listingsQuery.max_mileage));
+        parseSavedSearch.setMaxPrice(Integer.parseInt(listingsQuery.max_price));
+        parseSavedSearch.setMinHp(listingsQuery.car.minHp);
+        parseSavedSearch.setMinMpg(listingsQuery.car.minMpg);
+        parseSavedSearch.setMinTq(listingsQuery.car.minTq);
+        parseSavedSearch.setModels(listingsQuery.car.main_models);
+        parseSavedSearch.setMinYr(listingsQuery.car.minYr);
+        parseSavedSearch.setSortBy(listingsQuery.sortBy);
+        parseSavedSearch.setTags(listingsQuery.car.tags);
+        parseSavedSearch.setZip(listingsQuery.api.zipcode);
+        parseSavedSearch.setMinCylinders(listingsQuery.car.minCylinders);
+        parseSavedSearch.setUser(ParseUser.getCurrentUser());
+        parseSavedSearch.setSavedName(String.format("%d found", listingsQuery.num_matching_models));
+        parseSavedSearch.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                MaterialDialog dialog = new MaterialDialog.Builder(MakesSearchActivity.this)
+                        .content("Search Saved!")
+                        .positiveText("Got It!")
+                        .show();
+            }
+        });
+    }
 }
