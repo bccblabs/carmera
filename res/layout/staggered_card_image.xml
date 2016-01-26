@@ -125,8 +125,8 @@
                 android:layout_gravity="bottom|end"
                 android:background="@android:color/holo_red_light"
                 materialdesign:iconDrawable="@drawable/ic_favorite_white_24dp"
-                android:id="@+id/add_to_search"
-                android:text="@string/add_to_search"
+                android:id="@+id/favorite_btn"
+                android:text="@string/favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

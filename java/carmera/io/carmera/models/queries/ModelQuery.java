@@ -23,9 +23,19 @@ public class ModelQuery {
     @JsonProperty
     public String yearDesc;
     @JsonProperty
+    public Integer recallCnt;
+    @JsonProperty
     public List<Integer> styleIds;
 
     public ModelQuery() {
+    }
+
+    public Integer getRecallCnt() {
+        return recallCnt;
+    }
+
+    public void setRecallCnt(Integer recallCnt) {
+        this.recallCnt = recallCnt;
     }
 
     public String getModel() {

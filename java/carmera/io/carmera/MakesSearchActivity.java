@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
@@ -112,7 +113,8 @@ public class MakesSearchActivity extends AppCompatActivity {
                             null,
                             make.numModels + " models",
                             null,
-                            make.imageUrl);
+                            make.imageUrl,
+                            null);
                     matching_models_count += make.numModels;
                     staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
@@ -200,6 +202,7 @@ public class MakesSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.save_btn)
     void saveSearch () {
+        Toast.makeText(MakesSearchActivity.this, "search saved!", Toast.LENGTH_SHORT).show();
         ParseSavedSearch parseSavedSearch = new ParseSavedSearch();
         parseSavedSearch.setBodyTypes(listingsQuery.car.bodyTypes);
         parseSavedSearch.setCompressors(listingsQuery.car.compressors);
@@ -220,14 +223,6 @@ public class MakesSearchActivity extends AppCompatActivity {
         parseSavedSearch.setMinCylinders(listingsQuery.car.minCylinders);
         parseSavedSearch.setUser(ParseUser.getCurrentUser());
         parseSavedSearch.setSavedName(String.format("%d found", listingsQuery.num_matching_models));
-        parseSavedSearch.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                MaterialDialog dialog = new MaterialDialog.Builder(MakesSearchActivity.this)
-                        .content("Search Saved!")
-                        .positiveText("Got It!")
-                        .show();
-            }
-        });
+        parseSavedSearch.saveInBackground();
     }
 }

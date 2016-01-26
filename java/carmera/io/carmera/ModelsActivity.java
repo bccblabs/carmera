@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -19,7 +23,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.cards.StaggeredImageCard;
+import carmera.io.carmera.listeners.FavoriteBtnClickListener;
 import carmera.io.carmera.models.ListingsQuery;
+import carmera.io.carmera.models.ParseSavedModels;
 import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
@@ -29,7 +35,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class ModelsActivity extends AppCompatActivity {
+public class ModelsActivity extends AppCompatActivity implements FavoriteBtnClickListener {
 
     private List<ModelQuery> models;
 
@@ -44,6 +50,22 @@ public class ModelsActivity extends AppCompatActivity {
     @Bind(R.id.loading_sign) View loading;
 
     @Bind (R.id.data_staggered_grid_view) View staggered_grid_view;
+
+
+
+    @Override
+    public void onSaveModelClicked (ModelQuery modelQuery) {
+        Toast.makeText(ModelsActivity.this, modelQuery.model + " saved in favorites!", Toast.LENGTH_SHORT).show();
+        ParseSavedModels parseSavedModels = new ParseSavedModels();
+        parseSavedModels.setStyleIds(modelQuery.styleIds);
+        parseSavedModels.setModel(modelQuery.model);
+        parseSavedModels.setMpgDesc(modelQuery.getMpgDesc());
+        parseSavedModels.setPowerDesc(modelQuery.getPowerDesc());
+        parseSavedModels.setRecallCnt(10);
+        parseSavedModels.setYearDesc(modelQuery.getYearDesc());
+        parseSavedModels.saveInBackground();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +88,14 @@ public class ModelsActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ArrayList <Card> cards = new ArrayList<>();
         for (final ModelQuery model: models) {
-            StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this,
+            final StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this,
                     model.model+ "\n" + model.yearDesc,
                     "10 recalls",
                     model.powerDesc.replace("hp ", "hp\n"),
                     model.mpgDesc.replace("/", "\n"),
-                    model.imageUrl);
+                    model.imageUrl,
+                    model);
+
             staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {

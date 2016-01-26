@@ -1,0 +1,45 @@
+<RelativeLayout
+    android:background="@android:color/background_light"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/content_frame"
+        android:background="@android:color/background_light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card:item_margin="8dp"
+            card:column_count_portrait="2"
+            card:column_count_landscape="2"
+            card:grid_paddingRight="1dp"
+            card:grid_paddingLeft="1dp"
+            card:list_card_layout_resourceID="@layout/staggered_card"
+            android:id="@+id/data_staggered_grid_view"/>
+        <widgets.CanaroTextView
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/emptyview"
+            android:textColor="@color/selected_item_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_cars_found"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+            android:id="@+id/loading_sign"
+            android:layout_centerInParent="true"
+            android:layout_width="50dp"
+            android:background="@color/selected_item_color"
+            android:layout_height="50dp"/>
+    </RelativeLayout>
+</RelativeLayout>

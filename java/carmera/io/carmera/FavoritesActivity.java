@@ -20,6 +20,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.fragments.favorites_fragments.SavedModelsFragment;
 import carmera.io.carmera.fragments.favorites_fragments.SavedSearchFragment;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.utils.Constants;
@@ -48,9 +49,9 @@ public class FavoritesActivity extends AppCompatActivity {
         toolbar_title_text.setText("Favorites");
 
         FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
-        add_page(R.string.models, Constants.EXTRAS_LISTINGS_FAV, ListingsFragment.class, page_creator);
+        add_page(R.string.models, Constants.EXTRAS_LISTINGS_FAV, SavedModelsFragment.class, page_creator);
         add_page(R.string.search_history, Constants.EXTRAS_LISTINGS_SEEN, SavedSearchFragment.class, page_creator);
-        add_page(R.string.listings, Constants.EXTRAS_LISTINGS_FAV, ListingsFragment.class, page_creator);
+//        add_page(R.string.listings, Constants.EXTRAS_LISTINGS_FAV, ListingsFragment.class, page_creator);
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 page_creator.create());
