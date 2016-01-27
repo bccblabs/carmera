@@ -25,10 +25,10 @@ public class ListingsQuery {
     public Integer num_matching_listings;
 
     @JsonProperty
-    public String max_price = "100000";
+    public String max_price = "No Max";
 
     @JsonProperty
-    public String max_mileage = "100000";
+    public String max_mileage = "No Max";
 
     @JsonProperty
     public String sortBy = Constants.PRICE_ASC;

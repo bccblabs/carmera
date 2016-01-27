@@ -47,7 +47,7 @@ public class CarQuery {
     @JsonProperty
     public List<String> main_models = new ArrayList<>();
     @JsonProperty
-    public List<List<String>> sortBy;
+    public String sortBy;
     @JsonProperty
     public List<Integer> remaining_ids;
 
@@ -70,11 +70,11 @@ public class CarQuery {
         this.main_models = main_models;
     }
 
-    public List<List<String>> getSortBy() {
+    public String getSortBy() {
         return sortBy;
     }
 
-    public void setSortBy(List<List<String>> sortBy) {
+    public void setSortBy(String sortBy) {
         this.sortBy = sortBy;
     }
 

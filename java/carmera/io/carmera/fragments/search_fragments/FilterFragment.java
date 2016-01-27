@@ -120,7 +120,7 @@ public class FilterFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         callback = (OnResearchListener) getTargetFragment();
-        if (callback == null) {
+        if (callback != null) {
             callback = (OnResearchListener) getActivity();
         }
     }

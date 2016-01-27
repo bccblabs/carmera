@@ -238,7 +238,7 @@ public class StaggeredSearch extends Fragment {
             public void onClick(Card card, View view) {
                 showDialog();
                 String[] compressors = cxt.getResources().getStringArray(R.array.turbo);
-                onEditCompressors.OnEditCompressorsCallback(compressors);
+                onEditCompressors.OnEditCompressorCallback("Turbo");
             }
         });
         cards.add(staggeredImageButtonCard);
@@ -264,8 +264,7 @@ public class StaggeredSearch extends Fragment {
             @Override
             public void onClick(Card card, View view) {
                 showDialog();
-                String[] compressors = cxt.getResources().getStringArray(R.array.supercharger);
-                onEditCompressors.OnEditCompressorsCallback(compressors);
+                onEditCompressors.OnEditCompressorCallback("supercharger");
             }
         });
         cards.add(staggeredImageButtonCard);
