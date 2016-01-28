@@ -949,8 +949,10 @@
 
     <string-array name="japanese_makes">
         <item>Acura</item>
+        <item>Honda</item>
         <item>Infiniti</item>
         <item>Lexus</item>
+        <item>Nissan</item>
         <item>Toyota</item>
     </string-array>
 </resources>

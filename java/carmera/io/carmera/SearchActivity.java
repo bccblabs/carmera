@@ -87,12 +87,16 @@ public class SearchActivity extends AppCompatActivity implements
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
-            Toast.makeText(SearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            search_title.setText("0 listings");
+            listingsQuery = new ListingsQuery();
+            SearchActivity.this.loading.setVisibility(View.GONE);
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
                 SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
+                SearchActivity.this.loading.setVisibility(View.GONE);
+                search_title.setText(result.getListings().size() + " listings");
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));
@@ -111,12 +115,15 @@ public class SearchActivity extends AppCompatActivity implements
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             listingsQuery = new ListingsQuery();
-            Toast.makeText(SearchActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            SearchActivity.this.loading.setVisibility(View.GONE);
+            search_title.setText("0 listings");
         }
         @Override
-        public void onRequestSuccess (Listings result) {
+        public void onRequestSuccess(Listings result) {
             try {
                 SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
+                SearchActivity.this.loading.setVisibility(View.GONE);
+                search_title.setText(result.getListings().size() + " listings");
                 listingsFragment = ListingsFragment.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));

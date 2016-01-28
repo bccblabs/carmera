@@ -59,7 +59,8 @@ public class ParseSavedSearch extends ParseObject {
     }
 
     public void setMinHp(Integer val) {
-        put ("minHp", val);
+        if (val != null)
+            put ("minHp", val);
     }
 
     public Integer getMinHp () {
@@ -67,7 +68,8 @@ public class ParseSavedSearch extends ParseObject {
     }
 
     public void setMinTq(Integer val) {
-        put ("minTq", val);
+        if (val != null)
+            put ("minTq", val);
     }
 
     public Integer getMinTq () {
@@ -75,7 +77,8 @@ public class ParseSavedSearch extends ParseObject {
     }
 
     public void setMinMpg(Integer val) {
-        put ("minMpg", val);
+        if (val != null)
+            put ("minMpg", val);
     }
 
     public Integer getMinMpg () {
@@ -83,7 +86,8 @@ public class ParseSavedSearch extends ParseObject {
     }
 
     public void setMinYr(Integer val) {
-        put ("minYr", val);
+        if (val != null)
+            put ("minYr", val);
     }
 
     public Integer getMinYr () {

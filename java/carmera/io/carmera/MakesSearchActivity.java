@@ -200,8 +200,17 @@ public class MakesSearchActivity extends AppCompatActivity {
         parseSavedSearch.setDrivetrains(listingsQuery.car.drivenWheels);
         parseSavedSearch.setMakes(listingsQuery.car.makes);
         parseSavedSearch.setMatchingModelsCnt(MakesSearchActivity.this.matching_models_count);
-        parseSavedSearch.setMaxMileage(Integer.parseInt(listingsQuery.max_mileage));
-        parseSavedSearch.setMaxPrice(Integer.parseInt(listingsQuery.max_price));
+
+        if (listingsQuery.max_price.equals("No Max"))
+            parseSavedSearch.setMaxPrice(100000000);
+        else
+            parseSavedSearch.setMaxPrice(Integer.parseInt(listingsQuery.max_price));
+
+        if (listingsQuery.max_mileage.equals("No Max"))
+            parseSavedSearch.setMaxMileage(100000000);
+        else
+            parseSavedSearch.setMaxMileage(Integer.parseInt(listingsQuery.max_mileage));
+
         parseSavedSearch.setMinHp(listingsQuery.car.minHp);
         parseSavedSearch.setMinMpg(listingsQuery.car.minMpg);
         parseSavedSearch.setMinTq(listingsQuery.car.minTq);
