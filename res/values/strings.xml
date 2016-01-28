@@ -255,12 +255,12 @@
 
     <string name="listings">Listings</string>l
 
-    <string name="str_clear">Clear</string>
+    <string name="str_clear">Clear Filters</string>
     <string name="str_sort">Sort</string>
-    <string name="str_filter">Edit Search</string>
+    <string name="str_filter">Filters</string>
     <string name="str_search_all">See Cars</string>
     <string name="str_image_search">Image</string>
-    <string name="staggered">Cars</string>
+    <string name="staggered">Filters</string>
 
     <string name="add_to_search">Add</string>
     <string name="see_all">See All</string>
@@ -290,4 +290,12 @@
     <string name="listings_seen">SEEN</string>
     <string name="listings_fav">FAV</string>
     <string name="home">Home</string>
+    <string name="imports">Imports</string>
+    <string name="quick_search">Quick Search</string>
+    <string name="cost_saver">Cost Saver</string>
+    <string name="japanese_search">Japanese</string>
+    <string name="most_efficient">Most Efficient</string>
+    <string name="most_hp">Most Horsepower</string>
+    <string name="most_spacious">Most Spacious</string>
+    <string name="most_torque">Most Torque</string>
 </resources>

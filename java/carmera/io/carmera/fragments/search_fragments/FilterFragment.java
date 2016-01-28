@@ -120,7 +120,7 @@ public class FilterFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         callback = (OnResearchListener) getTargetFragment();
-        if (callback != null) {
+        if (callback == null) {
             callback = (OnResearchListener) getActivity();
         }
     }
@@ -257,11 +257,11 @@ public class FilterFragment extends DialogFragment {
         setSingleSpinnerSelection(sort_spinner, sort_criteria_adapter, listingsQuery.sortBy);
         setSingleSpinnerSelection(cylinders_spnr, cylinder_adapter, Integer.toString(listingsQuery.car.minCylinders));
 
-        try {
-            years_spinner.setSelection(findPos(year_adapter, Integer.toString(Collections.min(listingsQuery.car.years))));
-        } catch (Exception e) {
-            years_spinner.setSelection(0);
-        }
+//        try {
+//            years_spinner.setSelection(findPos(year_adapter, Integer.toString(Collections.min(listingsQuery.car.years))));
+//        } catch (Exception e) {
+//            years_spinner.setSelection(0);
+//        }
 
         mpg_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override

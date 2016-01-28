@@ -943,5 +943,14 @@
         <item>MPG: Low to High</item>
         <item>Recalls: Least to Most</item>
         <item>Recalls: Most to Least</item>
+        <item>Space: High to Low</item>
+        <item>Space: Low to High</item>
+    </string-array>
+
+    <string-array name="japanese_makes">
+        <item>Acura</item>
+        <item>Infiniti</item>
+        <item>Lexus</item>
+        <item>Toyota</item>
     </string-array>
 </resources>

@@ -35,6 +35,7 @@ import carmera.io.carmera.listeners.OnEditDriveTrain;
 import carmera.io.carmera.listeners.OnEditHp;
 import carmera.io.carmera.listeners.OnEditMakes;
 import carmera.io.carmera.listeners.OnEditMpg;
+import carmera.io.carmera.listeners.OnEditSort;
 import carmera.io.carmera.listeners.OnEditTags;
 import carmera.io.carmera.listeners.OnEditTorque;
 import carmera.io.carmera.listeners.OnEditTransmission;
@@ -50,25 +51,25 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 6/3/15.
  */
-public class SearchActivity extends AppCompatActivity implements CaptureFragment.OnCameraResultListener,
+public class SearchActivity extends AppCompatActivity implements
+                                                        CaptureFragment.OnCameraResultListener,
                                                         OnSearchFragmentVisible,
                                                         OnResearchListener,
                                                         OnEditBodyTypes,
+                                                        OnEditCompressors,
+                                                        OnEditCylinders,
                                                         OnEditDriveTrain,
                                                         OnEditHp,
                                                         OnEditMakes,
                                                         OnEditMpg,
+                                                        OnEditSort,
                                                         OnEditTags,
                                                         OnEditTorque,
-                                                        OnEditCompressors,
-                                                        OnEditCylinders,
                                                         OnEditTransmission {
 
     private final String TAG = getClass().getCanonicalName();
     private ListingsQuery listingsQuery = new ListingsQuery();
 
-    @Bind (R.id.ic_filter) ButtonFlat ic_filter;
-    @Bind (R.id.ic_search) ButtonFlat ic_search;
     @Bind (R.id.fab_toolbar) View fab_toolbar;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind (R.id.loading) View loading;
@@ -264,18 +265,16 @@ public class SearchActivity extends AppCompatActivity implements CaptureFragment
     }
 
     @Override
+    public void onEditSortString (String sort) {
+        this.listingsQuery.sortBy = sort;
+    }
+
+    @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
         Log.i (TAG, "On Research Callback: " + new Gson().toJson(this.listingsQuery.car));
         Intent i = new Intent(this, MakesSearchActivity.class);
         i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, this.listingsQuery));
-        startActivityForResult(i, 1);
-    }
-
-    @OnClick (R.id.ic_search)
-    public void search () {
-        Intent i = new Intent(this, MakesSearchActivity.class);
-        i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         startActivityForResult(i, 1);
     }
 

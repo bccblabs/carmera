@@ -43,7 +43,7 @@ public class CarQuery {
     @JsonProperty
     public Integer minMpg = 0;
     @JsonProperty
-    public Integer minYr = 1990;
+    public Integer minYr = 2010;
     @JsonProperty
     public List<String> main_models = new ArrayList<>();
     @JsonProperty

@@ -73,11 +73,6 @@ public class MakesSearchActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("");
             getSupportActionBar().show();
             title_text.setText("FOUND 0 MAKES");
-            FilterFragment filterFragment = FilterFragment.newInstance();
-            Bundle args = new Bundle();
-            args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-            filterFragment.setArguments(args);
-            filterFragment.show(getSupportFragmentManager(), "filter_dialog");
         }
 
         @Override
@@ -97,11 +92,6 @@ public class MakesSearchActivity extends AppCompatActivity {
             getSupportActionBar().show();
             title_text.setText("FOUND " + result.makesCount + " MAKES");
             if (result.makesCount < 1) {
-                FilterFragment filterFragment = FilterFragment.newInstance();
-                Bundle args = new Bundle();
-                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
-                filterFragment.setArguments(args);
-                filterFragment.show(getSupportFragmentManager(), "filter_dialog");
 
             } else {
                 MakesSearchActivity.this.listingsQuery = result.query;
