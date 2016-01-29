@@ -3,6 +3,7 @@ package carmera.io.carmera.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -16,12 +17,11 @@ public class ParseSavedModels extends ParseObject{
         return ParseQuery.getQuery(ParseSavedModels.class);
     }
 
-    public void setUser (String user) {
+    public void setUser (ParseUser user) {
         put ("user", user);
     }
-
-    public String getUser () {
-        return getString("user");
+    public ParseUser getUser () {
+        return getParseUser("user");
     }
     public void setModel (String model) {
         put("model", model);
@@ -38,12 +38,12 @@ public class ParseSavedModels extends ParseObject{
     }
 
 
-    public void setStyleIds (List<Integer> styleIds) {
-        put ("styleIds", styleIds);
+    public void setStyleId (Integer styleId) {
+        put ("styleId", styleId);
     }
 
-    public List<Integer> getStyleIds () {
-        return getList("styleIds");
+    public Integer getStyleIds () {
+        return getInt("styleId");
     }
 
     public void setPowerDesc(String powerDesc) {
@@ -71,60 +71,60 @@ public class ParseSavedModels extends ParseObject{
         return getString("year_desc");
     }
 
-//    public void setStartYr (Integer startYr) {
-//        put("startYr", startYr);
-//    }
-//    public Integer getStartYr () {
-//        return getInt("startYr");
-//    }
-//
-//    public void setEndYr (Integer endYr) {
-//        put("endYr", endYr);
-//    }
-//    public Integer getEndYr () {
-//        return getInt("endYr");
-//    }
-//
-//    public void setHp (Integer startYr) {
-//        put("hp", startYr);
-//    }
-//    public Integer getHp () {
-//        return getInt("hp");
-//    }
-//
-//    public void setTq (Integer endYr) {
-//        put("tq", endYr);
-//    }
-//    public Integer getTq () {
-//        return getInt("tq");
-//    }
-//
-//    public void getCity (Integer startYr) {
-//        put("city", startYr);
-//    }
-//    public Integer getCity () {
-//        return getInt("city");
-//    }
-//
-//    public void setHwy (Integer endYr) {
-//        put("hwy", endYr);
-//    }
-//    public Integer getHwy () {
-//        return getInt("hwy");
-//    }
-//
-//    public void setMatchingListingsCnt (Integer endYr) {
-//        put("matchingListingsCnt", endYr);
-//    }
-//    public Integer getMatchingListingsCnt () {
-//        return getInt("matchingListingsCnt");
-//    }
-//
-//    public void setBodyType (String model) {
-//        put("bodytype", model);
-//    }
-//    public String getBodyType () {
-//        return getString("bodytype");
-//    }
+    public void setStartYr (Integer startYr) {
+        put("startYr", startYr);
+    }
+    public Integer getStartYr () {
+        return getInt("startYr");
+    }
+
+    public void setEndYr (Integer endYr) {
+        put("endYr", endYr);
+    }
+    public Integer getEndYr () {
+        return getInt("endYr");
+    }
+
+    public void setHp (Integer startYr) {
+        put("hp", startYr);
+    }
+    public Integer getHp () {
+        return getInt("hp");
+    }
+
+    public void setTq (Integer endYr) {
+        put("tq", endYr);
+    }
+    public Integer getTq () {
+        return getInt("tq");
+    }
+
+    public void getCity (Integer startYr) {
+        put("city", startYr);
+    }
+    public Integer getCity () {
+        return getInt("city");
+    }
+
+    public void setHwy (Integer endYr) {
+        put("hwy", endYr);
+    }
+    public Integer getHwy () {
+        return getInt("hwy");
+    }
+
+    public void setMatchingListingsCnt (Integer endYr) {
+        put("matchingListingsCnt", endYr);
+    }
+    public Integer getMatchingListingsCnt () {
+        return getInt("matchingListingsCnt");
+    }
+
+    public void setBodyType (String model) {
+        put("bodytype", model);
+    }
+    public String getBodyType () {
+        return getString("bodytype");
+    }
 
 }

@@ -28,9 +28,9 @@ public class StaggeredCardSingleLine extends Card {
 
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view) {
+        setBackgroundResourceId(R.drawable.card_bgd0);
         title = (TextView) view.findViewById(R.id.staggered_card_title);
         card_main_layout = view.findViewById(R.id.card_main_layout);
-        card_main_layout.setBackgroundResource(BgdResId);
         Util.setText(title, this.title_str);
     }
 }

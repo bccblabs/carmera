@@ -99,12 +99,10 @@
     <style name="listing_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/background_floating_material_light</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
         <item name="android:layout_gravity">top|right</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="android:textAllCaps">true</item>
     </style>
     <style name="listing_title_blue" parent="listing_title">
         <item name="android:textColor">@color/default_blue</item>

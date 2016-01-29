@@ -35,7 +35,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class ModelsActivity extends AppCompatActivity implements FavoriteBtnClickListener {
+public class ModelsActivity extends AppCompatActivity {
 
     private List<ModelQuery> models;
 
@@ -50,22 +50,6 @@ public class ModelsActivity extends AppCompatActivity implements FavoriteBtnClic
     @Bind(R.id.loading_sign) View loading;
 
     @Bind (R.id.data_staggered_grid_view) View staggered_grid_view;
-
-
-
-    @Override
-    public void onSaveModelClicked (ModelQuery modelQuery) {
-        Toast.makeText(ModelsActivity.this, modelQuery.model + " saved in favorites!", Toast.LENGTH_SHORT).show();
-        ParseSavedModels parseSavedModels = new ParseSavedModels();
-        parseSavedModels.setStyleIds(modelQuery.styleIds);
-        parseSavedModels.setModel(modelQuery.model);
-        parseSavedModels.setMpgDesc(modelQuery.getMpgDesc());
-        parseSavedModels.setPowerDesc(modelQuery.getPowerDesc());
-        parseSavedModels.setRecallCnt(10);
-        parseSavedModels.setYearDesc(modelQuery.getYearDesc());
-        parseSavedModels.saveInBackground();
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

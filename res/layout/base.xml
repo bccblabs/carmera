@@ -19,7 +19,8 @@
             android:textSize="16sp"
             android:textColor="@android:color/primary_text_dark"
             android:textAllCaps="true"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
+            android:padding="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.v7.widget.Toolbar>

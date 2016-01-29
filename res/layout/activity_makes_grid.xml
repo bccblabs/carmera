@@ -79,7 +79,7 @@
                         android:paddingEnd="8dp"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/background_light"
-                        android:text="@string/save"/>
+                        android:text="@string/save_all"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

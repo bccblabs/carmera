@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFloatSmall;
@@ -21,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.models.ParseSavedModels;
 import carmera.io.carmera.models.listings_subdocuments.Link;
 import carmera.io.carmera.utils.Util;
 
@@ -42,7 +44,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         super.onBindViewHolder(viewHolder, i);
         final Listing listing = getItem(i);
         NumberFormat milefmt = NumberFormat.getIntegerInstance(Locale.US);
-        viewHolder.car_info.setText(String.format("%d %s %s %s", listing.getYear().getYear(),
+        viewHolder.car_info.setText(String.format("%d %s %s\n%s", listing.getYear().getYear(),
                 listing.getMake().getName(),
                 listing.getModel().getName(),
                 listing.getStyle().getTrim()));
@@ -63,21 +65,6 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
 
 
 
-        if (listing.dealer != null) {
-            if (listing.dealer.name != null ) {
-                Util.setText(viewHolder.dealer_name, listing.dealer.name);
-            }
-            if (listing.dealer.getAddress() != null) {
-                Util.setText(viewHolder.dealer_address,
-                        String.format("%s\n%s, %s",
-                                listing.dealer.getAddress().getStreet(),
-                                listing.dealer.getAddress().getCity(),
-                                listing.dealer.getAddress().getStateName()
-                        )
-                );
-            }
-        }
-
         try {
             List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
             if (links.size() > 0) {
@@ -96,8 +83,6 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         @Bind(R.id.listing_photo) public ImageView listingImage;
         @Bind(R.id.listing_price) public TextView price;
         @Bind(R.id.listing_mileage) public TextView mileage;
-        @Bind(R.id.dealer_name) public TextView dealer_name;
-        @Bind(R.id.dealer_address) public TextView dealer_address;
         public ViewHolder (View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -30,9 +30,8 @@ public class CarInfoDetailsCard extends Card {
     public void setupInnerViewElements (ViewGroup parent, View view) {
         if (view == null)
             return;
-        this.setBackgroundResourceId(BgdResId);
+        setBackgroundResourceId(this.BgdResId);
         card_main_layout = view.findViewById(R.id.card_main_layout);
-        card_main_layout.setBackgroundResource(BgdResId);
         title = (TextView) view.findViewById(R.id.staggered_card_title);
         subtitle0 = (TextView) view.findViewById(R.id.staggered_card_subtitle);
         Util.setText(title, this.title_str);

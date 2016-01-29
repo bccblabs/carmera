@@ -70,23 +70,24 @@ public class SavedModelsFragment extends Fragment {
                                 model.getMpgDesc(),
                                 null,
                                 null);
-                        staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
-                            @Override
-                            public void onClick(Card card, View view) {
-                                Intent i = new Intent(getActivity(), SearchActivity.class);
-                                Bundle args = new Bundle();
-                                ListingsQuery listingsQuery = new ListingsQuery();
-                                listingsQuery.car.remaining_ids = model.getStyleIds();
-                                listingsQuery.api.pagenum = 1;
-                                listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
-                                listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
-                                listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
-                                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
-                                args.putString(Constants.EXTRA_MODEL_NAME, model.getModel());
-                                i.putExtras(args);
-                                startActivity(i);
-                            }
-                        });
+//                        staggeredImageCard.setOnClickListener(
+//                                new Card.OnCardClickListener() {
+//                            @Override
+//                            public void onClick(Card card, View view) {
+//                                Intent i = new Intent(getActivity(), SearchActivity.class);
+//                                Bundle args = new Bundle();
+//                                ListingsQuery listingsQuery = new ListingsQuery();
+////                                listingsQuery.car.remaining_ids = model.getStyleIds();
+//                                listingsQuery.api.pagenum = 1;
+//                                listingsQuery.api.pagesize = Constants.PAGESIZE_DEFAULT;
+//                                listingsQuery.api.zipcode = sharedPreferences.getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT).trim();
+//                                listingsQuery.api.radius = sharedPreferences.getString("pref_key_radius", Constants.RADIUS_DEFAULT).trim();
+//                                args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(listingsQuery));
+//                                args.putString(Constants.EXTRA_MODEL_NAME, model.getModel());
+//                                i.putExtras(args);
+//                                startActivity(i);
+//                            }
+//                        });
                         cards.add(staggeredImageCard);
                     }
                     loading.setVisibility(View.GONE);

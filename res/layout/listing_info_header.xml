@@ -8,13 +8,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <widgets.CanaroTextView
+    <TextView
         style="@style/listing_title_small"
         android:id="@+id/header_text"/>
-    <widgets.CanaroTextView
+    <TextView
         style="@style/listing_title_small"
         android:id="@+id/listing_price"/>
-    <widgets.CanaroTextView
+    <TextView
         style="@style/listing_title_small"
         android:id="@+id/listing_mileage"/>
 </LinearLayout>

@@ -8,7 +8,7 @@
     <color name="selected_item_color">#30d1d5</color>
     <color name="transparent">#00000000</color>
     <color name="black">#FF000000</color>
-    <color name="black_20">#66000000</color>
+    <color name="black_20">#80000000</color>
     <color name="medium_text_enabled">#FF000000</color>
     <color name="medium_text_disabled">#4D000000</color>
     <color name="floating_background_dark">#23000000</color>

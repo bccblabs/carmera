@@ -37,7 +37,7 @@ public class Features extends Fragment {
 
         for (int i = 0; i < comments.size(); i++) {
             String txt = comments.get(i);
-            StaggeredCardSingleLine StaggeredCardSingleLine = new StaggeredCardSingleLine(getActivity(), txt, R.drawable.card_bgd0);
+            StaggeredCardSingleLine StaggeredCardSingleLine = new StaggeredCardSingleLine(getActivity(), txt, R.drawable.card_bgd1);
             cards.add(StaggeredCardSingleLine);
         }
         CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);

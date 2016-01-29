@@ -144,8 +144,10 @@ public class SavedSearchFragment extends Fragment {
                             }
                         });
                         cards.add(saved_search_card);
-                        loading.setVisibility(View.GONE);
-                        recycler.setVisibility(View.VISIBLE);
+                        if (loading != null)
+                            loading.setVisibility(View.GONE);
+                        if (recycler != null)
+                            recycler.setVisibility(View.VISIBLE);
 
                     }
                     cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(context, cards));

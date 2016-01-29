@@ -28,6 +28,8 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.parse.ParseUser;
+
 import org.parceler.Parcels;
 import org.parceler.guava.collect.Collections2;
 
@@ -43,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.cards.CarInfoDetailsCard;
 import carmera.io.carmera.models.Listing;
+import carmera.io.carmera.models.ParseSavedListings;
+import carmera.io.carmera.models.ParseSavedModels;
 import carmera.io.carmera.models.ResponseMessage;
 import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.models.listings_subdocuments.Link;
@@ -56,6 +60,7 @@ import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
+import it.gmariotti.cardslib.library.view.CardViewNative;
 
 /**
  * Created by bski on 11/9/15.
@@ -65,13 +70,14 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
     @Bind (R.id.loading_view) View loading_view;
     @Bind (R.id.content) View content_container;
-    @Bind (R.id.listing_info_card) CardView listing_info_card;
-    @Bind (R.id.specs_card) CardView specs_card;
-    @Bind (R.id.issues_card) CardView issues_card;
-    @Bind (R.id.reviews_card) CardView reviews_card;
-    @Bind (R.id.costs_card) CardView costs_card;
-    @Bind (R.id.prices_card) CardView prices_card;
-    @Bind (R.id.equipments_card) CardView equipments_card;
+    @Bind (R.id.listing_info_card)
+    CardViewNative listing_info_card;
+    @Bind (R.id.specs_card) CardViewNative specs_card;
+    @Bind (R.id.issues_card) CardViewNative issues_card;
+    @Bind (R.id.reviews_card) CardViewNative reviews_card;
+    @Bind (R.id.costs_card) CardViewNative costs_card;
+    @Bind (R.id.prices_card) CardViewNative prices_card;
+    @Bind (R.id.equipments_card) CardViewNative equipments_card;
     @Bind (R.id.toolbar) Toolbar toolbar;
     @Bind (R.id.listing_details_title) TextView listing_details_title;
 
@@ -83,11 +89,12 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
     private SharedPreferences sharedPreferences;
 
+    private StyleData styleData;
+
     public class ListingsBasicInfoCard extends Card {
         protected TextView yr_mk_md;
         protected TextView price;
         protected TextView mileage;
-        protected TextView dealer_address, dealer_info;
         protected SliderLayout photos;
         protected List<String> stock_images;
 
@@ -99,39 +106,37 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
         @Override
         public void setupInnerViewElements (ViewGroup parent, View view) {
             photos = (SliderLayout) parent.findViewById(R.id.listing_photos);
-            dealer_address = (TextView) parent.findViewById(R.id.dealer_address);
-            dealer_info = (TextView) parent.findViewById(R.id.dealer_name);
-            if (listing.dealer.name != null ) {
-                Util.setText(dealer_info, listing.dealer.name);
-            }
-            if (listing.dealer.getAddress() != null) {
-                Util.setText(dealer_address,
-                        String.format("%s\n%s, %s",
-                                listing.dealer.getAddress().getStreet(),
-                                listing.dealer.getAddress().getCity(),
-                                listing.dealer.getAddress().getStateName()
-                        )
-                );
-            }
+//            dealer_address = (TextView) parent.findViewById(R.id.dealer_address);
+//            dealer_info = (TextView) parent.findViewById(R.id.dealer_name);
+//            if (listing.dealer.name != null ) {
+//                Util.setText(dealer_info, listing.dealer.name);
+//            }
+//            if (listing.dealer.getAddress() != null) {
+//                Util.setText(dealer_address,
+//                        String.format("%s\n%s, %s",
+//                                listing.dealer.getAddress().getStreet(),
+//                                listing.dealer.getAddress().getCity(),
+//                                listing.dealer.getAddress().getStateName()
+//                        )
+//                );
+//            }
             yr_mk_md = (TextView) parent.findViewById(R.id.year_make_model_trim);
             price = (TextView) parent.findViewById(R.id.price);
             mileage = (TextView) parent.findViewById(R.id.mileage);
 
-            Util.setText(yr_mk_md,String.format("%d %s %s", listing.getYear().getYear(),
-                    listing.getMake().getName(),
-                    listing.getModel().getName()));
+            Util.setText(yr_mk_md,String.format("%s %s", listing.getYear().getYear() + " " + listing.getMake().getName() + " " + listing.getStyle().getSubmodel().modelName, listing.getStyle().getTrim()));
             Util.setText(price, Util.formatCurrency(listing.getMin_price()));
             NumberFormat milefmt = NumberFormat.getIntegerInstance(Locale.US);
             Util.setText(mileage, String.format("%s miles", milefmt.format(listing.getMileage())));
+
             photos.setPresetTransformer(SliderLayout.Transformer.Default);
             photos.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-            photos.setCustomAnimation(new DescriptionAnimation());
             photos.addOnPageChangeListener(ListingDetails.this);
 
             if (photos != null) {
                 try {
                     for (Link link : listing.getMedia().getPhotos().getLarge().getLinks()) {
-                        DefaultSliderView sliderView = new DefaultSliderView(ListingDetails.this);
+                        DefaultSliderView sliderView = new DefaultSliderView(getApplicationContext());
                         sliderView.image(link.getHref()).setOnSliderClickListener(ListingDetails.this);
                         photos.addSlider(sliderView);
                     }
@@ -167,6 +172,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
         @Override
         public void onRequestSuccess(final StyleData styleData) {
             Log.i(getClass().getCanonicalName(), "styleId: " + styleData.styleId);
+            ListingDetails.this.styleData = styleData;
             ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard(ListingDetails.this, styleData.images);
             basic_info_card.setBackgroundResourceId(R.drawable.card_bgd0);
             listing_info_card.setCard(basic_info_card);
@@ -176,8 +182,8 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 String line0 = null;
                 try {
                     if (styleData.powertrain.engine.horsepower != null && styleData.powertrain.engine.torque != null)
-                        line0 = String.format("%d hp %d lb/ft\n%s", styleData.powertrain.engine.horsepower,
-                                styleData.powertrain.engine.torque, String.format("%d/%d MPG", styleData.powertrain.mpg.city, styleData.powertrain.mpg.highway));
+                        line0 = String.format("%d hp\n%d lb/ft\n\n%s", styleData.powertrain.engine.horsepower,
+                                styleData.powertrain.engine.torque, String.format("%d city\n%d hwy", styleData.powertrain.mpg.city, styleData.powertrain.mpg.highway));
                     else
                         line0 = styleData.powertrain.engine.desc;
 
@@ -203,6 +209,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                         startActivity(viewer);
                     }
                 });
+                specsCard.setCardElevation(8);
                 specs_card.setCard(specsCard);
             } else {
                 specs_card.setVisibility(View.GONE);
@@ -216,7 +223,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                     CarInfoDetailsCard issuesCard = new CarInfoDetailsCard(
                             ListingDetails.this,
                             "Safety",
-                            "Recalls, Ratings, Issues",
+                            String.format("Ratings\n%d Recalls\n%d Issues", styleData.recalls.numberOfRecalls, styleData.complaints.count),
                             R.drawable.card_bgd0);
                     issuesCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
@@ -267,8 +274,10 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 if (costs.size() > 0) {
                     CarInfoDetailsCard costsCard = new CarInfoDetailsCard(
                             ListingDetails.this,
-                            "Running Costs",
-                            String.format("Gas Costs $%.0f / year", styleData.estimated_annual_fuel_cost),
+                            "Running Costs Per Year",
+                            String.format("Gas: $%.0f\n\nRepairs: $%.0f",
+                                    styleData.estimated_annual_fuel_cost,
+                                    styleData.costs.repairs),
                             R.drawable.card_bgd0);
                     costsCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
@@ -283,7 +292,9 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                     CarInfoDetailsCard pricesCard = new CarInfoDetailsCard(
                             ListingDetails.this,
                             "Prices",
-                            "Edmund's True Market Value",
+                            String.format("Invoice: $%d\n\nMSRP: $%d",
+                                    styleData.prices.baseInvoice,
+                                    styleData.prices.baseMSRP),
                             R.drawable.card_bgd0);
 
                     pricesCard.setOnClickListener(new Card.OnCardClickListener() {
@@ -304,11 +315,13 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 }
             }
 
-            if (listing.equipment != null || listing.features != null || listing.options != null) {
+            if (listing.equipment != null && listing.features != null && listing.options != null) {
                 CarInfoDetailsCard equipmentCard = new CarInfoDetailsCard(
                         ListingDetails.this,
                         "Equipments",
-                        "Options, Features",
+                        String.format("%d Options\n\n%d Features",
+                                listing.options.size(),
+                                listing.features.size()),
                         R.drawable.card_bgd0
                 );
 
@@ -447,7 +460,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             i.putExtra(Constants.EXTRA_FRANCHISEID, listing.dealer.franchiseId);
             i.putExtra(Constants.EXTRA_DEALER_NAME, listing.dealer.name);
             String car_desc = String.format("%d %s %s\n%s\nStock Id %s\nVIN %s",
-                    listing.year.year, listing.make.name, listing.model.name, listing.style.name,
+                    listing.year.year, listing.make.name, listing.model.name, listing.style.trim,
                     listing.stockNumber,
                     listing.vin);
             i.putExtra(Constants.EXTRA_LISTINGS_CHAT_INFO, car_desc);
@@ -466,10 +479,27 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                        MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
-                                .content("Saved!")
-                                .positiveText("Got It!")
-                                .show();
+                        Toast.makeText(getApplicationContext(), listing.model.getName() + " saved in favorites!", Toast.LENGTH_SHORT).show();
+                        ParseSavedModels parseSavedModels = new ParseSavedModels();
+                        parseSavedModels.setStyleId(Integer.parseInt(listing.style.getId()));
+                        parseSavedModels.setModel(listing.model.getName());
+                        parseSavedModels.setHp(styleData.powertrain.engine.horsepower);
+                        parseSavedModels.setBodyType(styleData.bodyType);
+                        parseSavedModels.setRecallCnt(styleData.recalls.numberOfRecalls);
+                        parseSavedModels.setEndYr(styleData.year);
+                        parseSavedModels.setHwy(styleData.powertrain.mpg.highway);
+                        parseSavedModels.setTq(styleData.powertrain.engine.torque);
+                        parseSavedModels.setUser(ParseUser.getCurrentUser());
+                        parseSavedModels.saveInBackground();
+
+                        ParseSavedListings parseSavedListings = new ParseSavedListings();
+                        parseSavedListings.setStockNumber(listing.stockNumber);
+                        parseSavedListings.setUser(ParseUser.getCurrentUser());
+                        parseSavedListings.setMake(listing.make.name);
+                        parseSavedListings.setModel(listing.model.name);
+                        parseSavedListings.setTrim(listing.style.trim);
+                        parseSavedListings.setYear(listing.year.year);
+                        parseSavedListings.saveInBackground();
                     }
                 })
                 .onPositive(new MaterialDialog.SingleButtonCallback() {

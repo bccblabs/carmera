@@ -3,6 +3,7 @@ package carmera.io.carmera.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 /**
  * Created by bski on 1/22/16.
@@ -16,12 +17,12 @@ public class ParseSavedListings extends ParseObject {
         return ParseQuery.getQuery(ParseSavedListings.class);
     }
 
-    public void setUserId (String userId) {
-        put ("userId", userId);
+    public void setUser (ParseUser userId) {
+        put ("user", userId);
     }
 
-    public String getUserId () {
-        return getString ("userId");
+    public ParseUser getUser () {
+        return getParseUser("user");
     }
 
     public void franchiseId (String franchiseId) {
@@ -29,7 +30,7 @@ public class ParseSavedListings extends ParseObject {
     }
 
     public String getFranchiseId () {
-        return getString ("franchiseId");
+        return getString("franchiseId");
     }
 
     public void setStockNumber (String stockNumber) {
@@ -39,4 +40,41 @@ public class ParseSavedListings extends ParseObject {
     public String getStockNumber () {
         return getString ("stockNumber");
     }
+
+    public void setMake (String val) {
+        put ("make", val);
+    }
+
+    public String getMake () {
+        return getString("make");
+    }
+
+    public void setModel (String val) {
+        put ("model", val);
+    }
+
+    public String getModel () {
+        return getString("make");
+    }
+
+
+
+    public void setTrim (String val) {
+        put ("trim", val);
+    }
+
+    public String getTrim () {
+        return getString("trim");
+    }
+
+
+    public void setYear (Integer val) {
+        put ("year", val);
+    }
+
+    public Integer getYear () {
+        return getInt("year");
+    }
+
+
 }
