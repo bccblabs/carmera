@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredTwoLinesCard;
 import carmera.io.carmera.utils.Constants;
+import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -33,32 +34,51 @@ public class Ratings extends Fragment {
         ArrayList <Card> cards = new ArrayList<>();
 
         if (src_data.rating_fun_to_drive != null && src_data.rating_fun_to_drive > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_fun_to_drive), src_data.rating_fun_to_drive + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_fun_to_drive),
+                    Util.formatRating(src_data.rating_fun_to_drive) + " / 5",
+                    R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
         if (src_data.rating_build_quality != null && src_data.rating_build_quality > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_build_quality), src_data.rating_build_quality + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_build_quality),
+                    Util.formatRating(src_data.rating_build_quality) + " / 5",
+                    R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
         if (src_data.rating_comfort != null && src_data.rating_comfort > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_comfort), src_data.rating_comfort + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_comfort),
+                    Util.formatRating(src_data.rating_comfort) + " / 5", R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
         if (src_data.rating_performance != null && src_data.rating_performance > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_performance), src_data.rating_performance + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_performance),
+                    Util.formatRating(src_data.rating_performance) + " / 5", R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
         if (src_data.rating_reliability != null && src_data.rating_reliability > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_reliability), src_data.rating_reliability + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_reliability),
+                    Util.formatRating(src_data.rating_reliability) + " / 5",
+                    R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
         if (src_data.rating_int != null && src_data.rating_int > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_int), src_data.rating_int + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_int),
+                    Util.formatRating(src_data.rating_int) + " / 5",
+                    R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
 
         if (src_data.rating_ext != null && src_data.rating_ext > 0) {
-            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(), getString(R.string.rating_ext), src_data.rating_ext + " / 5", R.drawable.card_bgd0);
+            StaggeredTwoLinesCard StaggeredTwoLinesCard = new StaggeredTwoLinesCard(getActivity(),
+                    getString(R.string.rating_ext),
+                    Util.formatRating(src_data.rating_ext) + " / 5",
+                    R.drawable.card_bgd0);
             cards.add(StaggeredTwoLinesCard);
         }
 

@@ -34,7 +34,7 @@ public class RecallCard extends Card {
         }
         if (recall.numberOfVehiclesAffected != null) {
             TextView tv = (TextView) view.findViewById(R.id.vehicles_recalled);
-            tv.setText(recall.numberOfVehiclesAffected + " recalled");
+            tv.setText(Util.formatCurrency(recall.numberOfVehiclesAffected).replaceAll("\\$", "") + " recalled");
         }
         if (recall.recallNumber != null) {
             TextView tv  = (TextView) view.findViewById(R.id.recall_num);

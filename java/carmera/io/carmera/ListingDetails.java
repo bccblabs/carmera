@@ -274,12 +274,12 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             reviews_card.setCard(reviewsCard);
 
             if (styleData.estimated_annual_fuel_cost != null)
-                card_desc_string = String.format("Gas\n%.0f/YR\n\n", styleData.estimated_annual_fuel_cost);
+                card_desc_string = String.format("Gas\n%s/YR\n\n", Util.formatCurrency(styleData.estimated_annual_fuel_cost));
             else
                 card_desc_string = "Gas\nN/A\n\n";
 
             if (styleData.costs != null && styleData.costs.repairs != null && styleData.costs.repairs > 0)
-                card_desc_string += String.format("Repairs\n%.0f/YR", styleData.costs.repairs);
+                card_desc_string += String.format("Repairs\n%s/YR", Util.formatCurrency(styleData.costs.repairs));
             else
                 card_desc_string += "Repairs\nN/A";
             CarInfoDetailsCard costsCard = new CarInfoDetailsCard(

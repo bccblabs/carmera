@@ -16,6 +16,7 @@ import java.util.List;
 
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
+import carmera.io.carmera.cards.WatermelonCard;
 import carmera.io.carmera.models.car_data_subdocuments.DataEntryFloat;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
@@ -47,7 +48,7 @@ public class Dimensions extends Fragment {
         List<DataEntryFloat> dimensions = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_DIMENSIONS));
         for (int i = 0; i < dimensions.size(); i++) {
             DataEntryFloat dimension = dimensions.get(i);
-            cards.add(new CarInfoCard(cxt, dimension.getName(), String.format("%.1f cubic inches", dimension.getValue()), R.drawable.card_select0));
+            cards.add(new WatermelonCard(cxt, dimension.getName(), dimension.getValue(), R.drawable.card_select0));
         }
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;

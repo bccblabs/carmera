@@ -69,6 +69,11 @@ public class Util {
         return fmt.format(i.intValue()).replaceAll("\\.00", "");
     }
 
+    public static String formatRating (Number i) {
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        return fmt.format(i).replaceAll("\\$", "");
+    }
+
     public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
         if (c != null) {
             list.addAll(c);
