@@ -66,7 +66,7 @@ public class Util {
 
     public static String formatCurrency (Number i) {
         NumberFormat fmt = NumberFormat.getCurrencyInstance();
-        return fmt.format(i.intValue());
+        return fmt.format(i.intValue()).replaceAll("\\.00", "");
     }
 
     public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
@@ -88,7 +88,6 @@ public class Util {
         return -1;
     }
 
-
     public static void setSingleSpinnerSelection (Spinner spinner, ArrayAdapter<String> values, String value) {
         try {
             int pos = findPos(values, value);
@@ -98,6 +97,10 @@ public class Util {
         }
     }
 
-
-
+    public static String appendString (Object field, String originalString, String unit) {
+        if (field == null)
+            return originalString + "\nN/A " + unit;
+        else
+            return originalString + "\n" + field.toString() + " " + unit;
+    }
 }

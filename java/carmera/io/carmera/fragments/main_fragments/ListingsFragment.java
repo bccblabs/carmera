@@ -105,6 +105,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             dealers_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
             dealers_recycler.setHasFixedSize(true);
 
+            loading_container.setVisibility(View.GONE);
             emptyView.setVisibility(View.GONE);
             dealer_layout.setVisibility(View.VISIBLE);
         }
@@ -127,6 +128,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
                 if (ListingsFragment.this.isAdded()) {
                     listingsQuery = result.getListingsQuery();
                     if (result.listings == null ||  result.listings.size() < 1) {
+                        loading_container.setVisibility(View.VISIBLE);
                         spiceManager.execute(new DealershipsRequest(listingsQuery.car.makes.get(0),
                                              zipcode,
                                              radius),

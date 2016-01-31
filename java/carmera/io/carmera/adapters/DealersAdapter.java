@@ -46,10 +46,8 @@ public class DealersAdapter extends BetterRecyclerAdapter<DealerInfo, DealersAda
                 dealerInfo.getAddress().getCity(),
                 dealerInfo.getAddress().getStateName()));
 
-        viewHolder.sales_ratings.setRating(dealerInfo.getReviews().getSales().getOverallRating());
-        viewHolder.sales_ratings.setClickable(false);
-        viewHolder.service_ratings.setRating(dealerInfo.getReviews().getService().getOverallRating());
-        viewHolder.service_ratings.setClickable(false);
+        viewHolder.sales_ratings.setText(dealerInfo.getReviews().getSales().getOverallRating() + " / 5");
+        viewHolder.service_ratings.setText(dealerInfo.getReviews().getService().getOverallRating() + " / 5");
         try {
             viewHolder.call_dealer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,8 +70,8 @@ public class DealersAdapter extends BetterRecyclerAdapter<DealerInfo, DealersAda
 
         @Bind(R.id.dealer_name) public TextView dealer_name;
         @Bind(R.id.dealer_address) public TextView dealer_address;
-        @Bind(R.id.sales_ratings) public RatingBar sales_ratings;
-        @Bind(R.id.service_ratings) public RatingBar service_ratings;
+        @Bind(R.id.sales_ratings) public TextView sales_ratings;
+        @Bind(R.id.service_ratings) public TextView service_ratings;
         @Bind(R.id.call_dealer) public ButtonFlat call_dealer;
         public ViewHolder (View itemView) {
             super(itemView);

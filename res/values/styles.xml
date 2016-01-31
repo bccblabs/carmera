@@ -110,7 +110,8 @@
     <style name="entry_title" parent="listing_title">
         <item name="android:layout_gravity">top|start</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
     </style>
     <style name="entry_title_right" parent="listing_title">
         <item name="android:layout_gravity">top|end</item>

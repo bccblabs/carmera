@@ -67,8 +67,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
     @Bind (R.id.loading_view) View loading_view;
     @Bind (R.id.content) View content_container;
-    @Bind (R.id.listing_info_card)
-    CardViewNative listing_info_card;
+    @Bind (R.id.listing_info_card) CardViewNative listing_info_card;
     @Bind (R.id.specs_card) CardViewNative specs_card;
     @Bind (R.id.issues_card) CardViewNative issues_card;
     @Bind (R.id.reviews_card) CardViewNative reviews_card;
@@ -103,20 +102,6 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
         @Override
         public void setupInnerViewElements (ViewGroup parent, View view) {
             photos = (SliderLayout) parent.findViewById(R.id.listing_photos);
-//            dealer_address = (TextView) parent.findViewById(R.id.dealer_address);
-//            dealer_info = (TextView) parent.findViewById(R.id.dealer_name);
-//            if (listing.dealer.name != null ) {
-//                Util.setText(dealer_info, listing.dealer.name);
-//            }
-//            if (listing.dealer.getAddress() != null) {
-//                Util.setText(dealer_address,
-//                        String.format("%s\n%s, %s",
-//                                listing.dealer.getAddress().getStreet(),
-//                                listing.dealer.getAddress().getCity(),
-//                                listing.dealer.getAddress().getStateName()
-//                        )
-//                );
-//            }
             yr_mk_md = (TextView) parent.findViewById(R.id.year_make_model_trim);
             price = (TextView) parent.findViewById(R.id.price);
             mileage = (TextView) parent.findViewById(R.id.mileage);
@@ -168,6 +153,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
         @Override
         public void onRequestSuccess(final StyleData styleData) {
+            String card_desc_string = "";
             Log.i(getClass().getCanonicalName(), "styleId: " + styleData.styleId);
             ListingDetails.this.styleData = styleData;
             ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard(ListingDetails.this, styleData.images);
@@ -175,156 +161,196 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             listing_info_card.setCard(basic_info_card);
 
 
-            if (styleData.powertrain != null || styleData.dimensions != null) {
-                String line0 = null;
-                try {
-                    if (styleData.powertrain.engine.horsepower != null && styleData.powertrain.engine.torque != null)
-                        line0 = String.format("%d hp\n%d lb/ft\n\n%s", styleData.powertrain.engine.horsepower,
-                                styleData.powertrain.engine.torque, String.format("%d city\n%d hwy", styleData.powertrain.mpg.city, styleData.powertrain.mpg.highway));
-                    else
-                        line0 = styleData.powertrain.engine.desc;
+            if (styleData.powertrain != null) {
 
-                } catch (NullPointerException ne) {
-                    Log.w(this.getClass().getCanonicalName(), ne.getMessage());
+                if (styleData.powertrain.engine != null) {
+                    card_desc_string = Util.appendString(styleData.powertrain.engine.horsepower, card_desc_string, "HP");
+                    card_desc_string = Util.appendString(styleData.powertrain.engine.torque, card_desc_string, "LB/FT\n");
+                } else {
+                    card_desc_string = "N/A HP\nN/A LB/FT\n";
                 }
 
-                CarInfoDetailsCard specsCard = new CarInfoDetailsCard(
-                        ListingDetails.this,
-                        "Specs",
-                        line0,
-                        R.drawable.card_bgd0);
+                if (styleData.powertrain.mpg != null) {
+                    card_desc_string = Util.appendString(styleData.powertrain.mpg.city, card_desc_string, "CITY");
+                    card_desc_string = Util.appendString(styleData.powertrain.mpg.highway, card_desc_string, "HWY");
+                } else {
+                    card_desc_string = "N/A CITY\nN/A HWY";
+                }
+            } else {
+                card_desc_string = "N/A HP\nN/A LB/FT";
+                card_desc_string += "\n\nN/A CITY\nN/A HWY";
+            }
 
-                specsCard.setOnClickListener(new Card.OnCardClickListener() {
+            CarInfoDetailsCard specsCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Specs",
+                    card_desc_string,
+                    R.drawable.card_bgd0);
+            specsCard.setOnClickListener(new Card.OnCardClickListener() {
+                @Override
+                public void onClick(Card card, View view) {
+                    Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                    viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
+                    if (styleData.powertrain != null)
+                        viewer.putExtra(Constants.EXTRA_POWERTRAIN, Parcels.wrap(styleData.powertrain));
+                    if (styleData.dimensions != null)
+                        viewer.putExtra(Constants.EXTRA_DIMENSIONS, Parcels.wrap(styleData.dimensions));
+                    startActivity(viewer);
+                }
+            });
+
+            specs_card.setCard(specsCard);
+
+            if (styleData.recalls != null)
+                card_desc_string = Util.appendString(styleData.recalls.numberOfRecalls, "", "Recalls");
+            else
+                card_desc_string = "N/A Recalls";
+
+            if (styleData.complaints != null)
+                card_desc_string = Util.appendString(styleData.complaints.count, card_desc_string, "Issues\n");
+            else
+                card_desc_string += "\nN/A Issues\n";
+
+            if (styleData.safety != null && styleData.safety.equipments != null)
+                card_desc_string = Util.appendString(styleData.safety.equipments.size(), card_desc_string, "\nfeatures");
+            else
+                card_desc_string += "\nN/A\nfeatures";
+
+            CarInfoDetailsCard issuesCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Safety",
+                    card_desc_string,
+                    R.drawable.card_bgd0);
+
+            if (styleData.safety != null || styleData.recalls != null || styleData.complaints != null) {
+                issuesCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
                         Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
-                        if (styleData.powertrain != null)
-                            viewer.putExtra(Constants.EXTRA_POWERTRAIN, Parcels.wrap(styleData.powertrain));
-                        if (styleData.dimensions != null)
-                            viewer.putExtra(Constants.EXTRA_DIMENSIONS, Parcels.wrap(styleData.dimensions));
+                        if (styleData.safety != null)
+                            viewer.putExtra(Constants.EXTRA_SAFETY, Parcels.wrap(styleData.safety));
+                        if (styleData.recalls != null)
+                            viewer.putExtra(Constants.EXTRA_RECALLS, Parcels.wrap(styleData.recalls));
+                        if (styleData.complaints != null)
+                            viewer.putExtra(Constants.EXTRA_CMPL, Parcels.wrap(styleData.complaints));
                         startActivity(viewer);
                     }
                 });
-                specsCard.setCardElevation(8);
-                specs_card.setCard(specsCard);
+            }
+
+            issues_card.setCard(issuesCard);
+
+            if (styleData.reviews != null)
+                card_desc_string = String.format("%d\nEdmund's User Reviews", styleData.reviews.size());
+            else
+                card_desc_string = "N/A\nEdmund's User Reviews";
+
+            CarInfoDetailsCard reviewsCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Reviews",
+                    card_desc_string,
+                    R.drawable.card_bgd0);
+
+            if (styleData.reviews != null || styleData.ratings != null || styleData.improvements != null || styleData.favorites != null) {
+                reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
+                        if (styleData.reviews != null)
+                            viewer.putExtra(Constants.EXTRA_REVIEW, Parcels.wrap(styleData.reviews));
+                        if (styleData.ratings != null)
+                            viewer.putExtra(Constants.EXTRA_RATINGS, Parcels.wrap(styleData.ratings));
+                        if (styleData.improvements != null)
+                            viewer.putExtra(Constants.EXTRA_IMPR, Parcels.wrap(styleData.improvements));
+                        if (styleData.favorites != null)
+                            viewer.putExtra(Constants.EXTRA_FAV, Parcels.wrap(styleData.favorites));
+                        startActivity(viewer);
+                    }
+                });
+            }
+
+            reviews_card.setCard(reviewsCard);
+
+            if (styleData.estimated_annual_fuel_cost != null)
+                card_desc_string = String.format("Gas\n%.0f/YR\n\n", styleData.estimated_annual_fuel_cost);
+            else
+                card_desc_string = "Gas\nN/A\n\n";
+
+            if (styleData.costs != null && styleData.costs.repairs != null && styleData.costs.repairs > 0)
+                card_desc_string += String.format("Repairs\n%.0f/YR", styleData.costs.repairs);
+            else
+                card_desc_string += "Repairs\nN/A";
+            CarInfoDetailsCard costsCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Running Costs",
+                    card_desc_string,
+                    R.drawable.card_bgd0);
+            if (styleData.costs != null) {
+                costsCard.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
+                        if (styleData.costs != null)
+                            viewer.putExtra(Constants.EXTRA_COSTS, Parcels.wrap(styleData.costs));
+                        startActivity(viewer);
+                    }
+                });
+            }
+            costs_card.setCard(costsCard);
+
+            if (styleData.prices != null && styleData.prices.baseInvoice != null)
+                card_desc_string = String.format("Invoice\n%s\n", Util.formatCurrency(styleData.prices.baseInvoice));
+            else
+                card_desc_string = "Invoice\nN/A\n";
+
+            if (styleData.prices != null && styleData.prices.baseMSRP != null)
+                card_desc_string += String.format("\nMSRP\n%s", Util.formatCurrency(styleData.prices.baseMSRP));
+            else
+                card_desc_string += "\nMSRP\nN/A";
+
+            CarInfoDetailsCard pricesCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Prices",
+                    card_desc_string,
+                    R.drawable.card_bgd0);
+
+            if (styleData.prices != null) {
+                pricesCard.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
+                        viewer.putExtra(Constants.EXTRA_PRICES, Parcels.wrap(styleData.prices));
+                        startActivity(viewer);
+                    }
+                });
+            }
+            prices_card.setCard(pricesCard);
+
+
+            if (listing.options != null) {
+                card_desc_string = listing.options.size() + "\nOptions\n\n";
             } else {
-                specs_card.setVisibility(View.GONE);
+                card_desc_string = "N/A\nOptions\n\n";
             }
 
-            if (styleData.tags != null) {
-                List<String> costs = new ArrayList<>(Collections2.filter(styleData.tags, new CostsPredicate()));
-                List<String> reliability = new ArrayList<>(Collections2.filter(styleData.tags, new ReliabilityPredicate()));
-                List<String> review = new ArrayList<>(Collections2.filter(styleData.tags, new RatingsPredicate()));
-                if (reliability.size() > 0) {
-                    CarInfoDetailsCard issuesCard = new CarInfoDetailsCard(
-                            ListingDetails.this,
-                            "Safety",
-                            String.format("%d Recalls\n%d Issues\n\n%d Features",
-                                    styleData.recalls.numberOfRecalls,
-                                    styleData.complaints.count,
-                                    styleData.safety.equipments.size()),
-                            R.drawable.card_bgd0);
-                    issuesCard.setOnClickListener(new Card.OnCardClickListener() {
-                        @Override
-                        public void onClick(Card card, View view) {
-                            Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
-                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
-                            if (styleData.safety != null)
-                                viewer.putExtra(Constants.EXTRA_SAFETY, Parcels.wrap(styleData.safety));
-                            if (styleData.recalls != null)
-                                viewer.putExtra(Constants.EXTRA_RECALLS, Parcels.wrap(styleData.recalls));
-                            if (styleData.complaints != null)
-                                viewer.putExtra(Constants.EXTRA_CMPL, Parcels.wrap(styleData.complaints));
-                            startActivity(viewer);
-                        }
-                    });
-                    issues_card.setCard(issuesCard);
-                } else {
-                    issues_card.setVisibility(View.GONE);
-                }
-
-                if (review.size() > 0) {
-                    CarInfoDetailsCard reviewsCard = new CarInfoDetailsCard(
-                            ListingDetails.this,
-                            "Reviews",
-                            String.format("%d\n\nEdmund's User Review", styleData.reviews.size()),
-                            R.drawable.card_bgd0);
-                    reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
-                        @Override
-                        public void onClick(Card card, View view) {
-                            Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
-                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
-                            if (styleData.reviews != null)
-                                viewer.putExtra(Constants.EXTRA_REVIEW, Parcels.wrap(styleData.reviews));
-                            if (styleData.ratings != null)
-                                viewer.putExtra(Constants.EXTRA_RATINGS, Parcels.wrap(styleData.ratings));
-                            if (styleData.improvements != null)
-                                viewer.putExtra(Constants.EXTRA_IMPR, Parcels.wrap(styleData.improvements));
-                            if (styleData.favorites != null)
-                                viewer.putExtra(Constants.EXTRA_FAV, Parcels.wrap(styleData.favorites));
-                            startActivity(viewer);
-                        }
-                    });
-                    reviews_card.setCard(reviewsCard);
-                } else {
-                    reviews_card.setVisibility(View.GONE);
-                }
-
-                if (costs.size() > 0) {
-                    CarInfoDetailsCard costsCard = new CarInfoDetailsCard(
-                            ListingDetails.this,
-                            "Running Costs",
-                            String.format("Gas: $%.0f/YR\n\nRepairs: $%.0f/YR",
-                                    styleData.estimated_annual_fuel_cost,
-                                    styleData.costs.repairs),
-                            R.drawable.card_bgd0);
-                    costsCard.setOnClickListener(new Card.OnCardClickListener() {
-                        @Override
-                        public void onClick(Card card, View view) {
-                            Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
-                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
-                            if (styleData.costs != null)
-                                viewer.putExtra(Constants.EXTRA_COSTS, Parcels.wrap(styleData.costs));
-                            startActivity(viewer);
-                        }
-                    });
-                    CarInfoDetailsCard pricesCard = new CarInfoDetailsCard(
-                            ListingDetails.this,
-                            "Prices",
-                            String.format("Invoice: $%d\n\nMSRP: $%d",
-                                    styleData.prices.baseInvoice,
-                                    styleData.prices.baseMSRP),
-                            R.drawable.card_bgd0);
-
-                    pricesCard.setOnClickListener(new Card.OnCardClickListener() {
-                        @Override
-                        public void onClick(Card card, View view) {
-                            Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
-                            viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
-                            if (styleData.prices != null)
-                                viewer.putExtra(Constants.EXTRA_PRICES, Parcels.wrap(styleData.prices));
-                            startActivity(viewer);
-                        }
-                    });
-                    costs_card.setCard(costsCard);
-                    prices_card.setCard(pricesCard);
-                } else {
-                    costs_card.setVisibility(View.GONE);
-                    prices_card.setVisibility(View.GONE);
-                }
+            if (listing.features != null) {
+                card_desc_string += listing.features.size() + " Features";
+            } else {
+                card_desc_string += "N/A\nFeatures";
             }
 
-            if (listing.equipment != null && listing.features != null && listing.options != null) {
-                CarInfoDetailsCard equipmentCard = new CarInfoDetailsCard(
-                        ListingDetails.this,
-                        "Equipments",
-                        String.format("%d Options\n\n%d Features",
-                                listing.options.size(),
-                                listing.features.size()),
-                        R.drawable.card_bgd0
-                );
+            CarInfoDetailsCard equipmentCard = new CarInfoDetailsCard(
+                    ListingDetails.this,
+                    "Equipments",
+                    card_desc_string,
+                    R.drawable.card_bgd0
+            );
 
+            if (listing.options != null || listing.features != null || listing.equipment != null) {
                 equipmentCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
@@ -339,10 +365,10 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                         startActivity(viewer);
                     }
                 });
-                equipments_card.setCard(equipmentCard);
-            } else {
-                equipments_card.setVisibility(View.GONE);
+
             }
+
+            equipments_card.setCard(equipmentCard);
 //
 //            if (styleData.incentives != null && styleData.incentives.getCount() > 0) {
 //                String incentives_desc = String.format("%d Incentives available now", styleData.incentives.getCount());
@@ -362,7 +388,6 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 //                    }
 //                });
 //            }
-
             loading_view.setVisibility(View.GONE);
             content_container.setVisibility(View.VISIBLE);
         }
