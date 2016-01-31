@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -74,7 +73,7 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
             spinnerText = defaultText;
 
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
-                R.layout.textview_for_spinner,
+                R.layout.view_spinner_text,
                 new String[] { spinnerText });
         setAdapter(adapterSpinner);
         if(adapter != null)
@@ -89,8 +88,8 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
-        View view = inflater.inflate(R.layout.alert_dialog_listview_search, null),
-                title_view = inflater.inflate(R.layout.spinner_title, null);
+        View view = inflater.inflate(R.layout.dialog_listview_search, null),
+                title_view = inflater.inflate(R.layout.view_spinner_title, null);
         View search_view = view.findViewById(R.id.alertSearchEditText);
         search_view.setVisibility(View.GONE);
         builder.setView(view);
@@ -127,7 +126,7 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
         this.listener = listener;
 
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
-                R.layout.textview_for_spinner, new String[] { allText });
+                R.layout.view_spinner_text, new String[] { allText });
         setAdapter(adapterSpinner);
 
         if(position != -1)
@@ -177,7 +176,7 @@ public class MultiSpinner extends Spinner implements DialogInterface.OnMultiChoi
             if (convertView == null) {
 
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.alert_dialog_listview_search_subview, null);
+                convertView = inflater.inflate(R.layout.dialog_listview_search_subview, null);
                 holder.textView = (TextView) convertView.findViewById(R.id.alertTextView);
                 holder.checkBox = (CheckBox) convertView.findViewById(R.id.alertCheckbox);
 

@@ -20,7 +20,7 @@
             card:column_count_landscape="2"
             card:grid_paddingRight="1dp"
             card:grid_paddingLeft="1dp"
-            card:list_card_layout_resourceID="@layout/staggered_card"
+            card:list_card_layout_resourceID="@layout/card_staggered_layout"
             android:id="@+id/data_staggered_grid_view"/>
         <widgets.CanaroTextView
             android:visibility="gone"

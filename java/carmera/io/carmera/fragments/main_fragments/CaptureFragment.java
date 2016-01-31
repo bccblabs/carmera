@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.SeekBar;
+
 import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
@@ -30,7 +30,6 @@ import carmera.io.carmera.R;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
 import carmera.io.carmera.models.queries.ImageQuery;
 import carmera.io.carmera.utils.Constants;
-import carmera.io.carmera.widgets.VerticalSeekBar;
 
 /**
  * Created by bski on 6/2/15.
@@ -117,7 +116,7 @@ public class CaptureFragment extends MySupportCameraFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View cameraView = super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.capture, container, false);
+        View v = inflater.inflate(R.layout.fragment_capture, container, false);
         ButterKnife.bind(this, v);
         camera_preview.addView(cameraView);
         loading.setVisibility(View.INVISIBLE);

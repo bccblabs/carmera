@@ -17,6 +17,8 @@ public class CarQuery {
     @JsonProperty
     public List<String> makes = new ArrayList<>();
     @JsonProperty
+    public List<String> main_models = new ArrayList<>();
+    @JsonProperty
     public List<String> models = new ArrayList<>();
     @JsonProperty
     public List<String> bodyTypes = new ArrayList<>();
@@ -33,7 +35,7 @@ public class CarQuery {
     @JsonProperty
     public List<String> labels = new ArrayList<>();
     @JsonProperty
-    public List<Integer> years = new ArrayList<>();
+    public List<String> years = new ArrayList<>();
     @JsonProperty
     public List<String> tags = new ArrayList<>();
     @JsonProperty
@@ -44,8 +46,6 @@ public class CarQuery {
     public Integer minMpg = 0;
     @JsonProperty
     public Integer minYr = 2010;
-    @JsonProperty
-    public List<String> main_models = new ArrayList<>();
     @JsonProperty
     public String sortBy;
     @JsonProperty
@@ -150,11 +150,11 @@ public class CarQuery {
         this.labels = labels;
     }
 
-    public List<Integer> getYears() {
+    public List<String> getYears() {
         return years;
     }
 
-    public void setYears(List<Integer> years) {
+    public void setYears(List<String> years) {
         this.years = years;
     }
 

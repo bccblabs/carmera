@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -83,7 +82,7 @@ public class DataViewer extends AppCompatActivity {
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        setContentView(R.layout.data_viewer_layout);
+        setContentView(R.layout.activity_data_viewer);
         ButterKnife.bind(this);
         model_name.setText(getIntent().getStringExtra(Constants.EXTRA_MODEL_NAME));
 

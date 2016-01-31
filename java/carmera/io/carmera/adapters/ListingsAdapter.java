@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -22,7 +19,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.Listing;
-import carmera.io.carmera.models.ParseSavedModels;
 import carmera.io.carmera.models.listings_subdocuments.Link;
 import carmera.io.carmera.utils.Util;
 
@@ -34,7 +30,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
     private Context cxt;
     @Override
     public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listing_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_listing_item, parent, false);
         this.cxt = parent.getContext();
         return new ViewHolder(view);
     }
@@ -68,11 +64,10 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         try {
             List<Link> links = listing.getMedia().getPhotos().getLarge().getLinks();
             if (links.size() > 0) {
-                Picasso.with(cxt).load (links.get(0).getHref()).into(viewHolder.listingImage);
-                Log.i(this.getClass().getCanonicalName(), " image url: " + links.get(0).getHref());
+                Picasso.with(cxt).load (links.get(0).getHref()).fit().into(viewHolder.listingImage);
             }
         } catch (Exception e) {
-            viewHolder.listingImage.setVisibility(View.GONE);
+            viewHolder.image_layout.setVisibility(View.GONE);
         }
     }
 
@@ -83,6 +78,7 @@ public class ListingsAdapter extends BetterRecyclerAdapter<Listing, ListingsAdap
         @Bind(R.id.listing_photo) public ImageView listingImage;
         @Bind(R.id.listing_price) public TextView price;
         @Bind(R.id.listing_mileage) public TextView mileage;
+        @Bind(R.id.image_layout) public View image_layout;
         public ViewHolder (View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

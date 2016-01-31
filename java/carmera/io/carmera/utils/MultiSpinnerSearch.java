@@ -8,13 +8,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -22,8 +20,6 @@ import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +63,7 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
         else
             spinnerText = defaultText;
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
-                R.layout.textview_for_spinner,
+                R.layout.view_spinner_text,
                 new String[] { spinnerText });
         setAdapter(adapterSpinner);
         if(adapter != null)
@@ -79,8 +75,8 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
     public boolean performClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        View view = inflater.inflate(R.layout.alert_dialog_listview_search, null),
-             title_view = inflater.inflate(R.layout.spinner_title, null);
+        View view = inflater.inflate(R.layout.dialog_listview_search, null),
+             title_view = inflater.inflate(R.layout.view_spinner_title, null);
         builder.setView(view);
         builder.setCustomTitle(title_view);
 
@@ -117,7 +113,7 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
         this.defaultText = allText;
         this.listener = listener;
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(),
-                R.layout.textview_for_spinner,
+                R.layout.view_spinner_text,
                 new String[] { defaultText });
         setAdapter(adapterSpinner);
 
@@ -171,7 +167,7 @@ public class MultiSpinnerSearch extends Spinner implements DialogInterface.OnCan
             if (convertView == null) {
 
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.alert_dialog_listview_search_subview, null);
+                convertView = inflater.inflate(R.layout.dialog_listview_search_subview, null);
                 holder.textView = (TextView) convertView.findViewById(R.id.alertTextView);
                 holder.checkBox = (CheckBox) convertView.findViewById(R.id.alertCheckbox);
 

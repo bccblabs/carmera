@@ -5,7 +5,7 @@
         <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="preferenceTheme">@style/CarmeraTheme.PreferenceStyle</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>tags
+    </style>
     <style name="CarmeraTheme.PreferenceStyle" parent="@style/PreferenceThemeOverlay">
         <item name="android:textColorPrimary">@android:color/darker_gray</item>
     </style>
@@ -104,15 +104,12 @@
         <item name="android:textSize">16sp</item>
         <item name="android:layout_margin">10dp</item>
     </style>
-    <style name="listing_title_blue" parent="listing_title">
-        <item name="android:textColor">@color/default_blue</item>
-    </style>
     <style name="listing_title_small" parent="listing_title">
         <item name="android:layout_gravity">top|start</item>
     </style>
     <style name="entry_title" parent="listing_title">
         <item name="android:layout_gravity">top|start</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
     <style name="entry_title_right" parent="listing_title">
@@ -192,21 +189,6 @@
         <item name="android:minHeight">20dp</item>
     </style>
 
-    <style name="cardwithlist">
-        <item name="android:layout_marginTop">@dimen/card_base_cardwithlist_list_margin_top</item>
-        <item name="android:layout_marginLeft">@dimen/card_base_cardwithlist_list_margin_left</item>
-        <item name="android:divider">@color/card_native_base_cardwithlist_divider_color</item>
-        <item name="android:showDividers">middle</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/default_blue</item>
-    </style>
-
-    <style name="menu_labels_style">
-        <item name="android:background">@drawable/ic_stars_white_24dp</item>
-        <item name="android:textColor">@color/card_pressed</item>
-    </style>
-
 
     <style name="search_card_view" parent="@style/grid_card">
         <item name="android:layout_width">wrap_content</item>
@@ -249,24 +231,6 @@
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
-    <style name="LightSpinnerItem" parent="Material.Drawable.Ripple.Wave">
-        <item name="rd_rippleColor">@color/colorPrimaryHalf</item>
-        <item name="rd_rippleAnimDuration">300</item>
-        <item name="rd_maskType">rectangle</item>
-        <item name="rd_cornerRadius">0dp</item>
-        <item name="rd_delayClick">afterRelease</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:textColor">@color/abc_primary_text_material_light</item>
-    </style>
-    <style name="DarkSpinnerItem" parent="Material.Drawable.Ripple.Wave">
-        <item name="rd_rippleColor">@color/colorAccentHalf</item>
-        <item name="rd_rippleAnimDuration">300</item>
-        <item name="rd_maskType">rectangle</item>
-        <item name="rd_cornerRadius">0dp</item>
-        <item name="rd_delayClick">afterRelease</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
-    </style>
     <style name="filter_main_text">
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -282,6 +246,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:spinnerMode">dialog</item>
     </style>
 
     <style name="filter_single_spinner_textview">
@@ -348,5 +313,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/indigo</item>
+        <item name="colorControlActivated">@color/pink</item>
     </style>
 </resources>

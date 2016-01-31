@@ -25,7 +25,7 @@
     <string name="bodyType_title">Body Type</string>
     <string name="type_to_search">Type to Search</string>
     <string name="back_to_camera">Back to Camera</string>
-    <string name="powertrain_search">Powertrain</string>
+    <string name="powertrain_search">Specs</string>
     <string name="hp_desc">Horsepower</string>
     <string name="tq_desc">Torque</string>
     <string name="fuel_consumption_desc">Fuel Consumption</string>
@@ -263,7 +263,6 @@
     <string name="staggered">Filters</string>
 
     <string name="add_to_search">Add</string>
-    <string name="see_all">See All</string>
     <string name="search_hint">Enter Car Name Here</string>
 
     <string name="min_mpg">Min MPG</string>
@@ -276,7 +275,8 @@
     <string name="models">Models</string>
     <string name="dealership">Dealership</string>
     <string name="call">Call</string>
-    <string name="save_all">Save All</string>
+    <string name="save_search">Save Search</string>
+    <string name="see_all_models">All Models</string>
     <string name="save">Save</string>
     <string name="sort_by">Sort By</string>
     <string name="efficient">40 MPG+ HWY</string>
@@ -292,11 +292,18 @@
     <string name="listings_fav">FAV</string>
     <string name="home">Home</string>
     <string name="imports">Imports</string>
-    <string name="quick_search">Quick Search</string>
+    <string name="quick_search">Sort By</string>
     <string name="cost_saver">Cost Saver</string>
     <string name="japanese_search">Japanese</string>
     <string name="most_efficient">Most Efficient</string>
     <string name="most_hp">Most Horsepower</string>
     <string name="most_spacious">Most Spacious</string>
     <string name="most_torque">Most Torque</string>
+
+    <string name="service_ratings">Service Ratings</string>
+    <string name="sales_ratings">Sales Ratings</string>
+    <string name="keywords">Keywords</string>
+    <string name="no_listings_request_dealers">Please ask dealers below</string>
+    <string name="high_hp">400+ HP</string>
+    <string name="seven_seats">7+ Seats</string>
 </resources>

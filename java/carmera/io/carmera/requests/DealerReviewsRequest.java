@@ -1,7 +1,5 @@
 package carmera.io.carmera.requests;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.octo.android.robospice.request.okhttp.OkHttpSpiceRequest;
 import com.squareup.okhttp.OkHttpClient;

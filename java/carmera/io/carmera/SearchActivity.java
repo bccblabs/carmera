@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,10 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.gc.materialdesign.views.ButtonFlat;
-import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -24,10 +21,11 @@ import java.util.Arrays;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import carmera.io.carmera.adapters.DealersAdapter;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
-import carmera.io.carmera.fragments.search_fragments.FilterFragment;
-import carmera.io.carmera.fragments.search_fragments.SearchContainer;
+import carmera.io.carmera.fragments.search_fragments.CarFilterFragment;
+import carmera.io.carmera.fragments.search_fragments.SearchContainerFragment;
 import carmera.io.carmera.listeners.OnEditBodyTypes;
 import carmera.io.carmera.listeners.OnEditCompressors;
 import carmera.io.carmera.listeners.OnEditCylinders;
@@ -41,6 +39,7 @@ import carmera.io.carmera.listeners.OnEditTorque;
 import carmera.io.carmera.listeners.OnEditTransmission;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
+import carmera.io.carmera.models.Dealers;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ImageQuery;
@@ -71,7 +70,7 @@ public class SearchActivity extends AppCompatActivity implements
     private ListingsQuery listingsQuery = new ListingsQuery();
 
     @Bind (R.id.fab_toolbar) View fab_toolbar;
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind (R.id.toolbar) Toolbar toolbar;
     @Bind (R.id.loading) View loading;
     @Bind (R.id.search_title) TextView search_title;
 
@@ -82,7 +81,6 @@ public class SearchActivity extends AppCompatActivity implements
     private String server_address;
 
     private SharedPreferences sharedPreferences;
-
 
     private final class ListingsRequestListener implements RequestListener<Listings> {
         @Override
@@ -103,35 +101,7 @@ public class SearchActivity extends AppCompatActivity implements
                 listingsFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, listingsFragment)
-                        .addToBackStack("lisings_fragment")
                         .commitAllowingStateLoss();
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
-    }
-
-    private final class NoHistListingsRequestListener implements RequestListener<Listings> {
-        @Override
-        public void onRequestFailure (SpiceException spiceException) {
-            listingsQuery = new ListingsQuery();
-            SearchActivity.this.loading.setVisibility(View.GONE);
-            search_title.setText("0 listings");
-        }
-        @Override
-        public void onRequestSuccess(Listings result) {
-            try {
-                SearchActivity.this.fab_toolbar.setVisibility(View.GONE);
-                SearchActivity.this.loading.setVisibility(View.GONE);
-                search_title.setText(result.getListings().size() + " listings");
-                listingsFragment = ListingsFragment.newInstance();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.EXTRA_LISTINGS_DATA, Parcels.wrap(Listings.class, result));
-                listingsFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, listingsFragment)
-                        .commitAllowingStateLoss();
-
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -141,7 +111,7 @@ public class SearchActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base);
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         server_address = sharedPreferences.getString("pref_key_server_addr", Constants.ServerAddr).trim();
@@ -161,12 +131,12 @@ public class SearchActivity extends AppCompatActivity implements
                 search_title.setText(model_name);
             fab_toolbar.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
-            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new NoHistListingsRequestListener());
+            spiceManager.execute(new ListingsRequest(listingsQuery, server_address), new ListingsRequestListener());
         } else {
             search_title.setText(getResources().getString(R.string.search));
             this.listingsQuery = new ListingsQuery();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, SearchContainer.newInstance())
+                    .replace(R.id.content_frame, SearchContainerFragment.newInstance())
                     .commit();
         }
 
@@ -195,7 +165,6 @@ public class SearchActivity extends AppCompatActivity implements
 
     @Override
     public void OnCameraResult (ImageQuery imageQuery) {
-
         spiceManager.execute(new ClassifyRequest(imageQuery, server_address), new ListingsRequestListener());
     }
 
@@ -222,7 +191,6 @@ public class SearchActivity extends AppCompatActivity implements
     @Override
     public void OnEditMakesCallback (String[] val) {
         this.listingsQuery.car.makes.addAll(Arrays.asList(val));
-        Log.i(TAG, "On Edit Makes: " + new Gson().toJson(this.listingsQuery.car));
     }
 
     @Override
@@ -248,7 +216,6 @@ public class SearchActivity extends AppCompatActivity implements
     @Override
     public void OnEditTagCallback (String val) {
         this.listingsQuery.car.tags.add(val);
-
     }
 
     @Override
@@ -279,7 +246,6 @@ public class SearchActivity extends AppCompatActivity implements
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
         this.listingsQuery = listingsQuery;
-        Log.i (TAG, "On Research Callback: " + new Gson().toJson(this.listingsQuery.car));
         Intent i = new Intent(this, MakesSearchActivity.class);
         i.putExtra(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, this.listingsQuery));
         startActivityForResult(i, 1);
@@ -287,15 +253,12 @@ public class SearchActivity extends AppCompatActivity implements
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
+        CarFilterFragment filterFragment = CarFilterFragment.newInstance();
         Bundle args = new Bundle();
-        listingsQuery.num_matching_models = 10;
-        listingsQuery.num_matching_listings = 10;
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         filterFragment.setArguments(args);
         filterFragment.show(getSupportFragmentManager(), "filter_dialog");
     }
-
 
     @OnClick (R.id.clear_btn)
     void onClear () {

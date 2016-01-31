@@ -23,7 +23,7 @@ public class TagsCard extends Card {
     protected TextView desc0_tv, desc1_tv;
 
     public TagsCard (Context cxt, @Nullable List<String> tags, String desc0, @Nullable String desc1, int background) {
-        super (cxt, R.layout.tags_card_content);
+        super (cxt, R.layout.card_tags_content);
         this.tags = tags;
         this.BgdResId = background;
         this.desc0 = desc0;

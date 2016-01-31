@@ -16,8 +16,13 @@ package carmera.io.carmera.utils;
  * limitations under the License.
  */
 
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.rey.material.widget.Spinner;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,5 +79,25 @@ public class Util {
         if (value > 0)
             list.add(value.toString() + "+" + unit);
     }
+
+    public static int findPos (ArrayAdapter<String> adapter, String item) {
+        for (Integer i = 0; i < adapter.getCount(); i++) {
+            if (item.equals(adapter.getItem(i)))
+                return i;
+        }
+        return -1;
+    }
+
+
+    public static void setSingleSpinnerSelection (Spinner spinner, ArrayAdapter<String> values, String value) {
+        try {
+            int pos = findPos(values, value);
+            spinner.setSelection(pos);
+        } catch (Exception e) {
+            spinner.setSelection(0);
+        }
+    }
+
+
 
 }

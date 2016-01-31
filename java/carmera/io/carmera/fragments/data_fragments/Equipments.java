@@ -38,7 +38,7 @@ public class Equipments extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate (R.layout.cards_recycler, container, false);
+        View v = inflater.inflate (R.layout.layout_cards_recycler, container, false);
         CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         Context cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);

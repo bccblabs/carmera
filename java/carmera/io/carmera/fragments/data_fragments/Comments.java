@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.StaggeredCardSingleLine;
+import carmera.io.carmera.cards.StaggeredSingleLineCard;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
@@ -37,7 +37,7 @@ public class Comments extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cards_recycler, container, false);
+        View v = inflater.inflate(R.layout.layout_cards_recycler, container, false);
         Context cxt = getActivity();
         CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         cardRecyclerView.setHasFixedSize(true);
@@ -51,7 +51,7 @@ public class Comments extends Fragment {
 
         for (int i = 0; i < comments.size(); i++) {
             String txt = comments.get(i);
-            cards.add(new StaggeredCardSingleLine(cxt, txt, R.drawable.card_select0));
+            cards.add(new StaggeredSingleLineCard(cxt, txt, R.drawable.card_select0));
         }
         cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));
         return v;

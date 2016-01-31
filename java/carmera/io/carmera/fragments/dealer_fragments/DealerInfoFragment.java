@@ -23,10 +23,9 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
-import carmera.io.carmera.cards.CompositeHeader;import carmera.io.carmera.requests.DealershipRequest;
+import carmera.io.carmera.requests.DealershipRequest;
 import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 11/30/15.
@@ -80,7 +79,7 @@ public class DealerInfoFragment extends Fragment {
                             dealerInfo.getAsJsonObject("operations").get("Sunday").getAsString()
                     );
 
-                    CarInfoCard operationsCard = new CarInfoCard(cxt, operations, null, R.drawable.card_bgd2);
+                    CarInfoCard operationsCard = new CarInfoCard(cxt, operations, null, R.drawable.card_bgd0);
 
                     dealer_ops_card.setCard(operationsCard);
 
@@ -114,7 +113,7 @@ public class DealerInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate (R.layout.dealer_info, container, false);
+        View v = inflater.inflate (R.layout.fragment_dealer_info, container, false);
         ButterKnife.bind(this, v);
         cxt = getActivity();
         return v;

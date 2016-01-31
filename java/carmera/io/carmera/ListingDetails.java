@@ -17,12 +17,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.google.gson.Gson;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -59,7 +57,6 @@ import carmera.io.carmera.requests.StyleDataRequest;
 import carmera.io.carmera.utils.Constants;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.view.CardView;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
 /**
@@ -99,7 +96,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
         protected List<String> stock_images;
 
         public ListingsBasicInfoCard (Context context, List<String> stock_photos) {
-           super(context, R.layout.listings_basic_info_card_content);
+           super(context, R.layout.card_listings_basic_info_content);
             this.stock_images = stock_photos;
         }
 
@@ -223,7 +220,10 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                     CarInfoDetailsCard issuesCard = new CarInfoDetailsCard(
                             ListingDetails.this,
                             "Safety",
-                            String.format("Ratings\n%d Recalls\n%d Issues", styleData.recalls.numberOfRecalls, styleData.complaints.count),
+                            String.format("%d Recalls\n%d Issues\n\n%d Features",
+                                    styleData.recalls.numberOfRecalls,
+                                    styleData.complaints.count,
+                                    styleData.safety.equipments.size()),
                             R.drawable.card_bgd0);
                     issuesCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
@@ -248,7 +248,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                     CarInfoDetailsCard reviewsCard = new CarInfoDetailsCard(
                             ListingDetails.this,
                             "Reviews",
-                            "Edmund's User Reviews",
+                            String.format("%d\n\nEdmund's User Review", styleData.reviews.size()),
                             R.drawable.card_bgd0);
                     reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
                         @Override
@@ -274,8 +274,8 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 if (costs.size() > 0) {
                     CarInfoDetailsCard costsCard = new CarInfoDetailsCard(
                             ListingDetails.this,
-                            "Running Costs Per Year",
-                            String.format("Gas: $%.0f\n\nRepairs: $%.0f",
+                            "Running Costs",
+                            String.format("Gas: $%.0f/YR\n\nRepairs: $%.0f/YR",
                                     styleData.estimated_annual_fuel_cost,
                                     styleData.costs.repairs),
                             R.drawable.card_bgd0);
@@ -371,7 +371,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listing_details);
+        setContentView(R.layout.activity_listing_details);
         ButterKnife.bind(this);
 
 

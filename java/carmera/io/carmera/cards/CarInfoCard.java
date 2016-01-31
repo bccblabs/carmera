@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import carmera.io.carmera.R;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by bski on 11/12/15.
@@ -22,7 +19,7 @@ public class CarInfoCard extends Card {
     protected TextView desc0_tv, desc1_tv;
 
     public CarInfoCard (Context cxt, String desc0, @Nullable String desc1, int background) {
-        super (cxt, R.layout.tags_card_content);
+        super (cxt, R.layout.card_tags_content);
         this.BgdResId = background;
         this.desc0 = desc0;
         this.desc1 = desc1;

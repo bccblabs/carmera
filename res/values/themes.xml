@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="spinner_item">
-        <item>@style/LightSpinnerItem</item>
-        <item>@style/DarkSpinnerItem</item>
     </array>
 </resources>

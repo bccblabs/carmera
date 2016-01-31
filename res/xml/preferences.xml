@@ -29,6 +29,5 @@
         <EditTextPreference
             android:key="pref_key_email"
             android:title="@string/pref_key_email"/>
-
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,18 +1,11 @@
 package carmera.io.carmera.requests;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.octo.android.robospice.request.okhttp.OkHttpSpiceRequest;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import carmera.io.carmera.models.listings_subdocuments.Dealer;
-import carmera.io.carmera.models.listings_subdocuments.DealerDetails;
 import carmera.io.carmera.utils.Constants;
 
 /**

@@ -1,18 +1,14 @@
 package carmera.io.carmera.cards;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.List;
 
 import carmera.io.carmera.R;
 import carmera.io.carmera.models.car_data_subdocuments.Recall;
 import carmera.io.carmera.utils.Util;
 import it.gmariotti.cardslib.library.internal.Card;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by bski on 11/12/15.
@@ -22,7 +18,7 @@ public class RecallCard extends Card {
     private Recall recall;
 
     public RecallCard (Context cxt, Recall recall, int background) {
-        super (cxt, R.layout.recall_card);
+        super (cxt, R.layout.card_recall_layout);
         this.recall = recall;
         this.BgdResId = background;
     }
@@ -32,6 +28,14 @@ public class RecallCard extends Card {
         if (view == null)
             return;
         this.setBackgroundResourceId(BgdResId);
+        if (recall.component != null) {
+            TextView tv = (TextView) view.findViewById(R.id.component_name);
+            tv.setText(recall.component);
+        }
+        if (recall.numberOfVehiclesAffected != null) {
+            TextView tv = (TextView) view.findViewById(R.id.vehicles_recalled);
+            tv.setText(recall.numberOfVehiclesAffected + " recalled");
+        }
         if (recall.recallNumber != null) {
             TextView tv  = (TextView) view.findViewById(R.id.recall_num);
             tv.setText(recall.recallNumber);

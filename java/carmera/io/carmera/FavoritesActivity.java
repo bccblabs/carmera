@@ -22,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.favorites_fragments.SavedModelsFragment;
 import carmera.io.carmera.fragments.favorites_fragments.SavedSearchFragment;
-import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.utils.Constants;
 
 /**
@@ -37,7 +36,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        setContentView(R.layout.data_viewer_layout);
+        setContentView(R.layout.activity_data_viewer);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

@@ -11,6 +11,7 @@ public class Constants {
     public final static String DealerReviewsEndPoint = "http://api.edmunds.com/v1/api/drrrepository/getdrrbydealerid";
     public final static String VehicleInfoEndPoint = "/vehicle_info";
     public final static String FranchiseEndPoint = "/dealerListings";
+    public final static String FranchiseSeachEndPoint="http://api.edmunds.com/api/dealer/v2/franchises/";
     public final static String NarrowSearchEndPoint = "/narrowSearch";
     public final static String LeadEndPoint = "/lead";
     public final static String MakesEndPoint = "/makes";

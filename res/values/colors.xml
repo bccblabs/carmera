@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="alpina">#124888</color>
-    <color name="russo">#CC0000</color>
-    <color name="f_accent">#595854</color>
-    <color name="guillotine_background">#FFFFFF</color>
-    <color name="guillotine_background_dark">@color/black50</color>
+    <color name="russo">#455A64</color>
+    <color name="indigo">#4b0082</color>
+    <color name="blue_grey">#607D8B</color>
+    <color name="pink">#FFC0CB</color>
     <color name="selected_item_color">#30d1d5</color>
     <color name="transparent">#00000000</color>
     <color name="black">#FF000000</color>
@@ -13,68 +12,4 @@
     <color name="medium_text_disabled">#4D000000</color>
     <color name="floating_background_dark">#23000000</color>
     <color name="search_background_dark">#53000000</color>
-
-    <color name="default_blue">#ff33b5e5</color>
-    <color name="demoextra_card_background_color1">#FFBB33</color>
-    <color name="demoextra_card_background_color2">#98CC00</color>
-    <color name="demoextra_card_background_color3">#A966CC</color>
-    <color name="demoextra_card_background_color4">#33B4E4</color>
-    <color name="demoextra_card_background_color5">#FF4343</color>
-    <color name="demoextra_card_background_color6">#A11143</color>
-
-
-    <color name="demo_2way_yellow_transparent">#ccba68c8</color>
-    <color name="demo_2way_green_transparent">#bb8bc34a</color>
-    <color name="demo_2way_blue_transparent">#bb7986cb</color>
-    <color name="demo_2way_red_transparent">#bbf36c60</color>
-
-
-    <color name="primary">#8BC34A</color>
-    <color name="primaryDark">#689F38</color>
-
-
-
-    <color name="username0">#e21400</color>
-    <color name="username1">#91580f</color>
-    <color name="username2">#f8a700</color>
-    <color name="username3">#f78b00</color>
-    <color name="username4">#58dc00</color>
-    <color name="username5">#287b00</color>
-    <color name="username6">#a8f07a</color>
-    <color name="username7">#4ae8c4</color>
-    <color name="username8">#3b88eb</color>
-    <color name="username9">#3824aa</color>
-    <color name="username10">#a700ff</color>
-    <color name="username11">#d300e7</color>
-
-    <array name="username_colors">
-        <item>@color/username0</item>
-        <item>@color/username1</item>
-        <item>@color/username2</item>
-        <item>@color/username3</item>
-        <item>@color/username4</item>
-        <item>@color/username5</item>
-        <item>@color/username6</item>
-        <item>@color/username7</item>
-        <item>@color/username8</item>
-        <item>@color/username9</item>
-        <item>@color/username10</item>
-        <item>@color/username11</item>
-    </array>
-
-
-
-    <color name="btn_default_light_normal">#00000000</color>
-    <color name="btn_default_light_pressed">#40ffffff</color>
-    <color name="btn_send_normal">#02c754</color>
-    <color name="btn_send_pressed">#006633</color>
-    <color name="btn_default_shadow">#99000000</color>
-    <color name="btn_context_menu_normal">#ffffff</color>
-    <color name="btn_context_menu_pressed">#40000000</color>
-    <color name="btn_context_menu_text_red">#ffff0000</color>
-
-    <color name="colorControlNormal">#FF78909C</color>
-    <color name="colorAccent">#FF00E5FF</color>
-    <color name="colorPrimaryHalf">#9003A9F4</color>
-    <color name="colorAccentHalf">#9000E5FF</color>
 </resources>

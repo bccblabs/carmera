@@ -24,7 +24,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoCard;
-import carmera.io.carmera.cards.CompositeHeader;
 import carmera.io.carmera.models.car_data_subdocuments.SalesReviews;
 import carmera.io.carmera.requests.DealerReviewsRequest;
 import carmera.io.carmera.utils.Constants;
@@ -63,14 +62,14 @@ public class DealerReviews extends Fragment {
                     if (salesReviews != null) {
                         for (int i = 0; i < salesReviews.size(); i++) {
                             SalesReviews txt = salesReviews.get(i);
-                            CompositeHeader hdr = new CompositeHeader(cxt,
-                                    String.format("Rating %.1f/5", txt.totalRating),
-                                    null, txt.date);
-
+//                            CompositeHeader hdr = new CompositeHeader(cxt,
+//                                    String.format("Rating %.1f/5", txt.totalRating),
+//                                    null, txt.date);
+//
                                 CarInfoCard card = new CarInfoCard(cxt, txt.title,
                                                                         txt.reviewBody,
                                                                         R.drawable.card_select0);
-                                card.addCardHeader(hdr);
+//                                card.addCardHeader(hdr);
                                 cards.add(card);
                         }
 
@@ -97,7 +96,7 @@ public class DealerReviews extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,   @Nullable ViewGroup container,
                                                         @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dealer_reviews, container, false);
+        View v = inflater.inflate(R.layout.fragment_dealer_reviews, container, false);
         ButterKnife.bind(this, v);
         cxt = getActivity();
         cardRecyclerView.setHasFixedSize(true);

@@ -16,7 +16,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.CompositeHeader;
 import carmera.io.carmera.cards.RecallCard;
 import carmera.io.carmera.models.car_data_subdocuments.Recall;
 import carmera.io.carmera.utils.Constants;
@@ -41,7 +40,7 @@ public class Recalls extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.cards_recycler, container, false);
+        View v = inflater.inflate(R.layout.layout_cards_recycler, container, false);
         ButterKnife.bind(this, v);
         CardRecyclerView cardRecyclerView = (CardRecyclerView) v.findViewById(R.id.cards_recycler);
         cardRecyclerView.setHasFixedSize(true);
@@ -55,11 +54,6 @@ public class Recalls extends Fragment {
         if (recalls_list != null) {
             for (int i = 0; i < recalls_list.size(); i++) {
                 RecallCard recallCard = new RecallCard(cxt, recalls_list.get(i), R.drawable.card_select0);
-                CompositeHeader hdr = new CompositeHeader (cxt,
-                        recalls_list.get(i).component + " recall",
-                        recalls_list.get(i).numberOfVehiclesAffected + " cars affected",
-                        null);
-                recallCard.addCardHeader(hdr);
                 cards.add(recallCard);
             }
             cardRecyclerView.setAdapter(new CardArrayRecyclerViewAdapter(cxt, cards));

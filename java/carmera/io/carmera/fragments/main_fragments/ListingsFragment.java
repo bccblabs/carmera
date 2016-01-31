@@ -1,5 +1,6 @@
 package carmera.io.carmera.fragments.main_fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -25,13 +26,16 @@ import butterknife.OnClick;
 import carmera.io.carmera.ListingDetails;
 import carmera.io.carmera.R;
 import carmera.io.carmera.adapters.BetterRecyclerAdapter;
+import carmera.io.carmera.adapters.DealersAdapter;
 import carmera.io.carmera.adapters.ListingsAdapter;
-import carmera.io.carmera.fragments.search_fragments.FilterFragment;
+import carmera.io.carmera.fragments.search_fragments.ListingsFilterFragment;
 import carmera.io.carmera.listeners.OnResearchListener;
+import carmera.io.carmera.models.Dealers;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ApiQuery;
+import carmera.io.carmera.requests.DealershipsRequest;
 import carmera.io.carmera.requests.FranchiseListings;
 import carmera.io.carmera.requests.ListingsRequest;
 import carmera.io.carmera.utils.Constants;
@@ -45,30 +49,33 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
 
 
     private ListingsAdapter listingsAdapter;
+    private DealersAdapter dealersAdapter;
+
     private String TAG = getClass().getCanonicalName();
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private ListingsQuery listingsQuery;
-    private String server_address;
+    private String server_address, zipcode, radius;
 
-    @Bind(R.id.loading_container) public View loading_container;
-    @Bind(R.id.listings_recylcer) public RecyclerView listings_recycler;
+    private ScrollingLinearLayoutManager scrollingLinearLayoutManager;
+
+    @Bind (R.id.loading_container) public View loading_container;
+    @Bind (R.id.listings_recylcer) public RecyclerView listings_recycler;
+    @Bind (R.id.dealers_recycler) public RecyclerView dealers_recycler;
+    @Bind (R.id.dealer_layout) public View dealer_layout;
 
     @Bind (R.id.fab_toolbar) View fab_toolbar;
     @Bind (R.id.emptyview) View emptyView;
 
     @OnClick(R.id.ic_filter)
     public void onFilter () {
-        FilterFragment filterFragment = FilterFragment.newInstance();
+        ListingsFilterFragment filterFragment = ListingsFilterFragment.newInstance();
         Log.i(this.getClass().getCanonicalName(), new Gson().toJson(listingsQuery, ListingsQuery.class));
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, listingsQuery));
         filterFragment.setArguments(args);
         filterFragment.setTargetFragment(this, 0);
-        filterFragment.show(getChildFragmentManager(), "filter_dialog");
+        filterFragment.show(getChildFragmentManager(), "listings_filter_dialog");
     }
-
-
-
 
     @Override
     public void onResearchCallback (ListingsQuery listingsQuery) {
@@ -82,37 +89,57 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             spiceManager.execute(new FranchiseListings(listingsQuery, server_address), new ListingsRequestListener());
     }
 
-    private final class ListingsRequestListener implements RequestListener<Listings> {
+    private final class DealershipsRequestListener implements RequestListener<Dealers> {
         @Override
         public void onRequestFailure (SpiceException spiceException) {
             loading_container.setVisibility(View.INVISIBLE);
             emptyView.setVisibility(View.VISIBLE);
+        }
+        @Override
+        public void onRequestSuccess (Dealers result) {
+            dealersAdapter = new DealersAdapter();
+            dealersAdapter.addAll(result.getDealers());
+            dealersAdapter.notifyDataSetChanged();
+
+            dealers_recycler.setAdapter(dealersAdapter);
+            dealers_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+            dealers_recycler.setHasFixedSize(true);
+
+            emptyView.setVisibility(View.GONE);
+            dealer_layout.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private final class ListingsRequestListener implements RequestListener<Listings> {
+        @Override
+        public void onRequestFailure (SpiceException spiceException) {
+            listings_recycler.setVisibility(View.GONE);
             fab_toolbar.setVisibility(View.GONE);
+            spiceManager.execute(new DealershipsRequest(listingsQuery.car.makes.get(0),
+                            zipcode,
+                            radius),
+                    new DealershipsRequestListener());
         }
         @Override
         public void onRequestSuccess (Listings result) {
             try {
                 if (ListingsFragment.this.isAdded()) {
-                    loading_container.setVisibility(View.INVISIBLE);
-                    if (result == null || result.listings.size() < 1) {
-                        emptyView.setVisibility(View.VISIBLE);
-                        fab_toolbar.setVisibility(View.GONE);
+                    listingsQuery = result.getListingsQuery();
+                    if (result.listings == null ||  result.listings.size() < 1) {
+                        spiceManager.execute(new DealershipsRequest(listingsQuery.car.makes.get(0),
+                                             zipcode,
+                                             radius),
+                                             new DealershipsRequestListener());
+                        listings_recycler.setVisibility(View.GONE);
                     } else {
+                        dealer_layout.setVisibility(View.GONE);
+                        listings_recycler.setVisibility(View.VISIBLE);
+                        listingsAdapter.addAll(result.getListings());
+                        listingsAdapter.notifyDataSetChanged();
                         emptyView.setVisibility(View.GONE);
                         fab_toolbar.setVisibility(View.VISIBLE);
                     }
-                    listings_recycler.setVisibility(View.VISIBLE);
-                    listings_recycler.setOnScrollListener(new EndlessRecyclerOnScrollListener(new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000)) {
-                        @Override
-                        public void onLoadMore(int current_page) {
-                        }
-                    });
-
-                    listingsQuery = result.getListingsQuery();
-                    if (result.listings == null ||  result.listings.size() < 1)
-                        return;
-                    listingsAdapter.addAll(result.getListings());
-                    listingsAdapter.notifyDataSetChanged();
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
@@ -128,12 +155,13 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         server_address = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_server_addr", Constants.ServerAddr).trim();
-
+        zipcode = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_zipcode", Constants.ZIPCODE_DEFAULT);
+        radius = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_radius", Constants.RADIUS_DEFAULT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.listings, container, false);
+        View v = inflater.inflate(R.layout.fragment_listings, container, false);
         ButterKnife.bind(this, v);
         return v;
     }
@@ -141,7 +169,7 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
     @Override
     public void onViewCreated (View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ScrollingLinearLayoutManager scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
+        scrollingLinearLayoutManager = new ScrollingLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 3000);
         listings_recycler.setLayoutManager(scrollingLinearLayoutManager);
         listingsAdapter = new ListingsAdapter();
         listingsAdapter.setOnItemClickListener(new BetterRecyclerAdapter.OnItemClickListener<Listing>() {
@@ -169,13 +197,25 @@ public class ListingsFragment extends Fragment implements OnResearchListener {
             listingsQuery = listings.getListingsQuery();
             listingsQuery.car.remaining_ids = new ArrayList<>();
             if (listings.listings == null ||  listings.listings.size() < 1) {
+                listings_recycler.setVisibility(View.GONE);
                 fab_toolbar.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-                return;
+                spiceManager.execute(new DealershipsRequest(listingsQuery.car.makes.get(0),
+                                zipcode,
+                                radius),
+                        new DealershipsRequestListener());
+            } else {
+                listings_recycler.setVisibility(View.VISIBLE);
+                listingsAdapter.addAll(listings.getListings());
+                listingsAdapter.notifyDataSetChanged();
             }
-            listings_recycler.setVisibility(View.VISIBLE);
-            listingsAdapter.addAll(listings.getListings());
-            listingsAdapter.notifyDataSetChanged();
+        } else {
+            listings_recycler.setVisibility(View.GONE);
+            fab_toolbar.setVisibility(View.GONE);
+            spiceManager.execute(new DealershipsRequest(listingsQuery.car.makes.get(0),
+                            zipcode,
+                            radius),
+                    new DealershipsRequestListener());
+
         }
     }
 

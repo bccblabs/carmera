@@ -3,7 +3,6 @@ package carmera.io.carmera;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,29 +10,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.fragments.search_fragments.FilterFragment;
+import carmera.io.carmera.fragments.search_fragments.CarFilterFragment;
+import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.ParseSavedSearch;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
+import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
@@ -43,15 +43,21 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class MakesSearchActivity extends AppCompatActivity {
+public class MakesSearchActivity extends AppCompatActivity implements OnResearchListener {
 
     private String server_address;
+
     private ListingsQuery listingsQuery;
+
     private SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+
     private ArrayList <Card> cards = new ArrayList<>();
+
     private CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter;
+
     private int matching_models_count = 0;
-    private FloatingActionButton favorites;
+
+    private MakeQueries makeQueries;
 
     @Bind (R.id.makes_title_tv) TextView title_text;
 
@@ -64,6 +70,13 @@ public class MakesSearchActivity extends AppCompatActivity {
     @Bind (R.id.data_staggered_grid_view) View staggered_grid_view;
 
     @Bind (R.id.emptyview) View emptyView;
+
+    @Override
+    public void onResearchCallback (ListingsQuery listingsQuery) {
+        this.listingsQuery = listingsQuery;
+        spiceManager.execute(new MakesQueryRequest(this.listingsQuery, server_address), new MakesQueryListener());
+    }
+
 
     private final class MakesQueryListener implements RequestListener<MakeQueries> {
         @Override
@@ -94,14 +107,20 @@ public class MakesSearchActivity extends AppCompatActivity {
             if (result.makesCount < 1) {
 
             } else {
+                makeQueries = result;
                 MakesSearchActivity.this.listingsQuery = result.query;
                 MakesSearchActivity.this.listingsQuery.car.models = new ArrayList<>();
-
+                Collections.sort(result.makes, new Comparator<MakeQuery>() {
+                    @Override
+                    public int compare(MakeQuery lhs, MakeQuery rhs) {
+                        return lhs.getMake().compareTo(rhs.getMake());
+                    }
+                });
                 for (final MakeQuery make : result.makes) {
                     StaggeredImageCard staggeredImageCard = new StaggeredImageCard(MakesSearchActivity.this,
                             make.make,
-                            null,
                             make.numModels + " models",
+                            null,
                             null,
                             make.imageUrl,
                             null);
@@ -120,6 +139,8 @@ public class MakesSearchActivity extends AppCompatActivity {
                     });
                     cards.add(staggeredImageCard);
                 }
+                listingsQuery.car.models = new ArrayList<>();
+                listingsQuery.num_matching_models = matching_models_count;
                 cardGridStaggeredArrayAdapter.notifyDataSetChanged();
                 fab_toolbar.setVisibility(View.VISIBLE);
 
@@ -199,7 +220,7 @@ public class MakesSearchActivity extends AppCompatActivity {
         parseSavedSearch.setConditions(listingsQuery.api.conditions);
         parseSavedSearch.setDrivetrains(listingsQuery.car.drivenWheels);
         parseSavedSearch.setMakes(listingsQuery.car.makes);
-        parseSavedSearch.setMatchingModelsCnt(MakesSearchActivity.this.matching_models_count);
+        parseSavedSearch.setMatchingModelsCnt(MakesSearchActivity.this.listingsQuery.num_matching_models);
 
         if (listingsQuery.max_price.equals("No Max"))
             parseSavedSearch.setMaxPrice(100000000);
@@ -223,5 +244,14 @@ public class MakesSearchActivity extends AppCompatActivity {
         parseSavedSearch.setUser(ParseUser.getCurrentUser());
         parseSavedSearch.setSavedName(String.format("%d found", listingsQuery.num_matching_models));
         parseSavedSearch.saveInBackground();
+    }
+
+    @OnClick (R.id.filter_btn)
+    void showFilters () {
+        CarFilterFragment filterFragment = CarFilterFragment.newInstance();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRA_LISTING_QUERY, Parcels.wrap(ListingsQuery.class, this.listingsQuery));
+        filterFragment.setArguments(args);
+        filterFragment.show(getSupportFragmentManager(), "car_filter_dialog");
     }
 }

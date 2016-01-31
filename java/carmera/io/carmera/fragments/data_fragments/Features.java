@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carmera.io.carmera.R;
-import carmera.io.carmera.cards.StaggeredCardSingleLine;
+import carmera.io.carmera.cards.StaggeredSingleLineCard;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
@@ -31,14 +31,14 @@ public class Features extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.staggered_cards_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_staggered_cards, container, false);
         ArrayList <Card> cards = new ArrayList<>();
         List<String> comments = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_FEATURES));
 
         for (int i = 0; i < comments.size(); i++) {
             String txt = comments.get(i);
-            StaggeredCardSingleLine StaggeredCardSingleLine = new StaggeredCardSingleLine(getActivity(), txt, R.drawable.card_bgd1);
-            cards.add(StaggeredCardSingleLine);
+            StaggeredSingleLineCard StaggeredSingleLineCard = new StaggeredSingleLineCard(getActivity(), txt, R.drawable.card_bgd1);
+            cards.add(StaggeredSingleLineCard);
         }
         CardGridStaggeredArrayAdapter cardGridStaggeredArrayAdapter = new CardGridStaggeredArrayAdapter(getActivity(), cards);
         CardGridStaggeredView cardGridStaggeredView = (CardGridStaggeredView) v.findViewById(R.id.data_staggered_grid_view);

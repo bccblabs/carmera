@@ -18,6 +18,8 @@ import com.parse.SaveCallback;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -71,12 +73,21 @@ public class ModelsActivity extends AppCompatActivity {
         }
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ArrayList <Card> cards = new ArrayList<>();
+        Collections.sort(models, new Comparator<ModelQuery>() {
+            @Override
+            public int compare(ModelQuery lhs, ModelQuery rhs) {
+                if (lhs.getModel().equals(rhs.getModel()))
+                    return lhs.yearDesc.compareTo(rhs.yearDesc);
+                else
+                    return lhs.getModel().compareTo(rhs.getModel());
+            }
+        });
         for (final ModelQuery model: models) {
             final StaggeredImageCard staggeredImageCard = new StaggeredImageCard(this,
-                    model.model+ "\n" + model.yearDesc,
-                    "10 recalls",
-                    model.powerDesc.replace("hp ", "hp\n"),
-                    model.mpgDesc.replace("/", "\n"),
+                    model.model,
+                    model.yearDesc,
+                    null,
+                    null,
                     model.imageUrl,
                     model);
 

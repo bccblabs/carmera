@@ -3,7 +3,6 @@ package carmera.io.carmera;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.fragments.dealer_fragments.DealerInfoFragment;
 import carmera.io.carmera.fragments.dealer_fragments.DealerReviews;
-import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 
 import carmera.io.carmera.utils.Constants;
 
@@ -33,7 +31,7 @@ public class DealerViewer extends AppCompatActivity {
     @Override
     public void onCreate (Bundle savedBundle) {
         super.onCreate(savedBundle);
-        setContentView(R.layout.data_viewer_layout);
+        setContentView(R.layout.activity_data_viewer);
         ButterKnife.bind(this);
         FragmentPagerItems.Creator page_creator = new FragmentPagerItems.Creator(this);
         data_viewer_model_text.setText(getIntent().getStringExtra(Constants.EXTRA_DEALER_NAME));
