@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,11 +21,11 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredImageCard;
 import carmera.io.carmera.fragments.search_fragments.CarFilterFragment;
 import carmera.io.carmera.listeners.OnResearchListener;
@@ -33,7 +33,6 @@ import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.ParseSavedSearch;
 import carmera.io.carmera.models.queries.MakeQueries;
 import carmera.io.carmera.models.queries.MakeQuery;
-import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.requests.MakesQueryRequest;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;

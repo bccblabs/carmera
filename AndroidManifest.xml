@@ -49,7 +49,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/debug_gms_api_key"/>
 
-        <activity android:name=".SearchActivity"
+        <activity android:name=".activities.SearchActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,29 +57,34 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListingDetails"
+        <activity android:name=".activities.ListingDetailsActivity"
             android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".DataViewer"
+        <activity android:name=".activities.DataViewerActivity"
             android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".DealerViewer"
+        <activity android:name=".activities.DealerViewerActivity"
             android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".MakesSearchActivity"
+        <activity android:name=".activities.MakesSearchActivity"
             android:label="@string/basic_search">
         </activity>
 
-        <activity android:name=".ModelsActivity"
+        <activity android:name=".activities.ModelsActivity"
             android:label="@string/models_search">
         </activity>
-        <activity android:name=".FavoritesActivity"
+        <activity android:name=".activities.FavoritesActivity"
             android:label="@string/home">
         </activity>
-        <activity android:name=".AppPreference"
+
+        <activity android:name=".activities.ListingsActivity"
+            android:label="@string/listings">
+        </activity>
+
+        <activity android:name=".activities.AppPreferenceActivity"
             android:label="@string/settings"/>
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"

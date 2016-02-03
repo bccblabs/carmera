@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,10 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -24,10 +20,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.R;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.listeners.FavoriteBtnClickListener;
+import carmera.io.carmera.fragments.data_fragments.CarHighlightsFragment;
+import carmera.io.carmera.listeners.OnClickModelInfoListener;
 import carmera.io.carmera.models.ListingsQuery;
-import carmera.io.carmera.models.ParseSavedModels;
 import carmera.io.carmera.models.queries.ModelQuery;
 import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
@@ -37,7 +34,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 12/18/15.
  */
-public class ModelsActivity extends AppCompatActivity {
+public class ModelsActivity extends AppCompatActivity implements OnClickModelInfoListener {
 
     private List<ModelQuery> models;
 
@@ -94,7 +91,7 @@ public class ModelsActivity extends AppCompatActivity {
             staggeredImageCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-                    Intent i = new Intent(ModelsActivity.this, SearchActivity.class);
+                    Intent i = new Intent(ModelsActivity.this, ListingsActivity.class);
                     Bundle args = new Bundle();
                     ListingsQuery listingsQuery = new ListingsQuery();
                     listingsQuery.car.remaining_ids = model.styleIds;
@@ -108,6 +105,7 @@ public class ModelsActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+            staggeredImageCard.setOnModelClickListener(ModelsActivity.this);
             cards.add(staggeredImageCard);
         }
         loading.setVisibility(View.GONE);
@@ -143,5 +141,15 @@ public class ModelsActivity extends AppCompatActivity {
     public void onDestroy () {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onClickModelInfo (ModelQuery modelQuery) {
+        CarHighlightsFragment filterFragment = CarHighlightsFragment.newInstance();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.EXTRAS_MODEL_HIGHLIGHTS, Parcels.wrap(ModelQuery.class, modelQuery));
+        filterFragment.setArguments(args);
+        filterFragment.show(getSupportFragmentManager(), "car_filter_dialog");
+
     }
 }

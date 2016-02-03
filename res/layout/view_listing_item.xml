@@ -38,7 +38,7 @@
                     android:text="1312 asdfa lk;"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
+                <widgets.CanaroTextView
                     android:id="@+id/listing_price"
                     android:textColor="@android:color/primary_text_dark"
                     android:paddingStart="16dp"

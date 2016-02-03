@@ -23,6 +23,7 @@ public class Constants {
     public final static String FRANCHISE_PAGESIZE = "50";
     public final static String PAGENUM_DEFAULT = "1";
 
+    public final static String EXTRAS_MODEL_HIGHLIGHTS = "extras_model_highlights";
 
     public final static String EXTRAS_LISTINGS_SEEN = "extras_listings_seen";
     public final static String EXTRAS_LISTINGS_FAV = "extras_listings_fav";

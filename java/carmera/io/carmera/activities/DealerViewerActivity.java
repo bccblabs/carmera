@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -13,6 +13,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.R;
 import carmera.io.carmera.fragments.dealer_fragments.DealerInfoFragment;
 import carmera.io.carmera.fragments.dealer_fragments.DealerReviews;
 
@@ -21,7 +22,7 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 11/30/15.
  */
-public class DealerViewer extends AppCompatActivity {
+public class DealerViewerActivity extends AppCompatActivity {
     public String TAG = getClass().getCanonicalName();
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;

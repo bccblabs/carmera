@@ -28,23 +28,24 @@ import it.gmariotti.cardslib.library.internal.Card;
 /**
  * Created by bski on 1/13/16.
  */
-public class StaggeredImageCard extends Card {
+public class StaggeredImageButtonCard extends Card {
     protected String title_str, subtitle_str, image_url, desc0, desc1;
     protected ImageView image_holder;
     protected TextView title, subtitle, desc_0, desc_1;
     protected ModelQuery modelQuery;
-    protected ImageView info_btn;
+    protected ButtonFloatSmall info_btn;
     public OnClickModelInfoListener onClickModelInfoListener;
 
     private Context cxt;
 
-    public StaggeredImageCard (Context cxt_,
+    public StaggeredImageButtonCard (Context cxt_,
                                @Nullable String title,
                                @Nullable String subtitle,
                                @Nullable String desc_0_str,
                                @Nullable String desc_1_str,
                                @Nullable String imageUrl,
-                               @Nullable ModelQuery modelQuery) {
+                               @Nullable ModelQuery modelQuery,
+                               OnClickModelInfoListener onClickModelInfoListener) {
 
         super (cxt_, R.layout.card_staggered_image_layout);
         this.cxt = cxt_;
@@ -54,11 +55,9 @@ public class StaggeredImageCard extends Card {
         this.desc0 = desc_0_str;
         this.desc1 = desc_1_str;
         this.modelQuery = modelQuery;
+        this.onClickModelInfoListener = onClickModelInfoListener;
     }
 
-    public void setOnModelClickListener (OnClickModelInfoListener onModelClickListener) {
-        this.onClickModelInfoListener = onModelClickListener;
-    }
     @Override
     public void setupInnerViewElements (ViewGroup parent, View view) {
         setBackgroundResourceId(R.drawable.card_bgd0);
@@ -67,7 +66,7 @@ public class StaggeredImageCard extends Card {
         desc_0 = (TextView) view.findViewById(R.id.staggered_card_desc0);
         desc_1 = (TextView) view.findViewById(R.id.staggered_card_desc1);
         image_holder = (ImageView) view.findViewById(R.id.staggered_image_holder);
-        info_btn = (ImageView) view.findViewById(R.id.info_btn);
+        info_btn = (ButtonFloatSmall) view.findViewById(R.id.info_btn);
         try {
             Picasso.with(getContext())
                     .load (Constants.EdmundsMedia + image_url.replace("_150.", "_175."))

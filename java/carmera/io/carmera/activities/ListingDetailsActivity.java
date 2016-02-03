@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,11 +29,9 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
-import org.parceler.guava.collect.Collections2;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +39,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import carmera.io.carmera.R;
 import carmera.io.carmera.cards.CarInfoDetailsCard;
 import carmera.io.carmera.models.Listing;
 import carmera.io.carmera.models.ParseSavedListings;
@@ -49,9 +48,6 @@ import carmera.io.carmera.models.ResponseMessage;
 import carmera.io.carmera.models.StyleData;
 import carmera.io.carmera.models.listings_subdocuments.Link;
 import carmera.io.carmera.models.queries.LeadQuery;
-import carmera.io.carmera.predicates.CostsPredicate;
-import carmera.io.carmera.predicates.RatingsPredicate;
-import carmera.io.carmera.predicates.ReliabilityPredicate;
 import carmera.io.carmera.requests.LeadRequest;
 import carmera.io.carmera.requests.StyleDataRequest;
 import carmera.io.carmera.utils.Constants;
@@ -62,7 +58,7 @@ import it.gmariotti.cardslib.library.view.CardViewNative;
 /**
  * Created by bski on 11/9/15.
  */
-public class ListingDetails extends AppCompatActivity implements BaseSliderView.OnSliderClickListener,
+public class ListingDetailsActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener {
 
     @Bind (R.id.loading_view) View loading_view;
@@ -113,13 +109,13 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
             photos.setPresetTransformer(SliderLayout.Transformer.Default);
             photos.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-            photos.addOnPageChangeListener(ListingDetails.this);
+            photos.addOnPageChangeListener(ListingDetailsActivity.this);
 
             if (photos != null) {
                 try {
                     for (Link link : listing.getMedia().getPhotos().getLarge().getLinks()) {
                         DefaultSliderView sliderView = new DefaultSliderView(getApplicationContext());
-                        sliderView.image(link.getHref()).setOnSliderClickListener(ListingDetails.this);
+                        sliderView.image(link.getHref()).setOnSliderClickListener(ListingDetailsActivity.this);
                         photos.addSlider(sliderView);
                     }
                 } catch (Exception e) {
@@ -138,7 +134,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
         }
         @Override
         public void onRequestSuccess (final ResponseMessage msg) {
-            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetailsActivity.this)
                     .content("Your request is recorded, your dealership will reach out to you shortly!")
                     .positiveText("Got It!")
                     .show();
@@ -148,15 +144,15 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
     private final class StyleDataRequestListener implements RequestListener<StyleData> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(ListingDetails.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListingDetailsActivity.this, "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onRequestSuccess(final StyleData styleData) {
             String card_desc_string = "";
             Log.i(getClass().getCanonicalName(), "styleId: " + styleData.styleId);
-            ListingDetails.this.styleData = styleData;
-            ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard(ListingDetails.this, styleData.images);
+            ListingDetailsActivity.this.styleData = styleData;
+            ListingsBasicInfoCard basic_info_card = new ListingsBasicInfoCard(ListingDetailsActivity.this, styleData.images);
             basic_info_card.setBackgroundResourceId(R.drawable.card_bgd0);
             listing_info_card.setCard(basic_info_card);
 
@@ -182,14 +178,14 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             }
 
             CarInfoDetailsCard specsCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Specs",
                     card_desc_string,
                     R.drawable.card_bgd0);
             specsCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-                    Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                    Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                     viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                     if (styleData.powertrain != null)
                         viewer.putExtra(Constants.EXTRA_POWERTRAIN, Parcels.wrap(styleData.powertrain));
@@ -217,7 +213,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 card_desc_string += "\nN/A\nfeatures";
 
             CarInfoDetailsCard issuesCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Safety",
                     card_desc_string,
                     R.drawable.card_bgd0);
@@ -226,7 +222,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 issuesCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
-                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (styleData.safety != null)
                             viewer.putExtra(Constants.EXTRA_SAFETY, Parcels.wrap(styleData.safety));
@@ -247,7 +243,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 card_desc_string = "N/A\nEdmund's User Reviews";
 
             CarInfoDetailsCard reviewsCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Reviews",
                     card_desc_string,
                     R.drawable.card_bgd0);
@@ -256,7 +252,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 reviewsCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
-                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (styleData.reviews != null)
                             viewer.putExtra(Constants.EXTRA_REVIEW, Parcels.wrap(styleData.reviews));
@@ -283,7 +279,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             else
                 card_desc_string += "Repairs\nN/A";
             CarInfoDetailsCard costsCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Running Costs",
                     card_desc_string,
                     R.drawable.card_bgd0);
@@ -291,7 +287,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 costsCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
-                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (styleData.costs != null)
                             viewer.putExtra(Constants.EXTRA_COSTS, Parcels.wrap(styleData.costs));
@@ -312,7 +308,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 card_desc_string += "\nMSRP\nN/A";
 
             CarInfoDetailsCard pricesCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Prices",
                     card_desc_string,
                     R.drawable.card_bgd0);
@@ -321,7 +317,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 pricesCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
-                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         viewer.putExtra(Constants.EXTRA_PRICES, Parcels.wrap(styleData.prices));
                         startActivity(viewer);
@@ -344,7 +340,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
             }
 
             CarInfoDetailsCard equipmentCard = new CarInfoDetailsCard(
-                    ListingDetails.this,
+                    ListingDetailsActivity.this,
                     "Equipments",
                     card_desc_string,
                     R.drawable.card_bgd0
@@ -354,7 +350,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
                 equipmentCard.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
-                        Intent viewer = new Intent(ListingDetails.this, DataViewer.class);
+                        Intent viewer = new Intent(ListingDetailsActivity.this, DataViewerActivity.class);
                         viewer.putExtra(Constants.EXTRA_MODEL_NAME, listing.getModel().getName());
                         if (listing.options != null && listing.options.size() > 0)
                             viewer.putExtra(Constants.EXTRA_OPTIONS, Parcels.wrap(listing.options));
@@ -423,7 +419,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
     @Override
     public void onStart () {
         super.onStart();
-        spiceManager.start(ListingDetails.this);
+        spiceManager.start(ListingDetailsActivity.this);
     }
 
     @Override
@@ -464,11 +460,11 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_favorites:
-                Intent i = new Intent(ListingDetails.this, FavoritesActivity.class);
+                Intent i = new Intent(ListingDetailsActivity.this, FavoritesActivity.class);
                 startActivity(i);
                 break;
             case R.id.action_settings:
-                Intent pref = new Intent(ListingDetails.this, AppPreference.class);
+                Intent pref = new Intent(ListingDetailsActivity.this, AppPreferenceActivity.class);
                 startActivity(pref);
                 break;
         }
@@ -480,7 +476,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
     @OnClick (R.id.dealer_info_btn)
     public void onDealer(View v) {
-            Intent i = new Intent(ListingDetails.this, DealerViewer.class);
+            Intent i = new Intent(ListingDetailsActivity.this, DealerViewerActivity.class);
             i.putExtra(Constants.EXTRA_DEALERID, listing.dealer.dealerId);
             i.putExtra(Constants.EXTRA_FRANCHISEID, listing.dealer.franchiseId);
             i.putExtra(Constants.EXTRA_DEALER_NAME, listing.dealer.name);
@@ -494,7 +490,7 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
     @OnClick(R.id.save_listing_btn)
     void onSave() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(ListingDetails.this)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(ListingDetailsActivity.this)
                 .title(R.string.save_and_drive)
                 .content(String.format("Do you want to save and schedule a test drive for %d %s %s",
                         listing.getYear().year, listing.getMake().name, listing.getModel().name))
@@ -536,14 +532,14 @@ public class ListingDetails extends AppCompatActivity implements BaseSliderView.
 
                         if (contact_name.length() < 1 && (contact_email.length() < 1 || contact_number.length() < 1)) {
 
-                            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetails.this)
+                            MaterialDialog dialog = new MaterialDialog.Builder(ListingDetailsActivity.this)
                                     .content("Please set your name and email/phone to allow dealership contacts!")
                                     .positiveText("Agree")
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                            Intent pref = new Intent (ListingDetails.this, AppPreference.class);
-                                            ListingDetails.this.startActivity(pref)
+                                            Intent pref = new Intent (ListingDetailsActivity.this, AppPreferenceActivity.class);
+                                            ListingDetailsActivity.this.startActivity(pref)
                                         ;}
                                     })
                                     .show();

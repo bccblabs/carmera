@@ -99,6 +99,28 @@
                         android:orientation="horizontal">
 
                         <it.gmariotti.cardslib.library.view.CardViewNative
+                            android:id="@+id/prices_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+
+                        <it.gmariotti.cardslib.library.view.CardViewNative
+                            android:id="@+id/equipments_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="6dp"
+                            card:card_layout_resourceID="@layout/card_car_info_details"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <it.gmariotti.cardslib.library.view.CardViewNative
                             android:id="@+id/reviews_card"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -116,28 +138,7 @@
                             android:layout_marginBottom="6dp"
                             card:card_layout_resourceID="@layout/card_car_info_details"/>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <it.gmariotti.cardslib.library.view.CardViewNative
-                            android:id="@+id/prices_card"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="6dp"
-                            android:layout_marginBottom="6dp"
-                            card:card_layout_resourceID="@layout/card_car_info_details"/>
-
-                        <it.gmariotti.cardslib.library.view.CardViewNative
-                            android:id="@+id/equipments_card"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginBottom="6dp"
-                            card:card_layout_resourceID="@layout/card_car_info_details"/>
-                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
             </RelativeLayout>

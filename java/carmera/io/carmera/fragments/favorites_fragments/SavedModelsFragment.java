@@ -1,24 +1,19 @@
 package carmera.io.carmera.fragments.favorites_fragments;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +21,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.SearchActivity;
 import carmera.io.carmera.cards.StaggeredImageCard;
-import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.ParseSavedModels;
-import carmera.io.carmera.utils.Constants;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.internal.CardGridStaggeredArrayAdapter;
 import it.gmariotti.cardslib.library.extra.staggeredgrid.view.CardGridStaggeredView;
 import it.gmariotti.cardslib.library.internal.Card;

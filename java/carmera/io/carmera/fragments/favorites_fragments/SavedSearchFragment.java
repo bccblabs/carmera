@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import carmera.io.carmera.R;
-import carmera.io.carmera.SearchActivity;
+import carmera.io.carmera.activities.SearchActivity;
 import carmera.io.carmera.cards.TagsCard;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.ParseSavedSearch;

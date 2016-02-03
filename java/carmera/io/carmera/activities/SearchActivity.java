@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import carmera.io.carmera.adapters.DealersAdapter;
+import carmera.io.carmera.R;
 import carmera.io.carmera.fragments.main_fragments.CaptureFragment;
 import carmera.io.carmera.fragments.main_fragments.ListingsFragment;
 import carmera.io.carmera.fragments.search_fragments.CarFilterFragment;
@@ -39,7 +39,6 @@ import carmera.io.carmera.listeners.OnEditTorque;
 import carmera.io.carmera.listeners.OnEditTransmission;
 import carmera.io.carmera.listeners.OnResearchListener;
 import carmera.io.carmera.listeners.OnSearchFragmentVisible;
-import carmera.io.carmera.models.Dealers;
 import carmera.io.carmera.models.Listings;
 import carmera.io.carmera.models.ListingsQuery;
 import carmera.io.carmera.models.queries.ImageQuery;
@@ -295,7 +294,7 @@ public class SearchActivity extends AppCompatActivity implements
                 startActivity(i);
                 break;
             case R.id.action_settings:
-                Intent pref = new Intent(SearchActivity.this, AppPreference.class);
+                Intent pref = new Intent(SearchActivity.this, AppPreferenceActivity.class);
                 startActivity(pref);
                 break;
         }

@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 
 import android.content.Intent;
@@ -20,6 +20,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.R;
 import carmera.io.carmera.fragments.favorites_fragments.SavedModelsFragment;
 import carmera.io.carmera.fragments.favorites_fragments.SavedSearchFragment;
 import carmera.io.carmera.utils.Constants;

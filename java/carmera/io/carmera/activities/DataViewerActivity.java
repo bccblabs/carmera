@@ -1,4 +1,4 @@
-package carmera.io.carmera;
+package carmera.io.carmera.activities;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +17,7 @@ import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import carmera.io.carmera.R;
 import carmera.io.carmera.fragments.data_fragments.Comments;
 import carmera.io.carmera.fragments.data_fragments.Complaints;
 import carmera.io.carmera.fragments.data_fragments.Costs;
@@ -36,7 +37,7 @@ import carmera.io.carmera.utils.Constants;
 /**
  * Created by bski on 11/11/15.
  */
-public class DataViewer extends AppCompatActivity {
+public class DataViewerActivity extends AppCompatActivity {
     private String TAG = getClass().getCanonicalName();
 
     @Bind(R.id.data_viewpager) public ViewPager viewPager;

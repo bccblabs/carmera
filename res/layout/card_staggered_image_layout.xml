@@ -18,7 +18,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
+                <widgets.CanaroTextView
                     android:id="@+id/staggered_card_title"
                     android:textColor="@android:color/primary_text_dark"
                     android:layout_gravity="center_horizontal"
@@ -26,7 +26,7 @@
                     android:paddingTop="16dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:textSize="24sp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -73,15 +73,15 @@
                     android:id="@+id/staggered_card_desc1"
                     />
             </LinearLayout>
-            <com.gc.materialdesign.views.ButtonFloatSmall
+            <ImageView
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_gravity="bottom|end"
                 android:id="@+id/info_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                materialdesign:iconDrawable="@drawable/ic_info_outline_black_24dp"
-                android:background="@android:color/background_light"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_action_info_white"
+                android:background="@color/transparent"/>
         </FrameLayout>
     </it.gmariotti.cardslib.library.view.ForegroundLinearLayout>
 </LinearLayout>
